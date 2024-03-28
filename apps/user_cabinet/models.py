@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from api.user_cabinet.utils import generate_payment_link
-from api.user_cabinet.utils import generate_promocode
 from django.utils.translation import gettext as _
 
 User = get_user_model()
@@ -88,113 +86,36 @@ class Transaction(models.Model):
         verbose_name_plural = _('Транзакции')
 
 
-class Payment(models.Model):
-    cost = models.DecimalField(max_digits=100, decimal_places=2, verbose_name=_('Цена'))
-    description = models.TextField(verbose_name=_('Описание'))
-    created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'))
-    cabinet = models.ForeignKey(Cabinet, related_name='payments', on_delete=models.SET_NULL, null=True, verbose_name=_('Кабинет'))
-    is_paid = models.BooleanField(blank=True, default=False, verbose_name=_('Оплачен'))
-    payment_url = models.TextField(blank=True, null=True, verbose_name=_('Ссылка на оплату'))
-
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        super().save()
-
-        self.payment_url = generate_payment_link(self.cost, self.pk, self.description)
-        return super().save()
-
-    def __str__(self):
-        return _(f'Счет оплаты - {self.pk}')
-
-    class Meta:
-        verbose_name = _('Оплата')
-        verbose_name_plural = _('Оплаты')
 
 
-class Promocode(models.Model):
-    code = models.CharField(max_length=16, blank=True, unique=True, verbose_name=_('Код'))
-    money = models.PositiveIntegerField(blank=True, default=0, verbose_name=_('Деньги'))
-    user_status = models.ForeignKey(UserStatus, on_delete=models.CASCADE, blank=True, null=True, verbose_name=_('Статус пользователя'))
-    is_active = models.BooleanField(blank=True, default=True, verbose_name=_('Активный'))
 
-    # def save(
-    #     self, force_insert=False, force_update=False, using=None, update_fields=None
-    # ):
-    #     self.code = generate_promocode()
-    #     return super().save()
-
-    def save(self, *args, **kwargs):
-        if not self.code:
-            self.code = generate_promocode(length=16)
-        super(Promocode, self).save(*args, **kwargs)
-
-
-    class Meta:
-        verbose_name = _('Промокод')
-        verbose_name_plural = _('Промокоды')
-
-
-class VipStatus(models.Model):
-    end_date = models.DateTimeField(verbose_name=_('Дата окончание'))
-    is_active = models.BooleanField(default=True, blank=True, verbose_name=_('Активный'))
-    created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'))
-
-    class Meta:
-        verbose_name = _('Вип статус')
-        verbose_name_plural = _('Вип статусы')
+# class SingletonModel(models.Model):
+#     """
+#     Модель, которая всегда имеет только один экземпляр.
+#     """
+#
+#     class Meta:
+#         abstract = True
+#
+#     def save(self, *args, **kwargs):
+#         # Если модель уже существует, удалите ее
+#         self.__class__.objects.exclude(id=self.id).delete()
+#         super(SingletonModel, self).save(*args, **kwargs)
+#
+#     @classmethod
+#     def load(cls):
+#         # Если модель еще не существует, создайте ее
+#         if not cls.objects.exists():
+#             cls.objects.create()
+#         return cls.objects.get()
 
 
-class IsColored(models.Model):
-    end_date = models.DateTimeField(verbose_name=_('Дата окончание'))
-    is_active = models.BooleanField(default=True, blank=True, verbose_name=_('Активный'))
-    created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'))
-
-    class Meta:
-        verbose_name = _('Цветное объявление')
-        verbose_name_plural = _('Цветные объявления')
-
-
-class SingletonModel(models.Model):
-    """
-    Модель, которая всегда имеет только один экземпляр.
-    """
-
-    class Meta:
-        abstract = True
-
-    def save(self, *args, **kwargs):
-        # Если модель уже существует, удалите ее
-        self.__class__.objects.exclude(id=self.id).delete()
-        super(SingletonModel, self).save(*args, **kwargs)
-
-    @classmethod
-    def load(cls):
-        # Если модель еще не существует, создайте ее
-        if not cls.objects.exists():
-            cls.objects.create()
-        return cls.objects.get()
-
-
-class Constants(SingletonModel):
-    max_cabinets = models.PositiveIntegerField(verbose_name=_('Максимальное количество'))
-    days_color = models.PositiveIntegerField(verbose_name=_('Выделенные цветом дни'))
-    days_vip = models.PositiveIntegerField(verbose_name=_('Вип дни'))
-    is_moder = models.BooleanField(verbose_name=_('Режим модерации'), blank=True, default=False)
-
-    class Meta:
-        verbose_name = _('Константа')
-        verbose_name_plural = _('Константы')
-
-
-class Ban(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
-    ipaddress = models.CharField(max_length=123, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return _(f'бан на пользователя {self.user} - {self.ipaddress}')
-
-    class Meta:
-        verbose_name = _('Заблокированый IP')
-        verbose_name_plural = _('Заблокированные IP')
+# class Constants(SingletonModel):
+#     max_cabinets = models.PositiveIntegerField(verbose_name=_('Максимальное количество'))
+#     days_color = models.PositiveIntegerField(verbose_name=_('Выделенные цветом дни'))
+#     days_vip = models.PositiveIntegerField(verbose_name=_('Вип дни'))
+#     is_moder = models.BooleanField(verbose_name=_('Режим модерации'), blank=True, default=False)
+#
+#     class Meta:
+#         verbose_name = _('Константа')
+#         verbose_name_plural = _('Константы')
