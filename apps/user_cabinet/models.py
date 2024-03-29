@@ -29,6 +29,11 @@ class Status(models.Model):
     title = models.CharField(max_length=123, verbose_name=_('Название'))
     quantity_announce = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
     discount = models.PositiveIntegerField(blank=True, default=0, verbose_name=_('Скидка'))
+    is_advertise = models.BooleanField(default=False, blank=True)
+    is_contact_prov = models.BooleanField(default=False, blank=True)
+    dayly_message = models.PositiveIntegerField(blank=True, default=30)
+    is_publish_phone = models.BooleanField(default=False, blank=True)
+
     created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'))
 
     def __str__(self):

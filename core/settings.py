@@ -38,13 +38,13 @@ PROJECT_APPS = [
 DJANGO_APPS = [
     'apps.authentication',
     'apps.user_cabinet',
+    'apps.provider',
 ]
 
 THIRD_PARTY_APPS = [
     "django_filters",
     "corsheaders",
-    'oauth2_provider',
-    'social_django',
+    # 'social.apps.django_app.default',
 ]
 
 INSTALLED_APPS = [*DJANGO_APPS, *THIRD_PARTY_APPS, *PROJECT_APPS]
@@ -67,11 +67,6 @@ ROOT_URLCONF = 'core.urls'
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, "apps/templates")
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'social_django.context_processors.backends',
-    'social_django.context_processors.login_redirect',
-)
-
 
 TEMPLATES = [
     {
@@ -85,8 +80,6 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.media",
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
             ],
         },
     },
