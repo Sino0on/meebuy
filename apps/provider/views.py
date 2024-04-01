@@ -4,9 +4,9 @@ from apps.provider.models import Provider, Category
 from apps.provider.filters import ProviderFilter
 
 
-class ProviderHomeListView(generic.ListView):
+class ProviderListView(generic.ListView):
     model = Provider
-    queryset = Provider.objects.all()
+    queryset = Provider.objects.filter(is_active=True)
     template_name = 'home.html'
     paginate_by = '10'
     filter_class = ProviderFilter
