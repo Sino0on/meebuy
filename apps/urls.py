@@ -5,5 +5,5 @@ from apps.authentication.views import LoginView
 
 urlpatterns = [
     path('', ProviderHomeListView.as_view()),
-    path('login', LoginView.as_view(), name='login')
+    path('login/', LoginView.as_view(), name='login')
 ]
