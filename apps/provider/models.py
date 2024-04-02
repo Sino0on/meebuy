@@ -35,6 +35,7 @@ class Provider(models.Model):
     phones = ArrayField(models.CharField(max_length=123))
     fax = models.CharField(max_length=123)
     requisites = models.TextField()
+    is_active = models.BooleanField(blank=True, default=True)
     emp_quantity = models.PositiveIntegerField(blank=True, null=True)
     register_ur = models.DateField(verbose_name=_('Дата регистрации юр лица'))
     conditions = models.ManyToManyField('Condition', null=True, blank=True)

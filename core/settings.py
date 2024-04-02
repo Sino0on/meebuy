@@ -26,7 +26,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 PROJECT_APPS = [
+    'daphne',
+    'channels',
     'jazzmin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +42,8 @@ DJANGO_APPS = [
     'apps.authentication',
     'apps.user_cabinet',
     'apps.provider',
-    'apps.tender'
+    'apps.tender',
+    'apps.chat',
 ]
 
 THIRD_PARTY_APPS = [
@@ -86,8 +90,24 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'core.asgi.application'
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("127.0.0.1", 6379)],
+#         },
+#     }
+# }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database
