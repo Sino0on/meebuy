@@ -16,8 +16,8 @@ class LoginView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            email = form.email
-            password = form.password
+            email = request.POST['email']
+            password = request.POST['password']
             user = authenticate(request, email=email, password=password)
             if user:
                 login(request, user)
