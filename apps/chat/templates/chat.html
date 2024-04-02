@@ -32,6 +32,7 @@
 
   ws.onopen = function() {
     console.log("Connected to the chat server.");
+    messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
   };
 
   ws.onmessage = function(event) {
@@ -63,12 +64,14 @@
                 'user': "{{ user.id }}" // Предполагается, что `user.username` доступно в вашем шаблоне
             }));
       input.value = ""; // Clear input after send
+      messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
     }
   }
 
   document.getElementById("messageInput").addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
       sendMessage();
+
     }
   });
 </script>

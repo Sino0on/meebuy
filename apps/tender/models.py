@@ -56,6 +56,7 @@ class Tender(models.Model):
     end_date = models.DateField()
     place_of_sale = models.CharField(max_length=123)
     type_pay = models.ForeignKey(TypePay, on_delete=models.PROTECT)
+    is_phone = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.title}'
