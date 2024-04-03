@@ -7,6 +7,7 @@
 <body>
     <h2>Список продуктов</h2>
     <form method="get">
+
         <div>
             <label for="id_title">Название:</label>
             <input type="text" id="id_title" name="title" value="{{ request.GET.title }}">
@@ -36,7 +37,10 @@
     <ul>
         {% for product in products %}
             <li>
-                {{ product.title }} - {{ product.price }}$. - {{ product.category.name }}
+                <div>
+                    <img src="{{ product.images.first.image.url }}" alt="">
+                </div>
+                <a href="{% url 'product_detail' product.pk %}">{{ product.title }}</a> - {{ product.price }}$. - {{ product.category.name }}
                 <a href="{% url 'product_update' product.pk %}">Редактировать</a> |
                 <a href="{% url 'product_delete' product.pk %}">Удалить</a>
             </li>
