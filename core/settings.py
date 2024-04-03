@@ -33,6 +33,8 @@ PROJECT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
 ]
 
 DJANGO_APPS = [
@@ -47,7 +49,6 @@ THIRD_PARTY_APPS = [
     "django_filters",
     "corsheaders",
     'allauth',
-    'django.contrib.sites',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
@@ -120,7 +121,7 @@ EMAIL_USE_TLS = True
 LOGIN_REDIRECT_URL = '/select_user_type/'
 LOGOUT_REDIRECT_URL = '/'
 
-SITE_ID = 6
+SITE_ID = 5
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -142,6 +143,15 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 #        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
 # }
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
 
 
 AUTH_USER_MODEL = "authentication.User"
