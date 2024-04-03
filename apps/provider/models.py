@@ -9,7 +9,7 @@ User = get_user_model()
 
 class Category(models.Model):
     title = models.CharField(max_length=123)
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor')
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

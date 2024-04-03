@@ -5,7 +5,7 @@ from apps.provider.models import Category
 class Product(models.Model):
     title = models.CharField(max_length=123)
     description = models.TextField()
-    price = models.DecimalField()
+    price = models.DecimalField(decimal_places=2, max_digits=7)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)

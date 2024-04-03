@@ -39,13 +39,18 @@ DJANGO_APPS = [
     'apps.authentication',
     'apps.user_cabinet',
     'apps.provider',
-    'apps.tender'
+    'apps.tender',
+    'apps.product',
 ]
 
 THIRD_PARTY_APPS = [
     "django_filters",
     "corsheaders",
-    # 'social.apps.django_app.default',
+    'allauth',
+    'django.contrib.sites',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 INSTALLED_APPS = [*DJANGO_APPS, *THIRD_PARTY_APPS, *PROJECT_APPS]
@@ -61,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 
@@ -104,6 +110,32 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'turdumamatov2024@gmail.com'
+EMAIL_HOST_PASSWORD = 'burhmhyudtlmllbu'
+EMAIL_USE_TLS = True
+
+LOGIN_REDIRECT_URL = '/select_user_type/'
+LOGOUT_REDIRECT_URL = '/'
+
+SITE_ID = 5
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
 # DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
@@ -116,6 +148,7 @@ AUTH_USER_MODEL = "authentication.User"
 
 AUTHENTICATION_BACKENDS = (
    'django.contrib.auth.backends.ModelBackend',
+   'allauth.account.auth_backends.AuthenticationBackend'
 )
 
 
