@@ -45,8 +45,10 @@ def select_user_type(request):
         form = UserTypeSelectionForm(request.POST)
         if form.is_valid():
             user_type = form.cleaned_data['user_type']
-
-            return redirect('login')
+            if request.user.auth_provider:  # Проверка провайдера
+                return redirect('view_profile')  # Перенаправление на профиль, если провайдер истинен
+            else:
+                return redirect('login')  # Перенаправление на логин, если провайдер ложен
     else:
         form = UserTypeSelectionForm()
     return render(request, 'select_user_type.html', {'form': form})
