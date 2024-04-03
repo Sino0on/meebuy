@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продуктов</title>
+</head>
+<body>
+    <h2>Список продуктов</h2>
+    <form method="get">
+        <div>
+            <label for="id_title">Название:</label>
+            <input type="text" id="id_title" name="title" value="{{ request.GET.title }}">
+        </div>
+        <div>
+            <label for="id_price_min">Минимальная цена:</label>
+            <input type="number" id="id_price_min" name="price_min" value="{{ request.GET.price_min }}">
+        </div>
+        <div>
+            <label for="id_price_max">Максимальная цена:</label>
+            <input type="number" id="id_price_max" name="price_max" value="{{ request.GET.price_max }}">
+        </div>
+        <div>
+            <label for="id_category">Категория:</label>
+            <select id="id_category" name="category">
+                <option value="">Выберите категорию</option>
+                {% for category in categories %}
+                    <option value="{{ category.pk }}" {% if request.GET.category == category.pk|stringformat:"s" %}selected{% endif %}>
+                        {{ category.title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Фильтровать</button>
+    </form>
+
+    <ul>
+        {% for product in products %}
+            <li>
+                {{ product.title }} - {{ product.price }}$. - {{ product.category.name }}
+                <a href="{% url 'product_update' product.pk %}">Редактировать</a> |
+                <a href="{% url 'product_delete' product.pk %}">Удалить</a>
+            </li>
+        {% empty %}
+            <li>Нет продуктов.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'product_create' %}">Добавить новый продукт</a>
+</body>
+</html>
