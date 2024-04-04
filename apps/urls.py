@@ -6,6 +6,9 @@ from apps.authentication.views import LoginView
 from apps.chat.views import chat_detail, chats
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
+from apps.user_cabinet.views import UserStatusListView
+from apps.user_cabinet.api import BuyStatusView
+
 
 urlpatterns = [
     path('provider/list/', ProviderListView.as_view()),
@@ -36,5 +39,8 @@ urlpatterns = [
     path('product/create/', ProductCreateView.as_view(), name='product_create'),
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update'),
     path('product/<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
+
+    path('status/list/', UserStatusListView.as_view()),
+    path('status/buy/<int:pk>', BuyStatusView.as_view())
 
 ]

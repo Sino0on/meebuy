@@ -58,6 +58,9 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
+
+    'rest_framework'
+    # 'social.apps.django_app.default',
 ]
 
 INSTALLED_APPS = [*DJANGO_APPS, *THIRD_PARTY_APPS, *PROJECT_APPS]
