@@ -5,6 +5,10 @@ from apps.provider.views import ProviderListView, ProviderDetailView
 from apps.authentication.views import LoginView
 from apps.chat.views import chat_detail, chats
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+
+
+from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
+
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
 from apps.user_cabinet.views import UserStatusListView
 from apps.user_cabinet.api import BuyStatusView
@@ -32,6 +36,7 @@ urlpatterns = [
     path('select_user_type/', SelectUserTypeView.as_view(), name='select_user_type'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', ViewProfile.as_view(), name='view_profile'),
+    path('login_redirect/', login_redirect, name='login_redirect'),
 
     # products
     path('products/', ProductListView.as_view(), name='product_list'),

@@ -10,10 +10,12 @@
 </head>
 <body>
     <h2>Google Login</h2>
-    <a href="{% provider_login_url 'google' %}?next=/select_user_type/">Login With Google</a>
+    <a href="{% provider_login_url 'google' %}?next=/login_redirect/">Login With Google</a>
     <h2>Facebook Login</h2>
-    <a href="{% provider_login_url 'facebook' %}?next=/select_user_type/">Login With Facebook</a>
+    <a href="{% provider_login_url 'facebook' %}?next=/login_redirect/">Login With Facebook</a>
     <h2>VK Login</h2>
-    <a href="{% provider_login_url 'vk' %}?next=/select_user_type/">Login With VK</a>
+    <a href="{% provider_login_url 'vk' %}?next=/login_redirect/">Login With VK</a>
+    <h2>Yandex Login</h2>
+    <a href="{% provider_login_url 'yandex' %}?next=/login_redirect/">Login With Yandex</a>
 </body>
 </html>
