@@ -9,7 +9,7 @@ User = get_user_model()
 
 class Category(models.Model):
     title = models.CharField(max_length=123)
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor', blank=True, null=True)
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -35,10 +35,11 @@ class Provider(models.Model):
     phones = ArrayField(models.CharField(max_length=123))
     fax = models.CharField(max_length=123)
     requisites = models.TextField()
+    is_active = models.BooleanField(blank=True, default=True)
     emp_quantity = models.PositiveIntegerField(blank=True, null=True)
     register_ur = models.DateField(verbose_name=_('Дата регистрации юр лица'))
-    conditions = models.ManyToManyField('Condition', null=True, blank=True)
-    deliveries = models.ManyToManyField('Delivery', null=True, blank=True)
+    conditions = models.ManyToManyField('Condition', blank=True)
+    deliveries = models.ManyToManyField('Delivery', blank=True)
     is_modered = models.BooleanField(default=False, blank=True)
     type_pay = models.ManyToManyField('TypePay')
 

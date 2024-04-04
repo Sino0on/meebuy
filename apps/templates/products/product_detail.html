@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали продукта</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .product-detail, .similar-products { margin-bottom: 20px; }
+        .similar-products ul, .product-images ul { list-style-type: none; padding: 0; }
+        .similar-products li, .product-images li { margin-bottom: 10px; }
+        .product-images img { width: 100px; height: auto; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="product-detail">
+        <h2>{{ product.title }}</h2>
+        <div class="product-images">
+            <ul>
+                {% for img in product.images.all %}
+                <li><img src="{{ img.image.url }}" alt="{{ product.title }}"></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <p>{{ product.description }}</p>
+        <p>Цена: {{ product.price }}₽</p>
+        <p>Цена за крупный опт: {{ product.wholesale_price }}₽</p>
+        <p>Цена за мелкий опт: {{ product.retail_wholesale_price }}₽</p>
+    </div>
+
+    <div class="similar-products">
+        <h3>Похожие продукты</h3>
+        <ul>
+            {% for product in similar_products %}
+                <li>
+                    <img src="{{ product.images.first.url }}" alt="">
+                    <a href="{% url 'product_detail' product.pk %}">
+                        {{ product.title }}
+                    </a> - {{ product.price }}₽
+                </li>
+            {% empty %}
+                <li>Похожие продукты не найдены.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

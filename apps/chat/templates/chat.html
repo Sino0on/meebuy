@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebSocket Chat</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+<style>
+  /* Дополнительные стили, если нужно */
+</style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container mx-auto px-4 py-5">
+    <div class="bg-white rounded-lg shadow p-5" id="messageContainer" style="height: 300px; overflow-y: auto;">
+        {% for message in messages %}
+        <div class="flex justify-between items-center">
+            <p class="text-sm font-semibold">{{ message.sender }}: <span class="text-normal font-normal">{{ message.content }}</span></p>
+            <span class="text-xs text-gray-500">{{ message.created_at | date:"d M Y H:i" }}</span>
+        </div>
+
+        {% endfor %}
+    </div>
+    <div class="flex mt-4">
+        <input type="text" id="messageInput" placeholder="Введите сообщение..." class="form-input mt-1 block w-full px-3 py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+        <button onclick="sendMessage()" class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Отправить</button>
+    </div>
+</div>
+
+<script>
+  var ws = new WebSocket(`ws://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
+
+  ws.onopen = function() {
+    console.log("Connected to the chat server.");
+    messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
+  };
+
+  ws.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    var messageContainer = document.getElementById("messageContainer");
+    var messageElement = document.createElement("div");
+<!--    var formattedTime = timestamp.toLocaleString('ru-RU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace('.', '');-->
+    messageElement.innerHTML = `<div class="flex justify-between items-center">
+            <p class="text-sm font-semibold">${data.message.user}: <span class="text-normal font-normal">${data.message.message}</span></p>
+            <span class="text-xs text-gray-500">saRb</span>
+        </div>`;
+    messageContainer.appendChild(messageElement);
+    messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
+  };
+
+  ws.onerror = function(error) {
+    console.log("WebSocket error: " + error);
+  };
+
+  ws.onclose = function(event) {
+    console.log("Disconnected from the chat server.");
+  };
+
+  function sendMessage() {
+    var input = document.getElementById("messageInput");
+    if (input.value.trim() !== "") {
+      ws.send(JSON.stringify({
+                'message': input.value,
+                'user': "{{ user.id }}" // Предполагается, что `user.username` доступно в вашем шаблоне
+            }));
+      input.value = ""; // Clear input after send
+      messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
+    }
+  }
+
+  document.getElementById("messageInput").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+      sendMessage();
+
+    }
+  });
+</script>
+
+</body>
+</html>

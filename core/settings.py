@@ -26,7 +26,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 PROJECT_APPS = [
+    'daphne',
+    'channels',
     'jazzmin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +44,7 @@ DJANGO_APPS = [
     'apps.authentication',
     'apps.user_cabinet',
     'apps.provider',
+    'apps.chat',
     'apps.tender',
     'apps.product',
 ]
@@ -54,7 +58,13 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
+<<<<<<< HEAD
     'allauth.socialaccount.providers.yandex',
+=======
+
+    'rest_framework'
+    # 'social.apps.django_app.default',
+>>>>>>> origin
 ]
 
 INSTALLED_APPS = [*DJANGO_APPS, *THIRD_PARTY_APPS, *PROJECT_APPS]
@@ -96,8 +106,24 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'core.asgi.application'
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("127.0.0.1", 6379)],
+#         },
+#     }
+# }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database
