@@ -17,5 +17,9 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+<form action="{% url 'download_excel' %}" method="get">
+    <button type="submit">Скачать шаблон Excel</button>
+</form>
+    <a href="{% url 'upload_products' %}">загрузить данные</a>
 </body>
 </html>

@@ -1,6 +1,6 @@
 from django.urls import path
 from apps.product.views import ProductListView, ProductUpdateView, ProductCreateView, ProductDeleteView, \
-    ProductDetailView
+    ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView
 from apps.provider.views import ProviderListView, ProviderDetailView
 from apps.authentication.views import LoginView
 from apps.chat.views import chat_detail, chats
@@ -39,6 +39,9 @@ urlpatterns = [
     path('product/create/', ProductCreateView.as_view(), name='product_create'),
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update'),
     path('product/<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
+    path('product/download-excel/', ExcelTemplateDownloadView.as_view(), name='download_excel'),
+    path('product/upload-products/', ExcelUploadView.as_view(), name='upload_products'),
+    path('product/upload-excel/', ExcelUploadView.as_view(), name='upload_excel'),
 
     path('status/list/', UserStatusListView.as_view()),
     path('status/buy/<int:pk>', BuyStatusView.as_view())
