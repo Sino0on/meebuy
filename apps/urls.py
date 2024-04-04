@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
-from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
+from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
 from apps.provider.views import ProviderHomeListView
 
 
@@ -19,4 +19,5 @@ urlpatterns = [
     path('select_user_type/', SelectUserTypeView.as_view(), name='select_user_type'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', ViewProfile.as_view(), name='view_profile'),
+    path('login_redirect/', login_redirect, name='login_redirect'),
 ]
