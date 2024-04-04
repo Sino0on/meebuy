@@ -1,0 +1,19 @@
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Sign In</title>
+</head>
+<body>
+    <h2>Google Login</h2>
+    <a href="{% provider_login_url 'google' %}?next=/select_user_type/">Login With Google</a>
+    <h2>Facebook Login</h2>
+    <a href="{% provider_login_url 'facebook' %}?next=/select_user_type/">Login With Facebook</a>
+    <h2>VK Login</h2>
+    <a href="{% provider_login_url 'vk' %}?next=/select_user_type/">Login With VK</a>
+</body>
+</html>

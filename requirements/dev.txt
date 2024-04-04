@@ -12,6 +12,7 @@ cryptography==42.0.5
 daphne==4.1.0
 defusedxml==0.8.0rc2
 Django==4.2.11
+django-allauth==0.61.1
 django-cors-headers==4.3.1
 django-debug-panel==0.8.3
 django-debug-toolbar==4.3.0
