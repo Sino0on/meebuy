@@ -58,13 +58,11 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
-<<<<<<< HEAD
     'allauth.socialaccount.providers.yandex',
-=======
+
 
     'rest_framework'
     # 'social.apps.django_app.default',
->>>>>>> origin
 ]
 
 INSTALLED_APPS = [*DJANGO_APPS, *THIRD_PARTY_APPS, *PROJECT_APPS]
