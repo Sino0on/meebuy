@@ -52,6 +52,8 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.vk',
 ]
 
 INSTALLED_APPS = [*DJANGO_APPS, *THIRD_PARTY_APPS, *PROJECT_APPS]
@@ -121,7 +123,7 @@ EMAIL_USE_TLS = True
 LOGIN_REDIRECT_URL = '/select_user_type/'
 LOGOUT_REDIRECT_URL = '/'
 
-SITE_ID = 5
+SITE_ID = 6
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -132,8 +134,32 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
-    }
+    },
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'ru_RU',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v13.0',
+    },
 }
+
 
 SOCIALACCOUNT_QUERY_EMAIL = True
 

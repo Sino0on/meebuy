@@ -7,12 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
 
 
-# HomeView
 class HomeView(TemplateView):
     template_name = 'home.html'
 
 
-# RegisterView
 class RegisterView(FormView):
     form_class = UserRegistrationForm
     template_name = 'register.html'
@@ -25,7 +23,6 @@ class RegisterView(FormView):
         return super().form_valid(form)
 
 
-# LoginView
 class LoginView(FormView):
     form_class = UserLoginForm
     template_name = 'login.html'
@@ -47,19 +44,18 @@ class LoginView(FormView):
             return self.form_invalid(form)
 
 
-# SelectUserTypeView
 class SelectUserTypeView(FormView):
     form_class = UserTypeSelectionForm
     template_name = 'select_user_type.html'
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        if self.request.user.auth_provider:
-            self.success_url = reverse_lazy('view_profile')
+        if self.request.user.is_authenticated:  # Проверка аутентификации пользователя
+            if hasattr(self.request.user, 'auth_provider') and self.request.user.auth_provider:  # Проверка наличия и значения атрибута auth_provider
+                self.success_url = reverse_lazy('view_profile')
         return super().form_valid(form)
 
 
-# LogoutView
 class LogoutView(RedirectView):
     url = '/'
 
@@ -68,7 +64,6 @@ class LogoutView(RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-# ViewProfile
 class ViewProfile(LoginRequiredMixin, UpdateView):
     form_class = UserProfileForm
     template_name = 'profile.html'
