@@ -25,7 +25,7 @@ class BuyStatusView(GenericAPIView):
             return Response(data={"Info": "Недостаточно средств"}, status=HTTP_400_BAD_REQUEST)
         user.cabinet.user_status = ActiveUserStatus.objects.create(
             status=status,
-            end_date=datetime.date.today() + datetime.timedelta(days=status.days)
+            end_date=datetime.date.today() + datetime.timedelta(days=status.months*30)
         )
         Transaction.objects.create(
             user=user.cabinet,

@@ -104,6 +104,10 @@ function connectTariff(id) {
             console.error('Ошибка при подключении тарифа:', error);
         });
 }
+
+function closeModal(modal) {
+    document.getElementById(modal).classList.add('hidden');
+}
 </script>
 
 
