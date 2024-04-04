@@ -8,12 +8,12 @@ from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTyp
 
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'auth/home.html'
 
 
 class RegisterView(FormView):
     form_class = UserRegistrationForm
-    template_name = 'register.html'
+    template_name = 'auth/register.html'
     success_url = reverse_lazy('select_user_type')
 
     def form_valid(self, form):
@@ -25,7 +25,7 @@ class RegisterView(FormView):
 
 class LoginView(FormView):
     form_class = UserLoginForm
-    template_name = 'login.html'
+    template_name = 'auth/login.html'
     success_url = reverse_lazy('select_user_type')
 
     def form_valid(self, form):
@@ -46,7 +46,7 @@ class LoginView(FormView):
 
 class SelectUserTypeView(FormView):
     form_class = UserTypeSelectionForm
-    template_name = 'select_user_type.html'
+    template_name = 'auth/select_user_type.html'
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
@@ -66,7 +66,7 @@ class LogoutView(RedirectView):
 
 class ViewProfile(LoginRequiredMixin, UpdateView):
     form_class = UserProfileForm
-    template_name = 'profile.html'
+    template_name = 'auth/profile.html'
     success_url = reverse_lazy('view_profile')
 
     def get_object(self):

@@ -7,7 +7,7 @@ from apps.provider.filters import ProviderFilter
 class ProviderListView(generic.ListView):
     model = Provider
     queryset = Provider.objects.filter(is_active=True)
-    template_name = 'home.html'
+    template_name = 'auth/home.html'
     paginate_by = '10'
     filter_class = ProviderFilter
     context_object_name = 'providers'
