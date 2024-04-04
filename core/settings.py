@@ -58,6 +58,8 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.yandex',
+
 
     'rest_framework'
     # 'social.apps.django_app.default',

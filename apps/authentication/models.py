@@ -35,8 +35,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     USER_TYPE_CHOICES = [
-        ('provider', _('Поставщик')),
-        ('buyer', _('Покупатель')),
+        (1, _('Поставщик')),
+        (2, _('Покупатель')),
     ]
     
     phone = models.CharField(max_length=15, null=True, unique=True, verbose_name=_('Номер телефона'), blank=True)
