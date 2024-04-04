@@ -1,25 +1,73 @@
-from django.shortcuts import render, redirect
-from django.views import generic
-from django.contrib.auth import login, authenticate
-from apps.authentication.forms import LoginForm
+from django.views.generic import TemplateView, FormView, UpdateView, RedirectView
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, logout, login as auth_login
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
 
 
-class LoginView(generic.TemplateView):
+class HomeView(TemplateView):
+    template_name = 'home.html'
+
+
+class RegisterView(FormView):
+    form_class = UserRegistrationForm
+    template_name = 'register.html'
+    success_url = reverse_lazy('select_user_type')
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.auth_provider = False
+        form.save()
+        return super().form_valid(form)
+
+
+class LoginView(FormView):
+    form_class = UserLoginForm
     template_name = 'login.html'
-    form_class = LoginForm
+    success_url = reverse_lazy('select_user_type')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = self.form_class
-        return context
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        user = authenticate(self.request, email=email, password=password)
+        if user is not None:
+            auth_login(self.request, user)
+            if user.auth_provider:
+                self.success_url = reverse_lazy('/select_user_type')
+            else:
+                self.success_url = reverse_lazy('/view_profile')
+            return super().form_valid(form)
+        else:
+            form.add_error(None, "Неверный email или пароль")
+            return self.form_invalid(form)
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            email = request.POST['email']
-            password = request.POST['password']
-            user = authenticate(request, email=email, password=password)
-            if user:
-                login(request, user)
-                return redirect('/')
-        return render(request, self.template_name, self.get_context_data())
+
+class SelectUserTypeView(FormView):
+    form_class = UserTypeSelectionForm
+    template_name = 'select_user_type.html'
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:  # Проверка аутентификации пользователя
+            if hasattr(self.request.user, 'auth_provider') and self.request.user.auth_provider:  # Проверка наличия и значения атрибута auth_provider
+                self.success_url = reverse_lazy('view_profile')
+        return super().form_valid(form)
+
+
+class LogoutView(RedirectView):
+    url = '/'
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super().get(request, *args, **kwargs)
+
+
+class ViewProfile(LoginRequiredMixin, UpdateView):
+    form_class = UserProfileForm
+    template_name = 'profile.html'
+    success_url = reverse_lazy('view_profile')
+
+    def get_object(self):
+        return self.request.user

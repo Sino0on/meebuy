@@ -36,19 +36,29 @@ PROJECT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
 ]
 
 DJANGO_APPS = [
     'apps.authentication',
     'apps.user_cabinet',
     'apps.provider',
-    'apps.tender',
     'apps.chat',
+    'apps.tender',
+    'apps.product',
 ]
 
 THIRD_PARTY_APPS = [
     "django_filters",
     "corsheaders",
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.vk',
+
     'rest_framework'
     # 'social.apps.django_app.default',
 ]
@@ -66,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 
@@ -125,18 +136,78 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'turdumamatov2024@gmail.com'
+EMAIL_HOST_PASSWORD = 'burhmhyudtlmllbu'
+EMAIL_USE_TLS = True
+
+LOGIN_REDIRECT_URL = '/select_user_type/'
+LOGOUT_REDIRECT_URL = '/'
+
+SITE_ID = 6
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'ru_RU',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v13.0',
+    },
+}
+
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
 # DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
 # }
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
 
 
 AUTH_USER_MODEL = "authentication.User"
 
 AUTHENTICATION_BACKENDS = (
    'django.contrib.auth.backends.ModelBackend',
+   'allauth.account.auth_backends.AuthenticationBackend'
 )
 
 
