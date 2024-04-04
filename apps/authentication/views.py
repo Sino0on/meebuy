@@ -53,8 +53,6 @@ class LoginView(FormView):
 class SelectUserTypeView(FormView):
     form_class = UserTypeSelectionForm
     template_name = 'auth/select_user_type.html'
-    success_url = reverse_lazy('login')
-    template_name = 'select_user_type.html'
     success_url = reverse_lazy('view_profile')  
 
     def form_valid(self, form):
