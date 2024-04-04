@@ -49,6 +49,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "django_filters",
     "corsheaders",
+    'rest_framework'
     # 'social.apps.django_app.default',
 ]
 

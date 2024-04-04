@@ -27,13 +27,7 @@ class Cabinet(models.Model):
 
 class Status(models.Model):
     title = models.CharField(max_length=123, verbose_name=_('Название'))
-    quantity_announce = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
-    discount = models.PositiveIntegerField(blank=True, default=0, verbose_name=_('Скидка'))
-    is_advertise = models.BooleanField(default=False, blank=True)
-    is_contact_prov = models.BooleanField(default=False, blank=True)
-    dayly_message = models.PositiveIntegerField(blank=True, default=30)
-    is_publish_phone = models.BooleanField(default=False, blank=True)
-
+    price_month = models.DecimalField(verbose_name='Цена за месяц', max_digits=100, decimal_places=1)
     created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'))
 
     def __str__(self):
@@ -44,13 +38,25 @@ class Status(models.Model):
         verbose_name_plural = _('Статусы')
 
 
-class UserStatus(models.Model):
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='userstatuses', verbose_name=_('Статус'))
-    price = models.PositiveIntegerField(verbose_name=_('Цена'))
-    days = models.PositiveIntegerField(verbose_name=_('Количество дней'))
+class PackageStatus(models.Model):
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='packagestatuses', verbose_name=_('Статус'))
+    price = models.DecimalField(verbose_name=_('Цена'), max_digits=100, decimal_places=1)
+    quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
+    quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'))
+    is_advertise = models.BooleanField(default=False, blank=True)
+    is_contact_prov = models.BooleanField(default=False, blank=True)
+    dayly_message = models.PositiveIntegerField(blank=True, default=30)
+    is_publish_phone = models.BooleanField(default=False, blank=True)
+    months = models.PositiveIntegerField(verbose_name=_('Количество месяцев'))
 
     def __str__(self):
-        return _(f'{self.status.title} - {self.days} дней')
+        return _(f'{self.status.title} - {self.months} месяцев')
+
+    def get_discount(self):
+        return self.status.price_month - self.get_month_price()
+
+    def get_month_price(self):
+        return self.price // self.months
 
     class Meta:
         verbose_name = _('Статус пользователя')
@@ -58,7 +64,7 @@ class UserStatus(models.Model):
 
 
 class ActiveUserStatus(models.Model):
-    status = models.ForeignKey(UserStatus, on_delete=models.PROTECT, related_name='active_statues', verbose_name=_('Статус'))
+    status = models.ForeignKey(PackageStatus, on_delete=models.PROTECT, related_name='active_statues', verbose_name=_('Статус'))
     end_date = models.DateField(verbose_name=_('Дата окончание'))
     is_active = models.BooleanField(default=False, blank=True, verbose_name=_('Активный'))
 

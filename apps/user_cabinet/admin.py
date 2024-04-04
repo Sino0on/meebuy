@@ -1,5 +1,5 @@
 from django.contrib import admin, messages
-from apps.user_cabinet.models import Cabinet, Transaction, ActiveUserStatus, UserStatus, Status
+from apps.user_cabinet.models import Cabinet, Transaction, ActiveUserStatus, PackageStatus, Status
 from django.db.models.functions import TruncWeek, TruncMonth, TruncYear
 from django.db.models import Count, Sum
 from django.utils.translation import gettext as _
@@ -31,10 +31,10 @@ class TransactionAdmin(admin.ModelAdmin):
     search_fields = ('user__user__email', )
 
 
-@admin.register(UserStatus)
-class UserStatusAdmin(admin.ModelAdmin):
-    list_display = ('status', 'price', 'days')
-    list_filter = ('days', )
+@admin.register(PackageStatus)
+class PackageStatusAdmin(admin.ModelAdmin):
+    list_display = ('status', 'price', 'months')
+    list_filter = ('months', )
 
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super().get_search_results(request, queryset, search_term)
@@ -59,6 +59,7 @@ class ActiveUserStatusAdmin(admin.ModelAdmin):
 #
 #     @admin.action(description=_('Включить режим модерации'))
 #     def moderate(self, request, queryset):
+#     def moderate(self, request, queryset):
 #         queryset.update(is_moder=True)
 #         self.message_user(request, _(f"Режим модерации включена!"))
 #
@@ -70,5 +71,5 @@ class ActiveUserStatusAdmin(admin.ModelAdmin):
 
 @admin.register(Status)
 class StatusAdmin(admin.ModelAdmin):
-    list_display = ('title', 'quantity_announce', 'discount', 'created_date')
+    list_display = ('title', 'created_date')
     search_fields = ('title', )
