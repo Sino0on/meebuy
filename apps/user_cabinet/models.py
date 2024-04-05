@@ -8,6 +8,7 @@ User = get_user_model()
 class Cabinet(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('Пользователь'))
     balance = models.PositiveIntegerField(blank=True, default=0, verbose_name=_('Баланс'))
+    is_upping = models.ForeignKey('ActiveUpping', blank=True, null=True, on_delete=models.SET_NULL)
     user_status = models.ForeignKey(
         'ActiveUserStatus',
         on_delete=models.SET_NULL,
@@ -97,7 +98,25 @@ class Transaction(models.Model):
         verbose_name_plural = _('Транзакции')
 
 
+class Upping(models.Model):
+    days = models.PositiveIntegerField()
+    price = models.DecimalField(decimal_places=1, max_digits=100)
 
+    def __str__(self):
+        return f'Поднятие в топ на - {self.days} дней'
+
+    class Meta:
+        verbose_name = 'Поднятие в топ'
+        verbose_name_plural = 'Поднятии в топ'
+
+
+class ActiveUpping(models.Model):
+    upping = models.ForeignKey(Upping, on_delete=models.SET_NULL, null=True)
+    is_active = models.BooleanField(default=True, blank=True)
+    end_date = models.DateField()
+
+    def __str__(self):
+        return f'Активное поднятие на  - {self.upping.days} дней'
 
 
 # class SingletonModel(models.Model):

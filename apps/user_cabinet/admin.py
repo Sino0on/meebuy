@@ -1,5 +1,6 @@
 from django.contrib import admin, messages
-from apps.user_cabinet.models import Cabinet, Transaction, ActiveUserStatus, PackageStatus, Status
+from apps.user_cabinet.models import (Cabinet, Transaction, ActiveUserStatus,
+                                      PackageStatus, Status, Upping, ActiveUpping)
 from django.db.models.functions import TruncWeek, TruncMonth, TruncYear
 from django.db.models import Count, Sum
 from django.utils.translation import gettext as _
@@ -73,3 +74,15 @@ class ActiveUserStatusAdmin(admin.ModelAdmin):
 class StatusAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_date')
     search_fields = ('title', )
+
+
+@admin.register(Upping)
+class UppingAdmin(admin.ModelAdmin):
+    list_display = ('days', 'price')
+    # search_fields = ('da', )
+
+
+@admin.register(ActiveUpping)
+class ActiveUppingAdmin(admin.ModelAdmin):
+    list_display = ('is_active', 'end_date')
+    search_fields = ('is_active', )
