@@ -1,10 +1,32 @@
 from django.contrib import admin
-from apps.tender.models import (TypePay, Country, City, Region,
-                                Tender, Category)
+from .models import Country, Region, City, Tender
 
+@admin.register(Country)
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ['title']
+    search_fields = ['title']
 
-admin.site.register(TypePay)
-admin.site.register(Country)
-admin.site.register(City)
-admin.site.register(Region)
-admin.site.register(Tender)
+@admin.register(Region)
+class RegionAdmin(admin.ModelAdmin):
+    list_display = ['title', 'country']
+    list_filter = ['country']
+    search_fields = ['title']
+    autocomplete_fields = ['country']
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = ['title', 'region']
+    list_filter = ['region__country', 'region']
+    search_fields = ['title']
+    autocomplete_fields = ['region']
+
+class TenderAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'city', 'user', 'created_at', 'end_date', 'type_pay', 'is_phone']
+    list_filter = ['created_at', 'end_date', 'city__region__country', 'city__region', 'city', 'category']
+    search_fields = ['title', 'description', 'requirements', 'place_of_sale']
+    autocomplete_fields = ['category', 'city', 'user', 'type_pay']
+    date_hierarchy = 'created_at'
+    fields = ('title', 'description', 'price', 'quantity', 'category', 'city', 'user', 'requirements', 'created_at', 'updated_at', 'end_date', 'place_of_sale', 'type_pay', 'is_phone')
+    readonly_fields = ('created_at', 'updated_at')
+
+admin.site.register(Tender, TenderAdmin)
