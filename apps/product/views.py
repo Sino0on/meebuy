@@ -6,7 +6,6 @@ from django.http import HttpResponse, FileResponse
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, FormView
-import pandas as pd
 from urllib.parse import quote
 
 from apps.product.filters import ProductFilter

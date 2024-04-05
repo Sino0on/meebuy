@@ -92,8 +92,8 @@ class ProvideImg(models.Model):
         return f'{self.title}'
 
     class Meta:
-        verbose_name = _("Изображения Поставщика")
-        verbose_name_plural = _("Изображении Поставщика")
+        verbose_name = _("Изображение Поставщика")
+        verbose_name_plural = _("Изображения Поставщика")
 
 
 class ProvideFiles(models.Model):
