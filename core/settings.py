@@ -148,7 +148,7 @@ EMAIL_USE_TLS = True
 LOGIN_REDIRECT_URL = '/select_user_type/'
 LOGOUT_REDIRECT_URL = '/'
 
-SITE_ID = 5
+SITE_ID = 6
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
