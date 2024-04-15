@@ -28,7 +28,7 @@ ALLOWED_HOSTS = ['*']
 PROJECT_APPS = [
     'daphne',
     'channels',
-    'jazzmin',
+    'simpleui',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,6 +58,8 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.yandex',
+
 
     'rest_framework'
     # 'social.apps.django_app.default',
@@ -266,140 +268,237 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#
+# JAZZMIN_SETTINGS = {
+#     # title of the window (Will default to current_admin_site.site_title if absent or None)
+#     "site_title": "MeeBuy",
+#
+#     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+#     "site_header": "MeeBuy",
+#
+#     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+#     "site_brand": "MeeBuy",
+#
+#     # Logo to use for your site, must be present in static files, used for brand on top left
+#     "site_logo": "logo/logo.png",
+#
+#     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+#     "login_logo": 'logo/logo.png',
+#
+#     # Logo to use for login form in dark themes (defaults to login_logo)
+#     "login_logo_dark": 'logo/logo.png',
+#
+#     # CSS classes that are applied to the logo above
+#     "site_logo_classes": "img-cube",
+#
+#     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+#     "site_icon": 'logo/logo.png',
+#
+#     # Welcome text on the login screen
+#     "welcome_sign": _("Добро пожаловать!"),
+#
+#     # Copyright on the footer
+#     "copyright": "Acme Library Ltd",
+#
+#     # List of model admins to search from the search bar, search bar omitted if excluded
+#     # If you want to use a single search field you dont need to use a list, you can use a simple string
+#     "search_model": ["auth.User", "auth.Group"],
+#
+#     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
+#     "user_avatar": None,
+#
+#     ############
+#     # Top Menu #
+#     ############
+#
+#     # Links to put along the top menu
+#     "topmenu_links": [
+#
+#         # Url that gets reversed (Permissions can be added)
+#         {"name": _("Домой"), "url": "admin:index", "permissions": ["auth.view_user"]},
+#
+#         # external url that opens in a new window (Permissions can be added)
+#         {"name": _("Поддержка"), "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+#
+#         # model admin to link to (Permissions checked against model)
+#         {"model": "authentication.User"},
+#
+#         # App with dropdown menu to all its models pages (Permissions checked against models)
+#         {"app": "announcement"},
+#     ],
+#
+#     #############
+#     # User Menu #
+#     #############
+#
+#     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
+#     "usermenu_links": [
+#         {"name": _("Поддержка"), "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+#         {"model": "authentication.User"}
+#     ],
+#
+#     #############
+#     # Side Menu #
+#     #############
+#
+#     # Whether to display the side menu
+#     "show_sidebar": True,
+#
+#     # Whether to aut expand the menu
+#     "navigation_expanded": True,
+# # Hide these apps when generating side menu e.g (auth)
+#     "hide_apps": [],
+#
+#     # Hide these models when generating side menu (e.g auth.user)
+#     "hide_models": [],
+#
+#     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
+#     "order_with_respect_to": ["authentication.User", "auth.Group", "category.Category", "category.SubCategory"],
+#
+#     # Custom links to append to app groups, keyed on app name
+#     # "custom_links": {
+#     #     "announcement": [{
+#     #         "name": "Make Messages",
+#     #         "url": "make_messages",
+#     #         "icon": "fas fa-comments",
+#     #         "permissions": ["announcement.view_book"]
+#     #     }]
+#     # },
+#
+#     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+#     # for the full list of 5.13.0 free icon classes
+#     "icons": {
+#         "auth": "fas fa-users-cog",
+#         "auth.User": "fas fa-user",
+#         "auth.Group": "fas fa-users",
+#     },
+#     # Icons that are used when one is not manually specified
+#     "default_icon_parents": "fas fa-chevron-circle-right",
+#     "default_icon_children": "fas fa-circle",
+#
+#     #################
+#     # Related Modal #
+#     #################
+#     # Use modals instead of popups
+#     "related_modal_active": False,
+#
+#     #############
+#     # UI Tweaks #
+#     #############
+#     # Relative paths to custom CSS/JS scripts (must be present in static files)
+#     "custom_css": None,
+#     "custom_js": None,
+#     # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
+#     "use_google_fonts_cdn": True,
+#     # Whether to show the UI customizer on the sidebar
+#
+#     ###############
+#     # Change view #
+#     ###############
+#     # Render out the change view as a single form, or in tabs, current options are
+#     # - single
+#     # - horizontal_tabs (default)
+#     # - vertical_tabs
+#     # - collapsible
+#     # - carousel
+#     "changeform_format": "horizontal_tabs",
+#     # override change forms on a per modeladmin basis
+#     "changeform_format_overrides": {"authentication.User": "collapsible", "auth.Group": "vertical_tabs"},
+# }
 
-JAZZMIN_SETTINGS = {
-    # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "MeeBuy",
 
-    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "MeeBuy",
 
-    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "MeeBuy",
+SIMPLEUI_HOME_INFO = False
+SIMPLEUI_HOME_ACTION = False
+SIMPLEUI_HOME_QUICK = True
+SIMPLEUI_INDEX = '#'
 
-    # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "logo/logo.png",
-
-    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": 'logo/logo.png',
-
-    # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": 'logo/logo.png',
-
-    # CSS classes that are applied to the logo above
-    "site_logo_classes": "img-cube",
-
-    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    "site_icon": 'logo/logo.png',
-
-    # Welcome text on the login screen
-    "welcome_sign": _("Добро пожаловать!"),
-
-    # Copyright on the footer
-    "copyright": "Acme Library Ltd",
-
-    # List of model admins to search from the search bar, search bar omitted if excluded
-    # If you want to use a single search field you dont need to use a list, you can use a simple string
-    "search_model": ["auth.User", "auth.Group"],
-
-    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
-    "user_avatar": None,
-
-    ############
-    # Top Menu #
-    ############
-
-    # Links to put along the top menu
-    "topmenu_links": [
-
-        # Url that gets reversed (Permissions can be added)
-        {"name": _("Домой"), "url": "admin:index", "permissions": ["auth.view_user"]},
-
-        # external url that opens in a new window (Permissions can be added)
-        {"name": _("Поддержка"), "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
-
-        # model admin to link to (Permissions checked against model)
-        {"model": "authentication.User"},
-
-        # App with dropdown menu to all its models pages (Permissions checked against models)
-        {"app": "announcement"},
-    ],
-
-    #############
-    # User Menu #
-    #############
-
-    # Additional links to include in the user menu on the top right ("app" url type is not allowed)
-    "usermenu_links": [
-        {"name": _("Поддержка"), "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
-        {"model": "authentication.User"}
-    ],
-
-    #############
-    # Side Menu #
-    #############
-
-    # Whether to display the side menu
-    "show_sidebar": True,
-
-    # Whether to aut expand the menu
-    "navigation_expanded": True,
-# Hide these apps when generating side menu e.g (auth)
-    "hide_apps": [],
-
-    # Hide these models when generating side menu (e.g auth.user)
-    "hide_models": [],
-
-    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["authentication.User", "auth.Group", "category.Category", "category.SubCategory"],
-
-    # Custom links to append to app groups, keyed on app name
-    # "custom_links": {
-    #     "announcement": [{
-    #         "name": "Make Messages",
-    #         "url": "make_messages",
-    #         "icon": "fas fa-comments",
-    #         "permissions": ["announcement.view_book"]
-    #     }]
-    # },
-
-    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
-    # for the full list of 5.13.0 free icon classes
-    "icons": {
-        "auth": "fas fa-users-cog",
-        "auth.User": "fas fa-user",
-        "auth.Group": "fas fa-users",
-    },
-    # Icons that are used when one is not manually specified
-    "default_icon_parents": "fas fa-chevron-circle-right",
-    "default_icon_children": "fas fa-circle",
-
-    #################
-    # Related Modal #
-    #################
-    # Use modals instead of popups
-    "related_modal_active": False,
-
-    #############
-    # UI Tweaks #
-    #############
-    # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": None,
-    "custom_js": None,
-    # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
-    "use_google_fonts_cdn": True,
-    # Whether to show the UI customizer on the sidebar
-
-    ###############
-    # Change view #
-    ###############
-    # Render out the change view as a single form, or in tabs, current options are
-    # - single
-    # - horizontal_tabs (default)
-    # - vertical_tabs
-    # - collapsible
-    # - carousel
-    "changeform_format": "horizontal_tabs",
-    # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"authentication.User": "collapsible", "auth.Group": "vertical_tabs"},
+SIMPLEUI_CONFIG = {
+    'system_keep': True,
+    # 'menus': [
+    #     {
+    #         'name': 'Поставщики',
+    #         'icon': 'fa fa-book',
+    #         'models': [
+    #             {
+    #                 'name': 'Поставщики',
+    #                 'icon': 'fa fa-list',
+    #                 'url': '/dev-admin8/provider/provider/'
+    #             },
+    #             {
+    #                 'name': 'Категории',
+    #                 'icon': 'fa fa-money-bill',
+    #                 'url': '/admin/catalog/brand/'
+    #             },
+    #             {
+    #                 'name': 'Products',
+    #                 'icon': 'fa fa-cube',
+    #                 'url': '/admin/catalog/product/'
+    #             },
+    #
+    #             # {
+    #             #     'name': 'Images',
+    #             #     'icon': 'fa fa-image',
+    #             #     'url': '/admin/catalog/image/'
+    #             # },
+    #             {
+    #                 'name': 'Configurations',
+    #                 'models': [
+    #                     {
+    #                         'name': 'Sizes',
+    #                         'icon': 'fa fa-ruler',
+    #                         'url': '/admin/catalog/size/'
+    #                     },
+    #                     {
+    #                         'name': 'Colors',
+    #                         'icon': 'fa fa-circle',
+    #                         'url': '/admin/catalog/color/'
+    #                     },
+    #                     {
+    #                         'name': 'Tags',
+    #                         'icon': 'fa fa-tag',
+    #                         'url': '/admin/catalog/tag/'
+    #                     },
+    #                     {
+    #                         'name': 'Size Chart',
+    #                         'icon': 'fa fa-table',
+    #                         'url': '/admin/catalog/sizechart/'
+    #                     },
+    #                 ]
+    #             },
+    #         ]
+    #     },
+    #     {
+    #         'name': 'Users',
+    #         'icon': 'fa fa-user',
+    #         'models': [
+    #             {
+    #                 'name': 'Users',
+    #                 'icon': 'fa fa-user',
+    #                 'url': '/admin/users/user/'
+    #             },
+    #             {
+    #                 'name': 'Carts',
+    #                 'icon': 'fa fa-shopping-cart',
+    #                 'url': '/admin/orders/cart/'
+    #             },
+    #
+    #         ]
+    #     },
+    #     {
+    #         'name': 'Orders',
+    #         'icon': 'fa fa-star',
+    #         'url': '/admin/orders/order/'
+    #     },
+    #     {
+    #         'name': 'Главная страница',
+    #         'icon': 'fa fa-window-maximize',
+    #         'url': '/admin/catalog/mainpage/'
+    #     },
+    #     {
+    #         'name': 'Static Pages',
+    #         'icon': 'fa fa-file-text',
+    #         'url': '/admin/catalog/staticpage/'
+    #     },
+    # ]
 }

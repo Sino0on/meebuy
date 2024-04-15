@@ -1,10 +1,14 @@
 from django.urls import path
 from apps.product.views import ProductListView, ProductUpdateView, ProductCreateView, ProductDeleteView, \
-    ProductDetailView
+    ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView
 from apps.provider.views import ProviderListView, ProviderDetailView
 from apps.authentication.views import LoginView
 from apps.chat.views import chat_detail, chats
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+
+
+from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
+
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
 from apps.user_cabinet.views import UserStatusListView, UppingListView
 from apps.user_cabinet.api import BuyStatusView, BuyUppingView
@@ -32,6 +36,7 @@ urlpatterns = [
     path('select_user_type/', SelectUserTypeView.as_view(), name='select_user_type'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', ViewProfile.as_view(), name='view_profile'),
+    path('login_redirect/', login_redirect, name='login_redirect'),
 
     # products
     path('products/', ProductListView.as_view(), name='product_list'),
@@ -39,6 +44,9 @@ urlpatterns = [
     path('product/create/', ProductCreateView.as_view(), name='product_create'),
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update'),
     path('product/<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
+    path('product/download-excel/', ExcelTemplateDownloadView.as_view(), name='download_excel'),
+    path('product/upload-products/', ExcelUploadView.as_view(), name='upload_products'),
+    path('product/upload-excel/', ExcelUploadView.as_view(), name='upload_excel'),
 
     path('status/list/', UserStatusListView.as_view()),
     path('upping/list/', UppingListView.as_view()),
