@@ -9,7 +9,7 @@ User = get_user_model()
 
 class Category(models.Model):
     title = models.CharField(max_length=123)
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor', null=True, blank=True)
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor', null=True, blank=True, verbose_name='Родительская категория')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -21,26 +21,26 @@ class Category(models.Model):
 
 
 class Provider(models.Model):
-    title = models.CharField(max_length=123)
-    mini_descr = models.CharField(max_length=250)
+    title = models.CharField(max_length=123, verbose_name='Название')
+    mini_descr = models.CharField(max_length=250, verbose_name='Короткое описание')
     description = models.TextField()
-    type = models.ForeignKey('Tag', on_delete=models.SET_NULL, null=True)
-    category = models.ManyToManyField(Category, related_name='providers')
-    post_index = models.CharField(max_length=123, blank=True, null=True)
-    metro = models.CharField(max_length=123, blank=True, null=True)
-    banner = models.ImageField(blank=True, null=True, upload_to='images/providers/banners/%Y/%m')
-    address = models.CharField(max_length=123)
-    how_get = models.CharField(max_length=123)
-    work_time = models.CharField(max_length=123)
-    phones = ArrayField(models.CharField(max_length=123))
-    fax = models.CharField(max_length=123)
+    type = models.ForeignKey('Tag', on_delete=models.SET_NULL, null=True, verbose_name=_('Тип'))
+    category = models.ManyToManyField(Category, related_name='providers', verbose_name=_('Категории'))
+    post_index = models.CharField(max_length=123, blank=True, null=True, verbose_name=_('Почтовый индекс'))
+    metro = models.CharField(max_length=123, blank=True, null=True, verbose_name=_('Метро'))
+    banner = models.ImageField(blank=True, null=True, upload_to='images/providers/banners/%Y/%m', verbose_name=_('Банер'))
+    address = models.CharField(max_length=123, verbose_name=_('Адрес'))
+    how_get = models.CharField(max_length=200, verbose_name=_('Как добраться'))
+    work_time = models.CharField(max_length=123, verbose_name=_('Время работы'))
+    phones = ArrayField(models.CharField(max_length=123), verbose_name=_('Телефон'))
+    fax = models.CharField(max_length=123, verbose_name=_('Факс'))
     requisites = models.TextField()
-    is_active = models.BooleanField(blank=True, default=True)
-    emp_quantity = models.PositiveIntegerField(blank=True, null=True)
+    is_active = models.BooleanField(blank=True, default=True, verbose_name=_('Активность'))
+    emp_quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('Кол-во работников'))
     register_ur = models.DateField(verbose_name=_('Дата регистрации юр лица'))
-    conditions = models.ManyToManyField('Condition', blank=True)
-    deliveries = models.ManyToManyField('Delivery', blank=True)
-    is_modered = models.BooleanField(default=False, blank=True)
+    conditions = models.ManyToManyField('Condition', blank=True, verbose_name=_('Условия'))
+    deliveries = models.ManyToManyField('Delivery', blank=True, verbose_name=_('Доставка'))
+    is_modered = models.BooleanField(default=False, blank=True, verbose_name=_('Изменения'))
     type_pay = models.ManyToManyField('TypePay')
 
     def __str__(self):
@@ -52,7 +52,7 @@ class Provider(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=123)
+    title = models.CharField(max_length=123, verbose_name='Тэг')
 
     def __str__(self):
         return f'{self.title}'
@@ -63,7 +63,7 @@ class Tag(models.Model):
 
 
 class Condition(models.Model):
-    title = models.CharField(max_length=123)
+    title = models.CharField(max_length=123, verbose_name='Состояние')
 
     def __str__(self):
         return f'{self.title}'
@@ -74,7 +74,7 @@ class Condition(models.Model):
 
 
 class Delivery(models.Model):
-    title = models.CharField(max_length=123)
+    title = models.CharField(max_length=123, verbose_name='Доставка')
 
     def __str__(self):
         return f'{self.title}'

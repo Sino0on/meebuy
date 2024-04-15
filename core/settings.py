@@ -148,7 +148,7 @@ EMAIL_USE_TLS = True
 LOGIN_REDIRECT_URL = '/select_user_type/'
 LOGOUT_REDIRECT_URL = '/'
 
-SITE_ID = 6
+SITE_ID = 5
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -409,96 +409,87 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 SIMPLEUI_HOME_INFO = False
-SIMPLEUI_HOME_ACTION = False
+SIMPLEUI_HOME_ACTION = True
 SIMPLEUI_HOME_QUICK = True
 SIMPLEUI_INDEX = '#'
+SIMPLEUI_DEFAULT_THEME = 'e-black-pro.css'
+SIMPLEUI_HOME_TITLE = 'Meebuy'
+SIMPLEUI_LOGO = '/static/logo/logo.svg'
+
+
+
 
 SIMPLEUI_CONFIG = {
-    'system_keep': True,
-    # 'menus': [
-    #     {
-    #         'name': 'Поставщики',
-    #         'icon': 'fa fa-book',
-    #         'models': [
-    #             {
-    #                 'name': 'Поставщики',
-    #                 'icon': 'fa fa-list',
-    #                 'url': '/dev-admin8/provider/provider/'
-    #             },
-    #             {
-    #                 'name': 'Категории',
-    #                 'icon': 'fa fa-money-bill',
-    #                 'url': '/admin/catalog/brand/'
-    #             },
-    #             {
-    #                 'name': 'Products',
-    #                 'icon': 'fa fa-cube',
-    #                 'url': '/admin/catalog/product/'
-    #             },
-    #
-    #             # {
-    #             #     'name': 'Images',
-    #             #     'icon': 'fa fa-image',
-    #             #     'url': '/admin/catalog/image/'
-    #             # },
-    #             {
-    #                 'name': 'Configurations',
-    #                 'models': [
-    #                     {
-    #                         'name': 'Sizes',
-    #                         'icon': 'fa fa-ruler',
-    #                         'url': '/admin/catalog/size/'
-    #                     },
-    #                     {
-    #                         'name': 'Colors',
-    #                         'icon': 'fa fa-circle',
-    #                         'url': '/admin/catalog/color/'
-    #                     },
-    #                     {
-    #                         'name': 'Tags',
-    #                         'icon': 'fa fa-tag',
-    #                         'url': '/admin/catalog/tag/'
-    #                     },
-    #                     {
-    #                         'name': 'Size Chart',
-    #                         'icon': 'fa fa-table',
-    #                         'url': '/admin/catalog/sizechart/'
-    #                     },
-    #                 ]
-    #             },
-    #         ]
-    #     },
-    #     {
-    #         'name': 'Users',
-    #         'icon': 'fa fa-user',
-    #         'models': [
-    #             {
-    #                 'name': 'Users',
-    #                 'icon': 'fa fa-user',
-    #                 'url': '/admin/users/user/'
-    #             },
-    #             {
-    #                 'name': 'Carts',
-    #                 'icon': 'fa fa-shopping-cart',
-    #                 'url': '/admin/orders/cart/'
-    #             },
-    #
-    #         ]
-    #     },
-    #     {
-    #         'name': 'Orders',
-    #         'icon': 'fa fa-star',
-    #         'url': '/admin/orders/order/'
-    #     },
-    #     {
-    #         'name': 'Главная страница',
-    #         'icon': 'fa fa-window-maximize',
-    #         'url': '/admin/catalog/mainpage/'
-    #     },
-    #     {
-    #         'name': 'Static Pages',
-    #         'icon': 'fa fa-file-text',
-    #         'url': '/admin/catalog/staticpage/'
-    #     },
-    # ]
+    'system_keep': False,
+    'menus': [
+        {
+            'name': 'Поставщики',
+            'icon': 'fa fa-book',
+            'models': [
+                {
+                    'name': 'Поставщики',
+                    'icon': 'fa fa-list',
+                    'url': '/dev-admin8/provider/provider/'
+                },
+                {
+                    'name': 'Configurations',
+                    'models': [
+                        {
+                            'name': 'Доставка',
+                            'icon': 'fa fa-ruler',
+                            'url': '/dev-admin8/provider/delivery/'
+                        },
+                        {
+                            'name': 'Категории Поставщиков',
+                            'icon': 'fa fa-money-bill',
+                            'url': '/dev-admin8/provider/category/'
+                        },
+                        {
+                            'name': 'Тэги',
+                            'icon': 'fa fa-tag',
+                            'url': '/dev-admin8/provider/tag/'
+                        },
+                        {
+                            'name': 'Условия',
+                            'icon': 'fa fa-table',
+                            'url': '/admin/catalog/sizechart/'
+                        },
+                        {
+                            'name': 'Варианты оплаты',
+                            'icon': 'fa fa-table',
+                            'url': '/dev-admin8/provider/typepay/'
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            'name': 'Товары',
+            'icon': 'fa fa-user',
+            'models': [
+                {
+                    'name': 'Товары',
+                    'icon': 'fa fa-user',
+                    'url': '/dev-admin8/product/product/'
+                },
+                {
+                    'name': 'Картнки товаров',
+                    'icon': 'fa fa-shopping-cart',
+                    'url': '/dev-admin8/product/productimg/'
+                },
+
+            ]
+        },
+        {
+            'name': 'Тендеры',
+            'icon': 'fa fa-star',
+            'url': '/dev-admin8/tender/tender/'
+        },
+        {
+            'name': 'Города',
+            'icon': 'fa fa-window-maximize',
+            'url': '/dev-admin8/tender/city/'
+        },
+
+    ]
 }
