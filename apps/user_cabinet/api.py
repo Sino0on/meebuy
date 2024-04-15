@@ -2,7 +2,7 @@ import datetime
 
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
-from apps.user_cabinet.models import PackageStatus, ActiveUserStatus, Status, Transaction
+from apps.user_cabinet.models import PackageStatus, ActiveUserStatus, ActiveUpping, Transaction, Upping
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -33,5 +33,30 @@ class BuyStatusView(GenericAPIView):
             description=f"Транзакция покупки статуса пользователя {status.status.title}"
         )
         user.cabinet.balance -= status.price
+        user.cabinet.save()
+        return Response(status=HTTP_200_OK)
+
+
+class BuyUppingView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'pk'
+
+    def get(self, request, *args, **kwargs):
+        upping = get_object_or_404(Upping, id=kwargs['pk'])
+        user = request.user
+        if not user.cabinet:
+            return Response(status=HTTP_403_FORBIDDEN)
+        if user.cabinet.balance < upping.price:
+            return Response(data={"Info": "Недостаточно средств"}, status=HTTP_400_BAD_REQUEST)
+        user.cabinet.is_upping = ActiveUpping.objects.create(
+            upping=upping,
+            end_date=datetime.date.today() + datetime.timedelta(days=upping.days)
+        )
+        Transaction.objects.create(
+            user=user.cabinet,
+            total=-upping.price,
+            description=f"Транзакция покупки топ магазина на - {upping.days} дней"
+        )
+        user.cabinet.balance -= upping.price
         user.cabinet.save()
         return Response(status=HTTP_200_OK)

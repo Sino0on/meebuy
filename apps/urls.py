@@ -10,8 +10,8 @@ from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
 
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
-from apps.user_cabinet.views import UserStatusListView
-from apps.user_cabinet.api import BuyStatusView
+from apps.user_cabinet.views import UserStatusListView, UppingListView
+from apps.user_cabinet.api import BuyStatusView, BuyUppingView
 
 
 urlpatterns = [
@@ -49,6 +49,8 @@ urlpatterns = [
     path('product/upload-excel/', ExcelUploadView.as_view(), name='upload_excel'),
 
     path('status/list/', UserStatusListView.as_view()),
-    path('status/buy/<int:pk>', BuyStatusView.as_view())
+    path('upping/list/', UppingListView.as_view()),
+    path('status/buy/<int:pk>', BuyStatusView.as_view()),
+    path('upping/buy/<int:pk>', BuyUppingView.as_view())
 
 ]
