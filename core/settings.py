@@ -428,7 +428,7 @@ SIMPLEUI_CONFIG = {
             'models': [
                 {
                     'name': 'Поставщики',
-                    'icon': 'fa fa-list',
+                    'icon': 'fa fa-industry',
                     'url': '/dev-admin8/provider/provider/'
                 },
                 {
@@ -436,12 +436,12 @@ SIMPLEUI_CONFIG = {
                     'models': [
                         {
                             'name': 'Доставка',
-                            'icon': 'fa fa-ruler',
+                            'icon': 'fa fa-truck',
                             'url': '/dev-admin8/provider/delivery/'
                         },
                         {
                             'name': 'Категории Поставщиков',
-                            'icon': 'fa fa-money-bill',
+                            'icon': 'fa fa-columns',
                             'url': '/dev-admin8/provider/category/'
                         },
                         {
@@ -456,7 +456,7 @@ SIMPLEUI_CONFIG = {
                         },
                         {
                             'name': 'Варианты оплаты',
-                            'icon': 'fa fa-table',
+                            'icon': 'fa fa-money-bill',
                             'url': '/dev-admin8/provider/typepay/'
                         },
                     ]
@@ -465,19 +465,50 @@ SIMPLEUI_CONFIG = {
         },
         {
             'name': 'Товары',
-            'icon': 'fa fa-user',
+            'icon': 'fa fa-boxes',
             'models': [
                 {
                     'name': 'Товары',
-                    'icon': 'fa fa-user',
+                    'icon': 'fa fa-box',
                     'url': '/dev-admin8/product/product/'
                 },
                 {
                     'name': 'Картнки товаров',
-                    'icon': 'fa fa-shopping-cart',
+                    'icon': 'fa fa-image',
                     'url': '/dev-admin8/product/productimg/'
                 },
 
+            ]
+        },
+        {
+            'name': 'Пользователи',
+            'icon': 'fa fa-user',
+            'models': [
+                {
+                    'name': 'Активныйе статусы пользователя',
+                    'icon': 'fa fa-circle',
+                    'url': '/dev-admin8/user_cabinet/activeuserstatus/'
+                },
+                {
+                    'name': 'Кабинеты',
+                    'icon': 'fa fa-image',
+                    'url': '/dev-admin8/user_cabinet/cabinet/'
+                },
+                {
+                    'name': 'Статусы',
+                    'icon': 'fa fa-info',
+                    'url': '/dev-admin8/user_cabinet/status/'
+                },
+                {
+                    'name': 'Статусы пользователей',
+                    'icon': 'fa fa-user-secret',
+                    'url': '/dev-admin8/user_cabinet/packagestatus/'
+                },
+                {
+                    'name': 'Транзакции',
+                    'icon': 'fa fa-play',
+                    'url': '/dev-admin8/user_cabinet/transaction/'
+                },
             ]
         },
         {
@@ -487,7 +518,7 @@ SIMPLEUI_CONFIG = {
         },
         {
             'name': 'Города',
-            'icon': 'fa fa-window-maximize',
+            'icon': 'fa fa-map-marker',
             'url': '/dev-admin8/tender/city/'
         },
 
