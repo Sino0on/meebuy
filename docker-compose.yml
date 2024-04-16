@@ -1,0 +1,11 @@
+version: "3.10"
+
+services:
+  app:
+    build: .
+    volumes:
+      - .:/core
+      - ./apps/static:/app/static
+    ports:
+    - "8011:8011"
+    command: bash -c "python manage.py migrate && gunicorn core.wsgi:application -w 4 -b 0.0.0.0:8011"
