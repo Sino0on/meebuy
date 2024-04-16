@@ -6,6 +6,6 @@ WORKDIR $APP_HOME
 
 COPY requirements/dev.txt .
 
-RUN pip install -r requirements/dev.txt
+RUN pip install -r dev.txt
 
 COPY . .
