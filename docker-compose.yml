@@ -1,7 +1,7 @@
 version: "3.10"
 
 services:
-  db:
+  web-db:
     image: postgres:latest
     restart: always
     ports:
@@ -23,4 +23,4 @@ services:
     environment:
       - .env
     depends_on:
-      - db
+      - web-db
