@@ -516,11 +516,28 @@ SIMPLEUI_CONFIG = {
             'icon': 'fa fa-star',
             'url': '/dev-admin8/tender/tender/'
         },
-        {
-            'name': 'Города',
-            'icon': 'fa fa-map-marker',
-            'url': '/dev-admin8/tender/city/'
-        },
 
+        {
+            'name': 'Локации',
+            'icon': 'fa fa-globe',
+            'models': [
+                {
+                    'name': 'Города',
+                    'icon': 'fa fa-map-marker',
+                    'url': '/dev-admin8/tender/city/'
+                },
+                {
+                    'name': 'Регионы (Области)',
+                    'icon': 'fa fa-map',
+                    'url': '/dev-admin8/tender/region/'
+                },
+                {
+                    'name': 'Страны',
+                    'icon': 'fa fa-flag',
+                    'url': '/dev-admin8/tender/country/'
+                },
+
+            ]
+        },
     ]
 }
