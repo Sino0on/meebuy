@@ -7,5 +7,5 @@ services:
       - .:/core
       - ./apps/static:/app/static
     ports:
-    - "8012:8012"
-    command: bash -c "python manage.py migrate && gunicorn core.wsgi:application -w 4 -b 0.0.0.0:8012"
+    - "8013:8013"
+    command: bash -c "python manage.py migrate && gunicorn core.wsgi:application -w 4 -b 0.0.0.0:8013"
