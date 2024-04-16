@@ -129,12 +129,12 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config("PG_NAME", default="meebuy_dev"),
-        'USER': config("PG_USER", default="tata_user"),
-        'PASSWORD': config("PG_PASS", default="qwerty2003"),
-        'HOST': config("PG_HOST", default="localhost"),
-        'PORT': config("PG_PORT", default="5432"),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int),
     }
 }
 
