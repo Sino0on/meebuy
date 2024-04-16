@@ -23,8 +23,6 @@ services:
     - "8013:8013"
     command: bash -c "python manage.py migrate && gunicorn core.wsgi:application -w 4 -b 0.0.0.0:8013"
     environment:
-      POSTGRES_DB: ${PG_NAME}
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASS}
-      depends_on:
-        - db
+      - .env
+    depends_on:
+      - db
