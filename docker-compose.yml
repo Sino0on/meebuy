@@ -1,12 +1,10 @@
 version: "3.10"
 
 services:
-  web-db:
+  db:
     image: postgres:latest
     restart: always
-    ports:
-      - "5432:5432"
-    environment:
+    env_file:
       - .env
 
     volumes:
@@ -17,10 +15,11 @@ services:
     volumes:
       - .:/core
       - ./apps/static:/app/static
+      - ./apps/media:/app/media
     ports:
-    - "8013:8013"
-    command: bash -c "python manage.py migrate && gunicorn core.wsgi:application -w 4 -b 0.0.0.0:8013"
-    environment:
+    - "8014:8014"
+    command: bash -c "python manage.py migrate && gunicorn core.wsgi:application -w 4 -b 0.0.0.0:8014"
+    env_file:
       - .env
     depends_on:
-      - web-db
+      - db
