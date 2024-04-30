@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Поставщики
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'pages/suppliers/suppliers.css' %}">
+{% endblock %}
+
+{% block content %}
+  <!-- main section -->
+  <div class="suppliers-animation-container">
+    <div>
+      <div class="menu">
+        <div class="container flex gap-4 py-4">
+          <img src="{% static 'assets/images/suppliers/icons/home.svg' %}"" />
+          <img src="{% static 'assets/images/suppliers/icons//arrow-prev.svg' %}"" />
+          <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
+        </div>
+      </div>
+      <div class="suppliers-wrapper">
+        <div class="container">
+          <div class="relative z-50 flex flex-col justify-center w-full">
+            <h2 style="font-size: 36px" class="text-white font-extrabold sm:pb-8 text-center">
+              поставщики
+            </h2>
+            <form class="mt-3">
+              <div class="relative md:w-[600px] sm:w-[400px] m-auto">
+                <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                  <img src="{% static 'assets/images/icons/search.svg' %}"Search icon" />
+                </div>
+                <input id="default-search"
+                  class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                  placeholder="Например: автозапчасти" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- product categories -->
+
+  <div class="pb-10">
+    <div class="container">
+      <h6 class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish">
+        категории товаров
+      </h6>
+      <div class="flex md:flex-row flex-col justify-between">
+        <ul class="flex flex-col md:gap-2 gap-1">
+          <li class="flex items-center gap-1">
+            <img class="bg-[#FFFFFF]" src="{% static 'assets/images/suppliers/product-categories/t-shirt.svg' %}"" />
+            <p>Одежда, обувь и аксессуары</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/home.svg' %}"" />
+            <p>Дом, дача, сад</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/furniture.svg' %}"" />
+            <p>Мебель</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/medicine.svg' %}"" />
+            <p>Медицина и товары для здоровья</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/books.svg' %}"" />
+            <p>Книги и канцелярские товары</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/services.svg' %}"" />
+            <p>Услуги</p>
+          </li>
+        </ul>
+        <ul class="flex flex-col md:gap-2 gap-1">
+          <li class="flex items-center gap-1">
+            <img class="bg-[#FFFFFF]" src="{% static 'assets/images/suppliers/product-categories/products.svg' %}"" />
+            <p>Продукты питания и напитки</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/presents.svg' %}"" />
+            <p>Подарки и сувениры</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/cosmetics.svg' %}"" />
+            <p>Косметика и гигиена</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/sports.svg' %}"" />
+            <p>Спорт, охота и туризм</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/musics.svg' %}"" />
+            <p>Музыка и искусство</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/others.svg' %}"" />
+            <p>Другое</p>
+          </li>
+        </ul>
+        <ul class="flex flex-col md:gap-2 gap-1">
+          <li class="flex items-center gap-1">
+            <img class="bg-[#FFFFFF]" src="{% static 'assets/images/suppliers/product-categories/toys.svg' %}"" />
+            <p>Игрушки и товары для детей</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/electronics.svg' %}"" />
+            <p>Электроника и бытовая техника</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/auto.svg' %}"" />
+            <p>Авто и мото</p>
+          </li>
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/pets.svg' %}"" />
+            <p>Животные и растения /p></p>
+          </li>
+
+          <li class="flex items-center gap-1">
+            <img src="{% static 'assets/images/suppliers/product-categories/construction.svg' %}"" />
+            <p>Строительство и ремонт</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Suppliers -->
+
+  <div class="bg-[#FFFFFC] py-16">
+    <div class="container">
+      <h6 class="text-start lg-md:text-xl font-semibold uppercase font-mulish">
+        ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
+      </h6>
+      <div class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10">
+        <ul class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]">
+          <li
+            class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish active:bg-[#FFFB98] focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]">
+            все
+            <img class="lg-md:hidden block" src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"" />
+          </li>
+          <div class="lg-md:flex hidden">
+            <li
+              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
+              поставщики
+            </li>
+            <li
+              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
+              производители
+            </li>
+            <li
+              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
+              логистика
+            </li>
+          </div>
+        </ul>
+
+        <div class="flex gap-5">
+          <div class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6">
+            Фильтр
+            <img src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"" />
+          </div>
+          <div class="cards lg-md:flex hidden gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6">
+            Рекомендуем
+            <a class="toggle-icon" id="toggleLink">
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"" />
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-7">
+        {% for provider in providers %}
+        <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
+          <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
+            <img src="{{ provider.image.url }}" />
+            <div class="flex flex-col gap-6">
+              <div>
+                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                  {{ provider.title }}
+                </h6>
+                <p>{{ provider.mini_descr }}</p>
+              </div>
+              <div class="flex gap-4">
+                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                  <a href="/provider/detail/{{ provider.id }}">
+                    Подробнее
+                  </a>
+                </button>
+                <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                  Написать
+                </button>
+              </div>
+            </div>
+          </div>
+          <ul class="flex gap-2 sm: absolute right-4">
+            <li>
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"" />
+            </li>
+            <li>
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"" />
+            </li>
+            <li>
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"" />
+            </li>
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]">
+        <img src="{% static 'assets/images/suppliers/suppliers/img/res-cross.png' %}"" />
+        <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
+          <div>
+            <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
+              Nike Air Max 90 Futura
+            </h5>
+            <p class="font-mulish text-[#2B292C]">
+              Оригинальные кроссовки Nike Air Max 90 Futura
+            </p>
+          </div>
+          <div class="flex md: justify-center gap-1">
+            <img class="md:max-w-[100px]" src="{% static 'assets/images/suppliers/suppliers/img/pink-cross.png' %}"" />
+            <img class="max-w-[106px]" src="{% static 'assets/images/suppliers/suppliers/img/white-croos.png' %}"" />
+            <img class="max-w-[106px]" src="{% static 'assets/images/suppliers/suppliers/img/hakki-cross.png' %}"" />
+          </div>
+        </div>
+      </div>
+
+      <!-- pagination -->
+
+      <div class="lg-md:flex hidden justify-between items-center">
+        <div class="flex items-center gap-5">
+          <div class="flex items-center gap-2">
+            <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"" />
+            <p>Назад</p>
+          </div>
+          <ul class="pagination">
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li class="active"><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li class="ellipsis">...</li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li><a href="#">8</a></li>
+            <li><a href="#">9</a></li>
+            <li><a href="#">10</a></li>
+            <li class="ellipsis">...</li>
+          </ul>
+          <div class="flex items-center gap-2">
+            <p>Вперед</p>
+            <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"" />
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <p>Перейти на страницу</p>
+          <input type="text" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10" />
+          <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="{% static 'assets/images/suppliers/suppliers/icons/next.svg"
+            alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'pages/home/index.js' %}"></script>
+{% endblock %}

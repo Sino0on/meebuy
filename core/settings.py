@@ -18,9 +18,6 @@ SECRET_KEY = config("SECRET_KEY", default="S#perS3crEt_1122")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 
-# ALLOWED_HOSTS = ['servicebackend.zherdesh.ru', 'localhost', '127.0.0.1', '0.0.0.0', '31.129.104.143',
-# 'new.zherdesh.ru']
-
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -254,11 +251,11 @@ MODELTRANSLATION_LANGUAGES = ('ru', 'ky')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 STATIC_URL = "/static/"
 
 # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "apps/media")
 MEDIA_URL = "/media/"

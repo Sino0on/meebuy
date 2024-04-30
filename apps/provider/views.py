@@ -7,7 +7,7 @@ from apps.provider.filters import ProviderFilter
 class ProviderListView(generic.ListView):
     model = Provider
     queryset = Provider.objects.filter(is_active=True)
-    template_name = 'auth/home.html'
+    template_name = 'providers/provider_list.html'
     paginate_by = '10'
     filter_class = ProviderFilter
     context_object_name = 'providers'
@@ -19,11 +19,13 @@ class ProviderListView(generic.ListView):
 
 
 class ProviderDetailView(generic.DetailView):
-    template_name = 'provider_detail.html'
+    template_name = 'providers/provider_detail.html'
     model = Provider
     context_object_name = 'provider'
+    # lookup_field = 'id'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['products'] = Provider.products.all()
+        context['products'] = self.object.products.all()[:3]
+        context['images'] = self.object.images.all()
         return context

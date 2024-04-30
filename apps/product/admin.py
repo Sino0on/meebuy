@@ -20,7 +20,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-            'title', 'description', 'type', 'manufacturer', 'price', 'retail_price', 'wholesale_price', 'min_quantity',
+            'title', 'provider', 'image', 'description', 'type', 'manufacturer', 'price', 'retail_price', 'wholesale_price', 'min_quantity',
             'category')
         }),
         ('Advanced options', {

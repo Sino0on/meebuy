@@ -28,6 +28,7 @@ class Provider(models.Model):
     category = models.ManyToManyField(Category, related_name='providers', verbose_name=_('Категории'))
     post_index = models.CharField(max_length=123, blank=True, null=True, verbose_name=_('Почтовый индекс'))
     metro = models.CharField(max_length=123, blank=True, null=True, verbose_name=_('Метро'))
+    image = models.ImageField(blank=True, null=True, upload_to='images/providers/avatars/%Y/%m', verbose_name=_('Аватар'))
     banner = models.ImageField(blank=True, null=True, upload_to='images/providers/banners/%Y/%m', verbose_name=_('Банер'))
     address = models.CharField(max_length=123, verbose_name=_('Адрес'))
     how_get = models.CharField(max_length=200, verbose_name=_('Как добраться'))
@@ -89,7 +90,7 @@ class ProvideImg(models.Model):
     providers = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.providers.title}'
 
     class Meta:
         verbose_name = _("Изображение Поставщика")

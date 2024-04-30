@@ -1,0 +1,28 @@
+.supplier__detail .content__wrap {
+    box-shadow: 0px 0px 10px 0px #B1B1B14D;
+}
+
+.supplier__detail .swiper-pagination-bullet-active {
+    width: 30px;
+    height: 12px;
+    background: #E4DB00;
+    border-radius: 30px;
+}
+
+@media (min-width: 640px) {
+    .supplier__detail .card img {
+        aspect-ratio: 2 / 1;
+    }
+}
+
+@media (min-width: 1024px) {
+    .supplier__detail .card img {
+        aspect-ratio: 3 / 2;
+    }
+}
+
+@media (min-width: 1280px) {
+    .supplier__detail .card img {
+        aspect-ratio: 3 / 2.5;
+    }
+}
