@@ -16,6 +16,8 @@ __pycache__/
 .venv
 venv
 
+postgres/
+
 apps/static/admin
 apps/static/rest_framework
 
