@@ -57,6 +57,7 @@ class Tender(models.Model):
     place_of_sale = models.CharField(max_length=123)
     type_pay = models.ForeignKey(TypePay, on_delete=models.PROTECT)
     is_phone = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True, blank=True)
 
     def __str__(self):
         return f'{self.title}'

@@ -132,17 +132,11 @@
                 <div class="grid grid-cols-1 gap-[30px] lg-md:grid-cols-2">
                     <div class="content__wrap px-5 py-[30px] text-dark-logo rounded-[10px]">
                         <h2 class="text-xl font-bold">О компании</h2>
-                        <p class="description text-dark-text mt-5 lg:mt-[30px]">Занимаемся оптовой продажей аксессуаров
-                            к смартфонам и
-                            мобильной
-                            электроникой. Прямые поставки с заводов производителя, имеем свой офис в Китае. Весь товар
-                            сертифицирован, гарантия 12 месяцев и низкие цены выделяют нас из числа многих. Весь товар в
-                            наличии, также работаем на заказ, именно для вас произведем и доставим нужный вам товар по
-                            супер выгодной цене.</p>
+                        <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ provider.description }}</p>
                         <ul class="">
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Тип компании</p>
-                                <p class="mt-2.5">Поставщик</p>
+                                <p class="mt-2.5">{{ provider.type }}</p>
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Объем поставок</p>
@@ -150,7 +144,7 @@
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Минимальный заказ</p>
-                                <p class="mt-2.5">1 000 сом</p>
+                                <p class="mt-2.5">100</p>
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Услуги</p>
@@ -158,11 +152,15 @@
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Варианты оплаты</p>
-                                <p class="mt-2.5">Безналичная оплата</p>
+                                {% for i in provider.type_pay.all %}
+                                <p class="mt-2.5">{{ i.title }}</p>
+                                {% endfor %}
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Способы доставки</p>
-                                <p class="mt-2.5">Курьером</p>
+                                {% for i in provider.deliveries.all %}
+                                <p class="mt-2.5">{{ i.title }}</p>
+                                {% endfor %}
                             </li>
                         </ul>
                     </div>
@@ -180,7 +178,7 @@
                                         fill="currentColor" />
                                 </svg>
 
-                                <p>Наш адрес <a href="" class="underline">г. Бишкек, Абдрахманова 1</a></p>
+                                <p>Наш адрес <a href="" class="underline">{{ prove }}</a></p>
                             </li>
                             <li class="flex items-center gap-[10px] mt-5">
                                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none"

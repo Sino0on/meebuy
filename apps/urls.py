@@ -10,6 +10,7 @@ from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
 
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
+from apps.tender.views import TenderListView, TenderDetailView
 from apps.user_cabinet.views import UserStatusListView, UppingListView
 from apps.user_cabinet.api import BuyStatusView, BuyUppingView
 
@@ -47,6 +48,10 @@ urlpatterns = [
     path('product/download-excel/', ExcelTemplateDownloadView.as_view(), name='download_excel'),
     path('product/upload-products/', ExcelUploadView.as_view(), name='upload_products'),
     path('product/upload-excel/', ExcelUploadView.as_view(), name='upload_excel'),
+
+    # tenders
+    path('tender/list/', TenderListView.as_view(), name='tender_list'),
+    path('tender/detail/<int:pk>/', TenderDetailView.as_view(), name='tender_detail'),
 
     path('status/list/', UserStatusListView.as_view()),
     path('upping/list/', UppingListView.as_view()),

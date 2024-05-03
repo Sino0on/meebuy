@@ -48,5 +48,5 @@ class TenderFilter(django_filters.FilterSet):
     class Meta:
         model = Tender
         fields = ['title', 'ordering_date', 'exclude_words',
-                  'price_from', 'price_to', 'country', 'region',
-                  'region', 'city']
+                  'price_from', 'price_to',
+                  'city', 'city']

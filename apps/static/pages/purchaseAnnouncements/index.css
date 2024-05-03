@@ -1,0 +1,16 @@
+.purchase__announcements .content__wrap {
+    box-shadow: 0px 0px 10px 0px #B1B1B14D;
+    border-radius: 10px;
+}
+
+.purchase__announcements .purchase__announcements-slider .content-prev {
+    left: -0.375rem/* -6px */;
+}
+
+.purchase__announcements .purchase__announcements-slider .content-next {
+    right: -0.375rem/* -6px */;
+}
+
+.similar__purchases a {
+    box-shadow: 0px 0px 10px 0px #B1B1B14D;
+}

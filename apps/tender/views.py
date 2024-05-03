@@ -7,7 +7,7 @@ from apps.tender.filters import TenderFilter
 
 class TenderListView(generic.ListView):
     model = Tender
-    queryset = Tender.objects.filter(is_active=True)
+    queryset = Tender.objects.all()
     template_name = 'tender_list.html'
     paginate_by = '10'
     filter_class = TenderFilter
@@ -19,7 +19,7 @@ class TenderListView(generic.ListView):
         return context
 
 
-class ProviderDetailView(generic.DetailView):
+class TenderDetailView(generic.DetailView):
     template_name = 'tender_detail.html'
     model = Tender
     context_object_name = 'tender'
