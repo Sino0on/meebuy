@@ -8,11 +8,25 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 
-from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
+from apps.authentication.forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
+from apps.product.models import Category, Product
+from apps.tender.models import Tender
+from apps.provider.models import Provider
+
 
 
 class HomeView(TemplateView):
     template_name = 'auth/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rec_products'] = Product.objects.all()[:6]
+        context['new_products'] = Product.objects.all()[:6]
+        context['new_providers'] = Provider.objects.all()[:4]
+        context['categories'] = Category.objects.all()
+        
+        context['tenders'] = Tender.objects.all()[:8]
+        return context
 
 
 class RegisterView(FormView):

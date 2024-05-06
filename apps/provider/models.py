@@ -10,6 +10,7 @@ User = get_user_model()
 class Category(models.Model):
     title = models.CharField(max_length=123)
     category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor', null=True, blank=True, verbose_name='Родительская категория')
+    icon = models.FileField(upload_to='images/category/icons/')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

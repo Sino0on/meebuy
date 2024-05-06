@@ -20,8 +20,9 @@
             <div class="overflow-hidden inline-flex"><span id="heroTitle" class="inline-block">товары</span>
             </div>
           </h2>
-          <form class="relative mt-[30px]">
+          <form action="/product/list/" class="relative mt-[30px]">
             <button type="button" id="heroFormBtn"
+
               class="btn-filled absolute top-0 uppercase font-medium text-sm text-dark-logo transition-opacity duration-[1000ms] ease-in-out z-[1]">Я
               ищу</button>
             <div id="heroSearchWrapper" class="relative w-0 overflow-hidden transition-all duration-[1500ms] ease-out">
@@ -29,6 +30,10 @@
                 <img id="heroSearchIconImg" src="{% static 'assets/images/icons/search.svg' %}" alt="Search icon">
               </div>
               <input id="default-search"
+                     type="text"
+                  name="title"
+                  value=""
+                  autocomplete="off"
                 class="block w-full p-2 pe-10 text-sm text-gray-900 border border-logo-color rounded-md lg-md:py-[18px] lg-md:pl-[30px] lg-md:text-lg"
                 placeholder="АКСЕССУАРЫ" required />
             </div>
@@ -68,113 +73,21 @@
       </div>
     </section>
     <!-- category -->
-    <section class="category bg-dark text-white py-[60px]">
+    <section class="category black bg-dark text-white py-[60px]">
       <div class="container">
         <div>
           <h2 class="text-center text-lg font-black uppercase md:text-2xl xl:text-3xl">Категории товаров</h2>
-          <ul class="grid grid-cols-1 gap-2 text-base mt-5 md:grid-cols-2 lg-md:grid-cols-3 xl:text-xl">
+          <ul class="grid grid-cols-1 gap-9 text-base mt-5 md:grid-cols-2 lg-md:gap-[30px] lg-md:grid-cols-3 xl:text-lg">
+            {% for i in categories %}
             <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/shirt.svg' %}" alt="Shirt">
-                <span>Одежда, обувь и аксессуары</span>
+              <a class="flex items-center gap-[10px] w-fit" href="/provider/list/?category={{ i.pk }}">
+                <div class="shadow-category-black text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12">
+                  <img src="{{ i.icon.url }}" alt="">
+                </div>
+                <span>{{ i.title }}</span>
               </a>
             </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/burger.svg' %}" alt="Shirt">
-                <span>Продукты питания и напитки</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/robot.svg' %}" alt="Shirt">
-                <span>Игрушки и товары для детей</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/house.svg' %}" alt="Shirt">
-                <span>Дом,дача,сад</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/gift.svg' %}" alt="Shirt">
-                <span>Подарки и сувениры</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/computer.svg' %}" alt="Shirt">
-                <span>Электроника и бытовая техника</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/bed.svg' %}" alt="Shirt">
-                <span>Мебель</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/makeup.svg' %}" alt="Shirt">
-                <span>Косметика и гигиена</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/happy-car.svg' %}" alt="Shirt">
-                <span>Авто и мото</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/first-aid.svg' %}" alt="Shirt">
-                <span>Медицина и товары для здоровья</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/football.svg' %}" alt="Shirt">
-                <span>Спорт, охота и туризм</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/animal.svg' %}" alt="Shirt">
-                <span>Животные и растения</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/books.svg' %}" alt="Shirt">
-                <span>Книги и канцелярские товары</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/guitar.svg' %}" alt="Shirt">
-                <span>Музыка и искусство</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/wrench.svg' %}" alt="Shirt">
-                <span>Строительство и ремонт</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/services.svg' %}" alt="Shirt">
-                <span>Услуги</span>
-              </a>
-            </li>
-            <li class="">
-              <a class="flex items-center gap-[10px] w-fit" href="">
-                <img src="{% static 'assets/images/icons/category/dark/other.svg' %}" alt="Shirt">
-                <span>Другое</span>
-              </a>
-            </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
@@ -185,59 +98,21 @@
         <h2 class="section__title text-lg md:text-2xl xl:text-3xl">рекомендуемые товары</h2>
         <div class="swiper recommended__slider mt-7">
           <div class="swiper-wrapper">
+            {% for i in rec_products %}
             <div class="swiper-slide">
               <div class="recommended__slide relative text-white p-4 xl:p-7">
                 <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/recommended-slider.jpg' %}" alt="">
+                  src="{{ i.image.url }}" alt="">
                 <div class="slide__content flex flex-col justify-between h-full">
                   <div>
                     <span class="text-logo-color sm:text-lg">Оптом</span>
-                    <h2 class="uppercase text-base font-black sm:text-3xl">Мебель</h2>
+                    <h2 class="uppercase text-base font-black sm:text-3xl">{{ i.title }}</h2>
                   </div>
-                  <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
+                  <a href="/product/detail/{{ i.pk }}/" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
                 </div>
               </div>
             </div>
-            <div class="swiper-slide">
-              <div class="recommended__slide relative text-white p-4 xl:p-7">
-                <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/recommended-slider.jpg' %}" alt="">
-                <div class="slide__content flex flex-col justify-between h-full">
-                  <div>
-                    <span class="text-logo-color sm:text-lg">Оптом</span>
-                    <h2 class="uppercase text-base font-black sm:text-3xl">Мебель</h2>
-                  </div>
-                  <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="recommended__slide relative text-white p-4 xl:p-7">
-                <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/recommended-slider.jpg' %}" alt="">
-                <div class="slide__content flex flex-col justify-between h-full">
-                  <div>
-                    <span class="text-logo-color sm:text-lg">Оптом</span>
-                    <h2 class="uppercase text-base font-black sm:text-3xl">Мебель</h2>
-                  </div>
-                  <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="recommended__slide relative text-white p-4 xl:p-7">
-                <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/recommended-slider.jpg' %}" alt="">
-                <div class="slide__content flex flex-col justify-between h-full">
-                  <div>
-                    <span class="text-logo-color sm:text-lg">Оптом</span>
-                    <h2 class="uppercase text-base font-black sm:text-3xl">Мебель</h2>
-                  </div>
-                  <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
-                </div>
-              </div>
-            </div>
-            <!-- more slides -->
+            {% endfor %}
           </div>
         </div>
         <div class="swiper-button-next custom-recommended-next">
@@ -251,97 +126,23 @@
         <h2 class="section__title text-lg md:text-2xl xl:text-3xl">новинки</h2>
         <div class="swiper new__slider mt-7">
           <div class="swiper-wrapper">
+            {% for i in new_products %}
             <div class="swiper-slide">
               <div class="new__slide relative p-4 lg-md:p-6">
                 <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/new-slider.jpg' %}" alt="">
+                  src="{{ i.image.url }}" alt="">
                 <div class="relative flex flex-col justify-between h-full lg-md:block">
                   <div>
                     <span class="text-logo-color text-base sm:text-lg">Оптом</span>
-                    <h2 class="text-base text-white uppercase font-black sm:text-3xl">Часы</h2>
+                    <h2 class="text-base text-white uppercase font-black sm:text-3xl">{{ i.title }}</h2>
                   </div>
                   <div class=" lg-md:mt-10">
-                    <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
+                    <a href="/product/detail/{{ i.pk }}/" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="swiper-slide">
-              <div class="new__slide relative p-4 lg-md:p-6">
-                <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/new-slider.jpg' %}" alt="">
-                <div class="relative flex flex-col justify-between h-full lg-md:block">
-                  <div>
-                    <span class="text-logo-color text-base sm:text-lg">Оптом</span>
-                    <h2 class="text-base text-white uppercase font-black sm:text-3xl">Часы</h2>
-                  </div>
-                  <div class=" lg-md:mt-10">
-                    <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="new__slide relative p-4 lg-md:p-6">
-                <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/new-slider.jpg' %}" alt="">
-                <div class="relative flex flex-col justify-between h-full lg-md:block">
-                  <div>
-                    <span class="text-logo-color text-base sm:text-lg">Оптом</span>
-                    <h2 class="text-base text-white uppercase font-black sm:text-3xl">Часы</h2>
-                  </div>
-                  <div class=" lg-md:mt-10">
-                    <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="new__slide relative p-4 lg-md:p-6">
-                <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/new-slider.jpg' %}" alt="">
-                <div class="relative flex flex-col justify-between h-full lg-md:block">
-                  <div>
-                    <span class="text-logo-color text-base sm:text-lg">Оптом</span>
-                    <h2 class="text-base text-white uppercase font-black sm:text-3xl">Часы</h2>
-                  </div>
-                  <div class=" lg-md:mt-10">
-                    <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="new__slide relative p-4 lg-md:p-6">
-                <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/new-slider.jpg' %}" alt="">
-                <div class="relative flex flex-col justify-between h-full lg-md:block">
-                  <div>
-                    <span class="text-logo-color text-base sm:text-lg">Оптом</span>
-                    <h2 class="text-base text-white uppercase font-black sm:text-3xl">Часы</h2>
-                  </div>
-                  <div class=" lg-md:mt-10">
-                    <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="new__slide relative p-4 lg-md:p-6">
-                <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{% static 'assets/images/home/new-slider.jpg' %}" alt="">
-                <div class="relative flex flex-col justify-between h-full lg-md:block">
-                  <div>
-                    <span class="text-logo-color text-base sm:text-lg">Оптом</span>
-                    <h2 class="text-base text-white uppercase font-black sm:text-3xl">Часы</h2>
-                  </div>
-                  <div class=" lg-md:mt-10">
-                    <a href="" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- other slides -->
+            {% endfor %}
           </div>
         </div>
         <div class="swiper-button-next swiper-button-next-new custom-new-next">
@@ -353,6 +154,7 @@
       <div class="container">
         <h2 class="section__title text-lg md:text-2xl xl:text-3xl">Новые компании</h2>
         <div class="grid grid-cols-1 gap-4 mt-7 lg-md:grid-cols-2 lg-md:mt-14">
+          {% for i in new_providers %}
           <div
             class="card flex flex-col relative p-[20px] rounded-[15px] lg-md:flex-row lg-md:items-center lg-md:gap-6">
             <!-- card icons -->
@@ -370,25 +172,18 @@
               </svg>
             </div>
             <div class="w-[30%] h-[30%] rounded-[10px] overflow-hidden lg-md:w-[120px] lg-md:h-[120px]">
-              <img class="w-full h-full object-cover" src="{% static 'assets/images/home/headphones-white.jpg' %}" alt="" />
+              <img class="w-full h-full object-cover" src="{{ i.image.url }}" alt="" />
             </div>
             <div class="mt-6 lg-md:w-[70%]">
               <div>
                 <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                  Headphones.kg
+                  {{ i.title }}
                 </h6>
-                <p class="text-base text-dark-logo line-clamp-1">Наушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары
-                  для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для
-                  гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары
-                  для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для
-                  гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетов</p>
+                <p class="text-base text-dark-logo line-clamp-1">{{ i.provider.description }}</p>
               </div>
               <div class="flex mt-4 gap-4 max-w-[282px]">
                 <button class="flex-grow btn-filled py-[7px]">
-                  <a href="/pages/supplierDetail/index.html">
+                  <a href="/provider/detail/{{ i.pk }}/">
                     Подробнее
                   </a>
                 </button>
@@ -398,136 +193,7 @@
               </div>
             </div>
           </div>
-          <div
-            class="card flex flex-col relative p-[20px] rounded-[15px] lg-md:flex-row lg-md:items-center lg-md:gap-6">
-            <!-- card icons -->
-            <div class="absolute right-4 top-4 flex items-center gap-1.5">
-              <img src="{% static 'assets/images/icons/premium.svg' %}" alt="">
-              <svg class="transition-colors" id="heart" width="36" height="36" viewBox="0 0 36 36" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect width="36" height="36" rx="18" fill="#2B292C" />
-                <path
-                  d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                  fill="currentColor" />
-                <path
-                  d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                  fill="#E4DB00" />
-              </svg>
-            </div>
-            <div class="w-[30%] h-[30%] rounded-[10px] overflow-hidden lg-md:w-[120px] lg-md:h-[120px]">
-              <img class="w-full h-full object-cover" src="{% static 'assets/images/home/headphones-white.jpg' %}" alt="" />
-            </div>
-            <div class="mt-6 lg-md:w-[70%]">
-              <div>
-                <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                  Headphones.kg
-                </h6>
-                <p class="text-base text-dark-logo line-clamp-1">Наушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары
-                  для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для
-                  гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары
-                  для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для
-                  гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex mt-4 gap-4 max-w-[282px]">
-                <button class="flex-grow btn-filled py-[7px]">
-                  Подробнее
-                </button>
-                <button class="flex-grow btn-outlined py-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
-            class="card flex flex-col relative p-[20px] rounded-[15px] lg-md:flex-row lg-md:items-center lg-md:gap-6">
-            <!-- card icons -->
-            <div class="absolute right-4 top-4 flex items-center gap-1.5">
-              <img src="{% static 'assets/images/icons/premium.svg' %}" alt="">
-              <svg class="transition-colors" id="heart" width="36" height="36" viewBox="0 0 36 36" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect width="36" height="36" rx="18" fill="#2B292C" />
-                <path
-                  d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                  fill="currentColor" />
-                <path
-                  d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                  fill="#E4DB00" />
-              </svg>
-            </div>
-            <div class="w-[30%] h-[30%] rounded-[10px] overflow-hidden lg-md:w-[120px] lg-md:h-[120px]">
-              <img class="w-full h-full object-cover" src="{% static 'assets/images/home/headphones-white.jpg' %}" alt="" />
-            </div>
-            <div class="mt-6 lg-md:w-[70%]">
-              <div>
-                <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                  Headphones.kg
-                </h6>
-                <p class="text-base text-dark-logo line-clamp-1">Наушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары
-                  для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для
-                  гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары
-                  для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для
-                  гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex mt-4 gap-4 max-w-[282px]">
-                <button class="flex-grow btn-filled py-[7px]">
-                  Подробнее
-                </button>
-                <button class="flex-grow btn-outlined py-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
-            class="card flex flex-col relative p-[20px] rounded-[15px] lg-md:flex-row lg-md:items-center lg-md:gap-6">
-            <!-- card icons -->
-            <div class="absolute right-4 top-4 flex items-center gap-1.5">
-              <img src="{% static 'assets/images/icons/premium.svg' %}" alt="">
-              <svg class="transition-colors" id="heart" width="36" height="36" viewBox="0 0 36 36" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect width="36" height="36" rx="18" fill="#2B292C" />
-                <path
-                  d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                  fill="currentColor" />
-                <path
-                  d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                  fill="#E4DB00" />
-              </svg>
-            </div>
-            <div class="w-[30%] h-[30%] rounded-[10px] overflow-hidden lg-md:w-[120px] lg-md:h-[120px]">
-              <img class="w-full h-full object-cover" src="{% static 'assets/images/home/headphones-white.jpg' %}" alt="" />
-            </div>
-            <div class="mt-6 lg-md:w-[70%]">
-              <div>
-                <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                  Headphones.kg
-                </h6>
-                <p class="text-base text-dark-logo line-clamp-1">Наушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары
-                  для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для
-                  гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары
-                  для гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для
-                  гаджетовНаушники и другие аксессуары для гаджетовНаушники и другие аксессуары для гаджетовНаушники и
-                  другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex mt-4 gap-4 max-w-[282px]">
-                <button class="flex-grow btn-filled py-[7px]">
-                  Подробнее
-                </button>
-                <button class="flex-grow btn-outlined py-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- add cards -->
+          {% endfor %}
         </div>
       </div>
     </section>
@@ -536,6 +202,7 @@
       <div class="container">
         <h2 class="section__title text-lg md:text-2xl xl:text-3xl">Новые закупки</h2>
         <div class="grid grid-cols-1 gap-4 mt-7 lg-md:grid-cols-2 lg-md:mt-14">
+          {% for i in tenders %}
           <div class="card relative p-4 rounded-[15px] lg-md:flex lg-md:flex-col">
             <!-- card icons -->
             <div class="absolute right-4 top-4 flex items-center gap-1.5">
@@ -551,151 +218,24 @@
               </svg>
             </div>
             <h6 class="pb-2 text-base lg-md:text-[18px] font-bold line-clamp-2 w-72 sm:w-11/12">
-              Керамические, глиняные кружки, кружки, кружки, кружки
+              {{ i.title }}
             </h6>
             <ul class="text-[#686868] flex flex-col gap-4 lg-md:gap-5 mb-8 mt-6">
-              <li>Количество: <span class="text-dark-logo"> От 100 шт.</span></li>
-              <li>Бюджет: <span class="text-dark-logo">50 000 сом.</span></li>
-              <li>Объем: <span class="text-dark-logo">мелкий опт</span></li>
+              <li>Количество: <span class="text-dark-logo"> От {{ i.quantity }} шт.</span></li>
+              <li>Бюджет: <span class="text-dark-logo">{{ i.price }} сом.</span></li>
+              <li>Объем: <span class="text-dark-logo">{{ i.type }}</span></li>
             </ul>
 
             <div class="flex items-end mt-4 gap-4 w-full lg-md:mt-auto">
               <button class="flex-grow btn-filled py-[7px] lg-md:max-w-36">
-                Подробнее
+                <a href="/tender/detail/{{ i.pk }}">Подробнее</a>
               </button>
               <span class="flex-grow text-end text-[#686868] font-normal">
-                27.11.2023
+                {{ i.created_at }}
               </span>
             </div>
           </div>
-          <div class="card relative p-4 rounded-[15px] lg-md:flex lg-md:flex-col">
-            <!-- card icons -->
-            <div class="absolute right-4 top-4 flex items-center gap-1.5">
-              <svg class="transition-colors" id="heart" width="36" height="36" viewBox="0 0 36 36" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect width="36" height="36" rx="18" fill="#2B292C" />
-                <path
-                  d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                  fill="currentColor" />
-                <path
-                  d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                  fill="#E4DB00" />
-              </svg>
-            </div>
-            <h6 class="pb-2 text-base lg-md:text-[18px] font-bold line-clamp-2 w-72 sm:w-11/12">
-              Керамические, глиняные кружки, кружки, кружки, кружки
-            </h6>
-            <ul class="text-[#686868] flex flex-col gap-4 lg-md:gap-5 mb-8 mt-6">
-              <li>Количество: <span class="text-dark-logo"> От 100 шт.</span></li>
-              <li>Бюджет: <span class="text-dark-logo">50 000 сом.</span></li>
-              <li>Объем: <span class="text-dark-logo">мелкий опт</span></li>
-            </ul>
-
-            <div class="flex items-end mt-4 gap-4 w-full lg-md:mt-auto">
-              <button class="flex-grow btn-filled py-[7px] lg-md:max-w-36">
-                Подробнее
-              </button>
-              <span class="flex-grow text-end text-[#686868] font-normal">
-                27.11.2023
-              </span>
-            </div>
-          </div>
-          <div class="card relative p-4 rounded-[15px] lg-md:flex lg-md:flex-col">
-            <!-- card icons -->
-            <div class="absolute right-4 top-4 flex items-center gap-1.5">
-              <svg class="transition-colors" id="heart" width="36" height="36" viewBox="0 0 36 36" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect width="36" height="36" rx="18" fill="#2B292C" />
-                <path
-                  d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                  fill="currentColor" />
-                <path
-                  d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                  fill="#E4DB00" />
-              </svg>
-            </div>
-            <h6 class="pb-2 text-base lg-md:text-[18px] font-bold line-clamp-2 w-72 sm:w-11/12">
-              Керамические, глиняные кружки, кружки, кружки, кружки
-            </h6>
-            <ul class="text-[#686868] flex flex-col gap-4 lg-md:gap-5 mb-8 mt-6">
-              <li>Количество: <span class="text-dark-logo"> От 100 шт.</span></li>
-              <li>Бюджет: <span class="text-dark-logo">50 000 сом.</span></li>
-              <li>Объем: <span class="text-dark-logo">мелкий опт</span></li>
-            </ul>
-
-            <div class="flex items-end mt-4 gap-4 w-full lg-md:mt-auto">
-              <button class="flex-grow btn-filled py-[7px] lg-md:max-w-36">
-                Подробнее
-              </button>
-              <span class="flex-grow text-end text-[#686868] font-normal">
-                27.11.2023
-              </span>
-            </div>
-          </div>
-          <div class="card relative p-4 rounded-[15px] lg-md:flex lg-md:flex-col">
-            <!-- card icons -->
-            <div class="absolute right-4 top-4 flex items-center gap-1.5">
-              <svg class="transition-colors" id="heart" width="36" height="36" viewBox="0 0 36 36" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect width="36" height="36" rx="18" fill="#2B292C" />
-                <path
-                  d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                  fill="currentColor" />
-                <path
-                  d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                  fill="#E4DB00" />
-              </svg>
-            </div>
-            <h6 class="pb-2 text-base lg-md:text-[18px] font-bold line-clamp-2 w-72 sm:w-11/12">
-              Керамические, глиняные кружки, кружки, кружки, кружки
-            </h6>
-            <ul class="text-[#686868] flex flex-col gap-4 lg-md:gap-5 mb-8 mt-6">
-              <li>Количество: <span class="text-dark-logo"> От 100 шт.</span></li>
-              <li>Бюджет: <span class="text-dark-logo">50 000 сом.</span></li>
-              <li>Объем: <span class="text-dark-logo">мелкий опт</span></li>
-            </ul>
-
-            <div class="flex items-end mt-4 gap-4 w-full lg-md:mt-auto">
-              <button class="flex-grow btn-filled py-[7px] lg-md:max-w-36">
-                Подробнее
-              </button>
-              <span class="flex-grow text-end text-[#686868] font-normal">
-                27.11.2023
-              </span>
-            </div>
-          </div>
-          <div class="card relative p-4 rounded-[15px] lg-md:flex lg-md:flex-col">
-            <!-- card icons -->
-            <div class="absolute right-4 top-4 flex items-center gap-1.5">
-              <svg class="transition-colors" id="heart" width="36" height="36" viewBox="0 0 36 36" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect width="36" height="36" rx="18" fill="#2B292C" />
-                <path
-                  d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                  fill="currentColor" />
-                <path
-                  d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                  fill="#E4DB00" />
-              </svg>
-            </div>
-            <h6 class="pb-2 text-base lg-md:text-[18px] font-bold line-clamp-2 w-72 sm:w-11/12">
-              Керамические, глиняные кружки, кружки, кружки, кружки
-            </h6>
-            <ul class="text-[#686868] flex flex-col gap-4 lg-md:gap-5 mb-8 mt-6">
-              <li>Количество: <span class="text-dark-logo"> От 100 шт.</span></li>
-              <li>Бюджет: <span class="text-dark-logo">50 000 сом.</span></li>
-              <li>Объем: <span class="text-dark-logo">мелкий опт</span></li>
-            </ul>
-
-            <div class="flex items-end mt-4 gap-4 w-full lg-md:mt-auto">
-              <button class="flex-grow btn-filled py-[7px] lg-md:max-w-36">
-                Подробнее
-              </button>
-              <span class="flex-grow text-end text-[#686868] font-normal">
-                27.11.2023
-              </span>
-            </div>
-          </div>
+          {% endfor %}
           <!-- other cards -->
         </div>
     </section>

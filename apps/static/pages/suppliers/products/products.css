@@ -1,0 +1,71 @@
+.cards {
+  box-shadow: #b1b1b14d 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+.swiper {
+  /* display: block; */
+}
+.swiper-slide {
+}
+
+.swiper-slide img {
+  display: block;
+  justify-content: center;
+  align-items: center;
+
+  object-fit: cover;
+}
+.swiper-wrapper {
+  display: flex;
+  padding-bottom: 60px;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: #000000 !important;
+  width: 7px !important;
+  content: "";
+  width: 10px;
+  height: 50px;
+  line-height: 40px;
+  font-size: 10px;
+}
+.sticky-left {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.sticky-section {
+  padding-top: 100px;
+}
+.supplier__detail .content__wrap {
+  box-shadow: 0px 0px 10px 0px #b1b1b14d;
+}
+
+.supplier__detail .swiper-pagination-bullet-active {
+  width: 30px;
+  height: 12px;
+  background: #e4db00;
+  border-radius: 30px;
+}
+
+@media (min-width: 640px) {
+  .supplier__detail .card img {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .supplier__detail .card img {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (min-width: 1280px) {
+  .supplier__detail .card img {
+    aspect-ratio: 3 / 2.5;
+  }
+}
+
+.like-icon {
+  fill: yellow;
+}

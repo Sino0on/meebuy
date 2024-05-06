@@ -17,26 +17,15 @@ from apps.provider.models import Category
 class ProductListView(ListView):
     model = Product
     context_object_name = 'products'
+    paginate_by = 20
     template_name = 'products/product_list.html'
-    filterset_class = ProductFilter
+    filter_class = ProductFilter
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        title_query = self.request.GET.get('title')
-        price_min_query = self.request.GET.get('price_min')
-        price_max_query = self.request.GET.get('price_max')
-        category_query = self.request.GET.get('category')
-
-        if title_query:
-            queryset = queryset.filter(title__icontains=title_query)
-        if price_min_query:
-            queryset = queryset.filter(price__gte=price_min_query)
-        if price_max_query:
-            queryset = queryset.filter(price__lte=price_max_query)
-        if category_query:
-            queryset = queryset.filter(category__id=category_query)
-
-        return queryset
+        query = self.queryset
+        filter = self.filter_class(self.request.GET, queryset=query)
+        query = filter.qs
+        return query
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,6 +35,7 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
+    context_object_name = 'product'
     template_name = 'products/product_detail.html'
 
     def get_context_data(self, **kwargs):

@@ -14,8 +14,8 @@
     <div>
       <div class="menu">
         <div class="container flex gap-4 py-4">
-          <img src="{% static 'assets/images/suppliers/icons/home.svg' %}"" />
-          <img src="{% static 'assets/images/suppliers/icons//arrow-prev.svg' %}"" />
+          <a href="/"><img src="{% static 'assets/images/suppliers/icons/home.svg' %}" alt="" /></a>
+          <img src="{% static 'assets/images/suppliers/icons//arrow-prev.svg' %}" />
           <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
         </div>
       </div>
@@ -28,7 +28,7 @@
             <form class="mt-3">
               <div class="relative md:w-[600px] sm:w-[400px] m-auto">
                 <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-                  <img src="{% static 'assets/images/icons/search.svg' %}"Search icon" />
+                  <img src="{% static 'assets/images/icons/search.svg' %}" alt="Search icon" />
                 </div>
                 <input id="default-search"
                   class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
@@ -44,89 +44,26 @@
   <!-- product categories -->
 
   <div class="pb-10">
-    <div class="container">
-      <h6 class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish">
-        категории товаров
-      </h6>
-      <div class="flex md:flex-row flex-col justify-between">
-        <ul class="flex flex-col md:gap-2 gap-1">
-          <li class="flex items-center gap-1">
-            <img class="bg-[#FFFFFF]" src="{% static 'assets/images/suppliers/product-categories/t-shirt.svg' %}"" />
-            <p>Одежда, обувь и аксессуары</p>
+      <div class="container">
+        <h6
+          class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
+        >
+          категории товаров
+        </h6>
+        <ul class="grid grid-cols-3 gap-4">
+          {% for i in categories %}
+          <li class="">
+            <a class="flex items-center gap-[10px] w-fit" href="/provider/list/?category={{ i.pk }}">
+              <div class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12">
+                <img src="{{ i.icon.url }}" alt="">
+              </div>
+              <span>{{ i.title }}</span>
+            </a>
           </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/home.svg' %}"" />
-            <p>Дом, дача, сад</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/furniture.svg' %}"" />
-            <p>Мебель</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/medicine.svg' %}"" />
-            <p>Медицина и товары для здоровья</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/books.svg' %}"" />
-            <p>Книги и канцелярские товары</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/services.svg' %}"" />
-            <p>Услуги</p>
-          </li>
-        </ul>
-        <ul class="flex flex-col md:gap-2 gap-1">
-          <li class="flex items-center gap-1">
-            <img class="bg-[#FFFFFF]" src="{% static 'assets/images/suppliers/product-categories/products.svg' %}"" />
-            <p>Продукты питания и напитки</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/presents.svg' %}"" />
-            <p>Подарки и сувениры</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/cosmetics.svg' %}"" />
-            <p>Косметика и гигиена</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/sports.svg' %}"" />
-            <p>Спорт, охота и туризм</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/musics.svg' %}"" />
-            <p>Музыка и искусство</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/others.svg' %}"" />
-            <p>Другое</p>
-          </li>
-        </ul>
-        <ul class="flex flex-col md:gap-2 gap-1">
-          <li class="flex items-center gap-1">
-            <img class="bg-[#FFFFFF]" src="{% static 'assets/images/suppliers/product-categories/toys.svg' %}"" />
-            <p>Игрушки и товары для детей</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/electronics.svg' %}"" />
-            <p>Электроника и бытовая техника</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/auto.svg' %}"" />
-            <p>Авто и мото</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/pets.svg' %}"" />
-            <p>Животные и растения /p></p>
-          </li>
-
-          <li class="flex items-center gap-1">
-            <img src="{% static 'assets/images/suppliers/product-categories/construction.svg' %}"" />
-            <p>Строительство и ремонт</p>
-          </li>
+          {% endfor %}
         </ul>
       </div>
     </div>
-  </div>
 
   <!-- Suppliers -->
 
@@ -253,13 +190,13 @@
           </ul>
           <div class="flex items-center gap-2">
             <p>Вперед</p>
-            <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"" />
+            <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"/>
           </div>
         </div>
         <div class="flex items-center gap-3">
           <p>Перейти на страницу</p>
           <input type="text" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10" />
-          <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="{% static 'assets/images/suppliers/suppliers/icons/next.svg"
+          <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"
             alt="" />
         </div>
       </div>

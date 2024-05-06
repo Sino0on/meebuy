@@ -22,12 +22,16 @@
         <div class="container flex justify-between lg-md:items-center lg-md:gap-[27px]">
           <a href="/"><img src="{% static 'assets/images/icons/logo.svg' %}" alt="Meebuy" /></a>
           <img class="lg-md:hidden" id="burgerIcon" src="{% static 'assets/images/icons/burger-menu.svg' %}" alt="Burger Menu" />
-          <form class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
+          <form action="/product/list/" class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
             <div class="relative">
               <div class="absolute inset-y-0 end-0 flex items-center pe-2">
                 <img src="{% static '/assets/images/icons/search.svg' %}" alt="Search icon" />
               </div>
               <input id="default-search"
+                  type="text"
+                  name="title"
+                  value=""
+                  autocomplete="off"
                 class="block w-full p-2 pe-10 text-sm bg-transparent text-[#9A9A9A] border border-grey-light rounded-md"
                 placeholder="Например: автозапчасти" />
             </div>
@@ -60,12 +64,16 @@
       </div>
       <!-- bot header with search and profile -->
       <div class="container flex justify-between py-3 lg-md:hidden">
-        <form id="searchForm" class="w-min transition-transform duration-300 ease-in-out">
+        <form action="/product/list/" id="searchForm" class="w-min transition-transform duration-300 ease-in-out">
           <div class="relative">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3">
               <img id="searchIconImg" src="{% static 'assets/images/icons/search.svg' %}" alt="Search icon" />
             </div>
             <input type="search" id="default-search"
+                   type="text"
+                  name="title"
+                  value=""
+                  autocomplete="off"
               class="block w-full p-2 ps-10 text-sm text-gray-900 border border-grey-light rounded-md"
               placeholder="Например: автозапчасти" required />
           </div>
@@ -134,12 +142,16 @@
       <div class="container flex justify-between lg-md:items-center lg-md:gap-[27px]">
         <a href="/pages/home/home.html"><img src="{% static 'assets/images/icons/logo.svg' %}" alt="Meebuy" /></a>
         <img class="lg-md:hidden" id="burgerIcon" src="{% static 'assets/images/icons/burger-menu.svg' %}" alt="Burger Menu" />
-        <form class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
+        <form action="/product/list/" class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
           <div class="relative">
             <div class="absolute inset-y-0 end-0 flex items-center pe-2">
               <img src="{% static 'assets/images/icons/search.svg' %}" alt="Search icon" />
             </div>
             <input id="default-search"
+                   type="text"
+                  name="title"
+                  value=""
+                  autocomplete="off"
               class="block w-full p-2 pe-10 text-sm bg-transparent text-[#9A9A9A] border border-grey-light rounded-md"
               placeholder="Например: автозапчасти" />
           </div>

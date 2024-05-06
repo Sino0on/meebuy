@@ -16,10 +16,10 @@
                 <div class="">
                     <div class="flex gap-4 py-4">
                         <div class="lg-md:flex hidden items-center gap-4">
-                            <img src="{% static 'assets/images/suppliers/icons/home.svg' %}" alt="" />
+                            <a href="/"><img src="{% static 'assets/images/suppliers/icons/home.svg' %}" alt="" /></a>
                             <img src="{% static 'assets/images/suppliers/icons/arrow-prev.svg' %}" alt="" />
                         </div>
-                        <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
+                        <a href="/provider/list/" class="font-normal font-mulish text-[#A0A0A0]">Поставщики</a>
                         <img src="{% static 'assets/images/suppliers/icons/arrow-prev.svg' %}" alt="" />
                         <p class="font-normal font-mulish text-[#A0A0A0]">{{ provider.title }}</p>
                     </div>
@@ -116,9 +116,9 @@
                             <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
                                 Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
                             </div>
-                            <a href="/product/detail/1" class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
-                                Подробнее
-                            </a>
+                            <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
+                                <a href="/product/detail/{{ product.id }}/">Подробнее</a>
+                            </button>
                         </div>
                         {% endfor %}
                     </div>
