@@ -13,6 +13,14 @@ class Category(models.Model):
     icon = models.FileField(upload_to='images/category/icons/')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @classmethod
+    def get_category_descendants(cls, category):
+        """ Рекурсивно получает все подкатегории для указанной категории. """
+        categories = [category]
+        for child in category.categor.all():  # используем related_name
+            categories.extend(cls.get_category_descendants(child))
+        return categories
+
     def __str__(self):
         return f'{self.title}'
 

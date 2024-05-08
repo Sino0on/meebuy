@@ -53,7 +53,7 @@
         <ul class="grid grid-cols-3 gap-4">
           {% for i in categories %}
           <li class="">
-            <a class="flex items-center gap-[10px] w-fit" href="/provider/list/?category={{ i.pk }}">
+            <a class="flex items-center gap-[10px] w-fit" href="?category={{ i.pk }}">
               <div class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12">
                 <img src="{{ i.icon.url }}" alt="">
               </div>
@@ -74,37 +74,31 @@
       </h6>
       <div class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10">
         <ul class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]">
-          <li
-            class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish active:bg-[#FFFB98] focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]">
+          <li id="first"
+            class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]">
             все
-            <img class="lg-md:hidden block" src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"" />
+            <img class="lg-md:hidden block" src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}" />
           </li>
           <div class="lg-md:flex hidden">
-            <li
+            {% for i in types %}
+            <li id="{{ i.pk }}"
               class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-              поставщики
+              <a href="?type={{i.pk}}" data-type="{{ i.pk }}">{{ i.title }}</a>
             </li>
-            <li
-              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-              производители
-            </li>
-            <li
-              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-              логистика
-            </li>
+            {% endfor %}
           </div>
         </ul>
 
         <div class="flex gap-5">
           <div class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6">
             Фильтр
-            <img src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"" />
+            <img src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}" />
           </div>
           <div class="cards lg-md:flex hidden gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6">
             Рекомендуем
             <a class="toggle-icon" id="toggleLink">
-              <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"" />
-              <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"" />
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}" />
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}" />
             </a>
           </div>
         </div>
@@ -135,20 +129,20 @@
           </div>
           <ul class="flex gap-2 sm: absolute right-4">
             <li>
-              <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"" />
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}" />
             </li>
             <li>
-              <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"" />
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}" />
             </li>
             <li>
-              <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"" />
+              <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}" />
             </li>
           </ul>
         </div>
         {% endfor %}
       </div>
       <div class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]">
-        <img src="{% static 'assets/images/suppliers/suppliers/img/res-cross.png' %}"" />
+        <img src="{% static 'assets/images/suppliers/suppliers/img/res-cross.png' %}" />
         <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
           <div>
             <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
@@ -159,9 +153,9 @@
             </p>
           </div>
           <div class="flex md: justify-center gap-1">
-            <img class="md:max-w-[100px]" src="{% static 'assets/images/suppliers/suppliers/img/pink-cross.png' %}"" />
-            <img class="max-w-[106px]" src="{% static 'assets/images/suppliers/suppliers/img/white-croos.png' %}"" />
-            <img class="max-w-[106px]" src="{% static 'assets/images/suppliers/suppliers/img/hakki-cross.png' %}"" />
+            <img class="md:max-w-[100px]" src="{% static 'assets/images/suppliers/suppliers/img/pink-cross.png' %}" />
+            <img class="max-w-[106px]" src="{% static 'assets/images/suppliers/suppliers/img/white-croos.png' %}" />
+            <img class="max-w-[106px]" src="{% static 'assets/images/suppliers/suppliers/img/hakki-cross.png' %}" />
           </div>
         </div>
       </div>
@@ -171,7 +165,7 @@
       <div class="lg-md:flex hidden justify-between items-center">
         <div class="flex items-center gap-5">
           <div class="flex items-center gap-2">
-            <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"" />
+            <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}" />
             <p>Назад</p>
           </div>
           <ul class="pagination">
@@ -206,5 +200,44 @@
 
 
 {% block js %}
+<script>
+
+const firstitem = document.getElementById('first');
+const urlParams = new URLSearchParams(window.location.search);
+// Если элемент найден, добавляем к нему класс
+
+if (urlParams.has('type')){
+
+    const listItem = document.getElementById(`${urlParams.get('type')}`);
+    listItem.classList.add('active');  // Замените 'new-class' на желаемое имя класса
+    firstitem.classList.remove('active');  // Замените 'new-class' на желаемое имя класса
+
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const links = document.querySelectorAll('a[data-type]');
+
+
+
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Предотвратить стандартное поведение ссылки
+
+            // Получаем текущий URL и его параметры
+            const currentUrl = new URL(window.location.href);
+            const params = currentUrl.searchParams;
+
+            // Устанавливаем или изменяем параметр 'type' на значение из атрибута 'data-type'
+            params.set('type', this.getAttribute('data-type'));
+
+            // Перенаправляем пользователя на новый URL с обновлёнными параметрами
+            window.location.href = currentUrl.toString();
+        });
+    });
+});
+
+
+</script>
 <script src="{% static 'pages/home/index.js' %}"></script>
 {% endblock %}

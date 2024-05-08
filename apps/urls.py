@@ -12,6 +12,7 @@ from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
 from apps.tender.views import TenderListView, TenderDetailView
 from apps.user_cabinet.views import UserStatusListView, UppingListView
+from apps.buyer.views import BuyerListView
 from apps.user_cabinet.api import BuyStatusView, BuyUppingView
 
 
@@ -38,6 +39,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', ViewProfile.as_view(), name='view_profile'),
     path('login_redirect/', login_redirect, name='login_redirect'),
+
+    path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),
 
     # products
     path('product/list/', ProductListView.as_view(), name='product_list'),

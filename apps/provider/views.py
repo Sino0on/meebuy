@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
-from apps.provider.models import Provider, Category
+from apps.provider.models import Provider, Tag
+from apps.tender.models import Category
 from apps.provider.filters import ProviderFilter
 
 
@@ -15,6 +16,7 @@ class ProviderListView(generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
+        context['types'] = Tag.objects.all()
         return context
 
 
