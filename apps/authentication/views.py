@@ -48,8 +48,31 @@ class RegisterView(FormView):
 
 class LoginView(FormView):
     form_class = UserLoginForm
-    template_name = 'auth/login.html'
-    success_url = reverse_lazy('view_profile')  
+    template_name = 'auth/auth.html'
+    success_url = '/user/'
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('password1'):
+            register_form = UserRegistrationForm(request.POST)
+            if register_form.is_valid():
+                user = register_form.save(commit=False)
+                register_form.save()
+
+                authenticated_user = authenticate(email=user.email, password=register_form.cleaned_data['password1'])
+                if authenticated_user is not None:
+                    auth_login(self.request, authenticated_user)
+                    return redirect('/user/')
+            else:
+                print(register_form.errors)
+                return self.render_to_response(self.get_context_data(register_form=register_form))
+
+        return super().post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = {'register_form': UserRegistrationForm()}
+        context.update(super().get_context_data(**kwargs))
+
+        return context
 
     def form_valid(self, form):
         email = form.cleaned_data['email']

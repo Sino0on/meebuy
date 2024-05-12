@@ -1,593 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suppliers</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suppliers</title>
-
-  <link rel="stylesheet" href="../../styles.css" />
-  <link href="../../output.css" rel="stylesheet" />
-  <link href="./suppliers.css" rel="stylesheet" />
-</head>
-
-<body>
-  <!-- header -->
-  <header class="header">
-    <div class="">
-      <!-- top header -->
-      <div class="bg-black py-4 lg">
-        <div class="container flex justify-between lg-md:items-center lg-md:gap-[27px]">
-          <a href="/pages/home/home.html"><img src="../../assets/images/icons/logo.svg" alt="Meebuy" /></a>
-          <img class="lg-md:hidden" id="burgerIcon" src="../../assets/images/icons/burger-menu.svg" alt="Burger Menu" />
-          <form class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
-            <div class="relative">
-              <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-                <img src="../../assets/images/icons/search.svg" alt="Search icon" />
-              </div>
-              <input id="default-search"
-                class="block w-full p-2 pe-10 text-sm bg-transparent text-[#9A9A9A] border border-grey-light rounded-md"
-                placeholder="Например: автозапчасти" />
-            </div>
-          </form>
-          <ul class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm">
-            <li class="font-medium uppercase">
-              <a href="/pages/suppliers/suppliers.html"> Поставщики </a>
-            </li>
-            <li class="font-medium uppercase">
-              <a> Закупки </a>
-            </li>
-            <li class="font-medium uppercase">
-              <a> Товары </a>
-            </li>
-            <li class="font-medium uppercase">
-              <a> Покупатели </a>
-            </li>
-          </ul>
-          <div class="hidden lg-md:flex gap-4">
-            <svg class="lg-md:block text-logo-color" width="36" height="36" viewBox="0 0 36 36" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
-                fill="currentColor" />
-            </svg>
-
-            <img class="lg-md:block" src="../../assets/images/icons/bell.svg" alt="" />
-          </div>
-        </div>
-      </div>
-      <!-- bot header with search and profile -->
-      <div class="container flex justify-between py-3 lg-md:hidden">
-        <form id="searchForm" class="w-min transition-transform duration-300 ease-in-out">
-          <div class="relative">
-            <div class="absolute inset-y-0 start-0 flex items-center ps-3">
-              <img id="searchIconImg" src="../../assets/images/icons/search.svg" alt="Search icon" />
-            </div>
-            <input type="search" id="default-search"
-              class="block w-full p-2 ps-10 text-sm text-gray-900 border border-grey-light rounded-md"
-              placeholder="Например: автозапчасти" required />
-          </div>
-        </form>
-
-        <svg class="text-dark-text" width="36" height="36" viewBox="0 0 36 36" fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
-            fill="currentColor" />
-        </svg>
-      </div>
-    </div>
-    <!-- burger menu -->
-    <div
-      class="burgerMenu h-screen bg-dark fixed bottom-0 right-0 w-screen shadow-lg transition-transform duration-300 ease-in-out z-50 lg-md:hidden px-5 translate-x-full"
-      id="burgerMenu">
-      <!-- close icon -->
-      <img class="absolute top-[18px] right-5" src="../../assets/images/icons/close.svg" alt="Close" id="closeIcon" />
-      <div class="flex flex-col justify-center h-full">
-        <div class="text-white flex flex-col gap-[30px]">
-          <ul class="flex flex-col justify-center items-center h-full gap-10">
-            <li class="text-base font-medium uppercase">
-              <a href="/pages/suppliers/suppliers.html"> Поставщики </a>
-            </li>
-            <li class="text-base font-medium uppercase">
-              <a> Закупки </a>
-            </li>
-            <li class="text-base font-medium uppercase">
-              <a> Товары </a>
-            </li>
-            <li class="text-base font-medium uppercase">
-              <a> Покупатели </a>
-            </li>
-          </ul>
-          <div class="flex flex-col justify-center items-center text-base font-medium">
-            <div class="flex flex-col items-center">
-              <svg class="text-white" width="36" height="36" viewBox="0 0 36 36" fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
-                  fill="currentColor" />
-              </svg>
-              <p class="mt-3">Личный кабинет</p>
-            </div>
-            <div class="flex flex-col items-center mt-[52px]">
-              <svg class="text-white w-9 h-9" width="25" height="28" viewBox="0 0 25 28" fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M12.1161 0C7.47867 0 3.71735 3.76285 3.71613 8.4L3.71431 15.019L0.45402 19.9135C-0.756575 21.7309 0.601382 24.2648 2.78462 24.2648H7.54425C7.97928 26.3887 9.86874 28 12.1161 28C12.9666 28 13.7665 27.7665 14.4504 27.3702C15.5695 26.7583 14.603 25.0891 13.5152 25.7551C13.0997 25.9958 12.6277 26.1333 12.1161 26.1333C10.8865 26.1333 9.85616 25.3574 9.47563 24.2648H21.4486C23.632 24.2648 24.9912 21.7307 23.7792 19.9135L20.5161 15.0217V8.4C20.5161 6.86877 20.1016 5.43276 19.3905 4.2C19.3292 4.09381 19.2476 4.00073 19.1504 3.92607C19.0531 3.85142 18.9421 3.79665 18.8237 3.7649C18.7053 3.73314 18.5818 3.72503 18.4602 3.74101C18.3387 3.757 18.2214 3.79677 18.1153 3.85806C18.0091 3.91935 17.916 4.00096 17.8414 4.09822C17.7667 4.19548 17.712 4.3065 17.6803 4.42492C17.6485 4.54334 17.6404 4.66685 17.6564 4.7884C17.6724 4.90996 17.7122 5.02716 17.7736 5.13333C18.329 6.09634 18.6495 7.20419 18.6495 8.4V15.3043C18.6495 15.4886 18.704 15.6687 18.8062 15.822L22.226 20.949C22.6672 21.6104 22.2444 22.3982 21.4486 22.3982H2.78462C1.98852 22.3982 1.56603 21.6112 2.00714 20.949L5.4242 15.8193C5.52641 15.666 5.58096 15.4858 5.58097 15.3016L5.5828 8.4C5.58376 4.76409 8.48052 1.86667 12.1161 1.86667C13.3119 1.86667 14.4198 2.18711 15.3828 2.74258C15.489 2.80397 15.6062 2.84384 15.7278 2.8599C15.8494 2.87597 15.9729 2.86792 16.0914 2.83621C16.2099 2.8045 16.321 2.74975 16.4183 2.6751C16.5156 2.60045 16.5972 2.50735 16.6585 2.40113C16.7198 2.29491 16.7596 2.17765 16.7756 2.05605C16.7916 1.93445 16.7834 1.81089 16.7516 1.69244C16.7198 1.57399 16.665 1.46296 16.5903 1.36571C16.5156 1.26846 16.4224 1.18688 16.3161 1.12565C15.0834 0.414583 13.6473 0 12.1161 0Z"
-                  fill="currentColor" />
-              </svg>
-
-              <p class="mt-3">Уведомления</p>
-            </div>
-          </div>
-        </div>
-        <img class="absolute bottom-0 left-1/2 -translate-x-1/2" src="../../assets/images/icons/meebuy.svg"
-          alt="Meebuy" />
-      </div>
-    </div>
-  </header>
-
-  <!-- main section -->
-  <div class="suppliers-animation-container">
-    <div>
-      <div class="menu">
-        <div class="container flex gap-4 py-4">
-          <img src="../../assets/images/suppliers/icons/home.svg" alt="" />
-          <img src="../../assets/images/suppliers/icons//arrow-prev.svg" alt="" />
-          <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
-        </div>
-      </div>
-      <div class="suppliers-wrapper">
-        <div class="container">
-          <div class="relative z-50 flex flex-col justify-center w-full">
-            <h2 style="font-size: 36px" class="text-white font-extrabold sm:pb-8 text-center">
-              поставщики
-            </h2>
-            <form class="mt-3">
-              <div class="relative md:w-[600px] sm:w-[400px] m-auto">
-                <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-                  <img src="../../assets/images/icons/search.svg" alt="Search icon" />
-                </div>
-                <input id="default-search"
-                  class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
-                  placeholder="Например: автозапчасти" />
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- product categories -->
-
-  <div class="pb-10">
-    <div class="container">
-      <h6 class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish">
-        категории товаров
-      </h6>
-      <div class="flex md:flex-row flex-col justify-between">
-        <ul class="flex flex-col md:gap-2 gap-1">
-          <li class="flex items-center gap-1">
-            <img class="bg-[#FFFFFF]" src="../../assets/images/suppliers/product-categories/t-shirt.svg" alt="" />
-            <p>Одежда, обувь и аксессуары</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/home.svg" alt="" />
-            <p>Дом, дача, сад</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/furniture.svg" alt="" />
-            <p>Мебель</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/medicine.svg" alt="" />
-            <p>Медицина и товары для здоровья</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/books.svg" alt="" />
-            <p>Книги и канцелярские товары</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/services.svg" alt="" />
-            <p>Услуги</p>
-          </li>
-        </ul>
-        <ul class="flex flex-col md:gap-2 gap-1">
-          <li class="flex items-center gap-1">
-            <img class="bg-[#FFFFFF]" src="../../assets/images/suppliers/product-categories/products.svg" alt="" />
-            <p>Продукты питания и напитки</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/presents.svg" alt="" />
-            <p>Подарки и сувениры</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/cosmetics.svg" alt="" />
-            <p>Косметика и гигиена</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/sports.svg" alt="" />
-            <p>Спорт, охота и туризм</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/musics.svg" alt="" />
-            <p>Музыка и искусство</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/others.svg" alt="" />
-            <p>Другое</p>
-          </li>
-        </ul>
-        <ul class="flex flex-col md:gap-2 gap-1">
-          <li class="flex items-center gap-1">
-            <img class="bg-[#FFFFFF]" src="../../assets/images/suppliers/product-categories/toys.svg" alt="" />
-            <p>Игрушки и товары для детей</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/electronics.svg" alt="" />
-            <p>Электроника и бытовая техника</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/auto.svg" alt="" />
-            <p>Авто и мото</p>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/pets.svg" alt="" />
-            <p>Животные и растения /p></p>
-          </li>
-
-          <li class="flex items-center gap-1">
-            <img src="../../assets/images/suppliers/product-categories/construction.svg" alt="" />
-            <p>Строительство и ремонт</p>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Suppliers -->
-
-  <div class="bg-[#FFFFFC] py-16">
-    <div class="container">
-      <h6 class="text-start lg-md:text-xl font-semibold uppercase font-mulish">
-        ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
-      </h6>
-      <div class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10">
-        <ul class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]">
-          <li
-            class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish active:bg-[#FFFB98] focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]">
-            все
-            <img class="lg-md:hidden block" src="../../assets/images/suppliers/suppliers/icons/arrow-down.svg" alt="" />
-          </li>
-          <div class="lg-md:flex hidden">
-            <li
-              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-              поставщики
-            </li>
-            <li
-              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-              производители
-            </li>
-            <li
-              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-              логистика
-            </li>
-          </div>
-        </ul>
-
-        <div class="flex gap-5">
-          <div class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6">
-            Фильтр
-            <img src="../../assets/images/suppliers/suppliers/icons/filter.svg" alt="" />
-          </div>
-          <div class="cards lg-md:flex hidden gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6">
-            Рекомендуем
-            <a class="toggle-icon" id="toggleLink">
-              <img src="../../assets/images/suppliers/suppliers/icons/arrow-down.svg" alt="" />
-              <img src="../../assets/images/suppliers/suppliers/icons/arrow-up.svg" alt="" />
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col gap-7">
-        <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-          <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-            <img src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png" alt="" />
-            <div class="flex flex-col gap-6">
-              <div>
-                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                  Headphones.kg
-                </h6>
-                <p>Наушники и другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex gap-4">
-                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                  <a href="/pages/supplierDetail/index.html">
-                    Подробнее
-                  </a>
-                </button>
-                <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <ul class="flex gap-2 sm: absolute right-4">
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-            </li>
-          </ul>
-        </div>
-        <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-          <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-            <img src="../../assets/images/suppliers/suppliers/img/white-ear-phone.png" alt="" />
-            <div class="flex flex-col gap-6">
-              <div>
-                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                  Headphones.kg
-                </h6>
-                <p>Наушники и другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex gap-4">
-                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                  <a href="/pages/supplierDetail/index.html">
-                    Подробнее
-                  </a>
-                </button>
-                <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <ul class="flex gap-2 sm: absolute right-4">
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-            </li>
-          </ul>
-        </div>
-        <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-          <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-            <img src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png" alt="" />
-            <div class="flex flex-col gap-6">
-              <div>
-                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                  Headphones.kg
-                </h6>
-                <p>Наушники и другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex gap-4">
-                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                  <a href="/pages/supplierDetail/index.html">
-                    Подробнее
-                  </a>
-                </button>
-                <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <ul class="flex gap-2 sm: absolute right-4">
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]">
-        <img src="../../assets/images/suppliers/suppliers/img/res-cross.png" alt="" />
-        <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
-          <div>
-            <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
-              Nike Air Max 90 Futura
-            </h5>
-            <p class="font-mulish text-[#2B292C]">
-              Оригинальные кроссовки Nike Air Max 90 Futura
-            </p>
-          </div>
-          <div class="flex md: justify-center gap-1">
-            <img class="md:max-w-[100px]" src="../../assets/images/suppliers/suppliers/img/pink-cross.png" alt="" />
-            <img class="max-w-[106px]" src="../../assets/images/suppliers/suppliers/img/white-croos.png" alt="" />
-            <img class="max-w-[106px]" src="../../assets/images/suppliers/suppliers/img/hakki-cross.png" alt="" />
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col gap-7">
-        <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-          <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-            <img src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png" alt="" />
-            <div class="flex flex-col gap-6">
-              <div>
-                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                  Headphones.kg
-                </h6>
-                <p>Наушники и другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex gap-4">
-                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                  <a href="/pages/supplierDetail/index.html">
-                    Подробнее
-                  </a>
-                </button>
-                <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <ul class="flex gap-2 sm: absolute right-4">
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-            </li>
-          </ul>
-        </div>
-        <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-          <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-            <img src="../../assets/images/suppliers/suppliers/img/white-ear-phone.png" alt="" />
-            <div class="flex flex-col gap-6">
-              <div>
-                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                  Headphones.kg
-                </h6>
-                <p>Наушники и другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex gap-4">
-                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                  <a href="/pages/supplierDetail/index.html">
-                    Подробнее
-                  </a>
-                </button>
-                <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <ul class="flex gap-2 sm: absolute right-4">
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-            </li>
-          </ul>
-        </div>
-        <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-          <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-            <img src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png" alt="" />
-            <div class="flex flex-col gap-6">
-              <div>
-                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                  Headphones.kg
-                </h6>
-                <p>Наушники и другие аксессуары для гаджетов</p>
-              </div>
-              <div class="flex gap-4">
-                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                  <a href="/pages/supplierDetail/index.html">
-                    Подробнее
-                  </a>
-                </button>
-                <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                  Написать
-                </button>
-              </div>
-            </div>
-          </div>
-          <ul class="flex gap-2 sm: absolute right-4">
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-            </li>
-            <li>
-              <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]">
-        <img src="../../assets/images/suppliers/suppliers/img/res-cross.png" alt="" />
-        <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
-          <div>
-            <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
-              Nike Air Max 90 Futura
-            </h5>
-            <p class="font-mulish text-[#2B292C]">
-              Оригинальные кроссовки Nike Air Max 90 Futura
-            </p>
-          </div>
-          <div class="flex md: justify-center gap-1">
-            <img class="md:max-w-[100px]" src="../../assets/images/suppliers/suppliers/img/pink-cross.png" alt="" />
-            <img class="max-w-[106px]" src="../../assets/images/suppliers/suppliers/img/white-croos.png" alt="" />
-            <img class="max-w-[106px]" src="../../assets/images/suppliers/suppliers/img/hakki-cross.png" alt="" />
-          </div>
-        </div>
-      </div>
-
-      <!-- pagination -->
-
-      <div class="lg-md:flex hidden justify-between items-center">
-        <div class="flex items-center gap-5">
-          <div class="flex items-center gap-2">
-            <img src="../../assets/images/suppliers/suppliers/icons/prev.svg" alt="" />
-            <p>Назад</p>
-          </div>
-          <ul class="pagination">
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li class="active"><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li class="ellipsis">...</li>
-            <li><a href="#">6</a></li>
-            <li><a href="#">7</a></li>
-            <li><a href="#">8</a></li>
-            <li><a href="#">9</a></li>
-            <li><a href="#">10</a></li>
-            <li class="ellipsis">...</li>
-          </ul>
-          <div class="flex items-center gap-2">
-            <p>Вперед</p>
-            <img src="../../assets/images/suppliers/suppliers/icons/next.svg" alt="" />
-          </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <p>Перейти на страницу</p>
-          <input type="text" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10" />
-          <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="../../assets/images/suppliers/suppliers/icons/next.svg"
-            alt="" />
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Footer -->
-  <footer class="bg-[#222222]">
+    <link rel="stylesheet" href="../../styles.css" />
+    <link href="./suppliers.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- header -->
     <div class="bg-black py-4">
-      <div class="container flex justify-between lg-md:items-center lg-md:gap-[27px]">
-        <a href="/pages/home/home.html"><img src="../../assets/images/icons/logo.svg" alt="Meebuy" /></a>
-        <img class="lg-md:hidden" id="burgerIcon" src="../../assets/images/icons/burger-menu.svg" alt="Burger Menu" />
-        <form class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
+      <div
+        class="container flex justify-between lg-md:items-center lg-md:gap-[27px]"
+      >
+        <a href="/pages/home/home.html"
+          ><img src="../../assets/images/icons/logo.svg" alt="Meebuy"
+        /></a>
+        <img
+          class="lg-md:hidden"
+          id="burgerIcon"
+          src="../../assets/images/icons/burger-menu.svg"
+          alt="Burger Menu"
+        />
+        <form
+          class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow"
+        >
           <div class="relative">
             <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-              <img src="../../assets/images/icons/search.svg" alt="Search icon" />
+              <img
+                src="../../assets/images/icons/search.svg"
+                alt="Search icon"
+              />
             </div>
-            <input id="default-search"
+            <input
+              id="default-search"
               class="block w-full p-2 pe-10 text-sm bg-transparent text-[#9A9A9A] border border-grey-light rounded-md"
-              placeholder="Например: автозапчасти" />
+              placeholder="Например: автозапчасти"
+            />
           </div>
         </form>
-        <ul class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm">
+        <ul
+          class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm"
+        >
           <li class="font-medium uppercase">
             <a> Поставщики </a>
           </li>
@@ -602,571 +57,956 @@
           </li>
         </ul>
         <div class="hidden lg-md:flex gap-4">
-          <svg class="lg-md:block text-logo-color" width="36" height="36" viewBox="0 0 36 36" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
+          <svg
+            class="lg-md:block text-logo-color"
+            width="36"
+            height="36"
+            viewBox="0 0 36 36"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
               d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
-              fill="currentColor" />
+              fill="currentColor"
+            />
           </svg>
 
-          <img class="lg-md:block" src="../../assets/images/icons/bell.svg" alt="" />
+          <img
+            class="lg-md:block"
+            src="../../assets/images/icons/bell.svg"
+            alt=""
+          />
         </div>
       </div>
     </div>
-    <div class="container text-[#FFFFFC] pt-14 pb-20">
-      <div class="flex md:flex-row flex-col items-start justify-between gap-14 text-[#8A8A8A]">
-        <div class="font-mulish flex flex-col text-[#FFFFFC] gap-8">
-          <h6 class="uppercase text-[20px] font-semibold">мы в соцсетях</h6>
-          <ul class="flex gap-3">
-            <li>
-              <img src="../../assets/images/icons/footer/socials/instagram.svg" alt="" />
+
+    <!-- main section -->
+    <div class="suppliers-animation-container">
+      <div>
+        <div class="menu">
+          <div class="container flex gap-4 py-4">
+            <img src="../../assets/images/suppliers/icons/home.svg" alt="" />
+            <img
+              src="../../assets/images/suppliers/icons//arrow-prev.svg"
+              alt=""
+            />
+            <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
+          </div>
+        </div>
+        <div class="suppliers-wrapper">
+          <div class="container">
+            <div class="relative z-50 flex flex-col justify-center w-full">
+              <h2
+                style="font-size: 36px"
+                class="text-white font-extrabold sm:pb-8 text-center"
+              >
+                поставщики
+              </h2>
+              <form class="mt-3">
+                <div class="relative md:w-[600px] sm:w-[400px] m-auto">
+                  <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                    <img
+                      src="../../assets/images/icons/search.svg"
+                      alt="Search icon"
+                    />
+                  </div>
+                  <input
+                    id="default-search"
+                    class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                    placeholder="Например: автозапчасти"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- product categories -->
+
+    <div class="pb-10">
+      <div class="container">
+        <h6
+          class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
+        >
+          категории товаров
+        </h6>
+        <ul class="grid gap-8 lg-md:grid-cols-3 sm: grid-cols-1">
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/t-shirt.svg"
+                  alt=""
+                />
+              </div>
+              <span>Одежда, обувь и аксессуары</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/burger.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Продукты питания и напитки</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/robot.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Игрушки и товары для детей</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/house.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Дом,дача,сад</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/gift.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Подарки и сувениры</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/computer.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Электроника и бытовая техника</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/bed.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Мебель</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/makeup.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Косметика и гигиена</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/happy-car.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Авто и мото</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-whiterounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/first-aid.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Медицина и товары для здоровья</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/football.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Спорт, охота и туризм</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/animal.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Животные и растения</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/books.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Книги и канцелярские товары</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/guitar.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Музыка и искусство</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/wrench.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Строительство и ремонт</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/services.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Услуги</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 lg-md:w-12 lg-md:h-12 text-white rounded-full overflow-hidden flex items-center justify-center"
+              >
+                <img
+                  src="../../assets/images/icons/category/other.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Другое</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Suppliers -->
+
+    <div class="bg-[#FFFFFC] py-16">
+      <div class="container">
+        <h6
+          class="text-start lg-md:text-xl font-semibold uppercase font-mulish"
+        >
+          ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
+        </h6>
+        <div
+          class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10"
+        >
+          <ul
+            class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]"
+          >
+            <li
+              class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish active:bg-[#FFFB98] focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]"
+            >
+              все
+              <img
+                class="lg-md:hidden block"
+                src="../../assets/images/suppliers/suppliers/icons/arrow-down.svg"
+                alt=""
+              />
             </li>
-            <li>
-              <img src="../../assets/images/icons/footer/socials/whatsapp.svg" alt="" />
+            <div class="lg-md:flex hidden">
+              <li
+                class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]"
+              >
+                поставщики
+              </li>
+              <li
+                class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]"
+              >
+                производители
+              </li>
+              <li
+                class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]"
+              >
+                логистика
+              </li>
+            </div>
+          </ul>
+
+          <div class="flex gap-5 relative">
+            <div
+              class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6"
+            >
+              Фильтр
+              <img
+                src="../../assets/images/suppliers/suppliers/icons/filter.svg"
+                alt=""
+              />
+            </div>
+            <div
+              class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6"
+              id="selectContainer"
+            >
+              Рекомендуем
+              <a class="toggle-icon" id="toggleLink">
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/arrow-down.svg"
+                  alt="Open"
+                  class="openIcon"
+                  style="display: block"
+                />
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/arrow-up.svg"
+                  alt="Close"
+                  class="closeIcon"
+                  style="display: none"
+                />
+              </a>
+            </div>
+            <!-- select -->
+            <div
+              id="selectModal"
+              class="modal absolute top-16 bottom-0 left-6"
+              style="display: none"
+            >
+              select will be after finishing design
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-7">
+          <div
+            class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+          >
+            <div
+              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+            >
+              <img
+                src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png"
+                alt=""
+              />
+              <div class="flex flex-col gap-6">
+                <div>
+                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                    Headphones.kg
+                  </h6>
+                  <p>Наушники и другие аксессуары для гаджетов</p>
+                </div>
+                <div class="flex gap-4">
+                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                    Подробнее
+                  </button>
+                  <button
+                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                  >
+                    Написать
+                  </button>
+                </div>
+              </div>
+            </div>
+            <ul class="flex gap-2 sm: absolute right-4">
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/diamand.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/check.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/cruiz.svg"
+                  alt=""
+                />
+              </li>
+            </ul>
+          </div>
+          <div
+            class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+          >
+            <div
+              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+            >
+              <img
+                src="../../assets/images/suppliers/suppliers/img/white-ear-phone.png"
+                alt=""
+              />
+              <div class="flex flex-col gap-6">
+                <div>
+                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                    Headphones.kg
+                  </h6>
+                  <p>Наушники и другие аксессуары для гаджетов</p>
+                </div>
+                <div class="flex gap-4">
+                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                    Подробнее
+                  </button>
+                  <button
+                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                  >
+                    Написать
+                  </button>
+                </div>
+              </div>
+            </div>
+            <ul class="flex gap-2 sm: absolute right-4">
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/diamand.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/check.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/cruiz.svg"
+                  alt=""
+                />
+              </li>
+            </ul>
+          </div>
+          <div
+            class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+          >
+            <div
+              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+            >
+              <img
+                src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png"
+                alt=""
+              />
+              <div class="flex flex-col gap-6">
+                <div>
+                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                    Headphones.kg
+                  </h6>
+                  <p>Наушники и другие аксессуары для гаджетов</p>
+                </div>
+                <div class="flex gap-4">
+                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                    Подробнее
+                  </button>
+                  <button
+                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                  >
+                    Написать
+                  </button>
+                </div>
+              </div>
+            </div>
+            <ul class="flex gap-2 sm: absolute right-4">
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/diamand.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/check.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/cruiz.svg"
+                  alt=""
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
+        >
+          <img
+            src="../../assets/images/suppliers/suppliers/img/res-cross.png"
+            alt=""
+          />
+          <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
+            <div>
+              <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
+                Nike Air Max 90 Futura
+              </h5>
+              <p class="font-mulish text-[#2B292C]">
+                Оригинальные кроссовки Nike Air Max 90 Futura
+              </p>
+            </div>
+            <div class="flex md: justify-center gap-1">
+              <img
+                class="md:max-w-[100px]"
+                src="../../assets/images/suppliers/suppliers/img/pink-cross.png"
+                alt=""
+              />
+              <img
+                class="max-w-[106px]"
+                src="../../assets/images/suppliers/suppliers/img/white-croos.png"
+                alt=""
+              />
+              <img
+                class="max-w-[106px]"
+                src="../../assets/images/suppliers/suppliers/img/hakki-cross.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-7">
+          <div
+            class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+          >
+            <div
+              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+            >
+              <img
+                src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png"
+                alt=""
+              />
+              <div class="flex flex-col gap-6">
+                <div>
+                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                    Headphones.kg
+                  </h6>
+                  <p>Наушники и другие аксессуары для гаджетов</p>
+                </div>
+                <div class="flex gap-4">
+                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                    Подробнее
+                  </button>
+                  <button
+                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                  >
+                    Написать
+                  </button>
+                </div>
+              </div>
+            </div>
+            <ul class="flex gap-2 sm: absolute right-4">
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/diamand.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/check.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/cruiz.svg"
+                  alt=""
+                />
+              </li>
+            </ul>
+          </div>
+          <div
+            class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+          >
+            <div
+              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+            >
+              <img
+                src="../../assets/images/suppliers/suppliers/img/white-ear-phone.png"
+                alt=""
+              />
+              <div class="flex flex-col gap-6">
+                <div>
+                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                    Headphones.kg
+                  </h6>
+                  <p>Наушники и другие аксессуары для гаджетов</p>
+                </div>
+                <div class="flex gap-4">
+                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                    Подробнее
+                  </button>
+                  <button
+                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                  >
+                    Написать
+                  </button>
+                </div>
+              </div>
+            </div>
+            <ul class="flex gap-2 sm: absolute right-4">
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/diamand.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/check.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/cruiz.svg"
+                  alt=""
+                />
+              </li>
+            </ul>
+          </div>
+          <div
+            class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+          >
+            <div
+              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+            >
+              <img
+                src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png"
+                alt=""
+              />
+              <div class="flex flex-col gap-6">
+                <div>
+                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                    Headphones.kg
+                  </h6>
+                  <p>Наушники и другие аксессуары для гаджетов</p>
+                </div>
+                <div class="flex gap-4">
+                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                    Подробнее
+                  </button>
+                  <button
+                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                  >
+                    Написать
+                  </button>
+                </div>
+              </div>
+            </div>
+            <ul class="flex gap-2 sm: absolute right-4">
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/diamand.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/check.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/suppliers/suppliers/icons/cruiz.svg"
+                  alt=""
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
+        >
+          <img
+            src="../../assets/images/suppliers/suppliers/img/res-cross.png"
+            alt=""
+          />
+          <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
+            <div>
+              <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
+                Nike Air Max 90 Futura
+              </h5>
+              <p class="font-mulish text-[#2B292C]">
+                Оригинальные кроссовки Nike Air Max 90 Futura
+              </p>
+            </div>
+            <div class="flex md: justify-center gap-1">
+              <img
+                class="md:max-w-[100px]"
+                src="../../assets/images/suppliers/suppliers/img/pink-cross.png"
+                alt=""
+              />
+              <img
+                class="max-w-[106px]"
+                src="../../assets/images/suppliers/suppliers/img/white-croos.png"
+                alt=""
+              />
+              <img
+                class="max-w-[106px]"
+                src="../../assets/images/suppliers/suppliers/img/hakki-cross.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- pagination -->
+
+        <div class="lg-md:flex hidden justify-between items-center">
+          <div class="flex items-center gap-5">
+            <div class="flex items-center gap-2">
+              <img
+                src="../../assets/images/suppliers/suppliers/icons/prev.svg"
+                alt=""
+                id="prevPagee"
+              />
+              <p id="prevPage" class="cursor-pointer">Назад</p>
+            </div>
+            <ul class="pagination" id="pagination">
+              <li class="page"><a href="#">1</a></li>
+              <li class="page"><a href="#">2</a></li>
+              <li class="page"><a href="#">3</a></li>
+              <li class="page"><a href="#">4</a></li>
+              <li class="page"><a href="#">5</a></li>
+              <li class="ellipsis">...</li>
+              <li class="page"><a href="#">6</a></li>
+              <li class="page active"><a href="#">7</a></li>
+              <li class="page"><a href="#">8</a></li>
+              <li class="page"><a href="#">9</a></li>
+              <li class="page"><a href="#">10</a></li>
+              <li class="ellipsis">...</li>
+            </ul>
+            <div class="flex items-center gap-2">
+              <p id="nextPage" class="cursor-pointer">Вперед</p>
+              <img
+                src="../../assets/images/suppliers/suppliers/icons/next.svg"
+                alt=""
+                id="nextPagee"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <p>Перейти на страницу</p>
+            <input
+              type="text"
+              class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4"
+            />
+            <img
+              class="bg-[#FFFCB7] p-2 rounded-[5px]"
+              src="../../assets/images/suppliers/suppliers/icons/next.svg"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-[#222222]">
+      <div class="bg-black py-4">
+        <div
+          class="container flex justify-between lg-md:items-center lg-md:gap-[27px]"
+        >
+          <a href="/pages/home/home.html"
+            ><img src="../../assets/images/icons/logo.svg" alt="Meebuy"
+          /></a>
+          <img
+            class="lg-md:hidden"
+            id="burgerIcon"
+            src="../../assets/images/icons/burger-menu.svg"
+            alt="Burger Menu"
+          />
+          <form
+            class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow"
+          >
+            <div class="relative">
+              <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                <img
+                  src="../../assets/images/icons/search.svg"
+                  alt="Search icon"
+                />
+              </div>
+              <input
+                id="default-search"
+                class="block w-full p-2 pe-10 text-sm bg-transparent text-[#9A9A9A] border border-grey-light rounded-md"
+                placeholder="Например: автозапчасти"
+              />
+            </div>
+          </form>
+          <ul
+            class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm"
+          >
+            <li class="font-medium uppercase">
+              <a> Поставщики </a>
             </li>
-            <li>
-              <img src="../../assets/images/icons/footer/socials/telegram.svg" alt="" />
+            <li class="font-medium uppercase">
+              <a> Закупки </a>
             </li>
-            <li>
-              <img src="../../assets/images/icons/footer/socials/wk.svg" alt="" />
+            <li class="font-medium uppercase">
+              <a> Товары </a>
+            </li>
+            <li class="font-medium uppercase">
+              <a> Покупатели </a>
             </li>
           </ul>
-          <p class="font-poppins">+7 (929) 566 -02 - 27</p>
-        </div>
-        <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-          <li class="uppercase font-mulish font-extrabold">
-            <h6 class="text-[#FFFFFC]">поставщикам</h6>
-          </li>
-          <li class="">Добавить компанию</li>
-          <li>Поиск закупок</li>
-          <li>Поиск покупателей</li>
-          <li>Тарифы</li>
-        </ul>
-        <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-          <li class="uppercase font-extrabold">
-            <h6 class="text-[#FFFFFC]">покупателям</h6>
-          </li>
-          <li>Купить оптом</li>
-          <li>Поставщики</li>
-          <li>Производители</li>
-          <li>Поиск товаров</li>
-        </ul>
-        <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-          <li class="uppercase font-mulish font-extrabold">
-            <h6 class="text-[#FFFFFC]">о компании</h6>
-          </li>
-          <li>Тарифы</li>
-          <li>Баннерная реклама</li>
-          <li>Правила</li>
-          <li>Техподдержка</li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-  <script src="./index.js"></script>
-</body>
+          <div class="hidden lg-md:flex gap-4">
+            <svg
+              class="lg-md:block text-logo-color"
+              width="36"
+              height="36"
+              viewBox="0 0 36 36"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
+                fill="currentColor"
+              />
+            </svg>
 
-<!-- product categories -->
-
-<div class="pb-10">
-  <div class="container">
-    <h6 class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish">
-      категории товаров
-    </h6>
-    <div class="flex md:flex-row flex-col justify-between">
-      <ul class="flex flex-col md:gap-2 gap-1">
-        <li class="flex items-center gap-1">
-          <img class="bg-[#FFFFFF]" src="../../assets/images/suppliers/product-categories/t-shirt.svg" alt="" />
-          <p>Одежда, обувь и аксессуары</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/home.svg" alt="" />
-          <p>Дом, дача, сад</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/furniture.svg" alt="" />
-          <p>Мебель</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/medicine.svg" alt="" />
-          <p>Медицина и товары для здоровья</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/books.svg" alt="" />
-          <p>Книги и канцелярские товары</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/services.svg" alt="" />
-          <p>Услуги</p>
-        </li>
-      </ul>
-      <ul class="flex flex-col md:gap-2 gap-1">
-        <li class="flex items-center gap-1">
-          <img class="bg-[#FFFFFF]" src="../../assets/images/suppliers/product-categories/products.svg" alt="" />
-          <p>Продукты питания и напитки</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/presents.svg" alt="" />
-          <p>Подарки и сувениры</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/cosmetics.svg" alt="" />
-          <p>Косметика и гигиена</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/sports.svg" alt="" />
-          <p>Спорт, охота и туризм</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/musics.svg" alt="" />
-          <p>Музыка и искусство</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/others.svg" alt="" />
-          <p>Другое</p>
-        </li>
-      </ul>
-      <ul class="flex flex-col md:gap-2 gap-1">
-        <li class="flex items-center gap-1">
-          <img class="bg-[#FFFFFF]" src="../../assets/images/suppliers/product-categories/toys.svg" alt="" />
-          <p>Игрушки и товары для детей</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/electronics.svg" alt="" />
-          <p>Электроника и бытовая техника</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/auto.svg" alt="" />
-          <p>Авто и мото</p>
-        </li>
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/pets.svg" alt="" />
-          <p>Животные и растения /p></p>
-        </li>
-
-        <li class="flex items-center gap-1">
-          <img src="../../assets/images/suppliers/product-categories/construction.svg" alt="" />
-          <p>Строительство и ремонт</p>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<!-- Suppliers -->
-
-<div class="bg-[#FFFFFC] py-16">
-  <div class="container">
-    <h6 class="text-start lg-md:text-xl font-semibold uppercase font-mulish">
-      ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
-    </h6>
-    <div class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10">
-      <ul class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]">
-        <li
-          class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish active:bg-[#FFFB98] focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]">
-          все
-          <img class="lg-md:hidden block" src="../../assets/images/suppliers/suppliers/icons/arrow-down.svg" alt="" />
-        </li>
-        <div class="lg-md:flex hidden">
-          <li
-            class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-            поставщики
-          </li>
-          <li
-            class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-            производители
-          </li>
-          <li
-            class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]">
-            логистика
-          </li>
-        </div>
-      </ul>
-
-      <div class="flex gap-5 relative">
-        <div class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6">
-          Фильтр
-          <img src="../../assets/images/suppliers/suppliers/icons/filter.svg" alt="" />
-        </div>
-        <div class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6"
-          id="selectContainer">
-          Рекомендуем
-          <a class="toggle-icon" id="toggleLink">
-            <img src="../../assets/images/suppliers/suppliers/icons/arrow-down.svg" alt="Open" class="openIcon"
-              style="display: block" />
-            <img src="../../assets/images/suppliers/suppliers/icons/arrow-up.svg" alt="Close" class="closeIcon"
-              style="display: none" />
-          </a>
-        </div>
-        <!-- select -->
-        <div id="selectModal" class="modal absolute top-16 bottom-0 left-6" style="display: none">
-          select will be after finishing design
-        </div>
-      </div>
-    </div>
-    <div class="flex flex-col gap-7">
-      <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-        <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-          <img src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png" alt="" />
-          <div class="flex flex-col gap-6">
-            <div>
-              <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                Headphones.kg
-              </h6>
-              <p>Наушники и другие аксессуары для гаджетов</p>
-            </div>
-            <div class="flex gap-4">
-              <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                Подробнее
-              </button>
-              <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                Написать
-              </button>
-            </div>
+            <img
+              class="lg-md:block"
+              src="../../assets/images/icons/bell.svg"
+              alt=""
+            />
           </div>
         </div>
-        <ul class="flex gap-2 sm: absolute right-4">
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-          </li>
-        </ul>
       </div>
-      <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-        <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-          <img src="../../assets/images/suppliers/suppliers/img/white-ear-phone.png" alt="" />
-          <div class="flex flex-col gap-6">
-            <div>
-              <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                Headphones.kg
-              </h6>
-              <p>Наушники и другие аксессуары для гаджетов</p>
-            </div>
-            <div class="flex gap-4">
-              <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                Подробнее
-              </button>
-              <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                Написать
-              </button>
-            </div>
+      <div class="container text-[#FFFFFC] pt-14 pb-20">
+        <div
+          class="flex md:flex-row flex-col items-start justify-between gap-14 text-[#8A8A8A]"
+        >
+          <div class="font-mulish flex flex-col text-[#FFFFFC] gap-8">
+            <h6 class="uppercase text-[20px] font-semibold">мы в соцсетях</h6>
+            <ul class="flex gap-3">
+              <li>
+                <img
+                  src="../../assets/images/icons/footer/socials/instagram.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/icons/footer/socials/whatsapp.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/icons/footer/socials/telegram.svg"
+                  alt=""
+                />
+              </li>
+              <li>
+                <img
+                  src="../../assets/images/icons/footer/socials/wk.svg"
+                  alt=""
+                />
+              </li>
+            </ul>
+            <p class="font-poppins">+7 (929) 566 -02 - 27</p>
           </div>
-        </div>
-        <ul class="flex gap-2 sm: absolute right-4">
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-          </li>
-        </ul>
-      </div>
-      <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-        <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-          <img src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png" alt="" />
-          <div class="flex flex-col gap-6">
-            <div>
-              <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                Headphones.kg
-              </h6>
-              <p>Наушники и другие аксессуары для гаджетов</p>
-            </div>
-            <div class="flex gap-4">
-              <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                Подробнее
-              </button>
-              <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                Написать
-              </button>
-            </div>
-          </div>
-        </div>
-        <ul class="flex gap-2 sm: absolute right-4">
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]">
-      <img src="../../assets/images/suppliers/suppliers/img/res-cross.png" alt="" />
-      <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
-        <div>
-          <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
-            Nike Air Max 90 Futura
-          </h5>
-          <p class="font-mulish text-[#2B292C]">
-            Оригинальные кроссовки Nike Air Max 90 Futura
-          </p>
-        </div>
-        <div class="flex md: justify-center gap-1">
-          <img class="md:max-w-[100px]" src="../../assets/images/suppliers/suppliers/img/pink-cross.png" alt="" />
-          <img class="max-w-[106px]" src="../../assets/images/suppliers/suppliers/img/white-croos.png" alt="" />
-          <img class="max-w-[106px]" src="../../assets/images/suppliers/suppliers/img/hakki-cross.png" alt="" />
+          <ul class="font-mulish flex flex-col gap-6 text-[18px]">
+            <li class="uppercase font-mulish font-extrabold">
+              <h6 class="text-[#FFFFFC]">поставщикам</h6>
+            </li>
+            <li class="">Добавить компанию</li>
+            <li>Поиск закупок</li>
+            <li>Поиск покупателей</li>
+            <li>Тарифы</li>
+          </ul>
+          <ul class="font-mulish flex flex-col gap-6 text-[18px]">
+            <li class="uppercase font-extrabold">
+              <h6 class="text-[#FFFFFC]">покупателям</h6>
+            </li>
+            <li>Купить оптом</li>
+            <li>Поставщики</li>
+            <li>Производители</li>
+            <li>Поиск товаров</li>
+          </ul>
+          <ul class="font-mulish flex flex-col gap-6 text-[18px]">
+            <li class="uppercase font-mulish font-extrabold">
+              <h6 class="text-[#FFFFFC]">о компании</h6>
+            </li>
+            <li>Тарифы</li>
+            <li>Баннерная реклама</li>
+            <li>Правила</li>
+            <li>Техподдержка</li>
+          </ul>
         </div>
       </div>
-    </div>
-    <div class="flex flex-col gap-7">
-      <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-        <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-          <img src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png" alt="" />
-          <div class="flex flex-col gap-6">
-            <div>
-              <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                Headphones.kg
-              </h6>
-              <p>Наушники и другие аксессуары для гаджетов</p>
-            </div>
-            <div class="flex gap-4">
-              <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                Подробнее
-              </button>
-              <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                Написать
-              </button>
-            </div>
-          </div>
-        </div>
-        <ul class="flex gap-2 sm: absolute right-4">
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-          </li>
-        </ul>
-      </div>
-      <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-        <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-          <img src="../../assets/images/suppliers/suppliers/img/white-ear-phone.png" alt="" />
-          <div class="flex flex-col gap-6">
-            <div>
-              <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                Headphones.kg
-              </h6>
-              <p>Наушники и другие аксессуары для гаджетов</p>
-            </div>
-            <div class="flex gap-4">
-              <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                Подробнее
-              </button>
-              <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                Написать
-              </button>
-            </div>
-          </div>
-        </div>
-        <ul class="flex gap-2 sm: absolute right-4">
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-          </li>
-        </ul>
-      </div>
-      <div class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
-        <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-          <img src="../../assets/images/suppliers/suppliers/img/bg-orange-ear-ph.png" alt="" />
-          <div class="flex flex-col gap-6">
-            <div>
-              <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                Headphones.kg
-              </h6>
-              <p>Наушники и другие аксессуары для гаджетов</p>
-            </div>
-            <div class="flex gap-4">
-              <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                Подробнее
-              </button>
-              <button class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
-                Написать
-              </button>
-            </div>
-          </div>
-        </div>
-        <ul class="flex gap-2 sm: absolute right-4">
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/diamand.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/check.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/suppliers/suppliers/icons/cruiz.svg" alt="" />
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]">
-      <img src="../../assets/images/suppliers/suppliers/img/res-cross.png" alt="" />
-      <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
-        <div>
-          <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
-            Nike Air Max 90 Futura
-          </h5>
-          <p class="font-mulish text-[#2B292C]">
-            Оригинальные кроссовки Nike Air Max 90 Futura
-          </p>
-        </div>
-        <div class="flex md: justify-center gap-1">
-          <img class="md:max-w-[100px]" src="../../assets/images/suppliers/suppliers/img/pink-cross.png" alt="" />
-          <img class="max-w-[106px]" src="../../assets/images/suppliers/suppliers/img/white-croos.png" alt="" />
-          <img class="max-w-[106px]" src="../../assets/images/suppliers/suppliers/img/hakki-cross.png" alt="" />
-        </div>
-      </div>
-    </div>
+    </footer>
 
-    <!-- pagination -->
-
-    <div class="lg-md:flex hidden justify-between items-center">
-      <div class="flex items-center gap-5">
-        <div class="flex items-center gap-2">
-          <img src="../../assets/images/suppliers/suppliers/icons/prev.svg" alt="" id="prevPagee" />
-          <p id="prevPage" class="cursor-pointer">Назад</p>
-        </div>
-        <ul class="pagination" id="pagination">
-          <li class="page"><a href="#">1</a></li>
-          <li class="page"><a href="#">2</a></li>
-          <li class="page"><a href="#">3</a></li>
-          <li class="page"><a href="#">4</a></li>
-          <li class="page"><a href="#">5</a></li>
-          <li class="ellipsis">...</li>
-          <li class="page"><a href="#">6</a></li>
-          <li class="page active"><a href="#">7</a></li>
-          <li class="page"><a href="#">8</a></li>
-          <li class="page"><a href="#">9</a></li>
-          <li class="page"><a href="#">10</a></li>
-          <li class="ellipsis">...</li>
-        </ul>
-        <div class="flex items-center gap-2">
-          <p id="nextPage" class="cursor-pointer">Вперед</p>
-          <img src="../../assets/images/suppliers/suppliers/icons/next.svg" alt="" id="nextPagee" />
-        </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <p>Перейти на страницу</p>
-        <input type="text" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4" />
-        <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="../../assets/images/suppliers/suppliers/icons/next.svg"
-          alt="" />
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Footer -->
-<footer class="bg-[#222222]">
-  <div class="bg-black py-4">
-    <div class="container flex justify-between lg-md:items-center lg-md:gap-[27px]">
-      <a href="/pages/home/home.html"><img src="../../assets/images/icons/logo.svg" alt="Meebuy" /></a>
-      <img class="lg-md:hidden" id="burgerIcon" src="../../assets/images/icons/burger-menu.svg" alt="Burger Menu" />
-      <form class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
-        <div class="relative">
-          <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-            <img src="../../assets/images/icons/search.svg" alt="Search icon" />
-          </div>
-          <input id="default-search"
-            class="block w-full p-2 pe-10 text-sm bg-transparent text-[#9A9A9A] border border-grey-light rounded-md"
-            placeholder="Например: автозапчасти" />
-        </div>
-      </form>
-      <ul class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm">
-        <li class="font-medium uppercase">
-          <a> Поставщики </a>
-        </li>
-        <li class="font-medium uppercase">
-          <a> Закупки </a>
-        </li>
-        <li class="font-medium uppercase">
-          <a> Товары </a>
-        </li>
-        <li class="font-medium uppercase">
-          <a> Покупатели </a>
-        </li>
-      </ul>
-      <div class="hidden lg-md:flex gap-4">
-        <svg class="lg-md:block text-logo-color" width="36" height="36" viewBox="0 0 36 36" fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
-            fill="currentColor" />
-        </svg>
-
-        <img class="lg-md:block" src="../../assets/images/icons/bell.svg" alt="" />
-      </div>
-    </div>
-  </div>
-  <div class="container text-[#FFFFFC] pt-14 pb-20">
-    <div class="flex md:flex-row flex-col items-start justify-between gap-14 text-[#8A8A8A]">
-      <div class="font-mulish flex flex-col text-[#FFFFFC] gap-8">
-        <h6 class="uppercase text-[20px] font-semibold">мы в соцсетях</h6>
-        <ul class="flex gap-3">
-          <li>
-            <img src="../../assets/images/icons/footer/socials/instagram.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/icons/footer/socials/whatsapp.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/icons/footer/socials/telegram.svg" alt="" />
-          </li>
-          <li>
-            <img src="../../assets/images/icons/footer/socials/wk.svg" alt="" />
-          </li>
-        </ul>
-        <p class="font-poppins">+7 (929) 566 -02 - 27</p>
-      </div>
-      <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-        <li class="uppercase font-mulish font-extrabold">
-          <h6 class="text-[#FFFFFC]">поставщикам</h6>
-        </li>
-        <li class="">Добавить компанию</li>
-        <li>Поиск закупок</li>
-        <li>Поиск покупателей</li>
-        <li>Тарифы</li>
-      </ul>
-      <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-        <li class="uppercase font-extrabold">
-          <h6 class="text-[#FFFFFC]">покупателям</h6>
-        </li>
-        <li>Купить оптом</li>
-        <li>Поставщики</li>
-        <li>Производители</li>
-        <li>Поиск товаров</li>
-      </ul>
-      <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-        <li class="uppercase font-mulish font-extrabold">
-          <h6 class="text-[#FFFFFC]">о компании</h6>
-        </li>
-        <li>Тарифы</li>
-        <li>Баннерная реклама</li>
-        <li>Правила</li>
-        <li>Техподдержка</li>
-      </ul>
-    </div>
-  </div>
-</footer>
-
-<script src="../procurement/procurement.js"></script>
-</body>
-
+    <script src="../procurement/procurement.js"></script>
+  </body>
 </html>

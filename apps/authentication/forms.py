@@ -4,15 +4,30 @@ from .models import User
 
 
 class UserRegistrationForm(forms.ModelForm):
-    email = forms.EmailField(required=True)
-    phone = forms.CharField(required=True)
-    username = forms.CharField(required=True)
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
+        'class': 'border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'placeholder': 'Email *',
+    }))
+    phone = forms.CharField(required=True, widget=forms.TextInput(attrs={
+        'class': 'border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'placeholder': '+996 *** *** ***',
+    }))
+    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={
+        'class': 'border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'placeholder': 'ФИО',
+    }))
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
+        'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'placeholder': '********'
+    }))
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={
+        'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'placeholder': '********'
+    }))
 
     class Meta:
         model = User
-        fields = ('email', 'phone', 'username', 'password1', 'password2')
+        fields = ('email', 'phone', 'first_name', 'password1', 'password2')
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -51,8 +66,14 @@ class UserTypeSelectionForm(forms.Form):
 
 
 class UserLoginForm(forms.Form):
-    email = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput())
+    email = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'border border-[#E6E6E6] w-[100%] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'placeholder': 'example@mail.com'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput({
+        'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'placeholder': '*******',
+    }))
 
 
 class UserProfileForm(forms.ModelForm):

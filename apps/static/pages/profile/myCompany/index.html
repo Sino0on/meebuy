@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="../profile.css">
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+<header class="header">
+    <div class="">
+        <!-- top header -->
+        <div class="bg-black py-4 lg">
+            <div class="container flex justify-between lg-md:items-center lg-md:gap-[27px]">
+                <a href="/pages/home/home.html"><img src="../../../assets/images/icons/logo.svg" alt="Meebuy"/></a>
+                <img class="lg-md:hidden" id="burgerIcon" src="../../../assets/images/icons/burger-menu.svg"
+                     alt="Burger Menu"/>
+                <form class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                            <img src="../../../assets/images/icons/search.svg" alt="Search icon"/>
+                        </div>
+                        <input id="default-search"
+                               class="block w-full p-2 pe-10 text-sm bg-transparent text-[#9A9A9A] border border-grey-light rounded-md"
+                               placeholder="Например: автозапчасти"/>
+                    </div>
+                </form>
+                <ul class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm">
+                    <li class="font-medium uppercase">
+                        <a href="/pages/suppliers/suppliers.html"> Поставщики </a>
+                    </li>
+                    <li class="font-medium uppercase">
+                        <a> Закупки </a>
+                    </li>
+                    <li class="font-medium uppercase">
+                        <a> Товары </a>
+                    </li>
+                    <li class="font-medium uppercase">
+                        <a> Покупатели </a>
+                    </li>
+                </ul>
+                <div class="hidden lg-md:flex gap-4">
+                    <svg class="lg-md:block text-logo-color" width="36" height="36" viewBox="0 0 36 36"
+                         fill="currentColor"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
+                              fill="currentColor"/>
+                    </svg>
+
+                    <img class="lg-md:block" src="../../../assets/images/icons/bell.svg" alt=""/>
+                </div>
+            </div>
+        </div>
+        <!-- bot header with search and profile -->
+        <div class="container flex justify-between py-3 lg-md:hidden">
+            <form id="searchForm" class="w-min transition-transform duration-300 ease-in-out">
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3">
+                        <img id="searchIconImg" src="../../../assets/images/icons/search.svg" alt="Search icon"/>
+                    </div>
+                    <input type="search" id="default-search"
+                           class="block w-full p-2 ps-10 text-sm text-gray-900 border border-grey-light rounded-md"
+                           placeholder="Например: автозапчасти" required/>
+                </div>
+            </form>
+
+            <svg class="text-dark-text" width="36" height="36" viewBox="0 0 36 36" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
+                      fill="currentColor"/>
+            </svg>
+        </div>
+    </div>
+    <!-- burger menu -->
+    <div
+            class="burgerMenu h-screen bg-dark fixed bottom-0 right-0 w-screen shadow-lg transition-transform duration-300 ease-in-out z-50 lg-md:hidden px-5 translate-x-full"
+            id="burgerMenu">
+        <!-- close icon -->
+        <img class="absolute top-[18px] right-5" src="../../../assets/images/icons/close.svg" alt="Close"
+             id="closeIcon"/>
+        <div class="flex flex-col justify-center h-full">
+            <div class="text-white flex flex-col gap-[30px]">
+                <ul class="flex flex-col justify-center items-center h-full gap-10">
+                    <li class="text-base font-medium uppercase">
+                        <a href="/pages/suppliers/suppliers.html"> Поставщики </a>
+                    </li>
+                    <li class="text-base font-medium uppercase">
+                        <a> Закупки </a>
+                    </li>
+                    <li class="text-base font-medium uppercase">
+                        <a> Товары </a>
+                    </li>
+                    <li class="text-base font-medium uppercase">
+                        <a> Покупатели </a>
+                    </li>
+                </ul>
+                <div class="flex flex-col justify-center items-center text-base font-medium">
+                    <div class="flex flex-col items-center">
+                        <svg class="text-white" width="36" height="36" viewBox="0 0 36 36" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
+                                  fill="currentColor"/>
+                        </svg>
+                        <p class="mt-3">Личный кабинет</p>
+                    </div>
+                    <div class="flex flex-col items-center mt-[52px]">
+                        <svg class="text-white w-9 h-9" width="25" height="28" viewBox="0 0 25 28" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M12.1161 0C7.47867 0 3.71735 3.76285 3.71613 8.4L3.71431 15.019L0.45402 19.9135C-0.756575 21.7309 0.601382 24.2648 2.78462 24.2648H7.54425C7.97928 26.3887 9.86874 28 12.1161 28C12.9666 28 13.7665 27.7665 14.4504 27.3702C15.5695 26.7583 14.603 25.0891 13.5152 25.7551C13.0997 25.9958 12.6277 26.1333 12.1161 26.1333C10.8865 26.1333 9.85616 25.3574 9.47563 24.2648H21.4486C23.632 24.2648 24.9912 21.7307 23.7792 19.9135L20.5161 15.0217V8.4C20.5161 6.86877 20.1016 5.43276 19.3905 4.2C19.3292 4.09381 19.2476 4.00073 19.1504 3.92607C19.0531 3.85142 18.9421 3.79665 18.8237 3.7649C18.7053 3.73314 18.5818 3.72503 18.4602 3.74101C18.3387 3.757 18.2214 3.79677 18.1153 3.85806C18.0091 3.91935 17.916 4.00096 17.8414 4.09822C17.7667 4.19548 17.712 4.3065 17.6803 4.42492C17.6485 4.54334 17.6404 4.66685 17.6564 4.7884C17.6724 4.90996 17.7122 5.02716 17.7736 5.13333C18.329 6.09634 18.6495 7.20419 18.6495 8.4V15.3043C18.6495 15.4886 18.704 15.6687 18.8062 15.822L22.226 20.949C22.6672 21.6104 22.2444 22.3982 21.4486 22.3982H2.78462C1.98852 22.3982 1.56603 21.6112 2.00714 20.949L5.4242 15.8193C5.52641 15.666 5.58096 15.4858 5.58097 15.3016L5.5828 8.4C5.58376 4.76409 8.48052 1.86667 12.1161 1.86667C13.3119 1.86667 14.4198 2.18711 15.3828 2.74258C15.489 2.80397 15.6062 2.84384 15.7278 2.8599C15.8494 2.87597 15.9729 2.86792 16.0914 2.83621C16.2099 2.8045 16.321 2.74975 16.4183 2.6751C16.5156 2.60045 16.5972 2.50735 16.6585 2.40113C16.7198 2.29491 16.7596 2.17765 16.7756 2.05605C16.7916 1.93445 16.7834 1.81089 16.7516 1.69244C16.7198 1.57399 16.665 1.46296 16.5903 1.36571C16.5156 1.26846 16.4224 1.18688 16.3161 1.12565C15.0834 0.414583 13.6473 0 12.1161 0Z"
+                                  fill="currentColor"/>
+                        </svg>
+
+                        <p class="mt-3">Уведомления</p>
+                    </div>
+                </div>
+            </div>
+            <img class="absolute bottom-0 left-1/2 -translate-x-1/2" src="../../../assets/images/icons/meebuy.svg"
+                 alt="Meebuy"/>
+        </div>
+    </div>
+</header>
+<nav class="breadcrumbs bg-[#FFFFFC]">
+    <div class="container">
+        <div class="">
+            <div class="flex gap-4 py-4">
+                <div class="flex items-center gap-4">
+                    <img src="../../../assets/images/icons/home.svg" alt=""/>
+                    <img src="../../../assets/images/icons/arrow-prev.svg" alt=""/>
+                </div>
+                <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
+            </div>
+        </div>
+    </div>
+</nav>
+<main class="profile-myCompany">
+    <section class="heading">
+        <div class="container">
+            <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                личный кабинет</h1>
+        </div>
+    </section>
+    <div class="container">
+        <div class="lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
+            <!--  this section is for avatar  -->
+            <section class="main-content mt-[30px] lg-md:mt-[50px]">
+                <div class="container">
+                    <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
+                        <!-- upload avatar-->
+                        <div class="upload__avatar text-center flex justify-center">
+                            <div class="relative">
+                                <img class="absolute right-0 bottom-0"
+                                     src="../../../assets/images/icons/camera-outline.svg"
+                                     alt="">
+                                <form class="rounded-full overflow-hidden  w-20 h-20" action="">
+                                    <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="../../../assets/images/icons/Avatar.svg" alt="">
+                                    </label>
+                                    <input id="upload" type="file" class="hidden"/>
+                                </form>
+                            </div>
+                        </div>
+                        <h2 class="text-center text-lg font-semibold mt-2.5">Асанов Асан</h2>
+                        <!-- dropdown menu-->
+                        <div class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden">
+                            <button class="dropdown__btn px-2.5 w-full  flex items-center justify-between text-dark-text">
+                                <p class="text-lg font-bold">Моя компания</p>
+                                <img class="w-5 h-5" src="../../../assets/images/icons/ios-arrow.svg" alt="">
+                            </button>
+                            <ul class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg">
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/products/myCompany.html">Товары</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- dropdown menu end-->
+                        <!-- desktop menu-->
+                        <div class="hidden lg-md:block">
+                            <ul class="flex flex-col">
+                                <li class="dropdown__item active">
+                                    <a href="/pages/profile/purchases/myCompany.html">Моя компания</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/products/myCompany.html">Товары</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- desktop menu end-->
+                    </div>
+                </div>
+            </section>
+            <!-- these sections are for main content  -->
+            <seciton class="main-content mt-10 mb-28 lg-md:mt-[50px] lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
+                <div class="container">
+                    <div class="cards grid grid-cols-1 gap-[30px] xl:grid-cols-2">
+                        <!--  Анкета  -->
+                        <div class="card__item shadow-card-shadow">
+                            <p class="text-[#FF4B4B]">Анкета компании заполнена некорректно! Корректно заполните
+                                название
+                                компании, описание, контактные данные. Затем подайте на перепроверку.</p>
+                            <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5"><a href="">Редактировать
+                                анкету</a></button>
+                            <a href=""
+                               class="mt-4 border border-[#E4DB00] bg-[#2B292C] text-bg-white rounded-[15px] flex items-center justify-center w-full gap-2.5 py-[13px] ">
+                                <img class="w-[23px] h-[23px]" src="../../../assets/images/icons/premium.svg" alt="">
+                                <span>Подключить <span class="uppercase">Premium</span> тариф</span>
+                            </a>
+                        </div>
+                        <!--  Фотографии  -->
+                        <div class="card__item photos text-dark-text shadow-card-shadow">
+                            <h2 class="content__title">Фотографии</h2>
+                            <p class="mt-3.5">На главной странице своей компании Вы можете разместить до 6
+                                фотографий</p>
+                            <!-- upload 6 photos -->
+                            <div class="photos__wrapper mt-6 grid grid-cols-[repeat(auto-fill,minmax(96px,96px))] gap-2.5 lg-md:grid-cols-[repeat(auto-fill,minmax(50px,50px))]">
+                                <form class="relative">
+                                    <label for="file1"
+                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        <div class="h-full w-full flex justify-center items-center">
+                                            <input type="file" name="file" id="file1" class="photos__input sr-only">
+                                            <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                                            <img src="../../../assets/images/pink-boots.png" alt=""
+                                                 class="hidden object-cover h-full w-full" id="preview1">
+                                            <!-- Default icon to show before file selection -->
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                      fill="#BEBEBE"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                </form>
+                                <form class="relative">
+                                    <label for="file2"
+                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        <div class="h-full w-full flex justify-center items-center">
+                                            <input type="file" name="file" id="file2" class="photos__input sr-only">
+                                            <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                                            <img src="../../../assets/images/pink-boots.png" alt=""
+                                                 class="hidden object-cover h-full w-full" id="preview2">
+                                            <!-- Default icon to show before file selection -->
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg" id="icon2">
+                                                <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                      fill="#BEBEBE"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                </form>
+                                <form class="relative">
+                                    <label for="file3"
+                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        <div class="h-full w-full flex justify-center items-center">
+                                            <input type="file" name="file3" id="file3" class="photos__input sr-only">
+                                            <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                                            <img src="../../../assets/images/pink-boots.png" alt=""
+                                                 class="hidden object-cover h-full w-full" id="preview3">
+                                            <!-- Default icon to show before file selection -->
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg" id="icon3">
+                                                <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                      fill="#BEBEBE"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                </form>
+                                <form class="relative">
+                                    <label for="file4"
+                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        <div class="h-full w-full flex justify-center items-center">
+                                            <input type="file" name="file" id="file4" class="photos__input sr-only">
+                                            <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                                            <img src="../../../assets/images/pink-boots.png" alt=""
+                                                 class="hidden object-cover h-full w-full" id="preview4">
+                                            <!-- Default icon to show before file selection -->
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg" id="icon4">
+                                                <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                      fill="#BEBEBE"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                </form>
+                                <form class="relative">
+                                    <label for="file5"
+                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        <div class="h-full w-full flex justify-center items-center">
+                                            <input type="file" name="file" id="file5" class="photos__input sr-only">
+                                            <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                                            <img src="../../../assets/images/pink-boots.png" alt=""
+                                                 class="hidden object-cover h-full w-full" id="preview5">
+                                            <!-- Default icon to show before file selection -->
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg" id="icon5">
+                                                <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                      fill="#BEBEBE"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                </form>
+                                <form class="relative">
+                                    <label for="file6"
+                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        <div class="h-full w-full flex justify-center items-center">
+                                            <input type="file" name="file" id="file6" class="photos__input sr-only">
+                                            <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                                            <img src="../../../assets/images/pink-boots.png" alt=""
+                                                 class="hidden object-cover h-full w-full" id="preview6">
+                                            <!-- Default icon to show before file selection -->
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg" id="icon6">
+                                                <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                      fill="#BEBEBE"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                </form>
+                            </div>
+                            <!-- advice-->
+                            <p class="relative mt-9 text-dark-logo leading-6">
+                                <img class="absolute -left-[3px] -top-2.5 -z-[1] rotate-[49.07deg]"
+                                     src="../../../assets/images/icons/bg-yellow-icon.svg" alt="">
+                                Совет: выберите самые яркие, качественные фото, чтобы привлечь больше клиентов
+                            </p>
+                        </div>
+                        <!--  цены  -->
+                        <div class="card__item price text-dark-text shadow-card-shadow">
+                            <h2 class="content__title">Прайс</h2>
+                            <p class="mt-3.5">Вы можете разместить прайс-листы, файлы, документы на Вашей странице</p>
+                            <form class="relative mt-6">
+                                <label for="price_file"
+                                       class="border-2 overflow-hidden w-full px-4 h-12 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center">
+                                    <div class="h-full w-full flex items-center">
+                                        <input type="file" name="file" id="price_file" class="photos__input sr-only">
+                                        <div class="flex items-center gap-2.5" id="price_icon">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                      fill="#BEBEBE"/>
+                                            </svg>
+                                            Добавить документ
+                                        </div>
+                                    </div>
+                                </label>
+                            </form>
+                            <div class="uploaded_files flex flex-col gap-2.5 mt-8">
+                            </div>
+                            <p class="relative mt-9 text-dark-logo leading-6">
+                                <img class="absolute -left-[3px] -top-2.5 -z-[1]"
+                                     src="../../../assets/images/icons/bg-yellow-icon.svg" alt="">
+                                Вы можете загрузить документы в формате: .pdf, .doc, .xls
+                            </p>
+                        </div>
+                        <!--  продукты  -->
+                        <div class="card__item products text-dark-text shadow-card-shadow">
+                            <h2 class="content__title">Продукты</h2>
+                            <p class="mt-3.5">У Вас пока нет товаров</p>
+                            <a href="/pages/profile/"
+                               class="flex items-center gap-2.5 mt-6 border-2 overflow-hidden w-full py-2 border-dashed border-[#AEAEAE] pl-5 rounded-lg flex  items-center">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                          fill="#BEBEBE"/>
+                                </svg>
+                                Добавить
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </seciton>
+        </div>
+    </div>
+</main>
+<script src="./index.js"></script>
+<script src="../profile.js"></script>
+<footer class="bg-[#222222]">
+    <div class="bg-black py-4">
+        <div class="container flex justify-between lg-md:items-center lg-md:gap-[27px]">
+            <a href="/pages/home/home.html"><img src="../../../assets/images/icons/logo.svg" alt="Meebuy"/></a>
+            <img class="lg-md:hidden" id="burgerIcon" src="../../../assets/images/icons/burger-menu.svg"
+                 alt="Burger Menu"/>
+            <form class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow">
+                <div class="relative">
+                    <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                        <img src="../../../assets/images/icons/search.svg" alt="Search icon"/>
+                    </div>
+                    <input id="default-search"
+                           class="block w-full p-2 pe-10 text-sm bg-transparent text-[#9A9A9A] border border-grey-light rounded-md"
+                           placeholder="Например: автозапчасти"/>
+                </div>
+            </form>
+            <ul class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm">
+                <li class="font-medium uppercase">
+                    <a href="/pages/suppliers/suppliers.html"> Поставщики </a>
+                </li>
+                <li class="font-medium uppercase">
+                    <a> Закупки </a>
+                </li>
+                <li class="font-medium uppercase">
+                    <a> Товары </a>
+                </li>
+                <li class="font-medium uppercase">
+                    <a> Покупатели </a>
+                </li>
+            </ul>
+            <div class="hidden lg-md:flex gap-4">
+                <svg class="lg-md:block text-logo-color" width="36" height="36" viewBox="0 0 36 36" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M18.002 2C9.17336 2 2 9.17336 2 18.002C2 26.8306 9.17309 34.0067 18.002 34.004C21.1453 34.003 24.2173 33.0712 26.8349 31.3333C26.9214 31.2794 26.9961 31.2086 27.0547 31.1253C27.1134 31.042 27.1547 30.9478 27.1763 30.8482C27.1979 30.7487 27.1993 30.6458 27.1804 30.5457C27.1616 30.4456 27.1229 30.3503 27.0665 30.2654C27.0102 30.1805 26.9374 30.1078 26.8525 30.0515C26.7676 29.9952 26.6723 29.9565 26.5721 29.9377C26.472 29.9189 26.3691 29.9204 26.2696 29.9421C26.1701 29.9637 26.0759 30.0051 25.9926 30.0638C23.6235 31.6366 20.8444 32.4791 18.002 32.48C9.99728 32.4824 3.524 26.007 3.524 18.002C3.524 9.997 9.997 3.524 18.002 3.524C26.007 3.524 32.4824 9.99728 32.48 18.002C32.4791 20.8444 31.6366 23.6235 30.0638 25.9926C30.0051 26.0759 29.9637 26.1701 29.9421 26.2696C29.9204 26.3691 29.9189 26.472 29.9377 26.5721C29.9565 26.6723 29.9952 26.7676 30.0515 26.8525C30.1078 26.9374 30.1805 27.0102 30.2654 27.0665C30.3503 27.1229 30.4456 27.1616 30.5457 27.1804C30.6458 27.1993 30.7487 27.1979 30.8482 27.1763C30.9478 27.1547 31.042 27.1134 31.1253 27.0547C31.2086 26.9961 31.2794 26.9214 31.3333 26.8349C33.0712 24.2173 34.003 21.1453 34.004 18.002C34.0067 9.17309 26.8306 2 18.002 2ZM18.002 5.048C15.6441 5.048 13.4294 5.68308 11.5243 6.78557C11.4351 6.83434 11.3566 6.90046 11.2933 6.98003C11.2301 7.0596 11.1834 7.15102 11.156 7.2489C11.1287 7.34678 11.1211 7.44915 11.1339 7.54998C11.1467 7.65081 11.1795 7.74807 11.2304 7.83603C11.2814 7.92398 11.3494 8.00087 11.4305 8.06215C11.5116 8.12343 11.6041 8.16787 11.7026 8.19286C11.8011 8.21784 11.9036 8.22287 12.0041 8.20764C12.1046 8.19241 12.2011 8.15724 12.2877 8.10419C13.9699 7.13077 15.9171 6.572 18.002 6.572C24.3236 6.572 29.4326 11.6805 29.432 18.002C29.4317 20.8792 28.2989 23.5861 26.384 25.6771V24.098C26.384 22.0004 24.6716 20.288 22.574 20.288H21.7249C22.7169 19.3188 23.336 17.9696 23.336 16.4795C23.336 13.5426 20.9374 11.144 18.0005 11.144C15.0637 11.144 12.6687 13.5426 12.6687 16.4795C12.6687 17.9696 13.2871 19.3188 14.2783 20.288H13.43C11.3324 20.288 9.62 22.0004 9.62 24.098V25.6666C7.70709 23.5782 6.57416 20.8748 6.572 18.0013C6.57043 15.9171 7.13059 13.9702 8.10419 12.2877C8.15724 12.2011 8.19241 12.1046 8.20764 12.0041C8.22287 11.9036 8.21784 11.8011 8.19286 11.7026C8.16787 11.6041 8.12343 11.5116 8.06215 11.4305C8.00087 11.3494 7.92398 11.2814 7.83603 11.2304C7.74807 11.1795 7.65081 11.1467 7.54998 11.1339C7.44915 11.1211 7.34678 11.1287 7.2489 11.156C7.15102 11.1834 7.0596 11.2301 6.98003 11.2933C6.90046 11.3566 6.83434 11.4351 6.78557 11.5243C5.68326 13.4291 5.04622 15.6441 5.048 18.0027C5.05095 21.9306 6.84003 25.6447 9.90575 28.0992C10.0178 28.1889 10.1529 28.2451 10.2955 28.2614C10.4381 28.2777 11.5 28.5 11.5 28.5C11.5 28.5 11.5 28.5 11.5 28.4865C13 28.4865 12.9131 28.4865 14.1927 28.4865H22.574C23.8536 28.4865 23 28.5 24.5 28.4865V28.5C24.5 28.5 25.5659 28.2888 25.7085 28.2726C25.8511 28.2563 25.9862 28.2001 26.0982 28.1104C29.1673 25.6532 30.9556 21.9337 30.956 18.002C30.9567 10.8566 25.1473 5.048 18.002 5.048ZM28.7898 28.0166C28.6878 28.015 28.5865 28.0338 28.4919 28.072C28.3973 28.1103 28.3114 28.1671 28.2391 28.2391C28.1683 28.3099 28.1121 28.394 28.0737 28.4865C28.0354 28.579 28.0156 28.6781 28.0156 28.7783C28.0156 28.8784 28.0354 28.9776 28.0737 29.0701C28.1121 29.1626 28.1683 29.2466 28.2391 29.3174C28.3099 29.3883 28.394 29.4445 28.4865 29.4828C28.579 29.5212 28.6781 29.5409 28.7783 29.5409C28.8784 29.5409 28.9776 29.5212 29.0701 29.4828C29.1626 29.4445 29.2466 29.3883 29.3174 29.3174C29.3883 29.2466 29.4445 29.1626 29.4828 29.0701C29.5212 28.9776 29.5409 28.8784 29.5409 28.7783C29.5409 28.6781 29.5212 28.579 29.4828 28.4865C29.4445 28.394 29.3883 28.3099 29.3174 28.2391C29.1771 28.0992 28.9879 28.0194 28.7898 28.0166Z"
+                          fill="currentColor"/>
+                </svg>
+
+                <img class="lg-md:block" src="../../../assets/images/icons/bell.svg" alt=""/>
+            </div>
+        </div>
+    </div>
+    <div class="container text-[#FFFFFC] pt-14 pb-20">
+        <div class="flex md:flex-row flex-col items-start justify-between gap-14 text-[#8A8A8A]">
+            <div class="font-mulish flex flex-col text-[#FFFFFC] gap-8">
+                <h6 class="uppercase text-[20px] font-semibold">мы в соцсетях</h6>
+                <ul class="flex gap-3">
+                    <li>
+                        <img src="../../../assets/images/icons/footer/socials/instagram.svg" alt=""/>
+                    </li>
+                    <li>
+                        <img src="../../../assets/images/icons/footer/socials/whatsapp.svg" alt=""/>
+                    </li>
+                    <li>
+                        <img src="../../../assets/images/icons/footer/socials/telegram.svg" alt=""/>
+                    </li>
+                    <li>
+                        <img src="../../../assets/images/icons/footer/socials/wk.svg" alt=""/>
+                    </li>
+                </ul>
+                <p class="font-poppins">+7 (929) 566 -02 - 27</p>
+            </div>
+            <ul class="font-mulish flex flex-col gap-6 text-[18px]">
+                <li class="uppercase font-mulish font-extrabold">
+                    <h6 class="text-[#FFFFFC]">поставщикам</h6>
+                </li>
+                <li class="">Добавить компанию</li>
+                <li>Поиск закупок</li>
+                <li>Поиск покупателей</li>
+                <li>Тарифы</li>
+            </ul>
+            <ul class="font-mulish flex flex-col gap-6 text-[18px]">
+                <li class="uppercase font-extrabold">
+                    <h6 class="text-[#FFFFFC]">покупателям</h6>
+                </li>
+                <li>Купить оптом</li>
+                <li><a href="/pages/suppliers/suppliers.html">
+                    Поставщики
+                </a>
+                </li>
+                <li>Производители</li>
+                <li>Поиск товаров</li>
+            </ul>
+            <ul class="font-mulish flex flex-col gap-6 text-[18px]">
+                <li class="uppercase font-mulish font-extrabold">
+                    <h6 class="text-[#FFFFFC]">о компании</h6>
+                </li>
+                <li>Тарифы</li>
+                <li>Баннерная реклама</li>
+                <li>Правила</li>
+                <li>Техподдержка</li>
+            </ul>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

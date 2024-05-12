@@ -39,7 +39,7 @@ class User(AbstractUser):
         (2, _('Покупатель')),
     ]
     
-    phone = models.CharField(max_length=15, null=True, unique=True, verbose_name=_('Номер телефона'), blank=True)
+    phone = models.CharField(max_length=20, null=True, unique=True, verbose_name=_('Номер телефона'), blank=True)
     email = models.EmailField(unique=True)
     username = models.CharField(unique=False, max_length=250, blank=True, null=True, verbose_name=_('Имя пользователя'))
     auth_provider = models.BooleanField(default=True, verbose_name=_('Провайдер'))

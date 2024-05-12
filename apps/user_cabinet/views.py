@@ -18,6 +18,7 @@ class UppingListView(LoginRequiredMixin, generic.ListView):
     model = Upping
     queryset = Upping.objects.all()
 
-# @login_required()
-# def buy_status(request):
-#     pass
+
+class UserDetailView(generic.TemplateView, LoginRequiredMixin):
+    template_name = 'cabinet/main.html'
+

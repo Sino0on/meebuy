@@ -1,0 +1,83 @@
+.tab-hover {
+  color: hsl(280, 4%, 17%);
+  transition: background-color 0.6s ease-in-out;
+  background-color: #fffb98;
+}
+.cards {
+  box-shadow: #b1b1b14d 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+/* button animation */
+.login-an {
+  animation: loginClick 0.8s;
+}
+@keyframes loginClick {
+  0% {
+    transform: translateY(100px);
+    animation-duration: 0s;
+  }
+}
+.register-an {
+  animation: registerClick 0.8s;
+}
+@keyframes registerClick {
+  0% {
+    transform: translateY(-200px);
+    animation-duration: 0s;
+  }
+}
+
+/* input animations */
+.input-change {
+  animation: inputChange 1s;
+}
+@keyframes inputChange {
+  0% {
+    opacity: 0.4;
+    animation-duration: 0.2s;
+  }
+  50% {
+    opacity: 0.6;
+    animation-duration: 0.4s;
+  }
+  100% {
+    opacity: 1;
+    animation-duration: 1s;
+  }
+}
+.password-an {
+  animation: passwordChange 1s;
+}
+@keyframes passwordChange {
+  0% {
+    opacity: 0;
+    animation-duration: 0.2s;
+  }
+  50% {
+    opacity: 0.2;
+    animation-duration: 0.6s;
+  }
+  100% {
+    opacity: 1;
+    animation-duration: 1s;
+  }
+}
+.password-an-log {
+  animation: passwordLogChange 1s;
+}
+@keyframes passwordLogChange {
+  0% {
+    opacity: 0.4;
+    animation-duration: 0.6s;
+  }
+  50% {
+    opacity: 0.6;
+    animation-duration: 0.7s;
+  }
+}
+
+#register-form,
+#login-form {
+  overflow: hidden;
+  transition: max-height 0.9s ease-in-out;
+}

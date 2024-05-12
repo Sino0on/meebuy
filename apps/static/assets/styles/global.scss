@@ -22,4 +22,10 @@
   .section__title {
     @apply uppercase text-dark font-black text-center;
   }
+  .btn-filled-yellow {
+    @apply bg-[#E4DB00] border border-[#E4DB00] rounded-[7px] text-dark-logo;
+  }
+  .btn-filled-yellow-light {
+    @apply bg-[#FFFB98] border border-[#FFFB98] rounded-[15px] text-dark-logo;
+  }
 }

@@ -4,16 +4,15 @@
 }
 
 .suppliers-wrapper {
-  background: url(../../assets/images/procurement/procurement-bg.png) center
-    no-repeat;
+  background: url(../../assets/images/home/purchases.jpg) center no-repeat;
   background-size: cover;
-  object-fit: cover;
   height: 350px;
   width: 86%;
+  animation: revealContent 1s;
+  background-size: cover;
   position: relative;
   display: flex;
   align-items: center;
-  animation: revealContent 1s;
   border-radius: 20px;
   margin: auto;
 }
@@ -36,7 +35,6 @@
 @keyframes revealContent {
   0% {
     width: 100%;
-    opacity: 1;
     border-radius: 0;
     transform: scale(1.4);
     display: flex;
@@ -45,11 +43,9 @@
   }
   80% {
     width: 86%;
-    opacity: 0.9;
     height: 350px;
   }
   100% {
-    opacity: 0.8;
     display: flex;
     justify-content: center;
     align-items: center;

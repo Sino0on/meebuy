@@ -6,7 +6,6 @@
     <title>Buyers</title>
 
     <link rel="stylesheet" href="../../styles.css" />
-    <link href="../../output.css" rel="stylesheet" />
     <link href="./buyers.css" rel="stylesheet" />
   </head>
   <body>
@@ -248,137 +247,229 @@
         >
           категории товаров
         </h6>
-        <div class="flex md:flex-row flex-col justify-between">
-          <ul class="flex flex-col md:gap-2 gap-1">
-            <li class="flex items-center gap-1">
-              <img
-                class="bg-[#FFFFFF]"
-                src="../../assets/images/suppliers/product-categories/t-shirt.svg"
-                alt=""
-              />
-              <p>Одежда, обувь и аксессуары</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/home.svg"
-                alt=""
-              />
-              <p>Дом, дача, сад</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/furniture.svg"
-                alt=""
-              />
-              <p>Мебель</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/medicine.svg"
-                alt=""
-              />
-              <p>Медицина и товары для здоровья</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/books.svg"
-                alt=""
-              />
-              <p>Книги и канцелярские товары</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/services.svg"
-                alt=""
-              />
-              <p>Услуги</p>
-            </li>
-          </ul>
-          <ul class="flex flex-col md:gap-2 gap-1">
-            <li class="flex items-center gap-1">
-              <img
-                class="bg-[#FFFFFF]"
-                src="../../assets/images/suppliers/product-categories/products.svg"
-                alt=""
-              />
-              <p>Продукты питания и напитки</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/presents.svg"
-                alt=""
-              />
-              <p>Подарки и сувениры</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/cosmetics.svg"
-                alt=""
-              />
-              <p>Косметика и гигиена</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/sports.svg"
-                alt=""
-              />
-              <p>Спорт, охота и туризм</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/musics.svg"
-                alt=""
-              />
-              <p>Музыка и искусство</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/others.svg"
-                alt=""
-              />
-              <p>Другое</p>
-            </li>
-          </ul>
-          <ul class="flex flex-col md:gap-2 gap-1">
-            <li class="flex items-center gap-1">
-              <img
-                class="bg-[#FFFFFF]"
-                src="../../assets/images/suppliers/product-categories/toys.svg"
-                alt=""
-              />
-              <p>Игрушки и товары для детей</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/electronics.svg"
-                alt=""
-              />
-              <p>Электроника и бытовая техника</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/auto.svg"
-                alt=""
-              />
-              <p>Авто и мото</p>
-            </li>
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/pets.svg"
-                alt=""
-              />
-              <p>Животные и растения /p></p>
-            </li>
-
-            <li class="flex items-center gap-1">
-              <img
-                src="../../assets/images/suppliers/product-categories/construction.svg"
-                alt=""
-              />
-              <p>Строительство и ремонт</p>
-            </li>
-          </ul>
-        </div>
+        <ul class="grid gap-8 lg-md:grid-cols-3 sm: grid-cols-1">
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/t-shirt.svg"
+                  alt=""
+                />
+              </div>
+              <span>Одежда, обувь и аксессуары</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/burger.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Продукты питания и напитки</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/robot.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Игрушки и товары для детей</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/house.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Дом,дача,сад</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/gift.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Подарки и сувениры</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/computer.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Электроника и бытовая техника</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/bed.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Мебель</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/makeup.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Косметика и гигиена</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/happy-car.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Авто и мото</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-whiterounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/first-aid.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Медицина и товары для здоровья</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/football.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Спорт, охота и туризм</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/animal.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Животные и растения</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/books.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Книги и канцелярские товары</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/guitar.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Музыка и искусство</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/wrench.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Строительство и ремонт</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              >
+                <img
+                  src="../../assets/images/icons/category/services.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Услуги</span>
+            </a>
+          </li>
+          <li class="text-[18px]">
+            <a class="flex items-center gap-[10px] w-fit" href="">
+              <div
+                class="shadow-lg w-12 h-12 lg-md:w-12 lg-md:h-12 text-white rounded-full overflow-hidden flex items-center justify-center"
+              >
+                <img
+                  src="../../assets/images/icons/category/other.svg"
+                  alt="Shirt"
+                />
+              </div>
+              <span>Другое</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
 

@@ -1,0 +1,96 @@
+.tariffs .tariffs__info {
+    border: 1px solid #C1BA01;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.tariffs .tariffs__info.recommended {
+    border: 1px solid #009F4A;
+}
+
+.tariffs .tariffs__info-recommended {
+    background: rgba(193, 186, 1, 0.3);
+    padding: 15px 10px 15px 10px;
+    height: 54px;
+}
+
+.tariffs .tariffs__info.recommended .tariffs__info-recommended {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;
+    background: #009F4A;
+}
+
+/* price */
+.tariffs .tariffs__info-price {
+    font-size: 36px;
+    font-weight: 900;
+}
+
+.tariffs .tariffs__info-price-old {
+    color: #EA1D01;
+}
+
+.tariffs .tariffs__info-price-discount {
+    color: #2DC071;
+}
+
+.tariffs .tariffs__info-price-discount span,
+.tariffs .tariffs__info-price-old span:last-child {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* title */
+.tariffs__info .tariffs__info-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #2B292C;
+    text-transform: uppercase;
+}
+
+/* choice */
+.tariffs__info .tariffs__info-choice.default p {
+    font-weight: 600;
+    color: #007B31;
+}
+
+/* text color  */
+.tariffs .tariffs__info p {
+    font-size: 18px;
+    color: #4D4D4D;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.tariffs .tariffs__info .counts {
+    font-size: 18px;
+    font-weight: 800;
+    color: #262626;
+}
+
+/* period */
+
+.tariffs .tariffs__info-period_price p {
+    color: #737373;
+}
+
+
+.tariffs .tariffs__info-period_price span {
+    font-weight: 900;
+}
+
+.tariffs .tariffs__info-period_term p{
+    font-size: 16px;
+    color: #454545;
+}
+
+.tariffs .tariffs__info-bonuses p {
+    text-align: left;
+    font-size: 16px;
+}
