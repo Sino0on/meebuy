@@ -1,0 +1,32 @@
+
+.addProduct .label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B292C;
+    line-height: 27px;
+}
+
+.addProduct .tooltip {
+    font-size: 16px;
+    font-weight: 300;
+    color: #4D4D4D;
+    margin-top: 20px;
+}
+
+.addProduct input[type="text"] {
+    margin-top: 24px;
+}
+
+.period__item {
+    cursor: pointer;
+}
+
+.period__item.active {
+    background: #FFFB98;
+}
+
+@media (min-width: 992px) {
+    .addProduct input[type="text"] {
+        margin-top: 26px;
+    }
+}

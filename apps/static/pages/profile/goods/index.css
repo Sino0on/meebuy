@@ -1,0 +1,20 @@
+.cards {
+  box-shadow: #b1b1b14d 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+input::placeholder {
+  color: "#A0A0A0";
+  font-size: 18px;
+  font-family: "Mulish";
+}
+.box-shadow {
+  width: 100%;
+  box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.1),
+    0px -10px 10px -10px rgba(0, 0, 0, 0.1);
+}
+input[type="checkbox"] {
+  accent-color: #bab306 !important;
+  color: white !important;
+}
+.scroll-container {
+  scrollbar-width: thin;
+}

@@ -140,6 +140,11 @@
         <!-- login -->
         <form method="post">
           <div id="login-form" style="display: flex; flex-direction: column; gap: 30px" class=" login-form overflow-hidden w-full mb-6 ">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
           <div class="flex flex-col gap-3  w-full">
             <label clas="text-[18px] font-mulish" for=""
               >Ваш адрес электронной почты Email *</label

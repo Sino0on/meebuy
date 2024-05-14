@@ -1,6 +1,12 @@
 from django import forms
-
+from django.contrib.auth.password_validation import validate_password
+from django.core import validators
+from django.contrib.admin.widgets import AutocompleteSelect
+from apps.product.models import Category
 from .models import User
+from apps.provider.models import Provider
+from django.utils.translation import gettext_lazy as _
+from django.contrib import admin
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -19,7 +25,7 @@ class UserRegistrationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
         'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
         'placeholder': '********'
-    }))
+    }), validators=[validate_password])
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={
         'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
         'placeholder': '********'
@@ -28,6 +34,16 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'phone', 'first_name', 'password1', 'password2')
+
+    def validate_password2(self, password2):
+        if self.cleaned_data.get("password1") != password2:
+            raise forms.ValidationError(_("Пароли не совпадают."))
+
+        return password2
+
+    def validate_password1(self, password1):
+        if not validate_password(password1):
+            return password1
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -50,12 +66,12 @@ class UserRegistrationForm(forms.ModelForm):
     
     def save(self, commit=True):
         user = super().save(commit=False)
+        self.clean_password2()
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user
         
-
 
 class UserTypeSelectionForm(forms.Form):
     USER_TYPE_CHOICES = [
@@ -84,3 +100,45 @@ class UserProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
         self.fields['username'].disabled = False  
+
+
+class ProviderForm(forms.ModelForm):
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        widget=AutocompleteSelect(Provider._meta.get_field('category').remote_field, admin.site)
+    )
+
+    class Meta:
+        fields = '__all__'
+        model = Provider
+
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
+        'class': 'input  mt-3.5 lg-md:mt-[18px]',
+        'placeholder': 'Email *',
+    }))
+    phone = forms.CharField(required=True, widget=forms.TextInput(attrs={
+        'class': 'input  mt-3.5 lg-md:mt-[18px]',
+        'placeholder': '+996 *** *** ***',
+    }))
+    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={
+        'class': 'input  mt-3.5 lg-md:mt-[18px]',
+        'placeholder': 'ФИО',
+    }))
+
+    class Meta:
+        model = User
+        fields = ('email', 'phone', 'first_name')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already taken")
+        return email
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if User.objects.filter(phone=phone).exists():
+            raise forms.ValidationError("This phone number is already taken")
+        return phone

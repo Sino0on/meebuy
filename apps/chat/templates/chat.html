@@ -1,32 +1,186 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WebSocket Chat</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-<style>
-  /* Дополнительные стили, если нужно */
-</style>
-</head>
-<body class="bg-gray-100">
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
 
-<div class="container mx-auto px-4 py-5">
-    <div class="bg-white rounded-lg shadow p-5" id="messageContainer" style="height: 300px; overflow-y: auto;">
-        {% for message in messages %}
-        <div class="flex justify-between items-center">
-            <p class="text-sm font-semibold">{{ message.sender }}: <span class="text-normal font-normal">{{ message.content }}</span></p>
-            <span class="text-xs text-gray-500">{{ message.created_at | date:"d M Y H:i" }}</span>
+{% block title %}Личный кабинет{% endblock %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/profile/messages/chat/index.css' %}">
+    {% endblock %}
+
+{% block content %}
+<nav class="breadcrumbs bg-[#FFFFFC]">
+    <div class="container">
+        <div class="">
+            <div class="flex gap-4 py-4">
+                <div class="flex items-center gap-4">
+                    <img src="{% static 'assets/images/icons/home.svg' %}" alt=""/>
+                    <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/>
+                </div>
+                <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
+            </div>
         </div>
-
-        {% endfor %}
     </div>
-    <div class="flex mt-4">
-        <input type="text" id="messageInput" placeholder="Введите сообщение..." class="form-input mt-1 block w-full px-3 py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-        <button onclick="sendMessage()" class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Отправить</button>
-    </div>
-</div>
+</nav>
+<main class="profile-myCompany">
+    <section class="heading">
+        <div class="container">
+            <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                личный кабинет</h1>
+        </div>
+    </section>
+    <div class="container">
+        <div class="lg-md:grid grid-cols-3  pb-[100px] lg-md:pb-[120px] lg-md:gap-5 xl:grid-cols-4">
+            <!--  this section is for avatar  -->
+            <section class="profile__navigate mt-[30px] lg-md:mt-[50px]">
+                <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px] lg-md:pb-28">
+                    <!-- upload avatar-->
+                    <div class="upload__avatar text-center flex justify-center">
+                        <div class="relative">
+                            <img class="absolute right-0 bottom-0"
+                                 src="{% static 'assets/images/icons/camera-outline.svg' %}"
+                                 alt="">
+                            <form class="rounded-full overflow-hidden  w-20 h-20" action="">
+                                <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
+                                    <img class="object-cover h-full" id="avatar"
+                                         src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                </label>
+                                <input id="upload" type="file" class="hidden"/>
+                            </form>
+                        </div>
+                    </div>
+                    <h2 class="text-center text-lg font-semibold mt-2.5">Асанов Асан</h2>
+                    <!-- dropdown menu-->
+                    <div class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden">
+                        <button class="dropdown__btn px-2.5 w-full  flex items-center justify-between text-dark-text">
+                            <p class="text-lg font-bold">Моя компания</p>
+                            <img class="w-5 h-5" src="{% static 'assets/images/icons/ios-arrow.svg' %}" alt="">
+                        </button>
+                        <ul class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg">
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/products/myCompany.html">Товары</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- dropdown menu end-->
+                    <!-- desktop menu-->
+                    <div class="hidden lg-md:block">
+                        <ul class="flex flex-col">
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/purchases/myCompany.html">Моя компания</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/products/myCompany.html">Товары</a>
+                            </li>
+                            <li class="dropdown__item active">
+                                <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- desktop menu end-->
+                </div>
+            </section>
+            <div class="lg-md:col-span-2 xl:col-span-3">
+                <!-- these sections are for main content  -->
+                <section class="main-content mt-[30px] h-[calc(100%-50px)] lg-md:mt-[50px]">
+                    <!-- tabs  -->
+                    <div class="tabs__wrapper">
+                        <button onclick="openTab(event,'Tab1')"
+                                class="tabs__item transition-colors active btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                            Входящие
+                        </button>
+                        <button onclick="openTab(event,'Tab2')"
+                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                            Избранные
+                        </button>
+                        <button onclick="openTab(event,'Tab3')"
+                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                            Удаленные
+                        </button>
+                    </div>
+                    <!-- tabs end  -->
+                    <div id="Tab1"
+                         class="card__wrapper flex flex-col h-[calc(100%-70px)] tab-content shadow-card-shadow rounded-[10px] mt-[30px] py-[25px] px-5">
+                        <div class="">
+                            <a class="flex items-center gap-2.5 pb-[28px] lg-md:pb-[30px] border-b border-b-grey-light font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg"
+                               href="/pages/profile/myCompany/index.html">
+                                <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="">
+                                Headphones.kg
+                            </a>
+                        </div>
+                        <div id="messageContainer" class="flex flex-col max-h-[440px] overflow-scroll px-[3px] py-[25px]">
 
+                            {% for message in messages %}
+                            {% if message.sender == user %}
+                            <div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] bg-[#FBFBFB] rounded-br-none lg-md:max-w-[426px] ml-auto">
+                                <p>{{ message.content }}</p>
+                                <div class="text-right text-[#747474] text-sm">{{ message.created_at|naturaltime }}</div>
+                            </div>
+                            {% else %}
+                            <div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] rounded-tl-none lg-md:max-w-[427px] lg-md:bg-[#FFFEDF]">
+                                <p>{{ message.content }}</p>
+                                <div class="text-right text-[#747474] text-sm">{{ message.created_at|naturaltime }}</div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="flex items-center gap-4 mt-5">
+                            <textarea id="messageInput" class="border border-[#515151] rounded-[10px] pt-3 flex-grow px-5" type="text" placeholder="Введите сообщение"></textarea>
+                            <button onclick="sendMessage()" ><img src="{% static 'assets/images/icons/circle-arrow-yellow.svg' %}" alt=""></button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
 <script>
   var ws = new WebSocket(`ws://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
 
@@ -40,10 +194,10 @@
     var messageContainer = document.getElementById("messageContainer");
     var messageElement = document.createElement("div");
 <!--    var formattedTime = timestamp.toLocaleString('ru-RU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace('.', '');-->
-    messageElement.innerHTML = `<div class="flex justify-between items-center">
-            <p class="text-sm font-semibold">${data.message.user}: <span class="text-normal font-normal">${data.message.message}</span></p>
-            <span class="text-xs text-gray-500">saRb</span>
-        </div>`;
+    messageElement.innerHTML = `<div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] rounded-tl-none lg-md:max-w-[427px] lg-md:bg-[#FFFEDF]">
+                                <p>${data.message.message}</p>
+                                <div class="text-right text-[#747474] text-sm">saRb</div>
+                            </div>`;
     messageContainer.appendChild(messageElement);
     messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
   };
@@ -75,6 +229,8 @@
     }
   });
 </script>
-
-</body>
-</html>
+{% endblock %}
+{% block js %}
+<script src="{% static 'index.js' %}"></script>
+<script src="{% static 'pages/profile/profile.js' %}"></script>
+{% endblock %}

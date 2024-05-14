@@ -1,5 +1,6 @@
 // photos upload
 const fileInputs = document.querySelectorAll('.photos__input');
+const photosWrapper = document.querySelector('.photos__wrapper');
 
 function handleFileLoad(event, index) {
     const imageElement = document.getElementById(`preview${index + 1}`);
@@ -10,14 +11,43 @@ function handleFileLoad(event, index) {
 }
 
 fileInputs.forEach((input, index) => {
-    input.addEventListener('change', () => {
+    const image = photosWrapper.querySelector(`#preview${index + 1}`);
+    const srcImage = image.src.split('/').pop();
+    input.addEventListener('change', (e) => {
+
         const file = input.files[0];
         if (file) {
-            console.log(input.id.substring(4))
             const reader = new FileReader();
             reader.onload = function (event) {
                 handleFileLoad(event, index);
             };
+                const formData = new FormData();
+                if(srcImage) {
+                    formData.append('oldImage', srcImage)
+                }
+                formData.append('image', input.files[0]);
+
+                const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken=')).split('=')[1];
+                // Отправляем запрос на сервер
+                fetch('/change-image/', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include',  // Если требуется, чтобы cookies отправлялись с запросом
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Avatar updated successfully');
+                        return response.json();
+                    } else {
+                        throw new Error('Something went wrong on API server!');
+                    }
+                }).then(response => {
+                    console.log(response);
+                }).catch(error => {
+                    console.error(error);
+                });
             reader.readAsDataURL(file);
         }
     });

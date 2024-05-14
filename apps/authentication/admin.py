@@ -6,7 +6,7 @@ from django.utils.translation import ngettext
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email', 'first_name', 'last_name', 'auth_provider', 'is_staff', 'is_active', 'is_confirm', )
+    list_display = ('id', 'email', 'first_name', 'last_name', 'auth_provider', 'is_staff', 'is_active', 'is_confirm')
     search_fields = ('email', 'first_name', 'last_name', )
     list_filter = ('is_staff', 'is_active', 'is_confirm', )
 

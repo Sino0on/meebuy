@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Личный кабинет{% endblock %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/profile/settings/index.css' %}">
+    {% endblock %}
+
+{% block content %}
+<nav class="breadcrumbs bg-[#FFFFFC]">
+    <div class="container">
+        <div class="">
+            <div class="flex gap-4 py-4">
+                <div class="flex items-center gap-4">
+                    <img src="{% static 'assets/images/icons/home.svg' %}" alt=""/>
+                    <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/>
+                </div>
+                <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
+            </div>
+        </div>
+    </div>
+</nav>
+<main class="profile-settings">
+    <section class="heading">
+        <div class="container">
+            <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                личный кабинет</h1>
+        </div>
+    </section>
+    <div class="container">
+        <div class="lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
+            <!--  this section is for avatar  -->
+            <section class="main-content mt-[30px] lg-md:mt-[50px]">
+                <div class="container">
+                    <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
+                        <!-- upload avatar-->
+                        <div class="upload__avatar text-center flex justify-center">
+                            <div class="relative">
+                                <img class="absolute right-0 bottom-0"
+                                     src="{% static 'assets/images/icons/camera-outline.svg' %}"
+                                     alt="">
+                                <form class="rounded-full overflow-hidden  w-20 h-20" action="">
+                                    <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
+                                        {% if user.buyer.image %}
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{{ user.buyer.image.url }}" alt="">
+                                        {% else %}
+                                        {% if user.provider.image %}
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{{ user.provider.image.url }}" alt="">
+                                        {% else %}
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                        {% endif %}
+                                        {% endif %}
+                                    </label>
+                                    {% csrf_token %}
+                                    <input id="upload" type="file" class="hidden"/>
+                                </form>
+                            </div>
+                        </div>
+                        <h2 class="text-center text-lg font-semibold mt-2.5">{{ user.first_name }}</h2>
+                        <!-- dropdown menu-->
+                        <div class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden">
+                            <button class="dropdown__btn px-2.5 w-full  flex items-center justify-between text-dark-text">
+                                <p class="text-lg font-bold">Моя компания</p>
+                                <img class="w-5 h-5" src="{% static 'assets/images/icons/ios-arrow.svg' %}" alt="">
+                            </button>
+                            <ul class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg">
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/products/myCompany.html">Товары</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- dropdown menu end-->
+                        <!-- desktop menu-->
+                        <div class="hidden lg-md:block">
+                            <ul class="flex flex-col">
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/purchases/myCompany.html">Моя компания</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/products/myCompany.html">Товары</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                                </li>
+                                <li class="dropdown__item active">
+                                    <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- desktop menu end-->
+                    </div>
+                </div>
+            </section>
+            <!-- these sections are for main content  -->
+            <seciton class="main-content block mt-10 mb-28 lg-md:mt-[50px] lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
+                <div class="container">
+                    <div class="card__item shadow-card-shadow  rounded-[10px]">
+                        <form method="post" class="form space-y-[26px] lg-md:space-y-[30px]">
+                            <label for="email" class="label block">
+                                Ваш адрес электронной почты Email *
+                                {{ form.email }}
+                            </label>
+                            <label for="name" class="label block">
+                                Ваше ФИО*
+                                {{ form.first_name }}
+                            </label>
+                            <label for="phoneNumber" class="label block">
+                                Ваш номер телефона
+                                {{ form.phone }}
+                                {% csrf_token %}
+                            </label>
+                            <label for="post" class="label block">
+                                Ваша должность
+                                <input class="input  mt-3.5 lg-md:mt-[18px]" type="text" id="post" name="email" placeholder="Не указана должность">
+                            </label>
+                            <a class="inline-block text-[#2254B6] underline underline-offset-2"  href="">Политика конфиденциальности</a>
+                            <button class="btn-filled-yellow w-full py-5 uppercase" type="submit">Сохранить</button>
+                            <div class="flex gap-[clamp(16px,1.5vw,30px)]">
+                                <a class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]" href="">Сменить пароль</a>
+                                <a href="{% url 'logout' %}" class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]">
+                                    Выйти из профиля</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </seciton>
+        </div>
+    </div>
+</main>
+<!--<script src="{% static 'pages/profile/settings/index.js' %}"></script>-->
+<script src="{% static 'pages/profile/profile.js' %}"></script>
+{% endblock %}

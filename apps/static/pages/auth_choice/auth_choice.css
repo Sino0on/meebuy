@@ -1,0 +1,23 @@
+.cards {
+  box-shadow: #b1b1b14d 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+.cardBox {
+  background-color: transparent;
+  transition: background-color 0.9s ease;
+  color: #2b292c;
+}
+.cardBox:hover {
+  background-color: #000;
+  color: #ffff;
+}
+.svg:hover {
+  fill: black;
+}
+
+.cards {
+  transition: background-color 0.9s ease;
+}
+.cards:hover div {
+  background-color: #000;
+  color: #fff;
+}

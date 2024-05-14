@@ -35,19 +35,19 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     USER_TYPE_CHOICES = [
-        (1, _('Поставщик')),
-        (2, _('Покупатель')),
+        (_('provider'), _('Поставщик')),
+        (_('buyer'), _('Покупатель')),
     ]
     
     phone = models.CharField(max_length=20, null=True, unique=True, verbose_name=_('Номер телефона'), blank=True)
     email = models.EmailField(unique=True)
     username = models.CharField(unique=False, max_length=250, blank=True, null=True, verbose_name=_('Имя пользователя'))
     auth_provider = models.BooleanField(default=True, verbose_name=_('Провайдер'))
-    avatar = models.ImageField(blank=True, null=True, upload_to="avatars/%Y/%m", default='avatars/df/Zherdesh logo-05.png',
+    avatar = models.ImageField(blank=True, null=True, upload_to="avatars/%Y/%m",
                                verbose_name=_('Аватар'))
     is_confirm = models.BooleanField(default=False, blank=True, verbose_name=_('Подтверждение почты'))
     position = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('Должность'))
-    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, verbose_name=_('Тип пользователя'))
+    user_type = models.CharField(max_length=20, verbose_name=_('Тип пользователя'))
     
     objects = UserManager()
 

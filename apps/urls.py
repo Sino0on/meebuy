@@ -2,8 +2,8 @@ from django.urls import path
 from apps.product.views import ProductListView, ProductUpdateView, ProductCreateView, ProductDeleteView, \
     ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView
 from apps.provider.views import ProviderListView, ProviderDetailView
-from apps.user_cabinet.views import UserDetailView
-from apps.authentication.views import LoginView
+from apps.user_cabinet.views import UserDetailView, UserAnketaView, change_avatar, change_image, UserSettingsView
+from apps.authentication.views import LoginView, SelectAuthUserTypeView
 from apps.chat.views import chat_detail, chats
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
@@ -20,8 +20,8 @@ from apps.user_cabinet.api import BuyStatusView, BuyUppingView
 urlpatterns = [
     path('provider/list/', ProviderListView.as_view()),
     path('provider/detail/<int:pk>/', ProviderDetailView.as_view()),
-    path('chat/<str:pk>/', chat_detail),
-    path('chat_list/', chats),
+    path('chat/<str:pk>/', chat_detail, name='chat_detail'),
+    path('chat_list/', chats, name='chat_list'),
     # path('', ProviderHomeListView.as_view()),
     path('change_password/', PasswordChangeView.as_view(template_name='auth/change_password.html'), name='change_password'),
     path('password_change_done/', PasswordChangeDoneView.as_view(template_name='auth/password_change_done.html'),
@@ -34,12 +34,22 @@ urlpatterns = [
     path('reset-password/complete/', PasswordResetCompleteView.as_view(template_name='auth/password_reset_complete.html'),
          name='password_reset_complete'),
     path('', HomeView.as_view(), name='home'),
+
+
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
+    path('choice/', SelectUserTypeView.as_view(), name='choice'),
     path('select_user_type/', SelectUserTypeView.as_view(), name='select_user_type'),
+    path('select_auth_user_type/', SelectAuthUserTypeView.as_view(), name='select_auth_user_type'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('profile/', ViewProfile.as_view(), name='view_profile'),
+    path('profile/', UserDetailView.as_view(), name='view_profile'),
+    path('profile/settings/', UserSettingsView.as_view(), name='settings'),
+    path('profile/anketa/', UserAnketaView.as_view(), name='anketa'),
     path('login_redirect/', login_redirect, name='login_redirect'),
+
+    path('change-avatar/', change_avatar),
+    path('change-image/', change_image),
+
 
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),
 

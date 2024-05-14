@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/profile/myCompany/editProfile/index.css' %}">
+{% endblock %}
+{% block content %}
+<main class="edit__profile">
+    <nav class="breadcrumbs bg-[#FFFFFC]">
+        <div class="container">
+            <div class="">
+                <div class="flex gap-4 py-4">
+                    <div class="flex items-center gap-4">
+                        <img src="{% static 'assets/images/icons/home.svg' %}" alt=""/>
+                        <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/>
+                    </div>
+                    <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="heading">
+        <div class="container">
+            <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                редактирование анкеты</h1>
+        </div>
+    </section>
+    <div class="container">
+        <div class="mt-[30px] lg-md:mt-0 lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
+            <!--  this section is for avatar  -->
+            <section class="hidden lg-md:block mt-[30px] lg-md:mt-[50px]">
+                <div class="container">
+                    <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
+                        <!-- upload avatar-->
+                        <div class="upload__avatar text-center flex justify-center">
+                            <div class="relative">
+                                <img class="absolute right-0 bottom-0"
+                                     src="{% static 'assets/images/icons/camera-outline.svg' %}"
+                                     alt="">
+                                <form class="rounded-full overflow-hidden  w-20 h-20" action="">
+                                    <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
+                                        {% if user.buyer.image %}
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{{ user.buyer.image.url }}" alt="">
+                                        {% else %}
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                        {% endif %}
+                                    </label>
+                                    <input id="upload" type="file" class="hidden"/>
+                                </form>
+                            </div>
+                        </div>
+                        <h2 class="text-center text-lg font-semibold mt-2.5">{{ user.first_name }}</h2>
+                        <!-- dropdown menu-->
+                        <div class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden">
+                            <button class="dropdown__btn px-2.5 w-full  flex items-center justify-between text-dark-text">
+                                <p class="text-lg font-bold">Моя компания</p>
+                                <img class="w-5 h-5" src="{% static 'assets/images/icons/ios-arrow.svg' %}" alt="">
+                            </button>
+                            <ul class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg">
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/products/myCompany.html">Товары</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- dropdown menu end-->
+                        <!-- desktop menu-->
+                        <div class="hidden lg-md:block">
+                            <ul class="flex flex-col">
+                                <li class="dropdown__item active">
+                                    <a href="/pages/profile/purchases/myCompany.html">Моя компания</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/products/myCompany.html">Товары</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- desktop menu end-->
+                    </div>
+                </div>
+            </section>
+            <!-- these sections are for main content  -->
+            <seciton class="main-content lg-md:mt-[50px] lg-md:col-span-2 xl:col-span-3 lg-md:mb-[120px]">
+                <div class="card__wrapper mb-28 h-full tab-content shadow-card-shadow rounded-[10px] lg-md:mb-0">
+                    <div class="px-5 py-[25px] lg-md:px-10 lg-md:py-[27px]">
+                        <a class="flex items-center gap-2.5 font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg"
+                           href="/pages/profile/myCompany/index.html">
+                            <img src="{% static '/assets/images/icons/prev-arrow.svg' %} " alt="">
+                            Назад в личный кабинет
+                        </a>
+                        <p class="mt-10 border-b border-b-grey-light pb-[30px]">
+                            Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем
+                            качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.
+                            <br>Все анкеты после добавления проходят проверку модератором. Если анкета оформлена
+                            ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
+                        </p>
+                        <div class="form mt-[30px]">
+                            <form class="space-y-[30px]">
+                                <div class="form__item">
+                                    <label class="label" for="name">Общеизвестное название компании / бренда *</label>
+                                    <p class="tooltip">Без кавычек. Например: Headphones</p>
+                                    <input id="name" type="text" placeholder="Headphones.kg">
+                                </div>
+                                <div class="form__item">
+                                    <label for="description">Краткое описание *</label>
+                                    <p class="tooltip">Например: наушники оптом</p>
+                                    <input id="description" type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Основная цель регистрации на сайте</label>
+                                    <div class="mt-6 space-y-4">
+                                        <label for="checkboxLabelFour"
+                                               class="flex items-center cursor-pointer select-none text-dark">
+                                            <div class="relative">
+                                                <input type="radio" id="checkboxLabelFour" name="tet"
+                                                       class="sr-only peer"/>
+                                                <div class="flex items-center justify-center w-5 h-5 mr-4 peer-checked:[&:not(:checked)]:border-gray-300]  peer-checked: border border-gray-300 rounded-full">
+                                                    <span class="dot h-2.5 w-2.5 rounded-full bg-transparent  peer-checked:bg-black"></span>
+                                                </div>
+                                            </div>
+                                            Продавать товары оптом
+                                        </label>
+                                        <label for="checkboxLabelFour2"
+                                               class="flex items-center cursor-pointer select-none text-dark">
+                                            <div class="relative">
+                                                <input type="radio" id="checkboxLabelFour2" name="tet"
+                                                       class="sr-only peer"/>
+                                                <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">
+                                                    <span class="dot h-2.5 w-2.5 rounded-full bg-transparent peer-checked:bg-black"></span>
+                                                </div>
+                                            </div>
+                                            Покупать товары оптом
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--  Если покупатель  -->
+                                <div class="form__item">
+                                    <label class="label">Объем закупок</label>
+                                    <div class="mt-6 space-y-4">
+                                        <label for=""
+                                               class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                            <input type="checkbox" name="tet" class="w-[25px] h-[25px] text-base"/>
+                                            Крупный опт
+                                        </label>
+                                        <label for=""
+                                               class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                            <input type="checkbox" name="tet" class="w-[25px] h-[25px] text-base"/>
+                                            Мелкий опт
+                                        </label>
+                                        <label for=""
+                                               class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                            <input type="checkbox" name="tet" class="w-[25px] h-[25px] text-base"/>
+                                            Единичные покупки
+                                        </label>
+                                        <label for=""
+                                               class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                            <input type="checkbox" name="tet" class="w-[25px] h-[25px] text-base"/>
+                                            Под реализацию
+                                        </label>
+                                        <label for=""
+                                               class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                            <input type="checkbox" name="tet" class="w-[25px] h-[25px] text-base"/>
+                                            Дропшиппинг
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Уровень приватности</label>
+                                    <div class="mt-6 space-y-4">
+                                        <label for="checkboxLabelFour"
+                                               class="flex items-center cursor-pointer select-none text-dark">
+                                            <div class="relative">
+                                                <input type="radio" name="tet" class="sr-only peer"/>
+                                                <div class="flex items-center justify-center w-5 h-5 mr-4 peer-checked:[&:not(:checked)]:border-gray-300]  peer-checked: border border-gray-300 rounded-full">
+                                                    <span class="dot h-2.5 w-2.5 rounded-full bg-transparent  peer-checked:bg-black"></span>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <p class="!text-dark-logo">Публичная анкета</p>
+                                                <p class="!text-dark-logo">(Ваша публичная информация будет доступна
+                                                    посетителям)</p>
+                                            </div>
+                                        </label>
+                                        <label for="checkboxLabelFour2"
+                                               class="flex items-center cursor-pointer select-none text-dark">
+                                            <div class="relative">
+                                                <input type="radio" name="tet" class="sr-only peer"/>
+                                                <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">
+                                                    <span class="dot h-2.5 w-2.5 rounded-full bg-transparent peer-checked:bg-black"></span>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <p class="!text-dark-logo">Скрытая анкета</p>
+                                                <p class="!text-dark-logo">(Ваши данные будут доступны только тем
+                                                    компаниям, которым вы пишете личные сообщения)</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--  Тут заканчиавается  -->
+                                <div class="form__item">
+                                    <label class="label">Основная деятельность вашей компании</label>
+                                    <div class="mt-6 space-y-4">
+                                        <label for="checkboxLabelFour"
+                                               class="flex items-center cursor-pointer select-none text-dark">
+                                            <div class="relative">
+                                                <input type="radio" id="" name="tet" class="sr-only peer"/>
+                                                <div class="flex items-center justify-center w-5 h-5 mr-4 peer-checked:[&:not(:checked)]:border-gray-300]  peer-checked: border border-gray-300 rounded-full">
+                                                    <span class="dot h-2.5 w-2.5 rounded-full bg-transparent  peer-checked:bg-black"></span>
+                                                </div>
+                                            </div>
+                                            Оптовая продажа товаров (вы поставщик)
+                                        </label>
+                                        <label for="checkboxLabelFour2"
+                                               class="flex items-center cursor-pointer select-none text-dark">
+                                            <div class="relative">
+                                                <input type="radio" id="" name="tet" class="sr-only peer"/>
+                                                <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">
+                                                    <span class="dot h-2.5 w-2.5 rounded-full bg-transparent peer-checked:bg-black"></span>
+                                                </div>
+                                            </div>
+                                            Производство товаров (вы производитель)
+                                        </label>
+                                        <label for="checkboxLabelFour2"
+                                               class="flex items-center cursor-pointer select-none text-dark">
+                                            <div class="relative">
+                                                <input type="radio" id="" name="tet" class="sr-only peer"/>
+                                                <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">
+                                                    <span class="dot h-2.5 w-2.5 rounded-full bg-transparent peer-checked:bg-black"></span>
+                                                </div>
+                                            </div>
+                                            Оказание услуг логистики / поиска товаров / таможенного оформления
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Описание</label>
+                                    <p class="tooltip">Опишите деятельность вашей компании, товары и услуги</p>
+                                    <textarea class="mt-6" placeholder="Например: наушники оптом" name=""
+                                              cols="30"></textarea>
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Ключевые слова для поиска / Теги</label>
+                                    <p class="tooltip">Введите через запятую ключевые слова и синонимы по которым будут
+                                        искать вашу компанию.Например: Мебель для дома, диваны, стулья, кресло, комод,
+                                        стол</p>
+                                    <textarea class="mt-6" placeholder="Например: наушники оптом" name=""
+                                              cols="30"></textarea>
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Категории</label>
+                                    <input type="text" placeholder="Поиск в категории">
+                                    <div class="divide-y divide-grey-light space-y-[15px]">
+                                        <div class="flex items-center gap-2.5 pt-[15px] text-dark-logo">
+                                            <div class="flex justify-center items-center p-2.5 rounded-full bg-logo-color w-[37px] h-[37px] lg-md:w-12 lg-md:h-12">
+                                                <img src="{% static '/assets/images/icons/category/t-shirt.svg' %} " alt=""></div>
+                                            Одежда, обувь и аксессуары
+                                            <img src="{% static '/assets/images/icons/ios-arrow.svg' %} " alt="">
+                                        </div>
+                                        <div class="flex items-center gap-2.5 pt-[15px] text-dark-logo">
+                                            <div class="flex justify-center items-center p-2.5 rounded-full bg-logo-color w-[37px] h-[37px] lg-md:w-12 lg-md:h-12">
+                                                <img src="{% static '/assets/images/icons/category/t-shirt.svg' %} " alt=""></div>
+                                            Одежда, обувь и аксессуары
+                                            <img src="{% static '/assets/images/icons/ios-arrow.svg' %} " alt="">
+                                        </div>
+                                        <div class="flex items-center gap-2.5 pt-[15px] text-dark-logo">
+                                            <div class="flex justify-center items-center p-2.5 rounded-full bg-logo-color w-[37px] h-[37px] lg-md:w-12 lg-md:h-12">
+                                                <img src="{% static '/assets/images/icons/category/t-shirt.svg' %} " alt=""></div>
+                                            Одежда, обувь и аксессуары
+                                            <img src="{% static '/assets/images/icons/ios-arrow.svg' %} " alt="">
+                                        </div>
+                                        <div class="flex items-center gap-2.5 pt-[15px] text-dark-logo">
+                                            <div class="flex justify-center items-center p-2.5 rounded-full bg-logo-color w-[37px] h-[37px] lg-md:w-12 lg-md:h-12">
+                                                <img src="{% static '/assets/images/icons/category/t-shirt.svg' %} " alt=""></div>
+                                            Одежда, обувь и аксессуары
+                                            <img src="{% static '/assets/images/icons/ios-arrow.svg' %} " alt="">
+                                        </div>
+                                        <div class="flex items-center gap-2.5 pt-[15px] text-dark-logo">
+                                            <div class="flex justify-center items-center p-2.5 rounded-full bg-logo-color w-[37px] h-[37px] lg-md:w-12 lg-md:h-12">
+                                                <img src="{% static '/assets/images/icons/category/t-shirt.svg' %} " alt=""></div>
+                                            Одежда, обувь и аксессуары
+                                            <img src="{% static '/assets/images/icons/ios-arrow.svg' %} " alt="">
+                                        </div>
+                                        <div class="flex items-center gap-2.5 pt-[15px] text-dark-logo">
+                                            <div class="flex justify-center items-center p-2.5 rounded-full bg-logo-color w-[37px] h-[37px] lg-md:w-12 lg-md:h-12">
+                                                <img src="{% static '/assets/images/icons/category/t-shirt.svg' %} " alt=""></div>
+                                            Одежда, обувь и аксессуары
+                                            <img src="{% static '/assets/images/icons/ios-arrow.svg' %} " alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Город</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Почтовый индекс</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Улица, дом</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Как добраться</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Время работы</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Телефоны</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                    <button class="btn btn-outlined py-4 px-[31px] border-[#2B292C] text-[#6E6E6E] mt-6 lg-md:mt-[26px]">
+                                        Добавить телефон
+                                    </button>
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Факс</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Адрес сайта</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Видео о компании (ссылка на YouTube)</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">E-mail (публичный адрес электронной почты)</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Другие контакты</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Реквизиты</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Количество сотрудников</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="form__item">
+                                    <label class="label">Дата регистрации юридического лица</label>
+                                    <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                                    <input type="text" placeholder="Например: наушники оптом">
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <button class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить</button>
+                                    <button class="btn-outlined flex-grow py-5 uppercase">Отмена</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </seciton>
+        </div>
+    </div>
+</main>
+<script src="{% static 'pages/profile/myCompany/editProfile/index.js' %}"></script>
+<script src="{% static 'pages/profile/profile.js' %}"></script>
+{% endblock %}
