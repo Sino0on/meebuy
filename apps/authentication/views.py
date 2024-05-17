@@ -162,10 +162,7 @@ class SelectAuthUserTypeView(FormView):
 
 def cabinet_create(request):
     try:
-        # Попытка получить связанный объект Cabinet
         cabinet = request.user.cabinet
     except ObjectDoesNotExist:
-        # Если не существует, создаем его
         cabinet = Cabinet.objects.create(user=request.user)
-
     return redirect(reverse_lazy('choice'))

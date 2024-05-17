@@ -197,11 +197,12 @@
                   </form>
               </li>
               <li class="cards rounded-[12px] py-2 px-3">
-                <a href=""
-                  ><img
-                    src="{% static 'assets/images/icons/yandex.svg' %}"
-                    alt="yandex"
-                /></a>
+                  <form action="{% url 'yandex_login' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">
+                      <img src="{% static 'assets/images/icons/yandex.svg' %}" alt="yandex"/>
+                    </button>
+                  </form>
               </li>
               <li class="cards rounded-[12px] p-2"
                 <a href=""
