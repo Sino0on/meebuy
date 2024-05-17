@@ -129,6 +129,10 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
 class BalanceView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/balance.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        print(request.user.cabinet.balance)
+        return super().dispatch(request, *args, **kwargs)
+
 
 class CreateTenderView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/create_tender.html'

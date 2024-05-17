@@ -51,30 +51,28 @@
                   <div class="relative">
                     <img
                       class="absolute right-0 bottom-0"
-                      src="{% static 'assets/images/icons/camera-outline.svg"
+                      src="{% static 'assets/images/icons/camera-outline.svg' %}"
                       alt=""
                     />
-                    <form
-                      class="rounded-full overflow-hidden w-20 h-20"
-                      action=""
-                    >
-                      <label
-                        for="upload"
-                        class="h-full flex-col items-center gap-2 cursor-pointer"
-                      >
-                        <img
-                          class="object-cover h-full"
-                          id="avatar"
-                          src="{% static 'assets/images/icons/Avatar.svg"
-                          alt=""
-                        />
-                      </label>
-                      <input id="upload" type="file" class="hidden" />
-                    </form>
+                    <form class="rounded-full overflow-hidden  w-20 h-20" action="">
+                                    <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
+                                        {% if user.provider.image %}
+
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{{ user.provider.image.url }}" alt="">
+                                        {% else %}
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                        {% endif %}
+                                    </label>
+                                    {% csrf_token %}
+                                    <input id="upload" type="file" class="hidden"/>
+                                </form>
                   </div>
                 </div>
+
                 <h2 class="text-center text-lg font-semibold mt-2.5">
-                  Асанов Асан
+                  {{ user.first_name }} {{  user.last_name }}
                 </h2>
                 <!-- dropdown menu-->
                 <div
@@ -83,10 +81,10 @@
                   <button
                     class="dropdown__btn px-2.5 w-full flex items-center justify-between text-dark-text"
                   >
-                    <p class="text-lg font-bold">Баланс</p>
+                    <p class="text-lg font-bold">Статистика</p>
                     <img
                       class="w-5 h-5"
-                      src="{% static 'assets/images/icons/ios-arrow.svg"
+                      src="{% static 'assets/images/icons/ios-arrow.svg' %}"
                       alt=""
                     />
                   </button>
@@ -94,47 +92,46 @@
                     class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg"
                   >
                     <li class="dropdown__item">
-                      <a href="/pages/profile/purchases/myCompany.html"
+                      <a href="{% url 'view_profile' %}"
                         >Моя компания</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/purchases/myCompany.html"
+                      <a href="{% url 'user_tenders' %}"
                         >Закупки</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/purchases/myCompany.html"
+                      <a href="{% url 'user_products' %}"
                         >Товары</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/messages/myCompany.html"
+                      <a href="{% url 'chat_list' %}"
                         >Сообщения</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/statistics/myCompany.html"
-                        >Статистика</a
-                      >
-                    </li>
-                    <li class="dropdown__item">
-                      <a href="/pages/profile/premiumRates/myCompany.html"
+                      <a href="{% url 'tariffs' %}"
                         >Premium тарифы</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/settings/myCompany.html"
+                      <a href="{% url 'settings' %}"
                         >Настройки аккаунта</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/favorites/myCompany.html"
+                      <a href="{% url 'balance' %}"
+                        Баланс</a>
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'favorites' %}"
                         >Избранные</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/supportService/myCompany.html"
+                      <a href=""
                         >Служба поддержки</a
                       >
                     </li>
@@ -145,50 +142,51 @@
                 <div class="hidden lg-md:block">
                   <ul class="flex flex-col">
                     <li class="dropdown__item">
-                      <a href="/pages/profile/purchases/myCompany.html"
+                      <a href="{% url 'view_profile' %}"
                         >Моя компания</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/purchases/myCompany.html"
+                      <a href="{% url 'user_tenders' %}"
                         >Закупки</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/products/myCompany.html"
+                      <a href="{% url 'user_products' %}"
                         >Товары</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/messages/myCompany.html"
+                      <a href="{% url 'chat_list' %}"
                         >Сообщения</a
                       >
                     </li>
-                    <li class="dropdown__item">
-                      <a href="/pages/profile/statistics/myCompany.html"
+                    <li class="dropdown__item active">
+                      <a href="{% url 'analytic' %}"
                         >Статистика</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/premiumRates/myCompany.html"
+                      <a href="{% url 'tariffs' %}"
                         >Premium тарифы</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/settings/myCompany.html"
+                      <a href="{% url 'settings' %}"
                         >Настройки аккаунта</a
                       >
                     </li>
-                    <li class="dropdown__item active">
-                      <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                    <li class="dropdown__item">
+                      <a href="{% url 'balance' %}">
+                        Баланс</a>
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/favorites/myCompany.html"
+                      <a href="{% url 'favorites' %}"
                         >Избранные</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/supportService/myCompany.html"
+                      <a href=""
                         >Служба поддержки</a
                       >
                     </li>
@@ -210,7 +208,7 @@
                   class="flex items-center justify-center gap-5 md:w-[40%] w-full text-[#2B292C] px-4 py-3 font-mulish font-medium text-[18px] bg-[#C3FFA7] rounded-2xl"
                 >
                   <p>Баланс кошелька</p>
-                  <span class="text-[24px]">0 сом</span>
+                  <span class="text-[24px]">{{ user.cabinet.balance }} сом</span>
                 </div>
                 <div class="flex items-center gap-5">
                   <button
@@ -269,7 +267,7 @@
                     >
                       <div class="flex items-center gap-[10px]">
                         <img
-                          src="{% static 'assets/images/icons/mbank.svg"
+                          src="{% static 'assets/images/icons/mbank.svg' %}"
                           alt=""
                         />
                         <p class="text-[#636363]">МБАНК</p>
@@ -282,7 +280,7 @@
                     >
                       <div class="flex items-center gap-[10px] w-[45%]">
                         <img
-                          src="{% static 'assets/images/icons/o.dengi.svg"
+                          src="{% static 'assets/images/icons/o.dengi.svg' %}"
                           alt=""
                         />
                         <p class="text-[#636363]">О!Деньги</p>
@@ -295,7 +293,7 @@
                     >
                       <div class="flex items-center gap-[10px] w-[45%]">
                         <img
-                          src="{% static 'assets/images/icons/balance.svg"
+                          src="{% static 'assets/images/icons/balance.svg' %}"
                           alt=""
                         />
                         <p class="text-[#636363]">Balance</p>
@@ -308,7 +306,7 @@
                     >
                       <div class="flex items-center gap-[10px] w-[45%]">
                         <img
-                          src="{% static 'assets/images/icons/balance.svg"
+                          src="{% static 'assets/images/icons/balance.svg' %}"
                           alt=""
                         />
                         <p class="text-[#636363]">Pay24</p>
@@ -366,7 +364,7 @@
                         <div class="flex flex-col gap-7 items-center">
                           <img
                             class="w-6 h-6"
-                            src="{% static 'assets/images/icons/diomend.svg"
+                            src="{% static 'assets/images/icons/diomend.svg' %}"
                             alt=""
                           />
                           <div
@@ -388,7 +386,7 @@
                             <button
                               class="border border-[#2B292C] uppercase rounded-[7px] py-3 sm:px-12 px-2 text-[#2B292C] text-[16px] font-mulish"
                             >
-                              <a href="../../tariffs/tariffs.html">
+                              <a href="{% url 'tariffs' %}">
                                 выбрать другой тариф</a
                               >
                             </button>
@@ -415,40 +413,30 @@
                       </tr>
                     </thead>
                     <tbody>
+                    {% for i in user.cabinet.transactions.all %}
                       <tr>
-                        <td scope="row">123</td>
+                        <td scope="row">{{ i.id }}</td>
                         <td>Пополнение баланса</td>
-                        <td>27.02.2024</td>
-                        <td>3 000 сом</td>
+                        <td>{{ i.created_at }}</td>
+                        <td>{{ i.total }} сом</td>
                         <td>
                           <img
-                            src="{% static 'assets/images/icons/trash.svg"
+                            src="{% static 'assets/images/icons/trash.svg' %}"
                             alt=""
                           />
                         </td>
                       </tr>
-
-                      <tr>
-                        <td scope="row">123</td>
-                        <td>Пополнение баланса</td>
-                        <td>27.02.2024</td>
-                        <td>3 000 сом</td>
-                        <td>
-                          <img
-                            src="{% static 'assets/images/icons/trash.svg"
-                            alt=""
-                          />
-                        </td>
-                      </tr>
+                    {% endfor %}
                     </tbody>
                   </table>
                   <!--  mobile version -->
                   <table class="sm:hidden flex justify-center">
                     <thead></thead>
                     <tbody>
+                    {% for i in user.cabinet.transactions.all %}
                       <tr>
                         <th scope="row">ID</th>
-                        <td scope="row">123</td>
+                        <td scope="row">{{ i.id }}</td>
                       </tr>
                       <tr>
                         <th>Транзакция</th>
@@ -456,41 +444,20 @@
                       </tr>
                       <tr>
                         <th>Дата</th>
-                        <td>27.02.2024</td>
+                        <td>{{ i.created_at }}</td>
                       </tr>
                       <tr class="border-[#A0A0A0] border-b">
                         <th>Сумма</th>
-                        <td>3 000 сом</td>
+                        <td>{{ i.total }} сом</td>
                         <td>
                           <img
-                            src="{% static 'assets/images/icons/trash.svg"
+                            src="{% static 'assets/images/icons/trash.svg' %}"
                             alt=""
                           />
                         </td>
                       </tr>
-                      <!-- second list -->
-                      <tr>
-                        <th scope="">ID</th>
-                        <td scope="">123</td>
-                      </tr>
-                      <tr>
-                        <th>Транзакция</th>
-                        <td>Пополнение баланса</td>
-                      </tr>
-                      <tr>
-                        <th>Дата</th>
-                        <td>27.02.2024</td>
-                      </tr>
-                      <tr class="border-[#A0A0A0] border-b">
-                        <th>Сумма</th>
-                        <td>3 000 сом</td>
-                        <td>
-                          <img
-                            src="{% static 'assets/images/icons/trash.svg"
-                            alt=""
-                          />
-                        </td>
-                      </tr>
+                    {% endfor %}
+
                     </tbody>
                   </table>
                 </div>
@@ -502,7 +469,7 @@
     </div>
 {% endblock %}
 {% block js %}
-    <script src="{% static 'pages/profile/addProductToBuy/index.js' %}"></script>
-    <script src="{% static 'pages/tenders/index.js' %}"></script>
+<!--    <script src="{% static 'pages/profile/addProductToBuy/index.js' %}"></script>-->
+    <script src="{% static 'pages/profile/balance/index.js' %}"></script>
     <script src="{% static 'pages/profile/profile.js' %}"></script>
 {% endblock %}

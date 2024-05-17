@@ -157,3 +157,11 @@ class SelectAuthUserTypeView(FormView):
             elif user_profile.user_type == 'buyer':
                 Buyer.objects.create(user=user_profile)
         return super().form_valid(form)
+
+
+def cabinet_create(request):
+    if request.user.cabinet:
+        return redirect(reverse_lazy('choice'))
+    else:
+        Cabinet.objects.create(user=request.user)
+        return redirect(reverse_lazy('choice'))

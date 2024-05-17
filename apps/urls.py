@@ -3,7 +3,7 @@ from apps.product.views import ProductListView, ProductUpdateView, ProductCreate
     ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView
 from apps.user_cabinet.views import *
-from apps.authentication.views import LoginView, SelectAuthUserTypeView
+from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
 from apps.chat.views import chat_detail, chats
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
@@ -49,6 +49,7 @@ urlpatterns = [
     path('profile/tender/list/', TenderListCabinetView.as_view(), name='user_tenders'),
     path('profile/product/list/', ProductListCabinetView.as_view(), name='user_products'),
     path('profile/create/tender/', CreateTenderView.as_view(), name='create_tender'),
+    path('profile/create/cabinet/', cabinet_create),
     path('profile/favorites/', FavoritesCabinetView.as_view(), name='favorites'),
     path('profile/analytic/', AnalyticCabinetView.as_view(), name='analytic'),
     path('profile/tariffs/', TariffsCabinetView.as_view(), name='tariffs'),
