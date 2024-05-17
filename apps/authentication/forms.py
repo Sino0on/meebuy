@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.password_validation import validate_password
 from django.core import validators
 from django.contrib.admin.widgets import AutocompleteSelect
-from apps.product.models import Category
+from apps.product.models import ProductCategory
 from .models import User
 from apps.provider.models import Provider
 from django.utils.translation import gettext_lazy as _
@@ -104,7 +104,7 @@ class UserProfileForm(forms.ModelForm):
 
 class ProviderForm(forms.ModelForm):
     category = forms.ModelChoiceField(
-        queryset=Category.objects.all(),
+        queryset=ProductCategory.objects.all(),
         widget=AutocompleteSelect(Provider._meta.get_field('category').remote_field, admin.site)
     )
 

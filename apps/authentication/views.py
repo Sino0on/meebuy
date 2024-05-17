@@ -10,9 +10,9 @@ from django.utils import timezone
 
 from apps.authentication.forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
 from apps.buyer.models import Buyer
-from apps.product.models import Category, Product
+from apps.product.models import Product
 from apps.tender.models import Tender
-from apps.provider.models import Provider
+from apps.provider.models import Provider, Category
 from apps.user_cabinet.models import Cabinet
 
 

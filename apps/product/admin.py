@@ -13,14 +13,14 @@ class ProductAdmin(admin.ModelAdmin):
     'title', 'price', 'retail_price', 'wholesale_price', 'min_quantity', 'category', 'created_at', 'updated_at')
     list_filter = ('category', 'created_at', 'updated_at', 'country_of_manufacture')
     search_fields = (
-    'title', 'description', 'manufacturer', 'phone', 'terms_of_sale', 'country_of_manufacture', 'characterization')
+    'title', 'description', 'mini_desc', 'manufacturer', 'phone', 'terms_of_sale', 'country_of_manufacture', 'characterization')
     readonly_fields = ('created_at', 'updated_at')
     inlines = [ProductImgInline]
 
     fieldsets = (
         (None, {
             'fields': (
-            'title', 'provider', 'image', 'description', 'type', 'manufacturer', 'price', 'retail_price', 'wholesale_price', 'min_quantity',
+            'title', 'provider', 'image', 'description', 'mini_desc', 'type', 'manufacturer', 'price', 'retail_price', 'wholesale_price', 'min_quantity',
             'category')
         }),
         ('Advanced options', {

@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
 
+from apps.product.models import Product
+from apps.provider.models import Provider
+from apps.tender.models import Tender
+
 User = get_user_model()
 
 
@@ -17,6 +21,10 @@ class Cabinet(models.Model):
         related_name='user_statuses',
         verbose_name=_('Статус пользователя')
     )
+    favorite_products = models.ManyToManyField(Product, related_name='user_cabinet', verbose_name=_('Избранные продукты'))
+    favorite_tenders = models.ManyToManyField(Tender, related_name='user_cabinet', verbose_name=_('Избранные закупки'))
+    favorite_providers = models.ManyToManyField(Provider, related_name='user_cabinet', verbose_name=_('Избранные оптовики'))
+
 
     def __str__(self):
         return f'{self.user.pk} - {self.user.email}'

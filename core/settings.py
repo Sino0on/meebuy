@@ -147,7 +147,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 LOGIN_REDIRECT_URL = '/select_user_type/'
 LOGOUT_REDIRECT_URL = '/'
 
-SITE_ID = int(config("SITE_ID"))
+SITE_ID = 1
 
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -254,17 +254,16 @@ MODELTRANSLATION_LANGUAGES = ('ru', 'ky')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 STATIC_URL = "/static/"
 
 # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "apps/media")
 MEDIA_URL = "/media/"
 
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", default="").split(',')
-
+# CSRF_TRUSTED_ORIGINS = ['*']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
