@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 
 
 from apps.authentication.forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
@@ -160,8 +161,11 @@ class SelectAuthUserTypeView(FormView):
 
 
 def cabinet_create(request):
-    if request.user.cabinet:
-        return redirect(reverse_lazy('choice'))
-    else:
-        Cabinet.objects.create(user=request.user)
-        return redirect(reverse_lazy('choice'))
+    try:
+        # Попытка получить связанный объект Cabinet
+        cabinet = request.user.cabinet
+    except ObjectDoesNotExist:
+        # Если не существует, создаем его
+        cabinet = Cabinet.objects.create(user=request.user)
+
+    return redirect(reverse_lazy('choice'))
