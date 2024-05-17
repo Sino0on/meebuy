@@ -43,7 +43,7 @@
                                      alt="">
                                 <form class="rounded-full overflow-hidden  w-20 h-20" action="">
                                     <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
-                                        {% if user.buyer.image %}
+                                        {% if user.provider.image %}
                                         <img class="object-cover h-full" id="avatar"
                                              src="{{ user.buyer.image.url }}" alt="">
                                         {% else %}
@@ -69,70 +69,70 @@
                                 <img class="w-5 h-5" src="{% static 'assets/images/icons/ios-arrow.svg' %}" alt="">
                             </button>
                             <ul class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg">
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/products/myCompany.html">Товары</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/balance/myCompany.html">Баланс</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
-                                </li>
-                            </ul>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/products/myCompany.html">Товары</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
+                            </li>
+                        </ul>
                         </div>
                         <!-- dropdown menu end-->
                         <!-- desktop menu-->
                         <div class="hidden lg-md:block">
                             <ul class="flex flex-col">
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/purchases/myCompany.html">Моя компания</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/purchases/myCompany.html">Закупки</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/products/myCompany.html">Товары</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/messages/myCompany.html">Сообщения</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/statistics/myCompany.html">Статистика</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/premiumRates/myCompany.html">Premium тарифы</a>
-                                </li>
-                                <li class="dropdown__item active">
-                                    <a href="/pages/profile/settings/myCompany.html">Настройки аккаунта</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/balance/myCompany.html">Баланс</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/favorites/myCompany.html">Избранные</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="/pages/profile/supportService/myCompany.html">Служба поддержки</a>
-                                </li>
-                            </ul>
+                            <li class="dropdown__item">
+                                <a href="{% url 'view_profile' %}">Моя компания</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="{% url 'user_tenders' %}">Закупки</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="{% url 'user_products' %}">Товары</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="{% url 'chat_list' %}">Сообщения</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="{% url 'analytic' %}">Статистика</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="{% url 'tariffs' %}">Premium тарифы</a>
+                            </li>
+                            <li class="dropdown__item active">
+                                <a href="{% url 'settings' %}">Настройки аккаунта</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="{% url 'balance' %}">Баланс</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="{% url 'favorites' %}">Избранные</a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a href="">Служба поддержки</a>
+                            </li>
+                        </ul>
                         </div>
                         <!-- desktop menu end-->
                     </div>
