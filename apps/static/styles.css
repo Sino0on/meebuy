@@ -1038,10 +1038,6 @@ input{
   z-index: 10;
 }
 
-.z-20{
-  z-index: 20;
-}
-
 .z-50{
   z-index: 50;
 }
@@ -3778,6 +3774,22 @@ input{
   padding-inline-end: 0.75rem;
 }
 
+.pl-10{
+  padding-left: 2.5rem;
+}
+
+.pl-11{
+  padding-left: 2.75rem;
+}
+
+.pl-12{
+  padding-left: 3rem;
+}
+
+.pl-14{
+  padding-left: 3.5rem;
+}
+
 .pl-3{
   padding-left: 0.75rem;
 }
@@ -3788,6 +3800,14 @@ input{
 
 .pl-5{
   padding-left: 1.25rem;
+}
+
+.pl-8{
+  padding-left: 2rem;
+}
+
+.pl-9{
+  padding-left: 2.25rem;
 }
 
 .pl-\[11px\]{

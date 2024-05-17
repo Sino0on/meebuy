@@ -1,0 +1,508 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block css %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/tenders/index.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/profile/addProductToBuy/index.css' %}" />
+{% endblock %}
+  {% block content %}
+    <div class="bg-[#FFFFFC]">
+      <nav class="breadcrumbs">
+        <div class="container">
+          <div class="">
+            <div class="flex gap-4 py-4">
+              <div class="flex items-center gap-4">
+                <img src="{% static 'assets/images/icons/home.svg' %}" alt="" />
+                <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+              </div>
+              <p class="font-normal font-mulish text-[#A0A0A0]">
+                Личный кабинет
+              </p>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="container mt-14 pb-28">
+        <h1
+          class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl"
+        >
+          личный кабинет
+        </h1>
+        <!--  this section is for avatar  -->
+
+        <div class="flex gap-[30px] lg-md:flex-row flex-col">
+          <section class="profile__navigate lg-md:w-[25%] bg-[#fff]">
+            <div class="">
+              <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
+                <!-- upload avatar-->
+                <div class="upload__avatar text-center flex justify-center">
+                  <div class="relative">
+                    <img
+                      class="absolute right-0 bottom-0"
+                      src="{% static 'assets/images/icons/camera-outline.svg"
+                      alt=""
+                    />
+                    <form
+                      class="rounded-full overflow-hidden w-20 h-20"
+                      action=""
+                    >
+                      <label
+                        for="upload"
+                        class="h-full flex-col items-center gap-2 cursor-pointer"
+                      >
+                        <img
+                          class="object-cover h-full"
+                          id="avatar"
+                          src="{% static 'assets/images/icons/Avatar.svg"
+                          alt=""
+                        />
+                      </label>
+                      <input id="upload" type="file" class="hidden" />
+                    </form>
+                  </div>
+                </div>
+                <h2 class="text-center text-lg font-semibold mt-2.5">
+                  Асанов Асан
+                </h2>
+                <!-- dropdown menu-->
+                <div
+                  class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden"
+                >
+                  <button
+                    class="dropdown__btn px-2.5 w-full flex items-center justify-between text-dark-text"
+                  >
+                    <p class="text-lg font-bold">Баланс</p>
+                    <img
+                      class="w-5 h-5"
+                      src="{% static 'assets/images/icons/ios-arrow.svg"
+                      alt=""
+                    />
+                  </button>
+                  <ul
+                    class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg"
+                  >
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Моя компания</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Закупки</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Товары</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/messages/myCompany.html"
+                        >Сообщения</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/statistics/myCompany.html"
+                        >Статистика</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/premiumRates/myCompany.html"
+                        >Premium тарифы</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/settings/myCompany.html"
+                        >Настройки аккаунта</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/favorites/myCompany.html"
+                        >Избранные</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/supportService/myCompany.html"
+                        >Служба поддержки</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!-- dropdown menu end-->
+                <!-- desktop menu-->
+                <div class="hidden lg-md:block">
+                  <ul class="flex flex-col">
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Моя компания</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Закупки</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/products/myCompany.html"
+                        >Товары</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/messages/myCompany.html"
+                        >Сообщения</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/statistics/myCompany.html"
+                        >Статистика</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/premiumRates/myCompany.html"
+                        >Premium тарифы</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/settings/myCompany.html"
+                        >Настройки аккаунта</a
+                      >
+                    </li>
+                    <li class="dropdown__item active">
+                      <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/favorites/myCompany.html"
+                        >Избранные</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/supportService/myCompany.html"
+                        >Служба поддержки</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!-- desktop menu end-->
+              </div>
+            </div>
+          </section>
+
+          <!-- these sections are for main content  -->
+          <div class="bg-[#fff]">
+            <section class="flex flex-col lg-md:w-[797px]">
+              <div
+                class="flex flex-col lg-md:flex-row-reverse justify-between items-center gap-5 mb-[30px] w-full"
+              >
+                <div
+                  id="balance-in-cash"
+                  class="flex items-center justify-center gap-5 md:w-[40%] w-full text-[#2B292C] px-4 py-3 font-mulish font-medium text-[18px] bg-[#C3FFA7] rounded-2xl"
+                >
+                  <p>Баланс кошелька</p>
+                  <span class="text-[24px]">0 сом</span>
+                </div>
+                <div class="flex items-center gap-5">
+                  <button
+                    id="replenishment"
+                    style="background-color: #fffb98"
+                    class="text-[#2B292C] font-mulish font-medium sm:text-[18px] text-[16px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                  >
+                    Пополнение
+                  </button>
+                  <button
+                    id="history-payment"
+                    class="text-[#2B292C] font-mulish font-medium sm:text-[18px] text-[16px] py-3 px-4 border-[#FFFB98] border-2 rounded-2xl"
+                  >
+                    История платежей
+                  </button>
+                </div>
+              </div>
+
+              <div id="main-section" class="cards sm:px-9 p-5 rounded-[15px]">
+                <!-- Пополнение -->
+                <div
+                  style="display: block"
+                  id="replenishment-block"
+                  class="rounded-[15px] bg-[#FFFFFF] font-mulish"
+                >
+                  <div class="flex flex-col gap-4">
+                    <p class="text-[#2B292C] text-[18px] font-semibold">
+                      Введите сумму
+                    </p>
+                    <input
+                      class="text-[#737373] text-[18px] font-light border border-[#E6E6E6] bg-[#F9F9F9] py-3 pl-5 rounded-2xl"
+                      type="text"
+                      placeholder="Введите сумму"
+                    />
+                  </div>
+                  <div class="flex flex-col gap-[10px] my-6">
+                    <p class="text-[#2B292C] text-[18px] font-semibold">
+                      Оплата
+                    </p>
+                    <div class="flex items-center gap-[10px]">
+                      <input class="h-[24px] w-[24px]" type="radio" />
+                      <p>Из Кыргызстана</p>
+                    </div>
+                    <div class="flex items-center gap-[10px]">
+                      <input class="h-[24px] w-[24px]" type="radio" />
+                      <p>Из другой страны</p>
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-3 w-full">
+                    <h6 class="text-[#2B292C] text-[18px] font-semibold">
+                      Выберите способ оплаты
+                    </h6>
+                    <div
+                      id="mbank"
+                      class="flex justify-between items-center cards py-[5px] px-[10px] rounded-[5px] lg-md:w-[45%] w-full"
+                    >
+                      <div class="flex items-center gap-[10px]">
+                        <img
+                          src="{% static 'assets/images/icons/mbank.svg"
+                          alt=""
+                        />
+                        <p class="text-[#636363]">МБАНК</p>
+                      </div>
+                      <img src="{% static 'assets/images/icons/next.svg' %}" alt="" />
+                    </div>
+                    <div
+                      id="o-dengi"
+                      class="flex justify-between items-center cards py-[5px] px-[10px] rounded-[5px] lg-md:w-[45%] w-full"
+                    >
+                      <div class="flex items-center gap-[10px] w-[45%]">
+                        <img
+                          src="{% static 'assets/images/icons/o.dengi.svg"
+                          alt=""
+                        />
+                        <p class="text-[#636363]">О!Деньги</p>
+                      </div>
+                      <img src="{% static 'assets/images/icons/next.svg' %}" alt="" />
+                    </div>
+                    <div
+                      id="balance"
+                      class="flex justify-between items-center cards py-[5px] px-[10px] rounded-[5px] lg-md:w-[45%] w-full"
+                    >
+                      <div class="flex items-center gap-[10px] w-[45%]">
+                        <img
+                          src="{% static 'assets/images/icons/balance.svg"
+                          alt=""
+                        />
+                        <p class="text-[#636363]">Balance</p>
+                      </div>
+                      <img src="{% static 'assets/images/icons/next.svg' %}" alt="" />
+                    </div>
+                    <div
+                      id="pay24"
+                      class="flex justify-between items-center cards py-[5px] px-[10px] rounded-[5px] lg-md:w-[45%] w-full"
+                    >
+                      <div class="flex items-center gap-[10px] w-[45%]">
+                        <img
+                          src="{% static 'assets/images/icons/balance.svg"
+                          alt=""
+                        />
+                        <p class="text-[#636363]">Pay24</p>
+                      </div>
+                      <img src="{% static 'assets/images/icons/next.svg' %}" alt= "" />
+                    </div>
+                  </div>
+
+                  <!-- confirm tarif -->
+                  <div
+                    id="open-modal"
+                    style="display: none"
+                    class="confirm_tarif_modal"
+                  >
+                    <div
+                      class="absolute md:top-[230px] top-[500px] lg-md:left-[400px] md:left-[240px] sm:left[160px] left-[40px] sm:w-[50%] w-[80%] bg-[#fff] rounded-[15px] sm:pt-6 pt-5 sm:pb-16 pb-5 sm:px-10 px-6"
+                    >
+                      <div class="confirm-modal">
+                        <div id="close_confirm" class="flex justify-end">
+                          <svg
+                            width="32"
+                            height="32"
+                            viewBox="0 0 32 32"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M15.9974 29.3327C23.3612 29.3327 29.3307 23.3631 29.3307 15.9993C29.3307 8.63555 23.3612 2.66602 15.9974 2.66602C8.6336 2.66602 2.66406 8.63555 2.66406 15.9993C2.66406 23.3631 8.6336 29.3327 15.9974 29.3327Z"
+                              stroke="#A0A0A0"
+                              stroke-width="2.66667"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M20 12L12 20"
+                              stroke="#A0A0A0"
+                              stroke-width="2.66667"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M12 12L20 20"
+                              stroke="#A0A0A0"
+                              stroke-width="2.66667"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </div>
+                        <h6
+                          class="uppercase text-[#2B292C] font-mulish text-[20px] font-bold text-center my-7"
+                        >
+                          Вы выбрали тариф
+                        </h6>
+                        <div class="flex flex-col gap-7 items-center">
+                          <img
+                            class="w-6 h-6"
+                            src="{% static 'assets/images/icons/diomend.svg"
+                            alt=""
+                          />
+                          <div
+                            class="uppercase text-[#2B292C] text-center font-black text-[26px] w-[126px]"
+                          >
+                            premium lite
+                          </div>
+                          <div
+                            id="buttons"
+                            style="display: flex"
+                            class="flex-col gap-4 transition-all duration-500"
+                          >
+                            <button
+                              id="connect-tarif-button"
+                              class="bg-[#E4DB00] rounded-[7px] uppercase py-3 sm:px-12 px-2 text-[#2B292C] text-[16px] font-mulish"
+                            >
+                              подключить
+                            </button>
+                            <button
+                              class="border border-[#2B292C] uppercase rounded-[7px] py-3 sm:px-12 px-2 text-[#2B292C] text-[16px] font-mulish"
+                            >
+                              <a href="../../tariffs/tariffs.html">
+                                выбрать другой тариф</a
+                              >
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--История платежей  -->
+                <div
+                  style="display: none"
+                  id="history-payment-block"
+                  class="rounded-[15px]"
+                >
+                  <table class="sm:block hidden">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Транзакция</th>
+                        <th scope="col">Дата</th>
+                        <th scope="col">Сумма</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td scope="row">123</td>
+                        <td>Пополнение баланса</td>
+                        <td>27.02.2024</td>
+                        <td>3 000 сом</td>
+                        <td>
+                          <img
+                            src="{% static 'assets/images/icons/trash.svg"
+                            alt=""
+                          />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td scope="row">123</td>
+                        <td>Пополнение баланса</td>
+                        <td>27.02.2024</td>
+                        <td>3 000 сом</td>
+                        <td>
+                          <img
+                            src="{% static 'assets/images/icons/trash.svg"
+                            alt=""
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--  mobile version -->
+                  <table class="sm:hidden flex justify-center">
+                    <thead></thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">ID</th>
+                        <td scope="row">123</td>
+                      </tr>
+                      <tr>
+                        <th>Транзакция</th>
+                        <td>Пополнение баланса</td>
+                      </tr>
+                      <tr>
+                        <th>Дата</th>
+                        <td>27.02.2024</td>
+                      </tr>
+                      <tr class="border-[#A0A0A0] border-b">
+                        <th>Сумма</th>
+                        <td>3 000 сом</td>
+                        <td>
+                          <img
+                            src="{% static 'assets/images/icons/trash.svg"
+                            alt=""
+                          />
+                        </td>
+                      </tr>
+                      <!-- second list -->
+                      <tr>
+                        <th scope="">ID</th>
+                        <td scope="">123</td>
+                      </tr>
+                      <tr>
+                        <th>Транзакция</th>
+                        <td>Пополнение баланса</td>
+                      </tr>
+                      <tr>
+                        <th>Дата</th>
+                        <td>27.02.2024</td>
+                      </tr>
+                      <tr class="border-[#A0A0A0] border-b">
+                        <th>Сумма</th>
+                        <td>3 000 сом</td>
+                        <td>
+                          <img
+                            src="{% static 'assets/images/icons/trash.svg"
+                            alt=""
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'pages/profile/addProductToBuy/index.js' %}"></script>
+    <script src="{% static 'pages/tenders/index.js' %}"></script>
+    <script src="{% static 'pages/profile/profile.js' %}"></script>
+{% endblock %}

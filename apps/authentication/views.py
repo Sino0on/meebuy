@@ -24,8 +24,8 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['rec_products'] = Product.objects.all()[:6]
         context['new_products'] = Product.objects.all()[:6]
-        context['new_providers'] = Provider.objects.all()[:4]
-        context['categories'] = Category.objects.all()
+        context['new_providers'] = Provider.objects.filter(is_modered=True)[:4]
+        context['categories'] = Category.objects.filter(category=None)
         
         context['tenders'] = Tender.objects.all()[:8]
         return context

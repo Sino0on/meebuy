@@ -1,8 +1,8 @@
 from django.urls import path
 from apps.product.views import ProductListView, ProductUpdateView, ProductCreateView, ProductDeleteView, \
     ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView
-from apps.provider.views import ProviderListView, ProviderDetailView
-from apps.user_cabinet.views import UserDetailView, UserAnketaView, change_avatar, change_image, UserSettingsView
+from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView
+from apps.user_cabinet.views import *
 from apps.authentication.views import LoginView, SelectAuthUserTypeView
 from apps.chat.views import chat_detail, chats
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
@@ -45,6 +45,13 @@ urlpatterns = [
     path('profile/', UserDetailView.as_view(), name='view_profile'),
     path('profile/settings/', UserSettingsView.as_view(), name='settings'),
     path('profile/anketa/', UserAnketaView.as_view(), name='anketa'),
+    path('profile/balance/', BalanceView.as_view(), name='balance'),
+    path('profile/tender/list/', TenderListCabinetView.as_view(), name='user_tenders'),
+    path('profile/product/list/', ProductListCabinetView.as_view(), name='user_products'),
+    path('profile/create/tender/', CreateTenderView.as_view(), name='create_tender'),
+    path('profile/favorites/', FavoritesCabinetView.as_view(), name='favorites'),
+    path('profile/analytic/', AnalyticCabinetView.as_view(), name='analytic'),
+    path('profile/tariffs/', TariffsCabinetView.as_view(), name='tariffs'),
     path('login_redirect/', login_redirect, name='login_redirect'),
 
     path('change-avatar/', change_avatar),
@@ -74,5 +81,8 @@ urlpatterns = [
 
     # user
     path('user/', UserDetailView.as_view()),
+
+    # apis
+    path('category/list/', CategoryListView.as_view())
 
 ]

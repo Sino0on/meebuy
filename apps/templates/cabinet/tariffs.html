@@ -1,0 +1,645 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Личный кабинет
+{% endblock %}
+
+{% block css %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'pages/tariffs/tariffs.css' %}" />
+{% endblock %}
+{% block content %}
+    <nav class="breadcrumbs bg-[#FFFFFC]">
+      <div class="container">
+        <div class="">
+          <div class="flex gap-4 py-4">
+            <div class="flex items-center gap-4">
+              <img src="{% static 'assets/images/icons/home.svg' %}" alt="" />
+              <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+            </div>
+            <p class="font-normal font-mulish text-[#A0A0A0]">Тарифы</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <section class="">
+        <div class="container">
+          <h1 class="uppercase font-black text-lg text-center lg:text-3xl">Тарифы</h1>
+          <!-- tariffs -->
+          <div
+            class="mt-[30px] lg-md:mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-offers gap-[30px]"
+          >
+            <!-- free -->
+            <div class="tariffs__info flex flex-col items-center pb-10">
+              <div class="tariffs__info-recommended w-full"></div>
+              <div
+                class="flex flex-col items-center gap-10 px-4 lg-md:px-3 h-full"
+              >
+                <div class="tariffs__info-title mt-[30px]">
+                  <h2>Бесплатный</h2>
+                </div>
+                <div>
+                  <img
+                    src="{% static 'assets/images/tariffs/tarif-free.png' %}"
+                    alt="Free"
+                  />
+                </div>
+                <!-- price -->
+                <div class="tariffs__info-price">
+                  <div class="tariffs__info-price-discount">
+                    0
+                    <span>сом / в месяц</span>
+                  </div>
+                </div>
+                <!-- divider -->
+                <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
+                <div class="flex items-center flex-col">
+                  <img
+                    src="{% static 'assets/images/tariffs/graph-free.png' %}"
+                    alt="Chart"
+                  />
+                  <p>
+                    Самая низкая позиция в каталоге, компанию трудно найти среди
+                    других
+                  </p>
+                </div>
+                <div class="flex items-center flex-col">
+                  <img src="{% static 'assets/images/icons/box.svg' %}" alt="Box" />
+                  <span class="counts">5</span>
+                  <p>Открытий закупок в месяц (на срок 1 мес.)</p>
+                </div>
+                <div class="flex items-center flex-col">
+                  <img src="{% static 'assets/images/icons/message.svg' %}" alt="Box" />
+                  <span class="counts">10</span>
+                  <p>Исходящих сообщений в день</p>
+                </div>
+                <div class="flex items-center flex-col">
+                  <span class="counts">100</span>
+                  <p>Лимит товаров</p>
+                </div>
+                <div class="tariffs__info-choice default">
+                  <p>По умолчанию выбранный тариф</p>
+                </div>
+              </div>
+            </div>
+            <!-- premium lite -->
+            <div class="tariffs__info flex flex-col items-center pb-10">
+              <div class="tariffs__info-recommended w-full"></div>
+              <div
+                class="flex flex-col items-center gap-10 px-4 lg-md:px-3 h-full"
+              >
+                <div class="tariffs__info-title mt-[30px] flex items-center">
+                  <img
+                    class="w-6"
+                    src="{% static 'assets/images/icons/premium.svg' %}"
+                    alt=""
+                  />
+                  <h2 class="ml-[5px]">premium lite</h2>
+                </div>
+                <div>
+                  <img
+                    src="{% static 'assets/images/tariffs/tarif-premium-lite.png' %}"
+                    alt="Free"
+                  />
+                </div>
+                <!-- price -->
+                <div class="tariffs__info-price">
+                  <div class="tariffs__info-price-old">
+                    <span class="line-through">5 900</span>
+                    <span>сом / в месяц</span>
+                  </div>
+                  <div class="tariffs__info-price-discount">
+                    3 900
+                    <span>сом / в месяц</span>
+                  </div>
+                </div>
+                <!-- period -->
+                <div class="tariffs__info-period">
+                  <div class="tariffs__info-period_price text-lg">
+                    <p>При оплате за <span>1 год</span></p>
+                    <p>Итого: <span>46 800 сом</span></p>
+                  </div>
+                  <div class="tariffs__info-period_term mt-10">
+                    <p class="">Срок подключения</p>
+                    <div class="flex gap-[30px] mt-5">
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="1"
+                          name="premiumLite-period"
+                        />
+                        1 месяц
+                      </div>
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="2"
+                          name="premiumLite-period"
+                        />
+                        3 месяца
+                      </div>
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="3"
+                          name="premiumLite-period"
+                        />
+                        1 год
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- divider -->
+                <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
+                <!-- highest position -->
+                <div class="flex items-center flex-col">
+                  <img
+                    src="{% static 'assets/images/tariffs/graph-premium-lite.svg' %}"
+                    alt="Chart"
+                  />
+                  <p>
+                    Самая низкая позиция в каталоге, компанию трудно найти среди
+                    других
+                  </p>
+                </div>
+                <!--  -->
+                <div class="flex items-center flex-col">
+                  <img
+                    src="{% static 'assets/images/tariffs/x-circle.svg' %}"
+                    alt="Box"
+                  />
+                  <p>Нет дополнительных открытий закупок</p>
+                </div>
+                <!-- messages -->
+                <div class="flex items-center flex-col">
+                  <img src="{% static 'assets/images/icons/message.svg' %}" alt="Box" />
+                  <span class="counts">10</span>
+                  <p>Исходящих сообщений в день</p>
+                </div>
+                <!-- limit  -->
+                <div class="flex items-center flex-col">
+                  <span class="counts">500</span>
+                  <p>Лимит товаров</p>
+                </div>
+                <!-- bonuses -->
+                <div class="tariffs__info-bonuses">
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Показ Вашего телефона незарегистрированным посетителям
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Показ Вашего E-mail и ссылки на ваш сайт / соцсети
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Просмотр сайта без рекламы
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Просмотр контактов поставщиков
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Статус верифицированной компании (при оплате по счету)
+                  </p>
+                </div>
+                <button class="btn-filled py-5 px-[30px] uppercase mt-auto">
+                  Подключить
+                </button>
+              </div>
+            </div>
+            <!-- premium standard -->
+            <div
+              class="tariffs__info recommended flex flex-col items-center pb-10"
+            >
+              <div class="tariffs__info-recommended w-full">
+                <img
+                  src="{% static 'assets/images/tariffs/recommended.svg' %}"
+                  alt="Recommended"
+                />
+                Рекомендуем
+              </div>
+              <div
+                class="flex flex-col items-center gap-10 px-4 lg-md:px-3 h-full"
+              >
+                <div class="tariffs__info-title mt-[30px] flex items-center">
+                  <img
+                    class="w-6"
+                    src="{% static 'assets/images/icons/premium.svg' %}"
+                    alt=""
+                  />
+                  <h2 class="ml-[5px]">premium standard</h2>
+                </div>
+                <div>
+                  <img
+                    src="{% static 'assets/images/tariffs/tariff-premium-standard.png' %}"
+                    alt="Tariff Premium Standard"
+                  />
+                </div>
+                <!-- price -->
+                <div class="tariffs__info-price">
+                  <div class="tariffs__info-price-old">
+                    <span class="line-through">8 900</span>
+                    <span>сом / в месяц</span>
+                  </div>
+                  <div class="tariffs__info-price-discount">
+                    6 500
+                    <span>сом / в месяц</span>
+                  </div>
+                </div>
+                <!-- period -->
+                <div class="tariffs__info-period">
+                  <div class="tariffs__info-period_price text-lg">
+                    <p>При оплате за <span>3 месяца</span></p>
+                    <p>Итого: <span>19 500 сом</span></p>
+                  </div>
+                  <div class="tariffs__info-period_term mt-10">
+                    <p class="">Срок подключения</p>
+                    <div class="flex gap-[30px] mt-5">
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="1"
+                          name="premiumLite-period"
+                        />
+                        1 месяц
+                      </div>
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="2"
+                          name="premiumLite-period"
+                        />
+                        3 месяца
+                      </div>
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="3"
+                          name="premiumLite-period"
+                        />
+                        1 год
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- divider -->
+                <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
+                <!-- highest position -->
+                <div class="flex items-center flex-col">
+                  <img
+                    src="{% static 'assets/images/tariffs/graph-premium-standard.svg' %}"
+                    alt="Chart"
+                  />
+                  <p>Средняя позиция в каталоге, компанию находят чаще</p>
+                </div>
+                <!-- opened buys -->
+                <div class="flex items-center flex-col">
+                  <img src="{% static 'assets/images/icons/box.svg' %}" alt="Box" />
+                  <span class="counts">450</span>
+                  <p>Открытий закупок в месяц (на срок 3 мес.)</p>
+                </div>
+                <!-- messages -->
+                <div class="flex items-center flex-col">
+                  <img
+                    src="{% static 'assets/images/icons/message.svg' %}"
+                    alt="Message"
+                  />
+                  <span class="counts">30</span>
+                  <p>Исходящих сообщений в день</p>
+                </div>
+                <!-- limit  -->
+                <div class="flex items-center flex-col">
+                  <span class="counts">1 000</span>
+                  <p>Лимит товаров</p>
+                </div>
+                <!-- bonuses -->
+                <div class="tariffs__info-bonuses">
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Показ Вашего телефона незарегистрированным посетителям
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Показ Вашего E-mail и ссылки на ваш сайт / соцсети
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Просмотр сайта без рекламы
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Просмотр контактов поставщиков
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Ежедневная синхронизация товаров YML
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Статус верифицированной компании (при оплате по счету)
+                  </p>
+                </div>
+                <button class="btn-filled py-5 px-[30px] uppercase mt-auto">
+                  Подключить
+                </button>
+              </div>
+            </div>
+            <!-- premium max -->
+            <div class="tariffs__info flex flex-col items-center pb-10">
+              <div class="tariffs__info-recommended w-full"></div>
+              <div
+                class="flex flex-col items-center gap-10 px-4 lg-md:px-3 h-full"
+              >
+                <div class="tariffs__info-title mt-[30px] flex items-center">
+                  <img
+                    class="w-6"
+                    src="{% static 'assets/images/icons/premium.svg' %}"
+                    alt=""
+                  />
+                  <h2 class="ml-[5px]">premium max</h2>
+                </div>
+                <div>
+                  <img
+                    src="{% static 'assets/images/tariffs/tarif-premium-lite.png' %}"
+                    alt="Free"
+                  />
+                </div>
+                <!-- price -->
+                <div class="tariffs__info-price">
+                  <div class="tariffs__info-price-discount">
+                    19 900
+                    <span>сом / в месяц</span>
+                  </div>
+                </div>
+                <!-- period -->
+                <div class="tariffs__info-period">
+                  <div class="tariffs__info-period_price text-lg">
+                    <p>При оплате за <span>1 мес.</span></p>
+                    <p>Итого: <span>19 900 сом</span></p>
+                  </div>
+                  <div class="tariffs__info-period_term mt-10">
+                    <p class="">Срок подключения</p>
+                    <div class="flex gap-[30px] mt-5">
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="1"
+                          name="premiumLite-period"
+                        />
+                        1 месяц
+                      </div>
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="2"
+                          name="premiumLite-period"
+                        />
+                        3 месяца
+                      </div>
+                      <div class="flex items-center flex-col justify-center">
+                        <input
+                          class="w-6 h-6"
+                          type="radio"
+                          value="3"
+                          name="premiumLite-period"
+                        />
+                        1 год
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- divider -->
+                <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
+                <!-- highest position -->
+                <div class="flex items-center flex-col">
+                  <img
+                    src="{% static 'assets/images/tariffs/graph-premium-max.svg' %}"
+                    alt="Chart"
+                  />
+                  <p>Самая высокая позиция, больше всего обращений</p>
+                </div>
+                <!-- opened buys -->
+                <div class="flex items-center flex-col">
+                  <img src="{% static 'assets/images/icons/box.svg' %}" alt="Box" />
+                  <span class="counts">500</span>
+                  <p>Открытий закупок в месяц (на срок 1 мес.)</p>
+                </div>
+                <!-- messages -->
+                <div class="flex items-center flex-col">
+                  <img src="{% static 'assets/images/icons/message.svg' %}" alt="Box" />
+                  <span class="counts">100</span>
+                  <p>Исходящих сообщений в день</p>
+                </div>
+                <!-- limit  -->
+                <div class="flex items-center flex-col">
+                  <span class="counts">10 000</span>
+                  <p>Лимит товаров</p>
+                </div>
+                <!-- bonuses -->
+                <div class="tariffs__info-bonuses">
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Показ Вашего телефона незарегистрированным посетителям
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Показ Вашего E-mail и ссылки на ваш сайт / соцсети
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Просмотр сайта без рекламы
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Просмотр контактов поставщиков
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Ежедневная синхронизация товаров YML
+                  </p>
+                  <p class="flex gap-2.5">
+                    <img
+                      src="{% static 'assets/images/tariffs/check.svg' %}"
+                      alt="Check"
+                    />Статус верифицированной компании (при оплате по счету)
+                  </p>
+                </div>
+                <button class="btn-filled py-5 px-[30px] uppercase mt-auto">
+                  Подключить
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="text-dark-text leading-6 text-center mt-10 lg-md:mt-14">
+            При истечении тарифа остаток открытий обнуляется, при продлении —
+            суммируется с новым
+          </div>
+        </div>
+      </section>
+      <section class="companies bg-[#FAFAFA] py-12 mt-[92px] lg-md:mt-[100px]">
+        <div class="container">
+          <h2
+            class="uppercase font-bold text-dark-logo text-center lg-md:text-xl"
+          >
+            нам доверяют более 100 компаний кыргызстана, казахстана и россии
+          </h2>
+          <div
+            class="grid grid-cols1 sm:grid-cols-2 gap-[50px] mt-6 lg-md:gap-[30px] lg-md:flex lg-md:justify-center lg-md:items-center"
+          >
+            <div class="flex justify-center lg-md:w-1/6">
+              <img src="{% static 'assets/images/tariffs/company-hooli.svg' %}" alt="" />
+            </div>
+            <div class="flex justify-center lg-md:w-1/6">
+              <img src="{% static 'assets/images/tariffs/company-lya.svg' %}" alt="" />
+            </div>
+            <div class="flex justify-center lg-md:w-1/6">
+              <img src="{% static 'assets/images/tariffs/company-leaf.svg' %}" alt="" />
+            </div>
+            <div class="flex justify-center lg-md:w-1/6">
+              <img
+                src="{% static 'assets/images/tariffs/company-stripe.svg' %}"
+                alt=""
+              />
+            </div>
+            <div class="flex justify-center lg-md:w-1/6">
+              <img src="{% static 'assets/images/tariffs/company-aws.svg' %}" alt="" />
+            </div>
+            <div class="flex justify-center lg-md:w-1/6">
+              <img
+                src="{% static 'assets/images/tariffs/company-reddit.svg' %}"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="questions mt-[100px] lg-md:mt-20">
+        <div class="container px-5">
+          <h2 class="text-lg font-black text-dark-logo uppercase text-center lg-md:text-xl lg:text-3xl">
+            часто задаваемые вопросы
+          </h2>
+          <div class="questions__accordions mt-7 lg-md:mt-12">
+            <div class="accordion py-[26px] border-t border-t-[#A4A4A4]">
+              <!-- title -->
+              <div
+                class="accordion__title cursor-pointer accordion-toggle flex items-center justify-between"
+              >
+                <p class="text-lg font-semibold text-dark-logo">
+                  Зачем мне переходить на премиум тариф?
+                </p>
+                <img
+                  class="arrow -rotate-90 w-6 h-6 transition-all duration-500 ease skew-y-6"
+                  src="{% static 'assets/images/icons/arrow-prev.svg' %}"
+                  alt=""
+                />
+              </div>
+              <!-- content -->
+              <div
+                class="accordion__content overflow-hidden transition-all duration-500 ease h-0 text-dark-text leading-7 pr-6"
+              >
+                С премиум тарифом Ваши объявления будут находиться в верхних
+                строчках поиска и каталога
+              </div>
+            </div>
+            <div class="accordion py-[26px] border-t border-t-[#A4A4A4]">
+              <!-- title -->
+              <div
+                class="accordion__title cursor-pointer accordion-toggle flex items-center justify-between"
+              >
+                <p class="text-lg font-semibold text-dark-logo">
+                  Зачем мне переходить на премиум тариф?
+                </p>
+                <img
+                  class="arrow -rotate-90 w-6 h-6 transition-all duration-500 ease skew-y-6"
+                  src="{% static 'assets/images/icons/arrow-prev.svg' %}"
+                  alt=""
+                />
+              </div>
+              <!-- content -->
+              <div
+                class="accordion__content overflow-hidden transition-all duration-500 ease h-0 text-dark-text leading-7 pr-6 mt-2"
+              >
+                С премиум тарифом Ваши объявления будут находиться в верхних
+                строчках поиска и каталога
+              </div>
+            </div>
+          </div>
+          <div class="max-w-[522] text-center mt-10">
+            <p class="text-lg text-dark-text">
+              Не нашли ответ на свой вопрос? Вы можете написать нам на
+              <br class="hidden sm:block">
+
+              <a href="" class="underline underline-offset-2">WhatsApp</a> или
+              <a href="" class="underline underline-offset-2">Telegram</a>
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="access-to-purchases mt-24 lg-md:mt-28 pb-24">
+        <div class="container px-5">
+          <div class="max-w-[750px] mx-auto">
+          <h2 class="text-lg font-bold text-dark-logo uppercase text-center lg-md:text-xl">
+            доступ к закупкам
+          </h2>
+          <p class="text-[#000000] font-normal leading-6 mt-7 lg-md:mt-10">
+            Компании с PREMIUM тарифом получают расширенный доступ к разделу закупки, где каждый день публикуются сотни новых объявлений об оптовых закупках. А вы можете связываться с клиентами напрямую и предлагать свою продукцию.
+            Что важно, мы не собираем объявления из других источников. Клиенты исключительно самостоятельно размещают объявления, что гарантирует их эксклюзивность, качество и актуальность.
+          </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    {% endblock %}
+  {% block js %}
+    <script src="{% static 'pages/tariffs/tariffs.js' %}"></script>
+  {% endblock %}

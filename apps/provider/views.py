@@ -3,6 +3,8 @@ from django.views import generic
 from apps.provider.models import Provider, Tag
 from apps.tender.models import Category
 from apps.provider.filters import ProviderFilter
+from rest_framework.generics import ListAPIView
+from apps.provider.serializers import CategoryListSerializer
 
 
 class ProviderListView(generic.ListView):
@@ -31,3 +33,10 @@ class ProviderDetailView(generic.DetailView):
         context['products'] = self.object.products.all()[:3]
         context['images'] = self.object.images.all()
         return context
+
+
+class CategoryListView(ListAPIView):
+    serializer_class = CategoryListSerializer
+    queryset = Category.objects.filter(category=None)
+
+

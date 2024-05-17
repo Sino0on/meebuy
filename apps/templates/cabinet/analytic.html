@@ -1,0 +1,463 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Личный кабинет
+{% endblock %}
+
+{% block css %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/profile/tenders/index.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/profile/analytic/index.css' %}" />
+
+{% endblock %}
+
+{% block content %}
+    <div class="bg-[#FFFFFC]">
+      <nav class="breadcrumbs">
+        <div class="container">
+          <div class="">
+            <div class="flex gap-4 py-4">
+              <div class="flex items-center gap-4">
+                <img src="{% static 'assets/images/icons/home.svg' %}" />
+                <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" />
+              </div>
+              <p class="font-normal font-mulish text-[#A0A0A0]">
+                Личный кабинет
+              </p>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="container mt-14 pb-28">
+        <h1
+          class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl"
+        >
+          личный кабинет
+        </h1>
+        <!--  this section is for avatar  -->
+
+        <div class="flex gap-[30px] lg-md:flex-row flex-col">
+          <section class="profile__navigate lg-md:w-[25%] bg-[#fff]">
+            <div class="">
+              <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
+                <!-- upload avatar-->
+                <div class="upload__avatar text-center flex justify-center">
+                  <div class="relative">
+                    <img
+                      class="absolute right-0 bottom-0"
+                      src="{% static 'assets/images/icons/camera-outline.svg' %}"
+                      alt=""
+                    />
+                    <form
+                      class="rounded-full overflow-hidden w-20 h-20"
+                      action=""
+                    >
+                      <label
+                        for="upload"
+                        class="h-full flex-col items-center gap-2 cursor-pointer"
+                      >
+                        <img
+                          class="object-cover h-full"
+                          id="avatar"
+                          src="{% static 'assets/images/icons/Avatar.svg' %}"
+                          alt=""
+                        />
+                      </label>
+                      <input id="upload" type="file" class="hidden" />
+                    </form>
+                  </div>
+                </div>
+                <h2 class="text-center text-lg font-semibold mt-2.5">
+                  Асанов Асан
+                </h2>
+                <!-- dropdown menu-->
+                <div
+                  class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden"
+                >
+                  <button
+                    class="dropdown__btn px-2.5 w-full flex items-center justify-between text-dark-text"
+                  >
+                    <p class="text-lg font-bold">Статистика</p>
+                    <img
+                      class="w-5 h-5"
+                      src="{% static 'assets/images/icons/ios-arrow.svg' %}"
+                      alt=""
+                    />
+                  </button>
+                  <ul
+                    class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg"
+                  >
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Моя компания</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Закупки</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Товары</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/messages/myCompany.html"
+                        >Сообщения</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/premiumRates/myCompany.html"
+                        >Premium тарифы</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/settings/myCompany.html"
+                        >Настройки аккаунта</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/favorites/myCompany.html"
+                        >Избранные</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/supportService/myCompany.html"
+                        >Служба поддержки</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!-- dropdown menu end-->
+                <!-- desktop menu-->
+                <div class="hidden lg-md:block">
+                  <ul class="flex flex-col">
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Моя компания</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/purchases/myCompany.html"
+                        >Закупки</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/products/myCompany.html"
+                        >Товары</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/messages/myCompany.html"
+                        >Сообщения</a
+                      >
+                    </li>
+                    <li class="dropdown__item active">
+                      <a href="/pages/profile/statistics/myCompany.html"
+                        >Статистика</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/premiumRates/myCompany.html"
+                        >Premium тарифы</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/settings/myCompany.html"
+                        >Настройки аккаунта</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/favorites/myCompany.html"
+                        >Избранные</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="/pages/profile/supportService/myCompany.html"
+                        >Служба поддержки</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!-- desktop menu end-->
+              </div>
+            </div>
+          </section>
+
+          <!-- these sections are for main content  -->
+          <div
+            id="main-section"
+            style="display: block"
+            class="bg-[#fff] relative"
+          >
+            <section class="flex flex-col lg-md:mt-0 mt-10 lg-md:w-[797px]">
+              <div>
+                <div class="scroll-container">
+                  <div
+                    class="flex items-center justify-start gap-5 mb-[30px] lg:w-[797px] lg-md: overflow-x-scroll"
+                  >
+                    <button
+                      id="statistics"
+                      style="background-color: #fffb98"
+                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                    >
+                      Статистика
+                    </button>
+                    <button
+                      id="lifting"
+                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                    >
+                      Поднятие
+                    </button>
+                    <button
+                      id="bannery"
+                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                    >
+                      Баннеры
+                    </button>
+                    <button
+                      id="verification"
+                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 lg-md:px-3 md: px-3 border-[#FFFB98] border-2 rounded-2xl"
+                    >
+                      Верификация
+                    </button>
+                    <a
+                      id="rates"
+                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 lg-md:px-3 md: p-3 border-[#FFFB98] border-2 rounded-2xl"
+                      href="../../tariffs/tariffs.html"
+                    >
+                      Тарифы</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="cards shadow-card-shadow rounded-2xl sm:p-9 p-5">
+                <!-- Статистика -->
+                <div id="statistics-block" style="display: block">
+                  <h6 class="text-[#4D4D4D] text-[18px] mb-5 text-center">
+                    Наведите курсор на график, чтобы увидеть данные
+                  </h6>
+                  <div>
+                    <canvas id="myChart"></canvas>
+                  </div>
+
+                  <div class="flex flex-col gap-4 mt-10">
+                    <div class="flex items-center gap-[10px]">
+                      <span
+                        class="h-[30px] w-[30px] bg-[#0407A3] rounded-full"
+                      ></span>
+                      <p>Посетители страницы</p>
+                    </div>
+                    <div class="flex items-center gap-[10px]">
+                      <span
+                        class="h-[30px] w-[30px] bg-[#6713F6] rounded-full"
+                      ></span>
+                      <p>Открытие телефона</p>
+                    </div>
+                    <div class="flex items-center gap-[10px]">
+                      <span
+                        class="h-[30px] w-[30px] bg-[#DDD7E4] rounded-full"
+                      ></span>
+                      <p>Переходы на сайт</p>
+                    </div>
+                    <div class="flex items-center gap-[10px]">
+                      <span
+                        class="h-[30px] w-[30px] bg-[#7E8BE2] rounded-full"
+                      ></span>
+                      <p>Входящие сообщения</p>
+                    </div>
+                    <div class="flex items-center gap-[10px]">
+                      <span
+                        class="h-[30px] w-[30px] bg-[#5EB7F2] rounded-full"
+                      ></span>
+                      <p>Исходящие сообщения</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Поднятие -->
+                <div id="lifting-block" style="display: none">
+                  <div class="flex flex-col gap-7">
+                    <p
+                      class="text-[#4D4D4D] font-mulish font-normal text-[16px]"
+                    >
+                      Поднятие позволяет закрепить вашу компанию вверху списка
+                      (даже выше других компаний с PREMIUM тарифом) на
+                      определенный срок, что позволяет привлечь больше клиентов.
+                      Рекомендуем периодически поднимать компанию или включить
+                      автоподнятие.
+                    </p>
+                    <div class="flex flex-col gap-5">
+                      <div
+                        class="lifting flex flex-col sm:flex-row sm:items-center sm: gap-[28px] w-full justify-between border-b border-[#A0A0A0] pb-4"
+                      >
+                        <p class="sm:block hidden text-[#4D4D4D] text-lg">
+                          Поднятие на 1 сутки
+                        </p>
+                        <span class="sm:block hidden text-[#4D4D4D] text-lg"
+                          >1 000 сом</span
+                        >
+                        <div
+                          class="flex items-center justify-between sm:hidden text-[#4D4D4D] text-lg"
+                        >
+                          <p>Поднятие на 1 сутки</p>
+                          <span>1 000 сом</span>
+                        </div>
+                        <div class="sm:w-[210px] w-full">
+                          <button
+                            class="uppercase text-[#2B292C] text-lg w-full font-semibold py-3 px-7 bg-[#E4DB00] rounded-lg"
+                          >
+                            активировать
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        class="lifting flex flex-col sm:flex-row sm:items-center sm: gap-[28px] w-full justify-between border-b border-[#A0A0A0] pb-4"
+                      >
+                        <p class="sm:block hidden text-[#4D4D4D] text-lg">
+                          Поднятие на 1 сутки
+                        </p>
+                        <span class="sm:block hidden text-[#4D4D4D] text-lg"
+                          >1 000 сом</span
+                        >
+                        <div
+                          class="flex items-center justify-between sm:hidden text-[#4D4D4D] text-lg"
+                        >
+                          <p>Поднятие на 1 сутки</p>
+                          <span>1 000 сом</span>
+                        </div>
+                        <div class="sm:w-[210px] w-full">
+                          <button
+                            class="uppercase text-[#2B292C] text-lg w-full font-semibold py-3 px-7 bg-[#E4DB00] rounded-lg"
+                          >
+                            активировать
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        class="lifting flex flex-col sm:flex-row sm:items-center sm: gap-[28px] w-full justify-between border-b border-[#A0A0A0] pb-4"
+                      >
+                        <p class="sm:block hidden text-[#4D4D4D] text-lg">
+                          Поднятие на 1 сутки
+                        </p>
+                        <span class="sm:block hidden text-[#4D4D4D] text-lg"
+                          >1 000 сом</span
+                        >
+                        <div
+                          class="flex items-center justify-between sm:hidden text-[#4D4D4D] text-lg"
+                        >
+                          <p>Поднятие на 1 сутки</p>
+                          <span>1 000 сом</span>
+                        </div>
+                        <div class="sm:w-[210px] w-full">
+                          <button
+                            class="uppercase text-[#2B292C] text-lg w-full font-semibold py-3 px-7 bg-[#E4DB00] rounded-lg"
+                          >
+                            активировать
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        class="lifting flex flex-col sm:flex-row sm:items-center sm: gap-[28px] w-full justify-between border-b border-[#A0A0A0] pb-4"
+                      >
+                        <p class="sm:block hidden text-[#4D4D4D] text-lg">
+                          Поднятие на 1 сутки
+                        </p>
+                        <span class="sm:block hidden text-[#4D4D4D] text-lg"
+                          >1 000 сом</span
+                        >
+                        <div
+                          class="flex items-center justify-between sm:hidden text-[#4D4D4D] text-lg"
+                        >
+                          <p>Поднятие на 1 сутки</p>
+                          <span>1 000 сом</span>
+                        </div>
+                        <div class="sm:w-[210px] w-full">
+                          <button
+                            class="uppercase text-[#2B292C] text-lg w-full font-semibold py-3 px-7 bg-[#E4DB00] rounded-lg"
+                          >
+                            активировать
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Баннеры -->
+                <div id="bannery-block" style="display: none">
+                  <div class="flex flex-col gap-6 w-full">
+                    <p
+                      class="text-[#4D4D4D] font-mulish font-normal text-start text-[18px]"
+                    >
+                      Баннеры — это наиболее традиционный вид интернет рекламы,
+                      рассчитанный на повышение узнаваемости бренда.
+                      Мы предлагаем баннеры на главной странице (с оплатой
+                      по времени) и внутренних страницах сайта (с оплатой
+                      по показам).
+                    </p>
+                    <div class="">
+                      <button
+                        class="sm:uppercase text-[#2B292C] text-lg font-medium py-3 sm:px-7 px-4 bg-[#E4DB00] rounded-lg"
+                      >
+                        Подробнее о баннерах и ценах
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Верификация -->
+                <div id="verification-block" style="display: none">
+                  <div class="flex flex-col items-start gap-10 font-mulish">
+                    <p class="text-[#4D4D4D] text-[18px] font-normal">
+                      Для прохождения верификации пришлите сканы/фото документов
+                      о регистрации компании, указанной в реквизитах вашей
+                      анкеты, на адрес ver@optlist.ru
+                    </p>
+                    <p class="text-[#4D4D4D] text-[18px] font-normal">
+                      Письмо должно быть с темой «Верификация», отправлено с
+                      вашего адреса example@gmail.com.
+                    </p>
+                  </div>
+                </div>
+                <!-- Тарифы -->
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+
+
+    {% endblock %}
+{% block js %}
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+      integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js' %}"></script>
+    <script src="{% static 'pages/profile/analytic/index.js' %}"></script>
+    <script src="{% static 'pages/profile/tenders/index.js' %}"></script>
+    <script src="{% static 'pages/profile/profile.js' %}"></script>
+
+
+{% endblock %}

@@ -22,12 +22,54 @@
     margin-top: 20px;
 }
 
-.edit__profile input[type="text"] {
+.edit__profile input[type="text"],
+.edit__profile input[type="tel"] {
     margin-top: 24px;
 }
 
 @media (min-width: 992px) {
-    .edit__profile input[type="text"] {
+    .edit__profile input[type="text"],
+    .edit__profile input[type="tel"] {
         margin-top: 26px;
     }
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+span.active {
+    color: #008000;
+}
+
+.tree__item--parent img {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.tree__item-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.radioInput:checked ~ div .dot {
+    background-color: black;
+}
+
+.checkboxInput:checked ~ .checkmark {
+    background-color: #BAB306;
+    border-color: #BAB306;
+}
+
+.checkboxInput:checked ~ .checkmark:after {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 10px;
+    background: url("/assets/images/icons/checkIcon.svg") no-repeat;
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }

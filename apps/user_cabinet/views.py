@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 
 from apps.authentication.forms import ProviderForm, UserUpdateForm
 from apps.user_cabinet.models import Status, Upping
-from apps.provider.models import ProvideImg
+from apps.provider.models import ProvideImg, Provider
 from apps.buyer.models import BuyerImg
 from django.contrib.auth import get_user_model
 from django.views import generic
@@ -52,10 +52,15 @@ class UserDetailView(generic.TemplateView, LoginRequiredMixin):
         return context
 
 
-class UserAnketaView(generic.CreateView, LoginRequiredMixin):
+class UserAnketaView(generic.UpdateView, LoginRequiredMixin):
     template_name = 'auth/edit_provider.html'
+    model = Provider
+    queryset = Provider.objects.all()
     form_class = ProviderForm
     context_object_name = 'form'
+
+    def get_object(self, queryset=None):
+        return self.request.user.provider
 
     def get_template_names(self):
         if self.request.user.user_type == 'buyer':
@@ -64,8 +69,11 @@ class UserAnketaView(generic.CreateView, LoginRequiredMixin):
             template_name = self.template_name
         return template_name
 
-    # def get_form_class(self):
-    #     if se
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        print(form)
+        return super().post(request, *args, **kwargs)
+
 
 @require_POST
 def change_avatar(request):
@@ -117,3 +125,30 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
     def get_object(self, queryset=None):
         return self.request.user
 
+
+class BalanceView(generic.TemplateView, LoginRequiredMixin):
+    template_name = 'cabinet/balance.html'
+
+
+class CreateTenderView(generic.TemplateView, LoginRequiredMixin):
+    template_name = 'cabinet/create_tender.html'
+
+
+class TenderListCabinetView(generic.TemplateView, LoginRequiredMixin):
+    template_name = 'cabinet/tenders.html'
+
+
+class ProductListCabinetView(generic.TemplateView, LoginRequiredMixin):
+    template_name = 'cabinet/products.html'
+
+
+class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
+    template_name = 'cabinet/likes.html'
+
+
+class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
+    template_name = 'cabinet/analytic.html'
+
+
+class TariffsCabinetView(generic.TemplateView, LoginRequiredMixin):
+    template_name = 'cabinet/tariffs.html'
