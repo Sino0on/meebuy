@@ -8,5 +8,5 @@ urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path('dev-admin8/', admin.site.urls),
     path('', include('apps.urls')),
-    path('accounts/', include('allauth.urls'))
+    path('accounts/', include('allauth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

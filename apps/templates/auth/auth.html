@@ -35,13 +35,14 @@
      <div class="cards flex lg-md:flex-row flex-col lg-md:justify-center  lg-md:w-[1000px]   rounded-2xl">
       <div class="lg-md:w-[534px] w-[390px] p-10 mx-auto ">
        <!-- register -->
-        <form method="post">
+
           <div id="register-form" style="max-height: 0px; display: flex; flex-direction: column; gap: 24px; z-index: 0; position: relative" class="overflow-hidden w-full mb-6 ">
             {% for field, errors in register_form.errors.items %}
                 {% for error in errors %}
                     <p style="color: red">{{ field }}: {{ error }}</p>
                 {% endfor %}
             {% endfor %}
+            <form method="post">
           <div class="flex flex-col gap-3  w-full">
 
             <label clas="text-[18px] font-mulish" for=""
@@ -99,15 +100,21 @@
           >
             зарегистрироваться
           </button>
+            </form>
           <div class="flex flex-col items-center gap-5">
             <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
               <ul class="flex items-center gap-5 w-[323px]">
                 <li class="cards rounded-[12px] p-2">
-                  <a href=""
+                  {% load socialaccount %}
+                  <form action="/accounts/google/login/" method="post">
+                    {% csrf_token %}
+                    <button type="submit"
                     ><img
                       src="{% static 'assets/images/icons/google.svg' %}"
                       alt="google"
-                  /></a>
+                    /></button>
+                  </form>
+
                 </li>
                 <li class="cards rounded-[12px] py-2 px-3">
                   <a href=""
@@ -136,9 +143,9 @@
               </ul>
           </div>
         </div>
-        </form>
+
         <!-- login -->
-        <form method="post">
+
           <div id="login-form" style="display: flex; flex-direction: column; gap: 30px" class=" login-form overflow-hidden w-full mb-6 ">
             {% for field, errors in form.errors.items %}
                 {% for error in errors %}
@@ -146,6 +153,7 @@
                 {% endfor %}
             {% endfor %}
           <div class="flex flex-col gap-3  w-full">
+            <form method="post">
             <label clas="text-[18px] font-mulish" for=""
               >Ваш адрес электронной почты Email *</label
             >
@@ -173,15 +181,20 @@
         >
         войти в личный кабинет
         </button>
+            </form>
         <div class="flex flex-col items-center gap-5">
           <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
             <ul class="flex items-center gap-5 w-[323px]">
               <li class="cards rounded-[12px] p-2">
-                <a href=""
-                  ><img
-                    src="{% static 'assets/images/icons/google.svg' %}"
-                    alt="google"
-                /></a>
+                {% load socialaccount %}
+                <form action="/accounts/google/login/" method="post">
+                    {% csrf_token %}
+                    <button type="submit"
+                    ><img
+                      src="{% static 'assets/images/icons/google.svg' %}"
+                      alt="google"
+                    /></button>
+                  </form>
               </li>
               <li class="cards rounded-[12px] py-2 px-3">
                 <a href=""
@@ -210,7 +223,7 @@
             </ul>
         </div>
         </div>
-        </form>
+
       </div>
      
       <img id="login-img" style="display: block;" class="login-img transition-all duration-500 ease-linear object-cover lg-md:rounded-r-2xl w-[466px]" src="{% static 'assets/images/auth/auth-bg.jpeg' %}" />
