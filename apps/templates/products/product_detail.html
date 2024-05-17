@@ -106,19 +106,31 @@
               <div class="flex items-center gap-3">
                 <img src="{% static 'assets/images/icons/location.svg' %}"  alt="" />
                 <p class="text-[#A0A0A0] font-normal text-[16px]">
-                  г. Бишкек, ул. xxxxxxxxxxxx
+                    {% if product.provider.city and product.provider.address %}
+                        {{ product.provider.city }} xxxxxxxxx
+                    {% else %}
+                        Адрес не заполнен
+                    {% endif %}
                 </p>
               </div>
               <div class="flex items-center gap-3">
                 <img src="{% static 'assets/images/icons/email.svg' %}"  alt="" />
                 <p class="text-[#A0A0A0] font-normal text-[16px]">
-                  xxxxxx@gmail.com
+                    {% if product.provider.email %}
+                        xxxxxx@gmail.com
+                    {% else %}
+                        Email не заполнен
+                    {% endif %} 
                 </p>
               </div>
               <div class="flex items-center gap-3">
                 <img src="{% static 'assets/images/icons/call.svg' %}"  alt="" />
                 <p class="text-[#A0A0A0] font-normal text-[16px]">
-                  +7 (929) 566 - XX - XX
+                    {% if product.provider.phone %}
+                        {{ product.provider.phone|slice:"0:-4" }}xxxx
+                    {% else %}
+                        Телефон не заполнен
+                    {% endif %}
                 </p>
               </div>
               <div class="flex items-center gap-3">
@@ -126,7 +138,11 @@
                   src="{% static 'assets/images/icons/earth-location.svg' %}"
                   alt=""
                 />
-                <p class="text-[#A0A0A0] font-normal text-[16px]">xxxxxxxxxx</p>
+                {% if product.provider.website %}
+                    <p class="text-[#A0A0A0] font-normal text-[16px]">xxxxxxxxxx</p>
+                {% else %}
+                    Веб сайт не заполнен
+                {% endif %}
               </div>
               <button
                 class="uppercase text-[16px] font-medium font-mulish py-3 px-4 bg-[#E4DB00] rounded-md"
@@ -155,7 +171,7 @@
                 Цена мелкий опт (10 - 100 шт.)
               </p>
               <span class="text-[#2B292C] text-[18px] font-extrabold"
-                >{{ product.price }} сом</span
+                >{{ product.retail_price }} сом</span
               >
             </div>
             <div class="flex items-center gap-5">
@@ -163,7 +179,7 @@
                 Цена крупный опт (101 - 1 000 шт.)
               </p>
               <span class="text-[#2B292C] text-[18px] font-extrabold"
-                >{{ product.price }} сом</span
+                >{{ product.wholesale_price }} сом</span
               >
             </div>
           </div>

@@ -32,7 +32,9 @@
             {% for category in categories %}
             <li class="">
                 <a class="flex items-center gap-[10px] w-fit" href="/product/list/?category={{ category.id }}">
-                    <img src="{{ category.icon.url }}" alt="{{ category.title }}">
+                    {% if category.icon %}
+                        <img src="{{ category.icon.url }}" alt="{{ category.title }}">
+                    {% endif %}
                     <span>{{ category.title }}</span>
                 </a>
             </li>
@@ -99,7 +101,7 @@
                         </svg>
                         <!-- card image -->
                         <div class="rounded-[10px] overflow-hidden w-full">
-                            <img class="aspect-square" src="{{ product.image.url }}" alt="">
+                            <img class="aspect-square" src="{% if product.image%} {{ product.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}" alt="">
                         </div>
                         <h2 class="text-dar text-lg font-bold mt-5 line-clamp-1">{{ product.title }}</h2>
                         <p class="text-dark-text mt-4 line-clamp-2 min-h-10 mb-[18px]">{{ product.mini_desc }}</p>

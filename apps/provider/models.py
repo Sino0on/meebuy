@@ -42,6 +42,7 @@ class Provider(models.Model):
     address = models.CharField(max_length=123, verbose_name=_('Адрес'), blank=True, null=True)
     work_time = models.CharField(max_length=123, verbose_name=_('Время работы'), blank=True, null=True)
     phones = ArrayField(models.CharField(max_length=123), verbose_name=_('Телефон'), blank=True, null=True)
+    web_site = models.URLField(verbose_name=_('Вебсайт'), blank=True, null=True)
     fax = models.CharField(max_length=123, verbose_name=_('Факс'), blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     image = models.ImageField(blank=True, null=True, upload_to='images/providers/avatars/%Y/%m', verbose_name=_('Аватар'))

@@ -9,9 +9,9 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from urllib.parse import quote
 
 from apps.product.filters import ProductFilter
-from apps.product.models import Product, ProductImg
+from apps.product.models import Product, ProductImg, ProductCategory
 from apps.product.forms import ProductForm, UploadExcelForm
-from apps.provider.models import Category
+from apps.provider.models import Category, Provider
 
 
 class ProductListView(ListView):
@@ -98,29 +98,30 @@ class ExcelUploadView(FormView):
     def form_valid(self, form):
         form = self.form_class(self.request.POST, self.request.FILES)
         file = self.request.FILES['excel_file']
-        print(file)
-        print(type(file))
+
         workbook = openpyxl.load_workbook(file)
         sheet = workbook.active
+        provider = Provider.objects.get(user=self.request.user)
 
         for row in sheet.iter_rows(min_row=2, values_only=True):
-            print(row)
             try:
-                category_instance, _ = Category.objects.get_or_create(title=row[1])
+                category_instance, _ = ProductCategory.objects.get_or_create(title=row[1])
                 Product.objects.create(
+                    provider=provider,
                     type=row[0],
                     category=category_instance,
                     title=row[2],
-                    description=row[3],
-                    manufacturer=row[4],
-                    price=row[5],
-                    retail_price=row[6],
-                    wholesale_price=row[7],
-                    min_quantity=row[8],
-                    terms_of_sale=row[9],
-                    country_of_manufacture=row[10],
-                    characterization=row[11],
-                    phone=row[12],
+                    mini_desc=row[3],
+                    description=row[4],
+                    manufacturer=row[5],
+                    price=row[6],
+                    retail_price=row[7],
+                    wholesale_price=row[8],
+                    min_quantity=row[9],
+                    terms_of_sale=row[10],
+                    country_of_manufacture=row[11],
+                    characterization=row[12],
+                    phone=row[13],
                 )
             except Exception as e:
                 print(e)
