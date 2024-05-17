@@ -160,6 +160,15 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         }
     },
+    'yandex': {
+        'SCOPE': [
+            'login:email',
+            'login:info',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
     'facebook': {
         'METHOD': 'oauth2',
         'SCOPE': ['email', 'public_profile'],
