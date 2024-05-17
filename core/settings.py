@@ -147,7 +147,8 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 LOGIN_REDIRECT_URL = '/select_user_type/'
 LOGOUT_REDIRECT_URL = '/'
 
-SITE_ID = config("SITE_ID")
+SITE_ID = int(config("SITE_ID"))
+
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
