@@ -58,6 +58,8 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
     'allauth.socialaccount.providers.yandex',
+    'allauth.socialaccount.providers.mailru',
+
 
 
     'rest_framework'
