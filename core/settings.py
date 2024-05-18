@@ -169,7 +169,14 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
-        }
+        },
+        'mailru': {
+            'APP': {
+                'client_id': 'bbf078dd6fef4aee827aee7b718f95a4',
+                'secret': '3b05b7c31cc7427795cca118ca86fac8',
+                'key': ''
+            }
+        },
     },
     'facebook': {
         'METHOD': 'oauth2',
