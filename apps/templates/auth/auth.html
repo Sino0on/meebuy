@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{% static 'pages/auth/auth.css' %}">
 {% endblock %}
 
-
 {% block title %}
 Главная
 {% endblock %}
@@ -31,7 +30,7 @@
           Вход
         </div>
       </div>
-      
+
      <div class="cards flex lg-md:flex-row flex-col lg-md:justify-center  lg-md:w-[1000px]   rounded-2xl">
       <div class="lg-md:w-[534px] w-[390px] p-10 mx-auto ">
        <!-- register -->
@@ -117,16 +116,22 @@
 
                 </li>
                 <li class="cards rounded-[12px] py-2 px-3">
-                  <a href=""
-                    ><img
-                      src="{% static 'assets/images/icons/yandex.svg' %}"
-                      alt="yandex"
-                  /></a>
+                  <form action="{% url 'yandex_login' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">
+                      <img src="{% static 'assets/images/icons/yandex.svg' %}" alt="yandex"/>
+                    </button>
+                  </form>
                 </li>
-                <li class="cards rounded-[12px] p-2"
-                  <a href=""
-                    ><img src="{% static 'assets/images/icons/gamil.svg' %}" alt="gamil"
-                  /></a>
+                <li class="cards rounded-[12px] p-2">
+                  <form action="/accounts/mailru/login/" method="post">
+                    {% csrf_token %}
+                    <button type="submit"
+                    ><img
+                      src="{% static 'assets/images/icons/mailru.svg' %}"
+                      alt="mailru"
+                    /></button>
+                  </form>
                 </li>
                 <li class="cards rounded-[12px] py-2 px-[14px]"
                   <a href=""
@@ -204,10 +209,15 @@
                     </button>
                   </form>
               </li>
-              <li class="cards rounded-[12px] p-2"
-                <a href=""
-                  ><img src="{% static 'assets/images/icons/gamil.svg' %}" alt="gamil"
-                /></a>
+              <li class="cards rounded-[12px] p-2">
+                  <form action="/accounts/mailru/login/" method="post">
+                    {% csrf_token %}
+                    <button type="submit"
+                    ><img
+                      src="{% static 'assets/images/icons/mailru.svg' %}"
+                      alt="mailru"
+                    /></button>
+                  </form>
               </li>
               <li class="cards rounded-[12px] py-2 px-[14px]"
                 <a href=""
@@ -226,7 +236,7 @@
         </div>
 
       </div>
-     
+
       <img id="login-img" style="display: block;" class="login-img transition-all duration-500 ease-linear object-cover lg-md:rounded-r-2xl w-[466px]" src="{% static 'assets/images/auth/auth-bg.jpeg' %}" />
      </div>
     </div>
