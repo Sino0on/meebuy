@@ -226,11 +226,14 @@
                     alt="facebook"
                 /></a>
               </li>
-              <li class="cards rounded-[12px] px-2 py-[14px]"
-                <a href=""
-                  ><img src="{% static 'assets/images/icons/vw.svg' %}" alt="vw"
-                /></a>
-              </li>
+                <li class="cards rounded-[12px] p-2">
+                  <form action="/accounts/vk/login/" method="post">
+                    {% csrf_token %}
+                    <button type="submit">
+                      <img src="{% static 'assets/images/icons/vw.svg' %}" alt="VK">
+                    </button>
+                  </form>
+                </li>
             </ul>
         </div>
         </div>
