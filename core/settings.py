@@ -172,8 +172,8 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         'mailru': {
             'APP': {
-                'client_id': 'bbf078dd6fef4aee827aee7b718f95a4',
-                'secret': '3b05b7c31cc7427795cca118ca86fac8',
+                'client_id': '17831799532140928a4f6f5396114e46',
+                'secret': '90cb63b857454b11890e87157cd357d9',
                 'key': ''
             }
         },
