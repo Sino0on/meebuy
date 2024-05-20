@@ -142,7 +142,7 @@
                   </form>
                 </li>
                 <li class="cards rounded-[12px] p-2">
-                  <form action="/accounts/vk/login/" method="post">
+                  <form action="{% provider_login_url "vk" %}" method="post">
                     {% csrf_token %}
                     <button type="submit">
                       <img src="{% static 'assets/images/icons/vw.svg' %}" alt="vk" />
@@ -232,7 +232,7 @@
                 </form>
               </li>
               <li class="cards rounded-[12px] p-2">
-                <form action="/accounts/vk/login/" method="post">
+                <form action="{% provider_login_url "vk" %}" method="post">
                   {% csrf_token %}
                   <button type="submit">
                     <img src="{% static 'assets/images/icons/vw.svg' %}" alt="vk" />
