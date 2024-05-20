@@ -181,8 +181,8 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         'vk': {
             'SCOPE': [
-                'login:email',
-                'login:info',
+                'profile',
+                'email',
             ],
             'AUTH_PARAMS': {
                 'access_type': 'online',
