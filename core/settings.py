@@ -171,10 +171,12 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         },
         'mailru': {
-            'APP': {
-                'client_id': '17831799532140928a4f6f5396114e46',
-                'secret': '90cb63b857454b11890e87157cd357d9',
-                'key': ''
+            'SCOPE': [
+                'login:email',
+                'login:info',
+            ],
+            'AUTH_PARAMS': {
+                'access_type': 'online',
             }
         },
         'vk': {
