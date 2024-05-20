@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
@@ -274,16 +273,14 @@
                         Вы можете загрузить файл Excel (.xlsx) с товарами.
                         Загрузить товары с помощью Excel-файла
                       </p>
-                      <div
-                        class="uppercase text-center font-medium text-[16px] border border-[#2B292C] rounded-lg py-3"
-                      >
-                        <label for="file"> выбрать загрузку Excel</label>
-                        <input
-                          style="display: none"
-                          type="file"
-                          name="file"
-                          id="file"
-                        />
+                      <div id="btnToExcel" class="cursor-pointer uppercase text-center font-medium text-[16px] border border-[#2B292C] rounded-lg py-3">
+                            <p> выбрать загрузку Excel</p>
+{#                              <input#}
+{#                              style="display: none"#}
+{#                              type="file"#}
+{#                              name="file"#}
+{#                              id="file"#}
+{#                            />#}
                       </div>
                     </div>
                     <div class="flex flex-col gap-2">
@@ -681,7 +678,11 @@
                           Нажмите, чтобы загрузить файл или перетащите файл в
                           эту область
                         </label>
-                        <input id="file" style="display: none" type="file" />
+                          <form action="{% url 'upload_excel' %}" method="post" enctype="multipart/form-data">
+                              {% csrf_token %}
+                                <input id="file" style="display: none" type="file"  />
+                              <button type="submit">go</button>
+                              </form>
                       </div>
                     </div>
                     <div class="flex flex-col gap-8">
