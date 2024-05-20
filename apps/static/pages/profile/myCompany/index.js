@@ -12,50 +12,50 @@ function handleFileLoad(event, index) {
 
 fileInputs.forEach((input, index) => {
     const image = photosWrapper.querySelector(`#preview${index + 1}`);
-    const srcImage = image.src.split('/').pop();
+    const srcImage = image?.src?.split('/').pop();
     input.addEventListener('change', (e) => {
-
         const file = input.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (event) {
                 handleFileLoad(event, index);
             };
-                const formData = new FormData();
-                if(srcImage) {
-                    formData.append('oldImage', srcImage)
-                }
-                formData.append('image', input.files[0]);
 
-                const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken=')).split('=')[1];
-                // Отправляем запрос на сервер
-                fetch('/change-image/', {
-                    method: 'POST',
-                    body: formData,
-                    credentials: 'include',  // Если требуется, чтобы cookies отправлялись с запросом
-                    headers: {
-                        'X-CSRFToken': csrftoken
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        console.log('Avatar updated successfully');
-                        return response.json();
-                    } else {
-                        throw new Error('Something went wrong on API server!');
-                    }
-                }).then(response => {
-                    console.log(response);
-                }).catch(error => {
-                    console.error(error);
-                });
+            const formData = new FormData();
+            if (srcImage) {
+                formData.append('oldImage', srcImage);
+            }
+            formData.append('image', file);
+
+            const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken=')).split('=')[1];
+            // Sending request to the server
+            fetch('/change-image/', {
+                method: 'POST',
+                body: formData,
+                credentials: 'include',  // If cookies need to be sent with the request
+                headers: {
+                    'X-CSRFToken': csrftoken
+                }
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Avatar updated successfully');
+                    return response.json();
+                } else {
+                    throw new Error('Something went wrong on API server!');
+                }
+            }).then(response => {
+                console.log(response);
+            }).catch(error => {
+                console.error(error);
+            });
             reader.readAsDataURL(file);
         }
     });
 });
 
-// price
+// price upload
 const priceInput = document.querySelector('#price_file');
-const priceFiles = document.querySelector('.uploaded_files')
+const priceFiles = document.querySelector('.uploaded_files');
 
 priceInput.addEventListener('change', () => {
     const file = priceInput.files[0];

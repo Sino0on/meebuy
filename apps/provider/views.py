@@ -9,7 +9,7 @@ from apps.provider.serializers import CategoryListSerializer
 
 class ProviderListView(generic.ListView):
     model = Provider
-    queryset = Provider.objects.filter(is_active=True)
+    queryset = Provider.objects.filter(is_modered=True)
     template_name = 'providers/provider_list.html'
     paginate_by = '10'
     filter_class = ProviderFilter

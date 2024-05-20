@@ -21,9 +21,9 @@ class Cabinet(models.Model):
         related_name='user_statuses',
         verbose_name=_('Статус пользователя')
     )
-    favorite_products = models.ManyToManyField(Product, related_name='user_cabinet', verbose_name=_('Избранные продукты'))
-    favorite_tenders = models.ManyToManyField(Tender, related_name='user_cabinet', verbose_name=_('Избранные закупки'))
-    favorite_providers = models.ManyToManyField(Provider, related_name='user_cabinet', verbose_name=_('Избранные оптовики'))
+    favorite_products = models.ManyToManyField(Product, related_name='user_cabinet', verbose_name=_('Избранные продукты'), blank=True)
+    favorite_tenders = models.ManyToManyField(Tender, related_name='user_cabinet', verbose_name=_('Избранные закупки'), blank=True)
+    favorite_providers = models.ManyToManyField(Provider, related_name='user_cabinet', verbose_name=_('Избранные оптовики'), blank=True)
 
 
     def __str__(self):
@@ -36,7 +36,8 @@ class Cabinet(models.Model):
 
 class Status(models.Model):
     title = models.CharField(max_length=123, verbose_name=_('Название'))
-    price_month = models.DecimalField(verbose_name='Цена за месяц', max_digits=100, decimal_places=1)
+    price_month = models.DecimalField(verbose_name='Цена за месяц', max_digits=100, decimal_places=1,)
+    is_recomended = models.BooleanField(blank=True, default=False, verbose_name='РЕКОМЕНДУЕМ')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'))
 
     def __str__(self):
@@ -52,6 +53,7 @@ class PackageStatus(models.Model):
     price = models.DecimalField(verbose_name=_('Цена'), max_digits=100, decimal_places=1)
     quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
     quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'))
+    image = models.FileField(upload_to='images/packages/', blank=True, default='1')
     is_advertise = models.BooleanField(default=False, blank=True)
     is_contact_prov = models.BooleanField(default=False, blank=True)
     dayly_message = models.PositiveIntegerField(blank=True, default=30)
