@@ -178,39 +178,20 @@ SOCIALACCOUNT_PROVIDERS = {
             }
         },
         'vk': {
+            'APP': {
+                'client_id': '51926387',
+                'secret': 'flbkRW2xTcRoxPM9okTH',
+                'key': '5578b42d5578b42d5578b42ddf5660e15e555785578b42d3330402c74d1e84289ea2fb2'
+            },
             'SCOPE': [
-                'email',       # Запрашиваем доступ к email пользователя
-                'friends',     # Пример доступа к списку друзей
-                'photos',      # Пример доступа к фотографиям
+                'email',
+                'friends',
+                'photos'
             ],
             'AUTH_PARAMS': {
-                'access_type': 'online',  # Используется для получения онлайн доступа
-                'v': '5.131',             # Версия API ВКонтакте
+                'v': '5.131'
             }
         }
-    },
-    'facebook': {
-        'METHOD': 'oauth2',
-        'SCOPE': ['email', 'public_profile'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time',
-        ],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': lambda request: 'ru_RU',
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v13.0',
     },
 }
 
