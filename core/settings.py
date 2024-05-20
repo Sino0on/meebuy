@@ -181,15 +181,12 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         'vk': {
             'SCOPE': [
-                'email',  # to get user's email
-                'friends',  # to get access to user's friend list (optional)
+                'login:email',
+                'login:info',
             ],
             'AUTH_PARAMS': {
-                'v': '5.131',  # VK API version
-            },
-            'METHOD': 'oauth2',
-            'LOCALE_FUNC': lambda request: 'ru_RU',
-            'VERIFIED_EMAIL': False,
+                'access_type': 'online',
+            }
         },
          'facebook': {
                 'METHOD': 'oauth2',
