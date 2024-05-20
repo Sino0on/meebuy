@@ -242,7 +242,7 @@
                     <a
                       id="rates"
                       class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 lg-md:px-3 md: p-3 border-[#FFFB98] border-2 rounded-2xl"
-                      href="../../tariffs/tariffs.html"
+                      href="{% url 'tariffs' %}"
                     >
                       Тарифы</a
                     >
@@ -306,98 +306,31 @@
                       автоподнятие.
                     </p>
                     <div class="flex flex-col gap-5">
+                      {% for i in uppings %}
                       <div
                         class="lifting flex flex-col sm:flex-row sm:items-center sm: gap-[28px] w-full justify-between border-b border-[#A0A0A0] pb-4"
                       >
                         <p class="sm:block hidden text-[#4D4D4D] text-lg">
-                          Поднятие на 1 сутки
+                          Поднятие на {{ i.days }} сутки
                         </p>
                         <span class="sm:block hidden text-[#4D4D4D] text-lg"
-                          >1 000 сом</span
+                          >{{ i.price }} сом</span
                         >
                         <div
                           class="flex items-center justify-between sm:hidden text-[#4D4D4D] text-lg"
                         >
-                          <p>Поднятие на 1 сутки</p>
-                          <span>1 000 сом</span>
+                          <p>Поднятие на {{ i.days }} сутки</p>
+                          <span>{{ i.price }} сом</span>
                         </div>
                         <div class="sm:w-[210px] w-full">
-                          <button
+                          <button onclick="connectTariff({{ i.id }})"
                             class="uppercase text-[#2B292C] text-lg w-full font-semibold py-3 px-7 bg-[#E4DB00] rounded-lg"
                           >
                             активировать
                           </button>
                         </div>
                       </div>
-                      <div
-                        class="lifting flex flex-col sm:flex-row sm:items-center sm: gap-[28px] w-full justify-between border-b border-[#A0A0A0] pb-4"
-                      >
-                        <p class="sm:block hidden text-[#4D4D4D] text-lg">
-                          Поднятие на 1 сутки
-                        </p>
-                        <span class="sm:block hidden text-[#4D4D4D] text-lg"
-                          >1 000 сом</span
-                        >
-                        <div
-                          class="flex items-center justify-between sm:hidden text-[#4D4D4D] text-lg"
-                        >
-                          <p>Поднятие на 1 сутки</p>
-                          <span>1 000 сом</span>
-                        </div>
-                        <div class="sm:w-[210px] w-full">
-                          <button
-                            class="uppercase text-[#2B292C] text-lg w-full font-semibold py-3 px-7 bg-[#E4DB00] rounded-lg"
-                          >
-                            активировать
-                          </button>
-                        </div>
-                      </div>
-                      <div
-                        class="lifting flex flex-col sm:flex-row sm:items-center sm: gap-[28px] w-full justify-between border-b border-[#A0A0A0] pb-4"
-                      >
-                        <p class="sm:block hidden text-[#4D4D4D] text-lg">
-                          Поднятие на 1 сутки
-                        </p>
-                        <span class="sm:block hidden text-[#4D4D4D] text-lg"
-                          >1 000 сом</span
-                        >
-                        <div
-                          class="flex items-center justify-between sm:hidden text-[#4D4D4D] text-lg"
-                        >
-                          <p>Поднятие на 1 сутки</p>
-                          <span>1 000 сом</span>
-                        </div>
-                        <div class="sm:w-[210px] w-full">
-                          <button
-                            class="uppercase text-[#2B292C] text-lg w-full font-semibold py-3 px-7 bg-[#E4DB00] rounded-lg"
-                          >
-                            активировать
-                          </button>
-                        </div>
-                      </div>
-                      <div
-                        class="lifting flex flex-col sm:flex-row sm:items-center sm: gap-[28px] w-full justify-between border-b border-[#A0A0A0] pb-4"
-                      >
-                        <p class="sm:block hidden text-[#4D4D4D] text-lg">
-                          Поднятие на 1 сутки
-                        </p>
-                        <span class="sm:block hidden text-[#4D4D4D] text-lg"
-                          >1 000 сом</span
-                        >
-                        <div
-                          class="flex items-center justify-between sm:hidden text-[#4D4D4D] text-lg"
-                        >
-                          <p>Поднятие на 1 сутки</p>
-                          <span>1 000 сом</span>
-                        </div>
-                        <div class="sm:w-[210px] w-full">
-                          <button
-                            class="uppercase text-[#2B292C] text-lg w-full font-semibold py-3 px-7 bg-[#E4DB00] rounded-lg"
-                          >
-                            активировать
-                          </button>
-                        </div>
-                      </div>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
@@ -447,6 +380,28 @@
 
     {% endblock %}
 {% block js %}
+
+<script>
+  function connectTariff(id) {
+    fetch('/upping/buy/' + encodeURIComponent(id)) // Предположим, что это ваш URL для подключения тарифа
+        .then(response => {
+            if (response.status === 200) {
+                // Показать модальное окно об успешном подключении
+                document.getElementById('modalSuccess').classList.remove('hidden');
+            } else if (response.status === 400) {
+                // Показать модальное окно о недостатке средств
+                document.getElementById('modalFailure').classList.remove('hidden');
+            } else {
+                // Обработка других HTTP статусов или ошибка сети
+                alert('Произошла ошибка. Пожалуйста, попробуйте позже.');
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при подключении тарифа:', error);
+        });
+}
+
+</script>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"

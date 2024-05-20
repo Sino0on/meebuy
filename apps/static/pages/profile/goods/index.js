@@ -8,7 +8,6 @@ const categoryBlock = document.getElementById("category-block");
 const priceBlock = document.getElementById("price-block");
 const autoloaderBlock = document.getElementById("autoload-block");
 const excelLoaderBlock = document.getElementById("excel-loader-block");
-const btnToExcel = document.getElementById('btnToExcel')
 
 const toggleTab = (element) => {
   const tabs = [goods, category, price, autoloader, excelLoader];
@@ -35,7 +34,6 @@ category.addEventListener("click", () => toggleTab(category));
 price.addEventListener("click", () => toggleTab(price));
 autoloader.addEventListener("click", () => toggleTab(autoloader));
 excelLoader.addEventListener("click", () => toggleTab(excelLoader));
-btnToExcel.addEventListener('click', () => toggleTab(excelLoader))
 
 // add category
 

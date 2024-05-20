@@ -153,6 +153,15 @@ class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
 class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/analytic.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['uppings'] = Upping.objects.all()
+        return context
 
-class TariffsCabinetView(generic.TemplateView, LoginRequiredMixin):
+
+class TariffsCabinetView(generic.ListView, LoginRequiredMixin):
     template_name = 'cabinet/tariffs.html'
+    model = Status
+    queryset = Status.objects.all()
+    context_object_name = 'statasus'
+
