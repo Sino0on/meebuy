@@ -180,18 +180,12 @@ SOCIALACCOUNT_PROVIDERS = {
             }
         },
         'vk': {
-            'APP': {
-                'client_id': '51926387',
-                'secret': 'flbkRW2xTcRoxPM9okTH',
-                'key': '5578b42d5578b42d5578b42ddf5660e15e555785578b42d3330402c74d1e84289ea2fb2'
-            },
             'SCOPE': [
-                'email',
-                'friends',
-                'photos'
+                'login:email',
+                'login:info',
             ],
             'AUTH_PARAMS': {
-                'v': '5.131'
+                'access_type': 'online',
             }
         },
          'facebook': {
