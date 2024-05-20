@@ -180,19 +180,16 @@ SOCIALACCOUNT_PROVIDERS = {
             }
         },
         'vk': {
-            'APP': {
-                'client_id': '51926387',
-                'secret': 'flbkRW2xTcRoxPM9okTH',
-                'key': '5578b42d5578b42d5578b42ddf5660e15e555785578b42d3330402c74d1e84289ea2fb2'
-            },
             'SCOPE': [
-                'email',
-                'friends',
-                'photos'
+                'email',  # to get user's email
+                'friends',  # to get access to user's friend list (optional)
             ],
             'AUTH_PARAMS': {
-                'v': '5.131'
-            }
+                'v': '5.131',  # VK API version
+            },
+            'METHOD': 'oauth2',
+            'LOCALE_FUNC': lambda request: 'ru_RU',
+            'VERIFIED_EMAIL': False,
         },
          'facebook': {
                 'METHOD': 'oauth2',
