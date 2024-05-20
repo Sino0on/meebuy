@@ -177,6 +177,17 @@ SOCIALACCOUNT_PROVIDERS = {
                 'key': ''
             }
         },
+        'vk': {
+            'SCOPE': [
+                'email',       # Запрашиваем доступ к email пользователя
+                'friends',     # Пример доступа к списку друзей
+                'photos',      # Пример доступа к фотографиям
+            ],
+            'AUTH_PARAMS': {
+                'access_type': 'online',  # Используется для получения онлайн доступа
+                'v': '5.131',             # Версия API ВКонтакте
+            }
+        }
     },
     'facebook': {
         'METHOD': 'oauth2',
