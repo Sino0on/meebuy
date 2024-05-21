@@ -35,7 +35,7 @@ class Product(models.Model):
     min_quantity = models.PositiveIntegerField(default=1, verbose_name='Минимальное количество')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Времея обновления')
-    category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT, verbose_name='Категория')
+    category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT, verbose_name='Категория', blank=True, null=True)
     image = models.ImageField(upload_to='images/products/%Y/%m/', verbose_name='Картинка')
     provider = models.ForeignKey('provider.Provider', on_delete=models.PROTECT, related_name='products')
     phone = models.CharField(max_length=123, blank=True, null=True, verbose_name='Телефон')

@@ -75,7 +75,7 @@ urlpatterns = [
     path('tender/list/', TenderListView.as_view(), name='tender_list'),
     path('tender/detail/<int:pk>/', TenderDetailView.as_view(), name='tender_detail'),
 
-    path('status/list/', UserStatusListView.as_view()),
+    path('status/list/', StatusListView.as_view()),
     path('upping/list/', UppingListView.as_view()),
     path('status/buy/<int:pk>', BuyStatusView.as_view()),
     path('upping/buy/<int:pk>', BuyUppingView.as_view()),

@@ -416,7 +416,7 @@
                     {% for i in user.cabinet.transactions.all %}
                       <tr>
                         <td scope="row">{{ i.id }}</td>
-                        <td>Пополнение баланса</td>
+                        <td>{{ i.description }}</td>
                         <td>{{ i.created_at }}</td>
                         <td>{{ i.total }} сом</td>
                         <td>

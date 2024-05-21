@@ -2,13 +2,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-
+from rest_framework.generics import ListAPIView
 from apps.authentication.forms import ProviderForm, UserUpdateForm
 from apps.user_cabinet.models import Status, Upping
 from apps.provider.models import ProvideImg, Provider
 from apps.buyer.models import BuyerImg
 from django.contrib.auth import get_user_model
 from django.views import generic
+from apps.user_cabinet.seriazliers import StatusSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
@@ -164,4 +165,9 @@ class TariffsCabinetView(generic.ListView, LoginRequiredMixin):
     model = Status
     queryset = Status.objects.all()
     context_object_name = 'statasus'
+
+
+class StatusListView(ListAPIView):
+    serializer_class = StatusSerializer
+    queryset = Status.objects.all()
 

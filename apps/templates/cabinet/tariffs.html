@@ -35,105 +35,105 @@
             <h1 class="uppercase font-black text-lg text-center lg:text-3xl">Тарифы</h1>
             <!-- tariffs -->
             <div class="mt-[30px] lg-md:mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-offers gap-[30px]">
-                {% for i in statasus %}
-                <div class="tariffs__info {% if i.is_recomended %}recommended{% endif %} flex flex-col items-center pb-10">
-                    {% if i.is_recomended %}
-                    <div class="tariffs__info-recommended w-full">
-                        <img src="{% static 'assets/images/tariffs/recommended.svg' %}" alt="Recommended" />
-                        Рекомендуем
-                    </div>
-                    {% else %}
-                    <div class="tariffs__info-recommended w-full"></div>
-                    {% endif %}
-                    <div class="flex flex-col items-center gap-10 px-4 lg-md:px-3 h-full">
-                        <div class="tariffs__info-title mt-[30px] flex items-center">
-                            <img class="w-6" src="{% static 'assets/images/icons/premium.svg' %}" alt="" />
-                            <h2 class="ml-[5px]">{{ i.title }}</h2>
-                        </div>
-                        <div>
-                            <img src="{% static 'assets/images/tariffs/tariff-premium-standard.png' %}" alt="Tariff Premium Standard" />
-                        </div>
-                        <!-- price -->
-                        <div class="tariffs__info-price" data-prices='{{ i.prices_json|escapejs }}'>
-                            <div class="tariffs__info-price-old">
-                                <span class="line-through">{{ i.price_month }}</span>
-                                <span>сом / в месяц</span>
-                            </div>
-                            <div class="tariffs__info-price-discount">
-                                6 500
-                                <span>сом / в месяц</span>
-                            </div>
-                        </div>
-                        <!-- period -->
-                        <div class="tariffs__info-period">
-                            <div class="tariffs__info-period_price text-lg">
-                                <p>При оплате за <span>3 месяца</span></p>
-                                <p>Итого: <span>19 500 сом</span></p>
-                            </div>
-                            <div class="tariffs__info-period_term mt-10">
-                                <p class="">Срок подключения</p>
-                                <div class="flex gap-[30px] mt-5">
-                                    {% for j in i.packagestatuses.all %}
-                                    <div class="flex items-center flex-col justify-center">
-                                        <input class="w-6 h-6 period-radio" type="radio" value="{{ j.months }}" name="{{ i.title }}" checked />
-                                        {{ j.months }} месяц
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- divider -->
-                        <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
-                        <!-- highest position -->
-                        <div class="flex items-center flex-col">
-                            <img src="{% static 'assets/images/tariffs/graph-premium-standard.svg' %}" alt="Chart" />
-                            <p>Средняя позиция в каталоге, компанию находят чаще</p>
-                        </div>
-                        <!-- opened buys -->
-                        <div class="flex items-center flex-col">
-                            <img src="{% static 'assets/images/icons/box.svg' %}" alt="Box" />
-                            <span class="counts">450</span>
-                            <p>Открытий закупок в месяц (на срок 3 мес.)</p>
-                        </div>
-                        <!-- messages -->
-                        <div class="flex items-center flex-col">
-                            <img src="{% static 'assets/images/icons/message.svg' %}" alt="Message" />
-                            <span class="counts">30</span>
-                            <p>Исходящих сообщений в день</p>
-                        </div>
-                        <!-- limit -->
-                        <div class="flex items-center flex-col">
-                            <span class="counts">1 000</span>
-                            <p>Лимит товаров</p>
-                        </div>
-                        <!-- bonuses -->
-                        <div class="tariffs__info-bonuses">
-                            <p class="flex gap-2.5">
-                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Показ Вашего телефона незарегистрированным посетителям
-                            </p>
-                            <p class="flex gap-2.5">
-                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Показ Вашего E-mail и ссылки на ваш сайт / соцсети
-                            </p>
-                            <p class="flex gap-2.5">
-                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Просмотр сайта без рекламы
-                            </p>
-                            <p class="flex gap-2.5">
-                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Просмотр контактов поставщиков
-                            </p>
-                            <p class="flex gap-2.5">
-                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Ежедневная синхронизация товаров YML
-                            </p>
-                            <p class="flex gap-2.5">
-                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Статус верифицированной компании (при оплате по счету)
-                            </p>
-                        </div>
-                        <button class="btn-filled py-5 px-[30px] uppercase mt-auto">
-                            Подключить
-                        </button>
-                    </div>
-                </div>
-                {% endfor %}
-                <!-- premium max -->
+<!--                {% for i in statasus %}-->
+<!--                <div class="tariffs__info {% if i.is_recomended %}recommended{% endif %} flex flex-col items-center pb-10">-->
+<!--                    {% if i.is_recomended %}-->
+<!--                    <div class="tariffs__info-recommended w-full">-->
+<!--                        <img src="{% static 'assets/images/tariffs/recommended.svg' %}" alt="Recommended" />-->
+<!--                        Рекомендуем-->
+<!--                    </div>-->
+<!--                    {% else %}-->
+<!--                    <div class="tariffs__info-recommended w-full"></div>-->
+<!--                    {% endif %}-->
+<!--                    <div class="flex flex-col items-center gap-10 px-4 lg-md:px-3 h-full">-->
+<!--                        <div class="tariffs__info-title mt-[30px] flex items-center">-->
+<!--                            <img class="w-6" src="{% static 'assets/images/icons/premium.svg' %}" alt="" />-->
+<!--                            <h2 class="ml-[5px]">{{ i.title }}</h2>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <img src="{% static 'assets/images/tariffs/tariff-premium-standard.png' %}" alt="Tariff Premium Standard" />-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; price &ndash;&gt;-->
+<!--                        <div class="tariffs__info-price" data-prices='{{ i.prices_json|escapejs }}'>-->
+<!--                            <div class="tariffs__info-price-old">-->
+<!--                                <span class="line-through">{{ i.price_month }}</span>-->
+<!--                                <span>сом / в месяц</span>-->
+<!--                            </div>-->
+<!--                            <div class="tariffs__info-price-discount">-->
+<!--                                6 500-->
+<!--                                <span>сом / в месяц</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; period &ndash;&gt;-->
+<!--                        <div class="tariffs__info-period">-->
+<!--                            <div class="tariffs__info-period_price text-lg">-->
+<!--                                <p>При оплате за <span>3 месяца</span></p>-->
+<!--                                <p>Итого: <span>19 500 сом</span></p>-->
+<!--                            </div>-->
+<!--                            <div class="tariffs__info-period_term mt-10">-->
+<!--                                <p class="">Срок подключения</p>-->
+<!--                                <div class="flex gap-[30px] mt-5">-->
+<!--                                    {% for j in i.packagestatuses.all %}-->
+<!--                                    <div class="flex items-center flex-col justify-center">-->
+<!--                                        <input class="w-6 h-6 period-radio" type="radio" value="{{ j.months }}" name="{{ i.title }}" checked />-->
+<!--                                        {{ j.months }} месяц-->
+<!--                                    </div>-->
+<!--                                    {% endfor %}-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; divider &ndash;&gt;-->
+<!--                        <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>-->
+<!--                        &lt;!&ndash; highest position &ndash;&gt;-->
+<!--                        <div class="flex items-center flex-col">-->
+<!--                            <img src="{% static 'assets/images/tariffs/graph-premium-standard.svg' %}" alt="Chart" />-->
+<!--                            <p>Средняя позиция в каталоге, компанию находят чаще</p>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; opened buys &ndash;&gt;-->
+<!--                        <div class="flex items-center flex-col">-->
+<!--                            <img src="{% static 'assets/images/icons/box.svg' %}" alt="Box" />-->
+<!--                            <span class="counts">450</span>-->
+<!--                            <p>Открытий закупок в месяц (на срок 3 мес.)</p>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; messages &ndash;&gt;-->
+<!--                        <div class="flex items-center flex-col">-->
+<!--                            <img src="{% static 'assets/images/icons/message.svg' %}" alt="Message" />-->
+<!--                            <span class="counts">30</span>-->
+<!--                            <p>Исходящих сообщений в день</p>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; limit &ndash;&gt;-->
+<!--                        <div class="flex items-center flex-col">-->
+<!--                            <span class="counts">1 000</span>-->
+<!--                            <p>Лимит товаров</p>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; bonuses &ndash;&gt;-->
+<!--                        <div class="tariffs__info-bonuses">-->
+<!--                            <p class="flex gap-2.5">-->
+<!--                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Показ Вашего телефона незарегистрированным посетителям-->
+<!--                            </p>-->
+<!--                            <p class="flex gap-2.5">-->
+<!--                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Показ Вашего E-mail и ссылки на ваш сайт / соцсети-->
+<!--                            </p>-->
+<!--                            <p class="flex gap-2.5">-->
+<!--                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Просмотр сайта без рекламы-->
+<!--                            </p>-->
+<!--                            <p class="flex gap-2.5">-->
+<!--                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Просмотр контактов поставщиков-->
+<!--                            </p>-->
+<!--                            <p class="flex gap-2.5">-->
+<!--                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Ежедневная синхронизация товаров YML-->
+<!--                            </p>-->
+<!--                            <p class="flex gap-2.5">-->
+<!--                                <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" />Статус верифицированной компании (при оплате по счету)-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                        <button class="btn-filled py-5 px-[30px] uppercase mt-auto">-->
+<!--                            Подключить-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                {% endfor %}-->
+<!--                &lt;!&ndash; premium max &ndash;&gt;-->
             </div>
             <div class="text-dark-text leading-6 text-center mt-10 lg-md:mt-14">
                 При истечении тарифа остаток открытий обнуляется, при продлении — суммируется с новым
@@ -226,8 +226,245 @@
 </main>
 {% endblock %}
 {% block js %}
-<script src="{% static 'pages/tariffs/tariffs.js' %}"></script>
+<!--<script src="{% static 'pages/tariffs/tariffs.js' %}"></script>-->
 <script>
+const toggles = document.querySelectorAll(".accordion-toggle");
+
+toggles.forEach((toggle) => {
+  toggle.addEventListener("click", function() {
+    const content = this.nextElementSibling;
+    const arrow = this.querySelector(".arrow");
+
+    // Проверяем, активен ли уже аккордеон
+    if (content.style.height && content.style.height !== "0px") {
+      content.style.height = "0px";
+      content.style.opacity = "0";
+      arrow.classList.remove("rotate-90");
+      arrow.classList.add("-rotate-90");
+    } else {
+      content.style.height = content.scrollHeight + "px";
+      content.style.opacity = "1";
+      arrow.classList.add("rotate-90");
+      arrow.classList.remove("-rotate-90");
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tariffsData = [
+    {
+      "id": 1,
+      "statuses": [
+        {
+          "id": 1,
+          "price": "123456.0",
+          "quantity_products": 10,
+          "quantity_tenders": 20,
+          "image": "http://192.168.31.186:9999/media/images/packages/tarif-free.png",
+          "is_advertise": false,
+          "is_contact_prov": true,
+          "dayly_message": 30,
+          "is_publish_phone": true,
+          "months": 1,
+          "status": 1
+        },
+        {
+          "id": 2,
+          "price": "12345.0",
+          "quantity_products": 20,
+          "quantity_tenders": 40,
+          "image": "http://192.168.31.186:9999/media/images/packages/tariff-premium-standard.png",
+          "is_advertise": false,
+          "is_contact_prov": true,
+          "dayly_message": 30,
+          "is_publish_phone": false,
+          "months": 3,
+          "status": 1
+        },
+        {
+          "id": 3,
+          "price": "324513.0",
+          "quantity_products": 23,
+          "quantity_tenders": 243,
+          "image": "http://192.168.31.186:9999/media/1",
+          "is_advertise": false,
+          "is_contact_prov": true,
+          "dayly_message": 30,
+          "is_publish_phone": false,
+          "months": 6,
+          "status": 1
+        }
+      ],
+      "title": "Супер статус",
+      "price_month": "5000.0",
+      "is_recomended": false,
+      "created_date": "2024-05-20T09:46:25.774818+06:00"
+    },
+    {
+      "id": 2,
+      "statuses": [
+        {
+          "id": 4,
+          "price": "345.0",
+          "quantity_products": 345,
+          "quantity_tenders": 345,
+          "image": "http://192.168.31.186:9999/media/images/packages/tarif-premium-lite.png",
+          "is_advertise": true,
+          "is_contact_prov": true,
+          "dayly_message": 30,
+          "is_publish_phone": true,
+          "months": 1,
+          "status": 2
+        }
+      ],
+      "title": "Супер мега тариф",
+      "price_month": "7000.0",
+      "is_recomended": true,
+      "created_date": "2024-05-20T09:46:37.013491+06:00"
+    },
+    {
+      "id": 3,
+      "statuses": [
+        {
+          "id": 5,
+          "price": "123.0",
+          "quantity_products": 123,
+          "quantity_tenders": 123,
+          "image": "http://192.168.31.186:9999/media/images/packages/tariff-premium-standard_fxnHaFQ.png",
+          "is_advertise": true,
+          "is_contact_prov": true,
+          "dayly_message": 12330,
+          "is_publish_phone": true,
+          "months": 1,
+          "status": 3
+        }
+      ],
+      "title": "Суперепупер мега крутой тариф",
+      "price_month": "10000.0",
+      "is_recomended": false,
+      "created_date": "2024-05-20T09:46:47.587517+06:00"
+    }
+  ];
+
+  const tariffsWrapper = document.querySelector(".tariffs__wrapper");
+
+  const renderTariff = (tariff, statusIndex) => {
+    const status = tariff.statuses[statusIndex];
+    return `
+          <div
+              class="tariffs__info ${tariff.is_recomended ? "recommended" : ""} flex flex-col items-center pb-10"
+            >
+              <div class="tariffs__info-recommended w-full">
+                  <img src="../../assets/images/tariffs/recommended.svg" alt="Recommended" />
+                ${tariff.is_recomended ? "Рекомендуем" : ""}
+              </div>
+              <div
+                class="flex flex-col items-center gap-10 px-4 lg-md:px-3 h-full"
+              >
+                <div class="tariffs__info-title mt-[30px] flex items-center">
+                  <img
+                    class="w-6"
+                    src="../../assets/images/icons/premium.svg"
+                    alt=""
+                  />
+                  <h2 class="ml-[5px]">${tariff.title}</h2>
+                </div>
+                <div>
+                  <img
+                    src="../../assets/images/tariffs/tariff-premium-standard.png"
+                    alt="Tariff Premium Standard"
+                  />
+                </div>
+                <!-- price -->
+                <div class="tariffs__info-price">
+                  <div class="tariffs__info-price-old">
+                    <span class="line-through">${status.price}</span>
+                    <span>сом / в месяц</span>
+                  </div>
+                  <div class="tariffs__info-price-discount">
+                    ${tariff.price_month}
+                    <span>сом / в месяц</span>
+                  </div>
+                </div>
+                <!-- period -->
+                <div class="tariffs__info-period">
+                  <div class="tariffs__info-period_price text-lg">
+                    <p>При оплате за <span>${status.months}</span></p>
+                    <p>Итого: <span>${status.price * status.months} сом</span></p>
+                  </div>
+                  <div class="tariffs__info-period_term mt-10">
+                    <p class="">Срок подключения</p>
+                    <div class="flex gap-[30px] mt-5">
+                    ${tariff.statuses.map((status, index) => {
+                        return `<div class="flex items-center flex-col justify-center">
+                                                        <input
+                                                          class="w-6 h-6"
+                                                          type="radio"
+                                                          value="${index}"
+                                                          name="tariff-${tariff.id}-period"
+                                                          ${index === statusIndex ? "checked" : ""}
+                                                          onclick="updateTariff(${tariff.id}, ${index})"
+                                                        />
+                                                        <span class="whitespace-nowrap">${status.months} месяца</span>
+                                                      </div>`;
+                      }).join("")}
+                    </div>
+                  </div>
+                </div>
+                <!-- divider -->
+                <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
+                <!-- highest position -->
+                <div class="flex items-center flex-col">
+                        <img src="../../assets/images/tariffs/graph-premium-standard.svg" alt="Chart" />
+                        <p>Средняя позиция в каталоге, компанию находят чаще</p>
+                    </div>
+                    <div class="flex items-center flex-col">
+                        <img src="../../assets/images/icons/box.svg" alt="Box" />
+                        <span class="counts">${status.quantity_tenders}</span>
+                        <p>Открытий закупок в месяц (на срок ${status.months} мес.)</p>
+                    </div>
+                    <div class="flex items-center flex-col">
+                        <img src="../../assets/images/icons/message.svg" alt="Message" />
+                        <span class="counts">${status.dayly_message}</span>
+                        <p>Исходящих сообщений в день</p>
+                    </div>
+                    <div class="flex items-center flex-col">
+                        <span class="counts">${status.quantity_products}</span>
+                        <p>Лимит товаров</p>
+                    </div>
+                    <div class="tariffs__info-bonuses">
+                        <p class="flex gap-2.5">
+                            <img src="../../assets/images/tariffs/check.svg" alt="Check" /> Показ Вашего телефона незарегистрированным посетителям
+                        </p>
+                        <p class="flex gap-2.5">
+                            <img src="../../assets/images/tariffs/check.svg" alt="Check" /> Показ Вашего E-mail и ссылки на ваш сайт / соцсети
+                        </p>
+                        <p class="flex gap-2.5">
+                            <img src="../../assets/images/tariffs/check.svg" alt="Check" /> Просмотр сайта без рекламы
+                        </p>
+                        <p class="flex gap-2.5">
+                            <img src="../../assets/images/tariffs/check.svg" alt="Check" /> Просмотр контактов поставщиков
+                        </p>
+                    </div>
+                    <button class="btn-filled py-5 px-[30px] uppercase mt-auto">
+                        Подключить
+                    </button>
+              </div>
+            </div>
+        `;
+  };
+
+  tariffsData.forEach((tariff, index) => {
+    tariffsWrapper.innerHTML += renderTariff(tariff, 0);
+  });
+
+  window.updateTariff = (tariffId, statusIndex) => {
+    const tariffIndex = tariffsData.findIndex(tariff => tariff.id === tariffId);
+    console.log(tariffsWrapper.children[tariffIndex])
+    const tariffElement = tariffsWrapper.children[tariffIndex];
+    tariffElement.outerHTML = renderTariff(tariffsData[tariffIndex], statusIndex);
+  };
+});
 
 </script>
 {% endblock %}

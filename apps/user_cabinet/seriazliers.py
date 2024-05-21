@@ -1,0 +1,17 @@
+from rest_framework import serializers
+from apps.user_cabinet.models import Status, PackageStatus
+
+
+class PackageStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PackageStatus
+        fields = '__all__'
+
+
+class StatusSerializer(serializers.ModelSerializer):
+    statuses = PackageStatusSerializer(many=True, source='packagestatuses')
+
+    class Meta:
+        model = Status
+        fields = '__all__'
+        include = ('statuses',)
