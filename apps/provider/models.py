@@ -3,13 +3,13 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
 
-
 User = get_user_model()
 
 
 class Category(models.Model):
     title = models.CharField(max_length=123)
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor', null=True, blank=True, verbose_name='Родительская категория')
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='categor', null=True, blank=True,
+                                 verbose_name='Родительская категория')
     icon = models.FileField(upload_to='images/category/icons/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -34,7 +34,25 @@ class Provider(models.Model):
     mini_descr = models.CharField(max_length=250, verbose_name='Короткое описание', blank=True, null=True)
     type = models.ForeignKey('Tag', on_delete=models.SET_NULL, null=True, verbose_name=_('Тип'), blank=True)
     description = models.TextField()
-    category = models.ManyToManyField(Category, related_name='providers', verbose_name=_('Категории'), blank=True, null=True)
+    category = models.ManyToManyField(Category, related_name='providers', verbose_name=_('Категории'), blank=True)
+
+    class BusinessType(models.TextChoices):
+        WHOLESALE = 'wholesale', _('Оптовая продажа товаров (вы поставщик)')
+        MANUFACTURING = 'manufacturing', _('Производство товаров (вы производитель)')
+        SERVICES = 'services', _('Оказание услуг логистики / поиска товаров / таможенного оформления')
+
+    company_core_business = models.CharField(
+        max_length=20,
+        choices=BusinessType.choices,
+        verbose_name=_('Основная деятельность вашей компании'),
+        default=BusinessType.WHOLESALE
+    )
+
+    large_wholesale = models.BooleanField(default=False, verbose_name=_('Крупный опт'))
+    small_wholesale = models.BooleanField(default=False, verbose_name=_('Мелкий опт'))
+    retail = models.BooleanField(default=False, verbose_name=_('Поштучно'))
+    official_distributor = models.BooleanField(verbose_name=_('Официальный дестрибьютор'), blank=True, null=True)
+
     city = models.ForeignKey('tender.City', on_delete=models.SET_NULL, blank=True, null=True)
     how_get = models.CharField(max_length=200, verbose_name=_('Как добраться'), blank=True, null=True)
     post_index = models.CharField(max_length=123, blank=True, null=True, verbose_name=_('Почтовый индекс'))
@@ -45,16 +63,21 @@ class Provider(models.Model):
     web_site = models.URLField(verbose_name=_('Вебсайт'), blank=True, null=True)
     fax = models.CharField(max_length=123, verbose_name=_('Факс'), blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    image = models.ImageField(blank=True, null=True, upload_to='images/providers/avatars/%Y/%m', verbose_name=_('Аватар'))
-    banner = models.ImageField(blank=True, null=True, upload_to='images/providers/banners/%Y/%m', verbose_name=_('Банер'))
+    image = models.ImageField(blank=True, null=True, upload_to='images/providers/avatars/%Y/%m',
+                              verbose_name=_('Аватар'))
+    banner = models.ImageField(blank=True, null=True, upload_to='images/providers/banners/%Y/%m',
+                               verbose_name=_('Банер'))
     requisites = models.TextField(blank=True, null=True)
     is_active = models.BooleanField(blank=True, default=True, verbose_name=_('Активность'))
     emp_quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('Кол-во работников'))
     register_ur = models.DateField(verbose_name=_('Дата регистрации юр лица'), blank=True, null=True)
-    conditions = models.ManyToManyField('Condition', blank=True, verbose_name=_('Условия'), null=True)
-    deliveries = models.ManyToManyField('Delivery', blank=True, verbose_name=_('Доставка'), null=True)
+    conditions = models.ManyToManyField('Condition', blank=True, verbose_name=_('Условия'))
+    deliveries = models.ManyToManyField('Delivery', blank=True, verbose_name=_('Доставка'))
     is_modered = models.BooleanField(default=False, blank=True, verbose_name=_('Прошла модерацию'), null=True)
-    type_pay = models.ManyToManyField('TypePay', blank=True, null=True)
+    type_pay = models.ManyToManyField('TypePay', blank=True, verbose_name=_('Типы оплаты'),)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True,)
+    email = models.EmailField(blank=True, null=True)
+    is_provider = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.title}'
@@ -123,6 +146,7 @@ class ProvideFiles(models.Model):
 
 class TypePay(models.Model):
     title = models.CharField(max_length=123)
+
     def __str__(self):
         return f'{self.title}'
 

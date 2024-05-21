@@ -1,4 +1,5 @@
 const url = `${window.location.origin}/category/list/`; // Используем origin вместо host для включения протокола
+    const selectedItems = [];
 
 // Отправляем запрос на сервер
 fetch(url)
@@ -11,7 +12,6 @@ fetch(url)
   .then(data => {
     const treeArray = data; // Сохраняем данные в переменную
 
-
 function createTree(treeArray, depth = 0) {
   const tree = document.createElement("ul");
   const plValue = Math.max(14 - 2 * depth, 4);
@@ -23,6 +23,7 @@ function createTree(treeArray, depth = 0) {
   treeArray.forEach(item => {
     const li = document.createElement("li");
     li.className = "tree__item";
+    console.log(item)
 
     const div = document.createElement("div");
     div.className = "cursor-pointer w-fit flex items-center gap-2.5 pt-[15px] text-dark-logo";
@@ -43,7 +44,7 @@ function createTree(treeArray, depth = 0) {
       if (!item.children || item.children.length === 0) {
         const index = selectedItems.indexOf(item.name);
         if (index === -1) {
-          selectedItems.push(item.name);
+          selectedItems.push(item.id);
           span.classList.add("active");
         } else {
           selectedItems.splice(index, 1);
@@ -91,7 +92,6 @@ document.getElementById("treeWrapper").appendChild(createTree(treeArray));
   });
 
 
-const selectedItems = [];
 
 const categorySearch = document.getElementById("categorySearch");
 
@@ -109,6 +109,7 @@ categorySearch.addEventListener("input", () => {
 });
 
 function updateSelectedItemsDisplay() {
+  console.log(selectedItems)
   document.getElementById("selectedCategory").value = selectedItems.join(", ");
 }
 
@@ -118,7 +119,7 @@ const numbersWrapper = document.querySelector(".numberInputs");
 addNumberBtn.addEventListener("click", () => {
   numbersWrapper.insertAdjacentHTML("beforeend", `
     <div class="flex justify-between items-center pr-7 relative">
-      <input class="numbers" type="tel" name="phoneNumber" placeholder="Например: наушники оптом">
+      <input class="numbers" type="tel" name="phoneNumber" placeholder="+996 ХХХ ХХХ ХХХ">
       <img class="deletePhoneInput absolute top-[60%] right-0 -translate-y-1/2 cursor-pointer" src="/assets/images/icons/x.svg" alt="">
     </div>
   `);
