@@ -145,6 +145,18 @@
               <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="">
               Назад в личный кабинет
             </a>
+          {% if form.errors %}
+    <ul>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endif %}
+          {% for choice in form.category.field.choices %}
+    {{ choice.0 }}: {{ choice.1 }} <br>
+{% endfor %}
             <p class="mt-10 border-b border-b-grey-light pb-[30px]">
               Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем
               качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.
@@ -167,47 +179,27 @@
 
 
                 <!--  Тут заканчиавается  -->
-                <div class="form__item">
-                  <label class="label">Основная деятельность вашей компании</label>
-                  <div class="mt-6 space-y-4">
-                    <label for="mainActivity"
-                           class="flex items-center cursor-pointer select-none text-dark">
-                      <div class="relative">
-                        <input type="radio" id="mainActivity" name="mainActivity" class="sr-only peer radioInput" />
-                        <div
-                          class="flex items-center justify-center w-5 h-5 mr-4    border border-gray-300 rounded-full">
-                          <span class="dot h-2.5 w-2.5 rounded-full bg-transparent  "></span>
-                        </div>
-                      </div>
-                      Оптовая продажа товаров (вы поставщик)
-                    </label>
-                    <label for="mainActivity2"
-                           class="flex items-center cursor-pointer select-none text-dark">
-                      <div class="relative">
-                        <input type="radio" id="mainActivity2" name="mainActivity" class="sr-only peer radioInput" />
+        <div class="form__item">
+        <label class="label">Основная деятельность вашей компании</label>
+        <div class="mt-6 space-y-4">
+            {% for choice in form.company_core_business.field.choices %}
+                <label class="flex items-center cursor-pointer select-none text-dark">
+                    <div class="relative">
+                        <input type="radio" id="{{ form.company_core_business.id_for_label }}_{{ forloop.counter }}" name="{{ form.company_core_business.name }}" value="{{ choice.0 }}" class="sr-only peer radioInput" {% if form.company_core_business.value == choice.0 %}checked{% endif %}/>
                         <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">
-                          <span class="dot h-2.5 w-2.5 rounded-full bg-transparent "></span>
+                            <span class="dot h-2.5 w-2.5 rounded-full bg-transparent "></span>
                         </div>
-                      </div>
-                      Производство товаров (вы производитель)
-                    </label>
-                    <label for="mainActivity3"
-                           class="flex items-center cursor-pointer select-none text-dark">
-                      <div class="relative">
-                        <input type="radio" id="mainActivity3" name="mainActivity" class="sr-only peer radioInput" />
-                        <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">
-                          <span class="dot h-2.5 w-2.5 rounded-full bg-transparent "></span>
-                        </div>
-                      </div>
-                      Оказание услуг логистики / поиска товаров / таможенного оформления
-                    </label>
-                  </div>
-                </div>
+                    </div>
+                    {{ choice.1 }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
                 <div class="form__item">
                   <label class="label">Описание</label>
                   <p class="tooltip">Опишите деятельность вашей компании, товары и услуги</p>
-                  <textarea class="mt-6" placeholder="Например: наушники оптом" name="descriptionTest"
-                            cols="30"></textarea>
+                  <textarea class="mt-6" placeholder="Например: наушники оптом" name="description"
+                            cols="30">{{ form.description.value }}</textarea>
                 </div>
                 <div class="form__item">
                   <label class="label">Ключевые слова для поиска / Теги</label>
@@ -215,13 +207,13 @@
                     искать вашу компанию.Например: Мебель для дома, диваны, стулья, кресло, комод,
                     стол</p>
                   <textarea class="mt-6" placeholder="Например: наушники оптом" name="keyWords"
-                            cols="30">{{ form.description.value }}</textarea>
+                            cols="30">{{ form.keywords.value }}</textarea>
                 </div>
                 <div class="form__item">
                   <label class="label">Категории</label>
                   <input type="text" placeholder="Поиск в категории" id="categorySearch">
                   <!--  Отрисовка категорий и под категорий-->
-                  <input type="hidden" id="selectedCategory" name="selectedCategory">
+                  <input type="hidden" id="selectedCategory" name="category">
                   <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>
                 </div>
                 <!--  крч если это не первая регистрация, то все что ниже находится нужно удалить  -->
@@ -252,14 +244,14 @@
                 </div>
                 <div class="form__item">
                   <label class="label">Телефоны</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                  <p class="tooltip">Публичные номера ваших телефонов. По одному на поле</p>
                   <div class="numberInputs">
                     <div class="flex justify-between items-center pr-7 relative">
-                      <input class="numbers" type="tel" name="phoneNumber" placeholder="Например: наушники оптом">
+                      <input class="numbers" type="tel" name="phoneNumber" placeholder="+996 ХХХ ХХХ ХХХ">
                       <img class="deletePhoneInput absolute top-[60%] right-0 -translate-y-1/2 cursor-pointer" src="{% static '/assets/images/icons/x.svg' %}" alt="">
                     </div>
                   </div>
-                  <button id="addNumberBtn"
+                  <button id="addNumberBtn" type="button"
                           class="btn btn-outlined py-4 px-[31px] border-[#2B292C] text-[#6E6E6E] mt-6 lg-md:mt-[26px]">
                     Добавить телефон
                   </button>

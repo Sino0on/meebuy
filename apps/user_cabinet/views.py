@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 
 from apps.authentication.forms import ProviderForm, UserUpdateForm
 from apps.user_cabinet.models import Status, Upping
-from apps.provider.models import ProvideImg, Provider
+from apps.provider.models import ProvideImg, Provider, Category
 from apps.buyer.models import BuyerImg
 from django.contrib.auth import get_user_model
 from django.views import generic
@@ -64,15 +64,30 @@ class UserAnketaView(generic.UpdateView, LoginRequiredMixin):
 
     def get_template_names(self):
         if self.request.user.user_type == 'buyer':
+            print('buyter')
             template_name = 'auth/edit_buyer.html'
         else:
             template_name = self.template_name
+            print('provider')
         return template_name
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        print(form)
+        # print(form)
         return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        print("Valid form data:", form.cleaned_data)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print("Invalid form data:", form.data)
+        print("Errors:", form.errors)
+        return super().form_invalid(form)
 
 
 @require_POST

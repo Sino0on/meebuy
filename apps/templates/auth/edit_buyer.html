@@ -148,16 +148,16 @@
                             ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
                         </p>
                         <div class="form mt-[30px]">
-                            <form class="space-y-[30px]">
+                            <form class="space-y-[30px]" method="post" action="{% url 'anketa' %}">
                                 <div class="form__item">
                                     <label class="label" for="name">Общеизвестное название компании / бренда *</label>
                                     <p class="tooltip">Без кавычек. Например: Headphones</p>
-                                    <input id="name" type="text" placeholder="Headphones.kg">
+                                    <input name="name" id="name" type="text" placeholder="Headphones.kg">
                                 </div>
                                 <div class="form__item">
                                     <label for="description">Краткое описание *</label>
                                     <p class="tooltip">Например: наушники оптом</p>
-                                    <input id="description" type="text" placeholder="Например: наушники оптом">
+                                    <input name="mini_descr" id="description" type="text" placeholder="Например: наушники оптом">
                                 </div>
                                 <div class="form__item">
                                     <label class="label">Основная цель регистрации на сайте</label>
