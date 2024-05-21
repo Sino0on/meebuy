@@ -106,9 +106,9 @@ class SelectUserTypeView(FormView):
             print(form.cleaned_data['user_type'])
             user_profile.save()
             if user_profile.user_type == 'provider':
-                Provider.objects.create(user=user_profile)
+                Provider.objects.create(user=user_profile, is_provider=True)
             elif user_profile.user_type == 'buyer':
-                Buyer.objects.create(user=user_profile)
+                Provider.objects.create(user=user_profile, is_provider=False)
         return super().form_valid(form)
 
 
