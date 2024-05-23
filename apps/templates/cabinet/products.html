@@ -273,7 +273,7 @@
                         Вы можете загрузить файл Excel (.xlsx) с товарами.
                         Загрузить товары с помощью Excel-файла
                       </p>
-                      <div id="btnToExcel" class="cursor-pointer uppercase text-center font-medium text-[16px] border border-[#2B292C] rounded-lg py-3">
+                      <div id="btnToExcel" class="download-excel cursor-pointer uppercase text-center font-medium text-[16px] border border-[#2B292C] rounded-lg py-3">
                             <p> выбрать загрузку Excel</p>
                               <input
                               style="display: none"
@@ -667,7 +667,7 @@
                       </p>
                       <div>
                         <label
-                          class="flex items-center gap-4 mt-3 md:p-8 p-5 border-2 border-[#BEBEBE] border-dashed rounded-[10px]"
+                          class="file-label flex items-center gap-4 mt-3 md:p-8 p-5 border-2 border-[#BEBEBE] border-dashed rounded-[10px]"
                           for="file"
                         >
                           <img
@@ -675,8 +675,8 @@
                             src="{% static 'assets/images/icons/xsl.svg' %}"
                             alt=""
                           />
-                          Нажмите, чтобы загрузить файл или перетащите файл в
-                          эту область
+                       <span id="file-label-text">   Нажмите, чтобы загрузить файл или перетащите файл в
+                          эту область</span>
                         </label>
                         <input id="file" style="display: none" type="file" />
                       </div>
@@ -724,9 +724,7 @@
                         </p>
                       </div>
                       <ul class="flex flex-col gap-2 text-[#4D4D4D] list-disc">
-                        <h6
-                          class="text-[#2B292C] font-semibold text-[18px] mb-3"
-                        >
+                        <h6 class="text-[#2B292C] font-semibold text-[18px] mb-3">
                           Дополнительная информация
                         </h6>
                         <li class="text-[16px] font-light text-[#4D4D4D]">
@@ -1282,8 +1280,42 @@
 
 {% endblock %}
 {% block js %}
-
     <script src="{% static 'pages/profile/goods/index.js' %}"></script>
     <script src="{% static 'pages/profile/tenders/index.js' %}"></script>
     <script src="{% static 'pages/profile/profile.js' %}"></script>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const fileInput = document.getElementById('file');
+    if (fileInput) {
+      fileInput.addEventListener("change", function(event) {
+        const fileLabelText = document.getElementById('file-label-text');
+        const files = event.target.files;
+        if (files.length > 0) {
+          fileLabelText.textContent = `Selected file: ${files[0].name}`;
+
+          // Автоматически отправляем форму через 3 секунды
+          setTimeout(() => {
+            const formData = new FormData();
+            formData.append('file', files[0]);
+
+            fetch('{% url 'upload_excel' %}', {
+              method: 'POST',
+              body: formData,
+            })
+            .then(response => response.text())
+            .then(data => {
+              console.log(data); // Обработка ответа сервера
+            })
+            .catch(error => {
+              console.error('Ошибка:', error);
+            });
+          }, 1000);
+        } else {
+          fileLabelText.textContent = 'Нажмите, чтобы загрузить файл или перетащите файл в эту область';
+        }
+      });
+    }
+  });
+</script>
 {% endblock %}

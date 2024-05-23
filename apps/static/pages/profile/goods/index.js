@@ -39,7 +39,7 @@ excelLoader.addEventListener("click", () => toggleTab(excelLoader));
 //excel open block
 const downloadExcel = document.getElementsByClassName("download-excel")[0]
 
-const openExcelBock = () => {
+const openExcelBlock = () => {
   if(goodsBlock.style.display === 'block'){
         goodsBlock.style.display = 'none'
     goods.style.backgroundColor = ''
@@ -52,7 +52,7 @@ const openExcelBock = () => {
     goodsBlock.style.display = 'none'
   }
 }
-downloadExcel.addEventListener("click", openExcelBock)
+downloadExcel.addEventListener("click", openExcelBlock)
 
 // add category
 
