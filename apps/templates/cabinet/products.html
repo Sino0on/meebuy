@@ -858,9 +858,10 @@
                   <select
                     class=" relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                   >
-                      <option value="0">list 1</option>
-                      <option value="1">list 2</option>
-                      <option value="2">list 3</option>
+                  {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+
                     <img
                       class="absolute right-7 top-6 mr-7"
                       src="{% static 'assets/images/icons/arrow-down.svg' %}"
