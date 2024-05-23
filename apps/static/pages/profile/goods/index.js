@@ -35,6 +35,25 @@ price.addEventListener("click", () => toggleTab(price));
 autoloader.addEventListener("click", () => toggleTab(autoloader));
 excelLoader.addEventListener("click", () => toggleTab(excelLoader));
 
+
+//excel open block
+const downloadExcel = document.getElementsByClassName("download-excel")[0]
+
+const openExcelBock = () => {
+  if(goodsBlock.style.display === 'block'){
+        goodsBlock.style.display = 'none'
+    goods.style.backgroundColor = ''
+     excelLoader.style.backgroundColor = "#FFFB98";
+     excelLoaderBlock.style.display = "block";
+
+  }else{
+     excelLoader.style.display = "block";
+    goods.style.backgroundColor = "#FFFB98";
+    goodsBlock.style.display = 'none'
+  }
+}
+downloadExcel.addEventListener("click", openExcelBock)
+
 // add category
 
 const buttonAddCategory = document.getElementById("add-category");
@@ -98,3 +117,33 @@ fileInputs.forEach((input, index) => {
     }
   });
 });
+
+// upload xsl file in excel block
+
+// document.getElementById('file').addEventListener("change", function(event) {
+//   const fileLabelText = document.getElementById('file-label-text');
+//   const files = event.target.files;
+//   if (files.length > 0) {
+//     fileLabelText.textContent = `Selected file: ${files[0].name}`;
+//
+//     // Автоматически отправляем форму через 3 секунды
+//     setTimeout(() => {
+//       const formData = new FormData();
+//       formData.append('file', files[0]);
+//
+//       fetch('http://localhost:8080', {
+//         method: 'POST',
+//         body: formData,
+//       })
+//       .then(response => response.text())
+//       .then(data => {
+//         console.log(data); // Обработка ответа сервера
+//       })
+//       .catch(error => {
+//         console.error('Ошибка:', error);
+//       });
+//     }, 3000);
+//   } else {
+//     fileLabelText.textContent = 'Нажмите, чтобы загрузить файл или перетащите файл в эту область';
+//   }
+// });

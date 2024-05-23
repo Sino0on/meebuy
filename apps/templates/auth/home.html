@@ -102,7 +102,7 @@
             <div class="swiper-slide">
               <div class="recommended__slide relative text-white p-4 xl:p-7">
                 <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{{ i.image.url }}" alt="">
+                  src="{% if i.image %}  {{ i.image.url }}" {% endif %}alt="">
                 <div class="slide__content flex flex-col justify-between h-full">
                   <div>
                     <span class="text-logo-color sm:text-lg">Оптом</span>
@@ -130,7 +130,7 @@
             <div class="swiper-slide">
               <div class="new__slide relative p-4 lg-md:p-6">
                 <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                  src="{{ i.image.url }}" alt="">
+                  src="{% if i.image %}  {{ i.image.url }} {% endif %}" alt="">
                 <div class="relative flex flex-col justify-between h-full lg-md:block">
                   <div>
                     <span class="text-logo-color text-base sm:text-lg">Оптом</span>

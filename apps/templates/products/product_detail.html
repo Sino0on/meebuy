@@ -62,7 +62,7 @@
           >
             <img
               class="lg-mg: w-[350px]"
-              src="{{ product.image.url }}"
+              src="{% if product.image %}{{ product.image.url }}{% endif %}"
               alt=""
             />
             <!-- slider -->
@@ -210,7 +210,7 @@
             >
               <img
                 class="rounded-xl"
-                src="{{ i.image.url }}"
+                src="{% if i.image %}  {{ i.image.url }}{% endif %}"
                 alt=""
               />
               <div class="flex flex-col gap-4 m-0">

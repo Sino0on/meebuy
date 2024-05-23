@@ -32,6 +32,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена за единицу')
     retail_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена за мелкий опт', blank=True, null=True)
     wholesale_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена за крупный опт', blank=True, null=True)
+    currency = models.CharField(max_length=100, verbose_name=_('Валюта'), blank=True, null=True)
     min_quantity = models.PositiveIntegerField(default=1, verbose_name='Минимальное количество')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Времея обновления')

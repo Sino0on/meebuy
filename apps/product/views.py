@@ -52,10 +52,13 @@ class ProductCreateView(CreateView):
     success_url = '/products'
 
     def form_valid(self, form):
+        provider = Provider.objects.get(user=self.request.user)
+        form.instance.provider = provider
         response = super().form_valid(form)
         images = self.request.FILES.getlist('images')
         for image in images:
             ProductImg.objects.create(product=self.object, image=image)
+
         return response
 
 
