@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST, require_GET
 from rest_framework.generics import ListAPIView, GenericAPIView
 from apps.authentication.forms import ProviderForm, UserUpdateForm
-from apps.product.models import Product
+from apps.product.models import Product, ProductCategory
 from apps.user_cabinet.models import Status, Upping
 from apps.provider.models import ProvideImg, Provider, Category
 from apps.buyer.models import BuyerImg
@@ -159,8 +159,15 @@ class TenderListCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/tenders.html'
 
 
-class ProductListCabinetView(generic.TemplateView, LoginRequiredMixin):
+class ProductListCabinetView(generic.ListView, LoginRequiredMixin):
+    object = Product
     template_name = 'cabinet/products.html'
+    queryset = Product.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.all()
+        return context
 
 
 class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):

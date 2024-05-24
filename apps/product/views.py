@@ -41,6 +41,7 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product = self.get_object()
+        context['categories'] = ProductCategory.objects.all()
         context['similar_products'] = Product.objects.filter(category=product.category).exclude(id=product.id)[:5]
         return context
 
@@ -50,6 +51,11 @@ class ProductCreateView(CreateView):
     form_class = ProductForm
     template_name = 'products/product_form.html'
     success_url = '/products'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.all()
+        return context
 
     def form_valid(self, form):
         provider = Provider.objects.get(user=self.request.user)
@@ -61,6 +67,9 @@ class ProductCreateView(CreateView):
 
         return response
 
+    def form_invalid(self, form):
+        print("Form invalid: %s", form.errors)
+        return super().form_invalid(form)
 
 class ProductUpdateView(UpdateView):
     model = Product
@@ -118,13 +127,12 @@ class ExcelUploadView(FormView):
                     description=row[4],
                     manufacturer=row[5],
                     price=row[6],
-                    retail_price=row[7],
-                    wholesale_price=row[8],
                     min_quantity=row[9],
                     terms_of_sale=row[10],
                     country_of_manufacture=row[11],
                     characterization=row[12],
                     phone=row[13],
+
                 )
             except Exception as e:
                 print(e)
