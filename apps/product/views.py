@@ -1,12 +1,17 @@
 import os
 
 import openpyxl
+import requests
+from PIL import Image
 from django.conf import settings
 from django.http import HttpResponse, FileResponse
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, FormView
 from urllib.parse import quote
+from django.core.files.base import ContentFile
+
+from six import BytesIO
 
 from apps.product.filters import ProductFilter
 from apps.product.models import Product, ProductImg, ProductCategory
@@ -71,6 +76,7 @@ class ProductCreateView(CreateView):
         print("Form invalid: %s", form.errors)
         return super().form_invalid(form)
 
+
 class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
@@ -109,16 +115,29 @@ class ExcelUploadView(FormView):
 
     def form_valid(self, form):
         form = self.form_class(self.request.POST, self.request.FILES)
-        file = self.request.FILES['excel_file']
+        file = self.request.FILES.get('file')
 
         workbook = openpyxl.load_workbook(file)
         sheet = workbook.active
         provider = Provider.objects.get(user=self.request.user)
 
-        for row in sheet.iter_rows(min_row=2, values_only=True):
-            try:
-                category_instance, _ = ProductCategory.objects.get_or_create(title=row[1])
-                Product.objects.create(
+        for row in sheet.iter_rows(min_row=3, values_only=True):
+            # try:
+                category_instance, _ = ProductCategory.objects.get_or_create(name=row[1])
+
+                image_url = row[12]
+                if image_url and isinstance(image_url, str):
+                    print(image_url)
+                    response = requests.get(image_url)
+                    image = Image.open(BytesIO(response.content))
+
+                    # Преобразование изображения в формат WEBP
+                    image_io = BytesIO()
+                    image.save(image_io, format='WEBP')
+                    image_content = ContentFile(image_io.getvalue(), name='image.webp')
+                else:
+                    image_content = None
+                product = Product.objects.create(
                     provider=provider,
                     type=row[0],
                     category=category_instance,
@@ -127,16 +146,17 @@ class ExcelUploadView(FormView):
                     description=row[4],
                     manufacturer=row[5],
                     price=row[6],
-                    min_quantity=row[9],
-                    terms_of_sale=row[10],
-                    country_of_manufacture=row[11],
-                    characterization=row[12],
-                    phone=row[13],
-
+                    min_quantity=row[7],
+                    terms_of_sale=row[8],
+                    country_of_manufacture=row[9],
+                    characterization=row[10],
+                    phone=row[11],
                 )
-            except Exception as e:
-                print(e)
-                continue
+                if image_content:
+                    product.image.save(image_content.name, image_content)
+            # except Exception as e:
+            #     print(e)
+            #     continue
 
         return super().form_valid(form)
 

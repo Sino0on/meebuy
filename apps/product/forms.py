@@ -9,4 +9,4 @@ class ProductForm(forms.ModelForm):
 
 
 class UploadExcelForm(forms.Form):
-    excel_file = forms.FileField(label='Excel файл')
+    excel_file = forms.FileField(label='Excel файл', required=False)
