@@ -130,7 +130,7 @@
                                 <a href="{% url 'favorites' %}">Избранные</a>
                             </li>
                             <li class="dropdown__item">
-                                <a href="">Служба поддержки</a>
+                                <a href="{% url 'send_message' %}">Служба поддержки</a>
                             </li>
                         </ul>
                         </div>
@@ -163,7 +163,7 @@
                             <a class="inline-block text-[#2254B6] underline underline-offset-2"  href="">Политика конфиденциальности</a>
                             <button class="btn-filled-yellow w-full py-5 uppercase" type="submit">Сохранить</button>
                             <div class="flex gap-[clamp(16px,1.5vw,30px)]">
-                                <a class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]" href="">Сменить пароль</a>
+                                <a class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]" href="{% url 'change_password' %}">Сменить пароль</a>
                                 <a href="{% url 'logout' %}" class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]">
                                     Выйти из профиля</a>
                             </div>

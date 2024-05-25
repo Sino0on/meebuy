@@ -6,12 +6,28 @@ from rest_framework.generics import ListAPIView, GenericAPIView
 from apps.authentication.forms import ProviderForm, UserUpdateForm
 from apps.product.models import Product, ProductCategory
 from apps.user_cabinet.models import Status, Upping
-from apps.provider.models import ProvideImg, Provider, Category
+from apps.provider.models import ProvideImg, Provider
 from apps.buyer.models import BuyerImg
 from django.contrib.auth import get_user_model
 from django.views import generic
 from apps.user_cabinet.seriazliers import StatusSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
+from django.contrib import messages
+from django.urls import reverse
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth import login
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+
+from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
 
 User = get_user_model()
 
@@ -195,6 +211,136 @@ class StatusListView(ListAPIView):
     queryset = Status.objects.all()
 
 
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Ваш пароль был успешно изменен!')
+            return redirect('view_profile')
+    else:
+        form = ChangePasswordForm(request.user)
+    return render(request, 'cabinet/change_password.html', {'form': form})
+
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            logger.info(f"Email from POST: {email}")
+            try:
+                user = User.objects.get(email=email)
+                logger.info(f"User found: {user}")
+
+                # Generate token and uid
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+                # Build reset link
+                current_site = get_current_site(request)
+                reset_link = request.build_absolute_uri(
+                    reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+                )
+                logger.info(f"Reset link: {reset_link}")
+
+                # Create email
+                mail_subject = 'Password Reset Request'
+                message = f'Hi {user.username},\n\nClick the link below to reset your password:\n{reset_link}\n\nIf you did not make this request, please ignore this email.'
+
+                email = EmailMessage(
+                    mail_subject, message, to=[email]
+                )
+
+                # Send email
+                try:
+                    email.send()
+                    logger.info(f"Email sent to: {email}")
+                    messages.success(request, 'Ссылка для восстановления пароля отправлена на ваш email.')
+                except Exception as e:
+                    logger.error(f"Error sending email: {e}")
+                    messages.error(request, 'Ошибка при отправке email.')
+
+                return redirect('check_email')
+            except User.DoesNotExist:
+                logger.warning("User not found")
+                messages.error(request, 'Пользователь с таким email не найден.')
+
+        else:
+            logger.warning("Form is not valid")
+            logger.warning(form.errors)
+    else:
+        form = PasswordResetForm()
+
+    return render(request, 'auth/reset_password.html', {'form': form})
+
+
+def check_email(request):
+    return render(request, 'auth/check_email.html')
+
+
+def reset_password_confirm(request, uidb64, token):
+    """
+    View to handle password reset confirmation
+    """
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = NewPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                backend = 'django.contrib.auth.backends.ModelBackend'
+                login(request, user, backend=backend)
+                return redirect('password_change_success')
+        else:
+            form = NewPasswordForm(user)
+        return render(request, 'auth/reset_password_confirm.html', {'form': form})
+    else:
+        return redirect('reset_password')
+
+
+def password_change_success(request):
+    return render(request, 'auth/password_change_success.html')
+
+
+@login_required
+def send_message(request):
+    if request.method == 'POST':
+        form = SupportMessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ваше сообщение успешно отправлено!')
+            return redirect('view_profile')
+    else:
+        form = SupportMessageForm()
+    return render(request, 'cabinet/send_message.html', {'form': form})
+
+
+def send_message_logout(request):
+    if request.method == 'POST':
+        form = SupportMessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ваше сообщение успешно отправлено!')
+            return redirect('login')
+    else:
+        form = SupportMessageForm()
+    return render(request, 'cabinet/send_message.html', {'form': form})
+
 @require_GET
 def add_provider_fav_api(request, pk):
     if not request.user.is_authenticated:
@@ -233,3 +379,4 @@ def add_provider_fav(request, pk):
     provider = get_object_or_404(Provider, id=pk)
     request.user.cabinet.favorite_providers.add(provider)
     return redirect(f'/provider/detail/{pk}/')
+

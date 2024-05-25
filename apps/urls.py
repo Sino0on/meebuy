@@ -4,6 +4,7 @@ from apps.product.views import ProductListView, ProductUpdateView, ProductCreate
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView
 from apps.user_cabinet.views import *
 from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
+
 from apps.chat.views import chat_detail, chats, create_chat
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
@@ -24,16 +25,6 @@ urlpatterns = [
     path('chat/create/<str:pk>/', create_chat, name='chat_create'),
     path('chat_list/', chats, name='chat_list'),
     # path('', ProviderHomeListView.as_view()),
-    path('change_password/', PasswordChangeView.as_view(template_name='auth/change_password.html'), name='change_password'),
-    path('password_change_done/', PasswordChangeDoneView.as_view(template_name='auth/password_change_done.html'),
-         name='password_change_done'),
-    path('reset-password/', PasswordResetView.as_view(template_name='auth/password_reset_form.html'), name='password_reset'),
-    path('reset-password/done/', PasswordResetDoneView.as_view(template_name='auth/password_reset_done.html'),
-         name='password_reset_done'),
-    path('reset-password/confirm/<uidb64>/<token>/',
-         PasswordResetConfirmView.as_view(template_name='auth/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset-password/complete/', PasswordResetCompleteView.as_view(template_name='auth/password_reset_complete.html'),
-         name='password_reset_complete'),
     path('', HomeView.as_view(), name='home'),
 
 
@@ -60,6 +51,13 @@ urlpatterns = [
 
     path('change-avatar/', change_avatar),
     path('change-image/', change_image),
+    path('change-password/', change_password, name='change_password'),
+    path('reset_password/', reset_password, name='reset_password'),
+    path('check_email/', check_email, name='check_email'),
+    path('reset/<str:uidb64>/<str:token>/', reset_password_confirm, name='password_reset_confirm'),
+    path('password-change-success/', password_change_success, name='password_change_success'),
+    path('send-message/', send_message, name='send_message'),
+    path('send-message-logout/', send_message_logout, name='send_message_logout'),
 
 
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),

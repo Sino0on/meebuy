@@ -159,3 +159,23 @@ class ActiveUpping(models.Model):
 #     class Meta:
 #         verbose_name = _('Константа')
 #         verbose_name_plural = _('Константы')
+
+class SupportMessage(models.Model):
+    CHOICES = (
+        ('Компания или ИП', 'Компания или ИП'),
+        ('Частное лицо', 'Частное лицо')
+    )
+    name = models.CharField(max_length=100, verbose_name=_('Ваше ФИО'))
+    phone = models.CharField(max_length=20, verbose_name=_('Ваш номер телефона'))
+    email = models.EmailField(verbose_name=_('Ваш e-mail'))
+    message = models.TextField(verbose_name=_('Ваше сообщение'))
+    regret_to_register = models.CharField(verbose_name=_('Оснавная цель для регистрации'), max_length=100, choices=CHOICES, default='Компания или ИП')
+    agree_to_policy = models.BooleanField(default=False, verbose_name=_('Я ознакомился и согласен с условиями'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
+
+    def __str__(self):
+        return f'Message from {self.name} at {self.created_at}'
+
+    class Meta:
+        verbose_name = _('Сообщение поддержки')
+        verbose_name_plural = _('Сообщения поддержки')
