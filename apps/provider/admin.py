@@ -2,15 +2,18 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import Category, Provider, Tag, Condition, Delivery, ProvideImg, ProvideFiles, TypePay
 
+
 class ProvideImgInline(admin.TabularInline):
     model = ProvideImg
     extra = 1
     fields = ['image']
 
+
 class ProvideFilesInline(admin.TabularInline):
     model = ProvideFiles
     extra = 1
     fields = ['image']
+
 
 class ProviderAdmin(admin.ModelAdmin):
     list_display = ('title', 'type', 'address', 'is_active', 'is_modered')
@@ -29,6 +32,7 @@ class ProviderAdmin(admin.ModelAdmin):
             kwargs["queryset"] = TypePay.objects.all()
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'parent_category')
@@ -36,27 +40,33 @@ class CategoryAdmin(admin.ModelAdmin):
 
     def parent_category(self, obj):
         return obj.category.title if obj.category else '---'
+
     parent_category.short_description = 'Parent Category'
+
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
 
+
 @admin.register(Condition)
 class ConditionAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
+
 
 @admin.register(Delivery)
 class DeliveryAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
 
+
 @admin.register(TypePay)
 class TypePayAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
+
 
 # Register your models here
 admin.site.register(Provider, ProviderAdmin)

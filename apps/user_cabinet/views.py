@@ -1,7 +1,10 @@
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from rest_framework.generics import ListAPIView
+from django.views.decorators.http import require_POST, require_GET
+from rest_framework.generics import ListAPIView, GenericAPIView
 from apps.authentication.forms import ProviderForm, UserUpdateForm
+from apps.product.models import Product, ProductCategory
 from apps.user_cabinet.models import Status, Upping
 from apps.provider.models import ProvideImg, Provider
 from apps.buyer.models import BuyerImg
@@ -172,8 +175,15 @@ class TenderListCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/tenders.html'
 
 
-class ProductListCabinetView(generic.TemplateView, LoginRequiredMixin):
+class ProductListCabinetView(generic.ListView, LoginRequiredMixin):
+    object = Product
     template_name = 'cabinet/products.html'
+    queryset = Product.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.all()
+        return context
 
 
 class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
@@ -199,6 +209,7 @@ class TariffsCabinetView(generic.ListView, LoginRequiredMixin):
 class StatusListView(ListAPIView):
     serializer_class = StatusSerializer
     queryset = Status.objects.all()
+
 
 
 @login_required
@@ -329,3 +340,43 @@ def send_message_logout(request):
     else:
         form = SupportMessageForm()
     return render(request, 'cabinet/send_message.html', {'form': form})
+
+@require_GET
+def add_provider_fav_api(request, pk):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+    provider = get_object_or_404(Provider, id=pk)
+    if provider in request.user.cabinet.favorite_providers.all():
+        request.user.cabinet.favorite_providers.remove(provider)
+        request.user.cabinet.save()
+    else:
+        request.user.cabinet.favorite_providers.add(provider)
+        request.user.cabinet.save()
+    return JsonResponse({'ok': 'ok'}, status=200)
+
+
+@require_GET
+def add_product_fav_api(request, pk):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+    product = get_object_or_404(Product, id=pk)
+    if product in request.user.cabinet.favorite_products.all():
+        request.user.cabinet.favorite_products.remove(product)
+        request.user.cabinet.save()
+    else:
+        request.user.cabinet.favorite_products.add(product)
+        request.user.cabinet.save()
+    return JsonResponse({'ok': 'ok'}, status=200)
+
+
+def delete_provider_fav(request, pk):
+    provider = get_object_or_404(Provider, id=pk)
+    request.user.cabinet.favorite_providers.remove(provider)
+    return redirect('/profile/favorites/')
+
+
+def add_provider_fav(request, pk):
+    provider = get_object_or_404(Provider, id=pk)
+    request.user.cabinet.favorite_providers.add(provider)
+    return redirect(f'/provider/detail/{pk}/')
+

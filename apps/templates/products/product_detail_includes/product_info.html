@@ -1,0 +1,41 @@
+        <div class="flex flex-col items-start gap-7">
+          <h6 class="text-[#2B292C] text-[20px] font-bold font-mulish">
+            {{ product.title }}
+          </h6>
+          <div class="flex flex-col gap-2 font-light">
+            <div class="flex items-center gap-5">
+              <p class="text-[#4D4D4D] text-[18px] font-mulish">
+                Цена за одну единицу товара
+              </p>
+              <span class="text-[#2B292C] text-[18px] font-extrabold"
+                >{{ product.price }} сом</span
+              >
+            </div>
+            <div class="flex items-center gap-5">
+              <p class="text-[#4D4D4D] text-[18px] font-mulish">
+                Цена мелкий опт (10 - 100 шт.)
+              </p>
+              <span class="text-[#2B292C] text-[18px] font-extrabold"
+                >{{ product.price }} сом</span
+              >
+            </div>
+            <div class="flex items-center gap-5">
+              <p class="text-[#4D4D4D] text-[18px] font-mulish">
+                Цена крупный опт (101 - 1 000 шт.)
+              </p>
+              <span class="text-[#2B292C] text-[18px] font-extrabold"
+                >{{ product.price }} сом</span
+              >
+            </div>
+          </div>
+          <button
+            class="uppercase py-3 px-4 rounded-lg border border-[#2B292C]"
+          >
+            задать вопрос
+          </button>
+          <p
+            class="lg-md:w-[443px] font-normal text-[16px] font-mulish text-[#4D4D4D]"
+          >
+            {{ product.description }}
+          </p>
+        </div>

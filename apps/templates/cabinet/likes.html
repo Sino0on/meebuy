@@ -104,7 +104,7 @@
                             <li class="dropdown__item">
                                 <a href="{% url 'view_profile' %}">Моя компания</a>
                             </li>
-                            <li class="dropdown__item active">
+                            <li class="dropdown__item">
                                 <a href="{% url 'user_tenders' %}">Закупки</a>
                             </li>
                             <li class="dropdown__item">
@@ -125,7 +125,7 @@
                             <li class="dropdown__item">
                                 <a href="{% url 'balance' %}">Баланс</a>
                             </li>
-                            <li class="dropdown__item">
+                            <li class="dropdown__item active">
                                 <a href="{% url 'favorites' %}">Избранные</a>
                             </li>
                             <li class="dropdown__item">
@@ -158,7 +158,31 @@
                     <!-- tabs content  -->
                     <div id="Tab1"
                          class="card__wrapper h-[calc(100%-70px)] tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
-                        <!-- if empty  -->
+                        {% if user.cabinet.favorite_providers.exists %}
+                        <div class="space-y-5 lg-md:space-y-0 lg-md:p-5 xl:p-10">
+                            {% for i in user.cabinet.favorite_providers.all %}
+                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
+                                <div class="flex justify-between items-center">
+                                    <a href="{% url 'provider_detail' i.pk %}">
+                                    <div class="flex items-center gap-5">
+
+                                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
+                                            <img class="object-cover h-full"
+                                                 src="{{ i.image.url }}"
+                                                 alt="empty icon">
+                                        </div>
+                                        <p>{{ i.title }}</p>
+
+                                    </div>
+                                    </a>
+                                    <a href="/delete/fav/provider/{{ i.pk }}">
+                                    <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
+                                        </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
                         <div class="shadow-card-shadow px-4 text-dark-text lg-md:shadow-none">
                             <div class="card__item text-center">
                                 <p class="text-center">Вы пока не добавляли компаний в Избранные</p>
@@ -168,8 +192,14 @@
                                                                                      alt="heart"></p>
                             </div>
                         </div>
-                        <!-- if filled  -->
+                        {% endif %}
+                    </div>
+
+                    <div id="Tab2"
+                         class="card__wrapper h-[calc(100%-70px)] tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
+                        {% if user.cabinet.favorite_products.exists %}
                         <div class="space-y-5 hidden lg-md:space-y-0 lg-md:p-5 xl:p-10">
+                            {% for i in user.cabinet.favorite_products.all %}
                             <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
                                 <a class="flex justify-between items-center">
                                     <div class="flex items-center gap-5">
@@ -183,59 +213,53 @@
                                     <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
                                 </a>
                             </div>
-                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
-                                <a class="flex justify-between items-center">
-                                    <div class="flex items-center gap-5">
-                                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
-                                            <img class="object-cover h-full"
-                                                 src="{% static '/assets/images/home/new-companies-logo.jpg' %}"
-                                                 alt="empty icon">
-                                        </div>
-                                        <p>Headphones.kg</p>
-                                    </div>
-                                    <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
-                                </a>
-                            </div>
-                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
-                                <a class="flex justify-between items-center">
-                                    <div class="flex items-center gap-5">
-                                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
-                                            <img class="object-cover h-full"
-                                                 src="{% static '/assets/images/home/new-companies-logo.jpg' %}"
-                                                 alt="empty icon">
-                                        </div>
-                                        <p>Headphones.kg</p>
-                                    </div>
-                                    <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
-                                </a>
-                            </div>
-                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
-                                <a class="flex justify-between items-center">
-                                    <div class="flex items-center gap-5">
-                                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
-                                            <img class="object-cover h-full"
-                                                 src="{% static '/assets/images/home/new-companies-logo.jpg' %}"
-                                                 alt="empty icon">
-                                        </div>
-                                        <p>Headphones.kg</p>
-                                    </div>
-                                    <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
-                                </a>
-                            </div>
-                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
-                                <a class="flex justify-between items-center">
-                                    <div class="flex items-center gap-5">
-                                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
-                                            <img class="object-cover h-full"
-                                                 src="{% static '/assets/images/home/new-companies-logo.jpg' %}"
-                                                 alt="empty icon">
-                                        </div>
-                                        <p>Headphones.kg</p>
-                                    </div>
-                                    <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
-                                </a>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="shadow-card-shadow px-4 text-dark-text lg-md:shadow-none">
+                            <div class="card__item text-center">
+                                <p class="text-center">Вы пока не добавляли товары в Избранные</p>
+                                <p class="mt-10 lg-md:mt-[30px] flex flex-col items-center gap-5 justify-center lg-md:gap-1 lg-md:flex-row ">
+                                    Чтобы добавить элемент в Избранные, нажмите <img class="w-6 h-6"
+                                                                                     src="{% static '/assets/images/icons/heart-filled-black.svg' %}"
+                                                                                     alt="heart"></p>
                             </div>
                         </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div id="Tab3"
+                         class="card__wrapper h-[calc(100%-70px)] tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
+                        {% if user.cabinet.favorite_tenders.exists %}
+                        <div class="space-y-5 hidden lg-md:space-y-0 lg-md:p-5 xl:p-10">
+                            {% for i in user.cabinet.favorite_tenders.all %}
+                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
+                                <a class="flex justify-between items-center">
+                                    <div class="flex items-center gap-5">
+                                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
+                                            <img class="object-cover h-full"
+                                                 src="{% static '/assets/images/home/new-companies-logo.jpg' %}"
+                                                 alt="empty icon">
+                                        </div>
+                                        <p>Headphones.kg</p>
+                                    </div>
+                                    <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="shadow-card-shadow px-4 text-dark-text lg-md:shadow-none">
+                            <div class="card__item text-center">
+                                <p class="text-center">Вы пока не добавляли закупки в Избранные</p>
+                                <p class="mt-10 lg-md:mt-[30px] flex flex-col items-center gap-5 justify-center lg-md:gap-1 lg-md:flex-row ">
+                                    Чтобы добавить элемент в Избранные, нажмите <img class="w-6 h-6"
+                                                                                     src="{% static '/assets/images/icons/heart-filled-black.svg' %}"
+                                                                                     alt="heart"></p>
+                            </div>
+                        </div>
+                        {% endif %}
 
                     </div>
                 </section>
