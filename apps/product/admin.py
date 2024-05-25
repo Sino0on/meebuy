@@ -10,7 +10,7 @@ class ProductImgInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-    'title', 'price', 'retail_price', 'wholesale_price', 'min_quantity', 'category', 'created_at', 'updated_at')
+    'title', 'price', 'min_quantity', 'category', 'created_at', 'updated_at')
     list_filter = ('category', 'created_at', 'updated_at', 'country_of_manufacture')
     search_fields = (
     'title', 'description', 'mini_desc', 'manufacturer', 'phone', 'terms_of_sale', 'country_of_manufacture', 'characterization')
@@ -20,7 +20,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-            'title', 'provider', 'image', 'description', 'mini_desc', 'type', 'manufacturer', 'price', 'retail_price', 'wholesale_price', 'min_quantity',
+            'title', 'provider', 'image', 'description', 'mini_desc', 'type', 'manufacturer', 'price', 'min_quantity',
             'category')
         }),
         ('Advanced options', {

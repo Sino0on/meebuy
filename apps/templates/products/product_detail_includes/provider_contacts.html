@@ -1,0 +1,49 @@
+{% load static %}
+<div class="cards flex flex-col gap-4 p-5 rounded-2xl">
+              <div class="flex items-center gap-3">
+                <img src="{% static 'assets/images/icons/location.svg' %}"  alt="" />
+                <p class="text-[#A0A0A0] font-normal text-[16px]">
+                    {% if product.provider.city and product.provider.address %}
+                        {{ product.provider.city }} xxxxxxxxx
+                    {% else %}
+                        Адрес не заполнен
+                    {% endif %}
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <img src="{% static 'assets/images/icons/email.svg' %}"  alt="" />
+                <p class="text-[#A0A0A0] font-normal text-[16px]">
+                    {% if product.provider.email %}
+                        xxxxxx@gmail.com
+                    {% else %}
+                        Email не заполнен
+                    {% endif %} 
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <img src="{% static 'assets/images/icons/call.svg' %}"  alt="" />
+                <p class="text-[#A0A0A0] font-normal text-[16px]">
+                    {% if product.provider.phone %}
+                        {{ product.provider.phone|slice:"0:-4" }}xxxx
+                    {% else %}
+                        Телефон не заполнен
+                    {% endif %}
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <img
+                  src="{% static 'assets/images/icons/earth-location.svg' %}"
+                  alt=""
+                />
+                {% if product.provider.website %}
+                    <p class="text-[#A0A0A0] font-normal text-[16px]">xxxxxxxxxx</p>
+                {% else %}
+                    Веб сайт не заполнен
+                {% endif %}
+              </div>
+              <button
+                class="uppercase text-[16px] font-medium font-mulish py-3 px-4 bg-[#E4DB00] rounded-md"
+              >
+                показать контакты
+              </button>
+            </div>

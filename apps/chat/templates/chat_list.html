@@ -156,36 +156,51 @@
                     <div id="Tab1"
                          class="card__wrapper h-[calc(100%-70px)] tab-content shadow-card-shadow rounded-[10px] mt-[30px] lg-md:p-5 xl:p-10">
                         {% for i in chat_details %}
-                        <a href="{% url 'chat_detail' i.chat.pk %}" class="card__item flex shadow-card-shadow flex-col lg-md:rounded-[15px] !py-5 relative lg-md:!p-5 lg-md:flex-row lg-md:items-center lg-md:gap-4">
-                            <!-- logo  -->
-                            <div class="w-[30px] h-[30px] rounded-full overflow-hidden lg-md:w-10 lg-md:h-10">
-                                {% if user.buyer.image %}
-                                <img class="w-full h-full object-cover"
-                                     src="{{ i.chat.user_second.buyer.image.url }}" alt="">
-                                {% else %}
-                                {% if i.chat.user_second.provider.image %}
-                                <img class="w-full h-full object-cover"
-                                     src="{{ i.chat.user_second.provider.image.url }}" alt="">
-                                {% else %}
-                                <img class="w-full h-full object-cover"
-                                     src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
-                                {% endif %}
-                                {% endif %}
-
-                            </div>
-                            <!-- logo end  -->
-                            <!-- item title and description  -->
-                            <div class="lg-md:flex lg-md:flex-col">
-                                <p class="text-[#222222] mt-5 text-lg">{{ i.chat.user_second }}</p>
-                                <p class="text-grey-light mt-[14px] line-clamp-2 lg-md:line-clamp-1">{{ i.last_message }}</p>
-                            </div>
-                            <!-- item title and description end  -->
-                            <!-- content with position  -->
-                            <img class="absolute top-2.5 right-5 cursor-pointer"
-                                 src="{% static 'assets/images/icons/pencil_dots-y.svg' %}" alt="">
-                            <p class="text-right mt-5 lg-md:absolute text-grey-light right-5 bottom-5">{{ i.last_message|naturaltime }}</p>
-                        </a>
+                            <a href="{% url 'chat_detail' i.chat.pk %}" class="card__item flex shadow-card-shadow flex-col lg-md:rounded-[15px] !py-5 relative lg-md:!p-5 lg-md:flex-row lg-md:items-center lg-md:gap-4">
+                                <!-- logo  -->
+                                <div class="w-[30px] h-[30px] rounded-full overflow-hidden lg-md:w-10 lg-md:h-10">
+                                    {% if request.user == i.chat.user_first %}
+                                        {% if i.chat.user_second.buyer.image %}
+                                        <img class="w-full h-full object-cover"
+                                             src="{{ i.chat.user_second.buyer.image.url }}" alt="">
+                                        {% elif i.chat.user_second.provider.image %}
+                                        <img class="w-full h-full object-cover"
+                                             src="{{ i.chat.user_second.provider.image.url }}" alt="">
+                                        {% else %}
+                                        <img class="w-full h-full object-cover"
+                                             src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                        {% endif %}
+                                    {% else %}
+                                        {% if i.chat.user_first.buyer.image %}
+                                        <img class="w-full h-full object-cover"
+                                             src="{{ i.chat.user_first.buyer.image.url }}" alt="">
+                                        {% elif i.chat.user_first.provider.image %}
+                                        <img class="w-full h-full object-cover"
+                                             src="{{ i.chat.user_first.provider.image.url }}" alt="">
+                                        {% else %}
+                                        <img class="w-full h-full object-cover"
+                                             src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <!-- logo end  -->
+                                <!-- item title and description  -->
+                                <div class="lg-md:flex lg-md:flex-col">
+                                    {% if request.user == i.chat.user_first %}
+                                        <p class="text-[#222222] mt-5 text-lg">{{ i.chat.user_second }}</p>
+                                    {% else %}
+                                        <p class="text-[#222222] mt-5 text-lg">{{ i.chat.user_first }}</p>
+                                    {% endif %}
+                                    <p class="text-grey-light mt-[14px] line-clamp-2 lg-md:line-clamp-1">{{ i.last_message.content|truncatechars:30 }}</p>
+                                </div>
+                                <!-- item title and description end  -->
+                                <!-- content with position  -->
+                                <img class="absolute top-2.5 right-5 cursor-pointer"
+                                     src="{% static 'assets/images/icons/pencil_dots-y.svg' %}" alt="">
+                                <p class="text-right mt-5 lg-md:absolute text-grey-light right-5 bottom-5">{{ i.last_message.created_at|naturaltime }}</p>
+                            </a>
                         {% endfor %}
+
                     </div>
                 </section>
             </div>

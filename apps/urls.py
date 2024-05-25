@@ -4,7 +4,10 @@ from apps.product.views import ProductListView, ProductUpdateView, ProductCreate
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView
 from apps.user_cabinet.views import *
 from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
-from apps.chat.views import chat_detail, chats
+
+from apps.chat.views import chat_detail, chats, create_chat
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+
 
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
 
@@ -17,8 +20,9 @@ from apps.user_cabinet.api import BuyStatusView, BuyUppingView
 
 urlpatterns = [
     path('provider/list/', ProviderListView.as_view()),
-    path('provider/detail/<int:pk>/', ProviderDetailView.as_view()),
+    path('provider/detail/<int:pk>/', ProviderDetailView.as_view(), name='provider_detail'),
     path('chat/<str:pk>/', chat_detail, name='chat_detail'),
+    path('chat/create/<str:pk>/', create_chat, name='chat_create'),
     path('chat_list/', chats, name='chat_list'),
     # path('', ProviderHomeListView.as_view()),
     path('', HomeView.as_view(), name='home'),
@@ -36,6 +40,8 @@ urlpatterns = [
     path('profile/balance/', BalanceView.as_view(), name='balance'),
     path('profile/tender/list/', TenderListCabinetView.as_view(), name='user_tenders'),
     path('profile/product/list/', ProductListCabinetView.as_view(), name='user_products'),
+    path('profile/product/create/', ProductCreateView.as_view(), name='product_create'),
+
     path('profile/create/tender/', CreateTenderView.as_view(), name='create_tender'),
     path('profile/create/cabinet/', cabinet_create),
     path('profile/favorites/', FavoritesCabinetView.as_view(), name='favorites'),
@@ -74,6 +80,12 @@ urlpatterns = [
     path('upping/list/', UppingListView.as_view()),
     path('status/buy/<int:pk>', BuyStatusView.as_view()),
     path('upping/buy/<int:pk>', BuyUppingView.as_view()),
+
+
+    path('fav/provider/<int:pk>/', add_provider_fav_api),
+    path('fav/product/<int:pk>/', add_product_fav_api),
+    path('delete/fav/provider/<int:pk>/', delete_provider_fav),
+    path('add_provider_favorite/<int:pk>/', add_provider_fav),
 
     # user
     path('user/', UserDetailView.as_view()),
