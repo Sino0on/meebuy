@@ -49,6 +49,8 @@ urlpatterns = [
     path('profile/balance/', BalanceView.as_view(), name='balance'),
     path('profile/tender/list/', TenderListCabinetView.as_view(), name='user_tenders'),
     path('profile/product/list/', ProductListCabinetView.as_view(), name='user_products'),
+    path('profile/product/create/', ProductCreateView.as_view(), name='product_create'),
+
     path('profile/create/tender/', CreateTenderView.as_view(), name='create_tender'),
     path('profile/create/cabinet/', cabinet_create),
     path('profile/favorites/', FavoritesCabinetView.as_view(), name='favorites'),
