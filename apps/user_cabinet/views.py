@@ -28,6 +28,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 
 from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
+from .models import Contacts
 
 User = get_user_model()
 
@@ -66,6 +67,8 @@ class UserDetailView(generic.TemplateView, LoginRequiredMixin):
             images = self.request.user.provider.images.all()
         context_values = (images[i] if i < len(images) else None for i in range(len(context_keys)))
         context.update(dict(zip(context_keys, context_values)))
+        contacts = Contacts.load()
+        context['contacts'] = contacts
 
         return context
 
@@ -158,6 +161,12 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
+
 
 class BalanceView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/balance.html'
@@ -166,6 +175,12 @@ class BalanceView(generic.TemplateView, LoginRequiredMixin):
         print(request.user.cabinet.balance)
         return super().dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
+
 
 class CreateTenderView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/create_tender.html'
@@ -173,6 +188,12 @@ class CreateTenderView(generic.TemplateView, LoginRequiredMixin):
 
 class TenderListCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/tenders.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
 
 
 class ProductListCabinetView(generic.ListView, LoginRequiredMixin):
@@ -183,11 +204,19 @@ class ProductListCabinetView(generic.ListView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = ProductCategory.objects.all()
+        contacts = Contacts.load()
+        context['contacts'] = contacts
         return context
 
 
 class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/likes.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
 
 
 class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
@@ -196,6 +225,8 @@ class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['uppings'] = Upping.objects.all()
+        contacts = Contacts.load()
+        context['contacts'] = contacts
         return context
 
 
@@ -204,6 +235,12 @@ class TariffsCabinetView(generic.ListView, LoginRequiredMixin):
     model = Status
     queryset = Status.objects.all()
     context_object_name = 'statasus'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
 
 
 class StatusListView(ListAPIView):
@@ -327,7 +364,8 @@ def send_message(request):
             return redirect('view_profile')
     else:
         form = SupportMessageForm()
-    return render(request, 'cabinet/send_message.html', {'form': form})
+    contacts = Contacts.load()
+    return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
 
 
 def send_message_logout(request):
@@ -339,7 +377,11 @@ def send_message_logout(request):
             return redirect('login')
     else:
         form = SupportMessageForm()
-    return render(request, 'cabinet/send_message.html', {'form': form})
+
+    contacts = Contacts.load()
+    return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
+
+
 
 @require_GET
 def add_provider_fav_api(request, pk):
@@ -379,4 +421,3 @@ def add_provider_fav(request, pk):
     provider = get_object_or_404(Provider, id=pk)
     request.user.cabinet.favorite_providers.add(provider)
     return redirect(f'/provider/detail/{pk}/')
-

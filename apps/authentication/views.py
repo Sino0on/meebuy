@@ -14,8 +14,7 @@ from apps.buyer.models import Buyer
 from apps.product.models import Product
 from apps.tender.models import Tender
 from apps.provider.models import Provider, Category
-from apps.user_cabinet.models import Cabinet
-
+from apps.user_cabinet.models import Cabinet, Contacts
 
 
 class HomeView(TemplateView):
@@ -29,6 +28,10 @@ class HomeView(TemplateView):
         context['categories'] = Category.objects.filter(category=None)
         
         context['tenders'] = Tender.objects.all()[:8]
+
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+
         return context
 
 
@@ -158,6 +161,12 @@ class SelectAuthUserTypeView(FormView):
             elif user_profile.user_type == 'buyer':
                 Buyer.objects.create(user=user_profile)
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
 
 
 def cabinet_create(request):

@@ -92,5 +92,4 @@ urlpatterns = [
 
     # apis
     path('category/list/', CategoryListView.as_view())
-
 ]
