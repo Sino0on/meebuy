@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from apps.provider.models import Category, TypePay
@@ -44,20 +46,22 @@ class City(models.Model):
 
 class Tender(models.Model):
     title = models.CharField(max_length=123)
-    description = models.TextField()
-    price = models.PositiveIntegerField(blank=True, default=0)
-    quantity = models.PositiveIntegerField()
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    city = models.ForeignKey(City, on_delete=models.PROTECT)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    requirements = models.CharField(max_length=123)
+    description = models.TextField(blank=True, null=True)
+    price = models.PositiveIntegerField(blank=True, default=0, null=True)
+    quantity = models.PositiveIntegerField(blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.PROTECT, blank=True, null=True)
+    phone = models.CharField(max_length=123, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    user = models.ForeignKey(User, related_name='tenders', on_delete=models.SET_NULL, null=True, blank=True)
+    requirements = models.CharField(max_length=123, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    end_date = models.DateField()
-    place_of_sale = models.CharField(max_length=123)
-    type_pay = models.ForeignKey(TypePay, on_delete=models.PROTECT)
-    is_phone = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True, blank=True)
+    end_date = models.DateField(blank=True, null=True)
+    place_of_sale = models.CharField(max_length=123, blank=True, null=True)
+    type_pay = models.ForeignKey(TypePay, on_delete=models.PROTECT, blank=True, null=True)
+    is_phone = models.BooleanField(default=False, blank=True, null=True)
+    is_active = models.BooleanField(default=True, blank=True, null=True)
 
     def __str__(self):
         return f'{self.title}'
@@ -66,3 +70,15 @@ class Tender(models.Model):
         verbose_name = _('Тендер')
         verbose_name_plural = _('Тендеры')
         ordering = ['-created_at']
+
+
+class TenderImg(models.Model):
+    tender = models.ForeignKey(Tender, on_delete=models.CASCADE, related_name='tender_images', blank=True)
+    image = models.ImageField(upload_to='images/tenders/')
+
+    def __str__(self):
+        return f'{self.tender}'
+
+    class Meta:
+        verbose_name = 'Изображении закупки'
+        verbose_name_plural = 'Изображение закупки'

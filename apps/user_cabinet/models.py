@@ -1,10 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
+from django.db.models import Count
+from datetime import datetime, timedelta
 
 from apps.product.models import Product
 from apps.provider.models import Provider
 from apps.tender.models import Tender
+
 
 User = get_user_model()
 
@@ -106,6 +109,7 @@ class Transaction(models.Model):
     class Meta:
         verbose_name = _('Транзакция')
         verbose_name_plural = _('Транзакции')
+        ordering = ['-created_at']
 
 
 class Upping(models.Model):
@@ -159,6 +163,105 @@ class ActiveUpping(models.Model):
 #     class Meta:
 #         verbose_name = _('Константа')
 #         verbose_name_plural = _('Константы')
+
+
+class ViewsCountProfile(models.Model):
+    user = models.ForeignKey(Cabinet, on_delete=models.CASCADE, related_name='views_count')
+    quest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_count_for_today(user):
+        today = datetime.now().date()
+        return ViewsCountProfile.objects.filter(user=user, created_at=today).count()
+
+    @staticmethod
+    def get_count_for_yesterday(user):
+        yesterday = datetime.now().date() - timedelta(days=1)
+        return ViewsCountProfile.objects.filter(user=user, created_at=yesterday).count()
+
+    @staticmethod
+    def get_count_for_month(user):
+        today = datetime.now()
+        return ViewsCountProfile.objects.filter(
+            user=user,
+            created_at__year=today.year,
+            created_at__month=today.month
+        ).count()
+
+    @staticmethod
+    def get_count_for_year(user):
+        today = datetime.now()
+        return ViewsCountProfile.objects.filter(
+            user=user,
+            created_at__year=today.year
+        ).count()
+
+
+class OpenNumberCount(models.Model):
+    user = models.ForeignKey(Cabinet, on_delete=models.CASCADE, related_name='numbers_count')
+    quest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_count_for_today(user):
+        today = datetime.now().date()
+        return OpenNumberCount.objects.filter(user=user, created_at=today).count()
+
+    @staticmethod
+    def get_count_for_yesterday(user):
+        yesterday = datetime.now().date() - timedelta(days=1)
+        return OpenNumberCount.objects.filter(user=user, created_at=yesterday).count()
+
+    @staticmethod
+    def get_count_for_month(user):
+        today = datetime.now()
+        return OpenNumberCount.objects.filter(
+            user=user,
+            created_at__year=today.year,
+            created_at__month=today.month
+        ).count()
+
+    @staticmethod
+    def get_count_for_year(user):
+        today = datetime.now()
+        return OpenNumberCount.objects.filter(
+            user=user,
+            created_at__year=today.year
+        ).count()
+
+
+class SiteOpenCount(models.Model):
+    user = models.ForeignKey(Cabinet, on_delete=models.CASCADE, related_name='sites_count')
+    quest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_count_for_today(user):
+        today = datetime.now().date()
+        return SiteOpenCount.objects.filter(user=user, created_at=today).count()
+
+    @staticmethod
+    def get_count_for_yesterday(user):
+        yesterday = datetime.now().date() - timedelta(days=1)
+        return SiteOpenCount.objects.filter(user=user, created_at=yesterday).count()
+
+    @staticmethod
+    def get_count_for_month(user):
+        today = datetime.now()
+        return SiteOpenCount.objects.filter(
+            user=user,
+            created_at__year=today.year,
+            created_at__month=today.month
+        ).count()
+
+    @staticmethod
+    def get_count_for_year(user):
+        today = datetime.now()
+        return SiteOpenCount.objects.filter(
+            user=user,
+            created_at__year=today.year
+        ).count()
 
 class SupportMessage(models.Model):
     CHOICES = (

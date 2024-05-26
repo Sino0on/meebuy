@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.password_validation import validate_password
 from django.core import validators
 from django.contrib.admin.widgets import AutocompleteSelect
+from django.contrib.auth.forms import UserChangeForm
 from apps.product.models import ProductCategory
 from .models import User
 from apps.provider.models import Provider
@@ -113,7 +114,7 @@ class ProviderForm(forms.ModelForm):
         model = Provider
 
 
-class UserUpdateForm(forms.ModelForm):
+class UserUpdateForm(UserChangeForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
         'class': 'input  mt-3.5 lg-md:mt-[18px]',
         'placeholder': 'Email *',
@@ -126,19 +127,32 @@ class UserUpdateForm(forms.ModelForm):
         'class': 'input  mt-3.5 lg-md:mt-[18px]',
         'placeholder': 'ФИО',
     }))
-
-    class Meta:
-        model = User
-        fields = ('email', 'phone', 'first_name')
+    job_title = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'input  mt-3.5 lg-md:mt-[18px]',
+        'placeholder': 'Не указана должность',
+    }))
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("This email is already taken")
+        user = self.instance
+
+        if User.objects.filter(email=email).exclude(pk=user.pk).exists():
+            raise forms.ValidationError('Этот email уже используется другим пользователем.')
+
         return email
+
+    def clean_job_title(self):
+        job_title = self.cleaned_data.get('job_title')
+
+        return job_title
+
+    class Meta:
+        model = User
+        fields = ('email', 'phone', 'first_name', 'job_title')
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
-        if User.objects.filter(phone=phone).exists():
-            raise forms.ValidationError("This phone number is already taken")
+        user = self.instance
+        if User.objects.filter(phone=phone).exclude(pk=user.pk).exists():
+            raise forms.ValidationError("Этот номер телефона уже используется другим пользователем")
         return phone

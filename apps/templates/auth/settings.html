@@ -156,9 +156,9 @@
                                 {{ form.phone }}
                                 {% csrf_token %}
                             </label>
-                            <label for="post" class="label block">
+                            <label for="job_title" class="label block">
                                 Ваша должность
-                                <input class="input  mt-3.5 lg-md:mt-[18px]" type="text" id="post" name="email" placeholder="Не указана должность">
+                                {{ form.job_title }}
                             </label>
                             <a class="inline-block text-[#2254B6] underline underline-offset-2"  href="">Политика конфиденциальности</a>
                             <button class="btn-filled-yellow w-full py-5 uppercase" type="submit">Сохранить</button>

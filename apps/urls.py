@@ -12,7 +12,7 @@ from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
 
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
-from apps.tender.views import TenderListView, TenderDetailView
+from apps.tender.views import TenderListView, TenderDetailView, delete_tender, TenderCreateView, TenderUpdateView
 from apps.user_cabinet.views import UserStatusListView, UppingListView
 from apps.buyer.views import BuyerListView
 from apps.user_cabinet.api import BuyStatusView, BuyUppingView
@@ -75,6 +75,9 @@ urlpatterns = [
     # tenders
     path('tender/list/', TenderListView.as_view(), name='tender_list'),
     path('tender/detail/<int:pk>/', TenderDetailView.as_view(), name='tender_detail'),
+    path('tender/create/', TenderCreateView.as_view(), name='tender_create'),
+    path('tender/update/<int:pk>', TenderUpdateView.as_view(), name='tender_update'),
+    path('tender/delete/<int:pk>/', delete_tender, name='delete_tender'),
 
     path('status/list/', StatusListView.as_view()),
     path('upping/list/', UppingListView.as_view()),
@@ -91,6 +94,7 @@ urlpatterns = [
     path('user/', UserDetailView.as_view()),
 
     # apis
-    path('category/list/', CategoryListView.as_view())
+    path('category/list/', CategoryListView.as_view()),
+    path('connect_tariff', tariff_buy),
 
 ]
