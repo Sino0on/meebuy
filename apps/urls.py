@@ -1,6 +1,7 @@
 from django.urls import path
 from apps.product.views import ProductListView, ProductUpdateView, ProductCreateView, ProductDeleteView, \
-    ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView
+    ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView, ProductCategoryCreateView, ProductCategoryUpdateView, \
+    ProductCategoryDeleteView, PriceColumnCreateView, PriceColumnUpdateView, PriceColumnDeleteView
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView
 from apps.user_cabinet.views import *
 from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
@@ -93,6 +94,12 @@ urlpatterns = [
     path('user/', UserDetailView.as_view()),
 
     # apis
-    path('category/list/', CategoryListView.as_view())
+    path('category/list/', CategoryListView.as_view()),
+    path('create-category/', ProductCategoryCreateView.as_view(), name='create_category'),
+    path('edit-category/<int:pk>/', ProductCategoryUpdateView.as_view(), name='edit_category'),
+    path('delete-category/<int:pk>/', ProductCategoryDeleteView.as_view(), name='delete_category'),
 
+    path('price-columns/create/', PriceColumnCreateView.as_view(), name='price_column_create'),
+    path('price-columns/edit/<int:pk>/', PriceColumnUpdateView.as_view(), name='price_column_edit'),
+    path('price-columns/delete/<int:pk>/', PriceColumnDeleteView.as_view(), name='price_column_delete'),
 ]

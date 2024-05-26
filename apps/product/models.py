@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -6,10 +8,10 @@ class ProductCategory(models.Model):
     name = models.CharField(max_length=255)
     parent = models.ForeignKey('ProductCategory', on_delete=models.PROTECT, related_name='children', null=True, blank=True, verbose_name='Родительская категория')
     created_at = models.DateTimeField(auto_now_add=True)
+    provider = models.ForeignKey('provider.Provider', on_delete=models.PROTECT, related_name='product_categories')
 
     @classmethod
     def get_category_descendants(cls, category):
-        """ Рекурсивно получает все подкатегории для указанной категории. """
         categories = [category]
         for child in category.children.all():
             categories.extend(cls.get_category_descendants(child))
@@ -56,3 +58,46 @@ class ProductImg(models.Model):
 
     def __str__(self):
         return f'{self.product.title}'
+
+
+class PriceColumn(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Название колонки")
+    formula = models.CharField(max_length=255, verbose_name="Формула расчета")
+    min_order_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Сумма от", default=0.0)
+    provider = models.ForeignKey('provider.Provider', on_delete=models.PROTECT, related_name='prices')
+
+    def apply_formula(self, base_price):
+        price = base_price
+        formulas = self.formula.split(';')
+
+        for formula_part in formulas:
+            operator = formula_part[0]
+            value = formula_part[1:]
+
+            if value.endswith('%'):
+                percentage = Decimal(value[:-1]) / 100
+                if operator == '+':
+                    price += price * percentage
+                elif operator == '-':
+                    price -= price * percentage
+            elif value.endswith('$'):
+                amount = Decimal(value[:-1])
+                if operator == '+':
+                    price += amount
+                elif operator == '-':
+                    price -= amount
+            else:
+                amount = Decimal(value)
+                if operator == '+':
+                    price += amount
+                elif operator == '-':
+                    price -= amount
+
+        return price
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Колонка цены"
+        verbose_name_plural = "Колонки цен"

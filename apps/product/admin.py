@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Product, ProductImg
+from .models import Product, ProductImg, ProductCategory
+
+
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(admin.ModelAdmin):
+    pass
 
 
 class ProductImgInline(admin.TabularInline):
@@ -10,18 +15,20 @@ class ProductImgInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-    'title', 'price', 'min_quantity', 'category', 'created_at', 'updated_at')
+        'title', 'price', 'min_quantity', 'category', 'created_at', 'updated_at')
     list_filter = ('category', 'created_at', 'updated_at', 'country_of_manufacture')
     search_fields = (
-    'title', 'description', 'mini_desc', 'manufacturer', 'phone', 'terms_of_sale', 'country_of_manufacture', 'characterization')
+        'title', 'description', 'mini_desc', 'manufacturer', 'phone', 'terms_of_sale', 'country_of_manufacture',
+        'characterization')
     readonly_fields = ('created_at', 'updated_at')
     inlines = [ProductImgInline]
 
     fieldsets = (
         (None, {
             'fields': (
-            'title', 'provider', 'image', 'description', 'mini_desc', 'type', 'manufacturer', 'price', 'min_quantity',
-            'category')
+                'title', 'provider', 'image', 'description', 'mini_desc', 'type', 'manufacturer', 'price',
+                'min_quantity',
+                'category')
         }),
         ('Advanced options', {
             'classes': ('collapse',),

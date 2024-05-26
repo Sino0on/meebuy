@@ -4,7 +4,7 @@
             class="cards px-10 py-7 rounded-2xl lg-md:w-[797px] bg-[#fff]"
           >
             <div class="flex flex-col gap-5">
-              <div class="flex items-center gap-4">
+              <div id="test222" class="cursor-pointer flex items-center gap-4">
                 <svg
                   width="10"
                   height="17"
@@ -19,7 +19,6 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"></path>
                 </svg>
-
                 <p
                   class="text-[#2B292C] md:text-[18px] text-[16px] font-semibold font-mulish"
                 >
@@ -35,17 +34,27 @@
                 Пожалуйста, начните с родительской категории, затем добавляйте
                 подкатегории
               </p>
-                <label>
-                    <input
-                      class="bg-[#F9F9F9] rounded-2xl pl-5 py-4 border border-[#E6E6E6]"
-                      type="text"
-                      placeholder="Например: Женская одежда"
-                    />
-                </label>
-                <button
-                class="text-[#2B292C] bg-[#E4DB00] rounded-[7px] py-4 text-[16px] font-medium font-mulish uppercase"
-              >
-                добавить категорию
-              </button>
+                <form action="{% url 'create_category' %}" id="add_category" method="post">
+                        {% csrf_token %}
+                    <select name="parent" id="">
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+
+                    </select>
+                    <br>
+                    <label>
+                        <input
+                          class="bg-[#F9F9F9] rounded-2xl pl-5 py-4 border border-[#E6E6E6]"
+                          type="text" name="name"
+                          placeholder="Например: Женская одежда"
+                        />
+                    </label>
+                    <button form="add_category"
+                    class="text-[#2B292C] bg-[#E4DB00] rounded-[7px] py-4 text-[16px] font-medium font-mulish uppercase"
+                  >
+                    добавить категорию
+                  </button>
+                </form>
             </div>
           </div>
