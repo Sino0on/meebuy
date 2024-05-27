@@ -256,16 +256,29 @@ class TenderListCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/tenders.html'
 
 
-class ProductListCabinetView(generic.ListView, LoginRequiredMixin):
-    object = Product
+class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
+    model = Product
     template_name = 'cabinet/products.html'
-    queryset = Product.objects.all()
+    context_object_name = 'product_list'
+
+    def get_queryset(self):
+        return Product.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = ProductCategory.objects.all()
+        categories = ProductCategory.objects.filter(provider__user=self.request.user)
+        context['categories'] = categories
+        category_tree = self.build_category_tree(categories)
+        context['category_tree'] = category_tree
         return context
 
+    def build_category_tree(self, categories, parent=None, level=0):
+        tree = []
+        for category in categories:
+            if category.parent == parent:
+                tree.append((category, level))
+                tree.extend(self.build_category_tree(categories, category, level + 1))
+        return tree
 
 class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/likes.html'
