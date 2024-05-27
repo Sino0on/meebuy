@@ -31,6 +31,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 
 from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
+
+from .models import Contacts
+
 import plotly.graph_objs as go
 from plotly.offline import plot
 
@@ -84,6 +87,7 @@ def generate_chart(user):
     return plot_div
 
 
+
 User = get_user_model()
 
 
@@ -104,23 +108,15 @@ class UppingListView(LoginRequiredMixin, generic.ListView):
 class UserDetailView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/provider_profile.html'
 
-    def get_template_names(self):
-        if self.request.user.user_type == 'buyer':
-            template_name = 'cabinet/buyer_profile.html'
-        else:
-            template_name = self.template_name
-        return template_name
-
     def get_context_data(self, **kwargs):
         print(self.request.user.user_type)
         context = super().get_context_data(**kwargs)
         context_keys = ['one', 'two', 'three', 'four', 'five', 'six']
-        if self.request.user.user_type == 'buyer':
-            images = self.request.user.buyer.images.all()
-        else:
-            images = self.request.user.provider.images.all()
+        images = self.request.user.provider.images.all()
         context_values = (images[i] if i < len(images) else None for i in range(len(context_keys)))
         context.update(dict(zip(context_keys, context_values)))
+        contacts = Contacts.load()
+        context['contacts'] = contacts
 
         return context
 
@@ -131,36 +127,32 @@ class UserAnketaView(generic.UpdateView, LoginRequiredMixin):
     queryset = Provider.objects.all()
     form_class = ProviderForm
     context_object_name = 'form'
+    success_url = '/profile/'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def get_object(self, queryset=None):
         return self.request.user.provider
-
-    def get_template_names(self):
-        if self.request.user.user_type == 'buyer':
-            print('buyter')
-            template_name = 'auth/edit_buyer.html'
-        else:
-            template_name = self.template_name
-            print('provider')
-        return template_name
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
     def post(self, request, *args, **kwargs):
+        print('post')
         form = self.form_class(request.POST)
-        # print(form)
-        return super().post(request, *args, **kwargs)
+        if form.is_valid():
+            pass
+        else:
+            print(form.errors)
+        obj = super().post(request, *args, **kwargs)
+        self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста подождите пару минут'
+        self.object.save()
+        return obj
 
-    def form_valid(self, form):
-        print("Valid form data:", form.cleaned_data)
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        print("Invalid form data:", form.data)
-        print("Errors:", form.errors)
-        return super().form_invalid(form)
 
 
 @require_POST
@@ -214,6 +206,12 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
+
     def get_initial(self):
         initial = super().get_initial()
         user = self.request.user
@@ -240,12 +238,19 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
             return self.form_invalid(form)
 
 
+
 class BalanceView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/balance.html'
 
     def dispatch(self, request, *args, **kwargs):
         print(request.user.cabinet.balance)
         return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
 
 
 class CreateTenderView(generic.TemplateView, LoginRequiredMixin):
@@ -254,6 +259,12 @@ class CreateTenderView(generic.TemplateView, LoginRequiredMixin):
 
 class TenderListCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/tenders.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
 
 
 class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
@@ -266,6 +277,8 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
         categories = ProductCategory.objects.filter(provider__user=self.request.user)
         context['categories'] = categories
         category_tree = self.build_category_tree(categories)
@@ -274,8 +287,6 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
             context['has_products'] = True
         else:
             context['has_products'] = False
-
-        return context
         return context
 
     def build_category_tree(self, categories, parent=None, level=0):
@@ -289,6 +300,12 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
 class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/likes.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
+
 
 class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/analytic.html'
@@ -296,6 +313,8 @@ class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['uppings'] = Upping.objects.all()
+        contacts = Contacts.load()
+        context['contacts'] = contacts
         return context
 
 
@@ -304,6 +323,12 @@ class TariffsCabinetView(generic.ListView, LoginRequiredMixin):
     model = Status
     queryset = Status.objects.all()
     context_object_name = 'statasus'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        return context
 
 
 class StatusListView(ListAPIView):
@@ -427,7 +452,8 @@ def send_message(request):
             return redirect('view_profile')
     else:
         form = SupportMessageForm()
-    return render(request, 'cabinet/send_message.html', {'form': form})
+    contacts = Contacts.load()
+    return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
 
 
 def send_message_logout(request):
@@ -439,7 +465,11 @@ def send_message_logout(request):
             return redirect('login')
     else:
         form = SupportMessageForm()
-    return render(request, 'cabinet/send_message.html', {'form': form})
+
+    contacts = Contacts.load()
+    return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
+
+
 
 @require_GET
 def add_provider_fav_api(request, pk):
@@ -481,6 +511,7 @@ def add_provider_fav(request, pk):
     return redirect(f'/provider/detail/{pk}/')
 
 
+
 def tariff_buy(request):
     status = get_object_or_404(PackageStatus, id=int(request.GET.get('id')))
     user = request.user
@@ -511,4 +542,5 @@ def tariff_buy(request):
     user.cabinet.balance -= status.price
     user.cabinet.save()
     return JsonResponse(data={"Info": "ok"}, status=200)
+
 

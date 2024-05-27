@@ -177,9 +177,36 @@
                     <div class="form__item">
                         <label class="label">Список товаров</label>
                         <p class="tooltip">Введите необходимые товары через запятую.Пример: Платья, брюки, блузки…</p>
-                        <input id="productList" type="text" placeholder="Например: наушники оптом">
-                        {% if form.product_list.errors %}
+                        <input id="requirements" type="text" name="requirements" placeholder="Например: наушники оптом">
+                        {% if form.requirements.errors %}
                             <div class="text-red-500 text-sm">{{ form.product_list.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                  <div class="form__item">
+                        <label class="label">Место реализации</label>
+                        <p class="tooltip">Введите место реализации</p>
+                        <input id="place_of_sale" type="text" name="place_of_sale" placeholder="Например: маркетплейс">
+                        {% if form.place_of_sale.errors %}
+                            <div class="text-red-500 text-sm">{{ form.place_of_sale.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                  <div class="form__item">
+                        <label class="label">Бюджет</label>
+                        <p class="tooltip">Введите бюджет</p>
+                        <input id="price" type="text" name="price" placeholder="Например: 10000">
+                        {% if form.price.errors %}
+                            <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                  <div class="form__item">
+                        <label class="label">Количество</label>
+                        <p class="tooltip">Введите Количество</p>
+                        <input id="quantity" type="text" name="quantity" placeholder="Например: 1000">
+                        {% if form.quantity.errors %}
+                            <div class="text-red-500 text-sm">{{ form.quantity.errors }}</div>
                         {% endif %}
                     </div>
 
