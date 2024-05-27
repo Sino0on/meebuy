@@ -1,46 +1,71 @@
-                <div id="goods-block" style="display: block">
-                  <div class="flex flex-col gap-7 font-mulish">
-                    <div>
-                      <h6 class="text-[20px] font-bold">
-                        Как добавить свои товары?
-                      </h6>
-                      <p class="text-[#757575] text-[17px] mt-2">
-                        Есть несколько способов добавить свои товары на сайт:
-                      </p>
+{% load static %}
+<div id="goods-block" style="display: block">
+  <div class="flex flex-col gap-7 font-mulish">
+    <div>
+        {% if has_products %}
+            {% for i in object_list.all %}
+            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
+                <a href="#" class="flex justify-between items-center">
+                    <div class="flex items-center gap-5">
+                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
+                            <img class="object-cover h-full"
+                                 src="{% if i.image %} {{ i.image.url }}{% endif %}"
+                                 alt="empty icon">
+                        </div>
+                        <p>{{ i.title }}</p>
                     </div>
-                    <hr class="h-[2px] w-full bg-[#A0A0A0]" />
-                    <div class="flex flex-col gap-2">
-                      <h6 class="text-[18px] font-semibold">
-                        Вариант 1. Загрузка через файл Excel
-                      </h6>
-                      <p class="text-[#757575] font-light text-[1tpx] mb-4">
-                        Вы можете загрузить файл Excel (.xlsx) с товарами.
-                        Загрузить товары с помощью Excel-файла
-                      </p>
-                      <div id="btnToExcel" class="download-excel cursor-pointer uppercase text-center font-medium text-[16px] border border-[#2B292C] rounded-lg py-3">
-                            <p> выбрать загрузку Excel</p>
-                              <input
-                              style="display: none"
-                              type="file"
-                              name="file"
-                              id="file"
-                            />
-                      </div>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                      <h6 class="text-[18px] font-semibold">
-                        Вариант 2. Вручную
-                      </h6>
-                      <p class="text-[#757575] font-light text-[1tpx] mb-4">
-                        Вы можете добавить товары вручную, при этом рекомендуем
-                        сначала создать категории товаров.
-                      </p>
-                      <button
-                        id="add-goods-button"
-                        class="uppercase font-medium text-[16px] border border-[#2B292C] rounded-lg py-3"
-                      >
-                        добавить товар вручную
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                    <form action="{% url 'product_delete' i.id %}" method="post">
+                        <button type="submit">
+                            {% csrf_token %}
+                    <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
+                            </button>
+                    </form>
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+          <h6 class="text-[20px] font-bold">
+            Как добавить свои товары?
+          </h6>
+          <p class="text-[#757575] text-[17px] mt-2">
+            Есть несколько способов добавить свои товары на сайт:
+          </p>
+        {% endif %}
+
+    </div>
+    <hr class="h-[2px] w-full bg-[#A0A0A0]" />
+    <div class="flex flex-col gap-2">
+      <h6 class="text-[18px] font-semibold">
+        Вариант 1. Загрузка через файл Excel
+      </h6>
+      <p class="text-[#757575] font-light text-[1tpx] mb-4">
+        Вы можете загрузить файл Excel (.xlsx) с товарами.
+        Загрузить товары с помощью Excel-файла
+      </p>
+      <div id="btnToExcel" class="download-excel cursor-pointer uppercase text-center font-medium text-[16px] border border-[#2B292C] rounded-lg py-3">
+            <p> выбрать загрузку Excel</p>
+              <input
+              style="display: none"
+              type="file"
+              name="file"
+              id="file"
+            />
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <h6 class="text-[18px] font-semibold">
+        Вариант 2. Вручную
+      </h6>
+      <p class="text-[#757575] font-light text-[1tpx] mb-4">
+        Вы можете добавить товары вручную, при этом рекомендуем
+        сначала создать категории товаров.
+      </p>
+      <button
+        id="add-goods-button"
+        class="uppercase font-medium text-[16px] border border-[#2B292C] rounded-lg py-3"
+      >
+        добавить товар вручную
+      </button>
+    </div>
+  </div>
+</div>

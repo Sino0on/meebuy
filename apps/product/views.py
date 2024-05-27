@@ -93,7 +93,7 @@ class ProductCreateView(CreateView):
 class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
-    template_name = 'products/product_form.html'
+    template_name = 'cabinet/product_update.html'
     success_url = '/products'
 
     def form_valid(self, form):
@@ -107,7 +107,7 @@ class ProductUpdateView(UpdateView):
 class ProductDeleteView(DeleteView):
     model = Product
     template_name = 'products/product_confirm_delete.html'
-    success_url = reverse_lazy('product_list')
+    success_url = reverse_lazy('user_products')
 
 
 class ExcelTemplateDownloadView(View):
