@@ -5,6 +5,7 @@ from apps.product.views import ProductListView, ProductUpdateView, ProductCreate
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView
 from apps.user_cabinet.views import *
 from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
+
 from apps.chat.views import chat_detail, chats, create_chat
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
@@ -12,7 +13,7 @@ from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
 
 from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
-from apps.tender.views import TenderListView, TenderDetailView
+from apps.tender.views import TenderListView, TenderDetailView, delete_tender, TenderCreateView, TenderUpdateView
 from apps.user_cabinet.views import UserStatusListView, UppingListView
 from apps.buyer.views import BuyerListView
 from apps.user_cabinet.api import BuyStatusView, BuyUppingView
@@ -25,16 +26,6 @@ urlpatterns = [
     path('chat/create/<str:pk>/', create_chat, name='chat_create'),
     path('chat_list/', chats, name='chat_list'),
     # path('', ProviderHomeListView.as_view()),
-    path('change_password/', PasswordChangeView.as_view(template_name='auth/change_password.html'), name='change_password'),
-    path('password_change_done/', PasswordChangeDoneView.as_view(template_name='auth/password_change_done.html'),
-         name='password_change_done'),
-    path('reset-password/', PasswordResetView.as_view(template_name='auth/password_reset_form.html'), name='password_reset'),
-    path('reset-password/done/', PasswordResetDoneView.as_view(template_name='auth/password_reset_done.html'),
-         name='password_reset_done'),
-    path('reset-password/confirm/<uidb64>/<token>/',
-         PasswordResetConfirmView.as_view(template_name='auth/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset-password/complete/', PasswordResetCompleteView.as_view(template_name='auth/password_reset_complete.html'),
-         name='password_reset_complete'),
     path('', HomeView.as_view(), name='home'),
 
 
@@ -61,6 +52,13 @@ urlpatterns = [
 
     path('change-avatar/', change_avatar),
     path('change-image/', change_image),
+    path('change-password/', change_password, name='change_password'),
+    path('reset_password/', reset_password, name='reset_password'),
+    path('check_email/', check_email, name='check_email'),
+    path('reset/<str:uidb64>/<str:token>/', reset_password_confirm, name='password_reset_confirm'),
+    path('password-change-success/', password_change_success, name='password_change_success'),
+    path('send-message/', send_message, name='send_message'),
+    path('send-message-logout/', send_message_logout, name='send_message_logout'),
 
 
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),
@@ -78,6 +76,9 @@ urlpatterns = [
     # tenders
     path('tender/list/', TenderListView.as_view(), name='tender_list'),
     path('tender/detail/<int:pk>/', TenderDetailView.as_view(), name='tender_detail'),
+    path('tender/create/', TenderCreateView.as_view(), name='tender_create'),
+    path('tender/update/<int:pk>', TenderUpdateView.as_view(), name='tender_update'),
+    path('tender/delete/<int:pk>/', delete_tender, name='delete_tender'),
 
     path('status/list/', StatusListView.as_view()),
     path('upping/list/', UppingListView.as_view()),
@@ -95,6 +96,8 @@ urlpatterns = [
 
     # apis
     path('category/list/', CategoryListView.as_view()),
+
+  
     path('create-category/', ProductCategoryCreateView.as_view(), name='create_category'),
     path('edit-category/<int:pk>/', ProductCategoryUpdateView.as_view(), name='edit_category'),
     path('delete-category/<int:pk>/', ProductCategoryDeleteView.as_view(), name='delete_category'),
@@ -102,4 +105,8 @@ urlpatterns = [
     path('price-columns/create/', PriceColumnCreateView.as_view(), name='price_column_create'),
     path('price-columns/edit/<int:pk>/', PriceColumnUpdateView.as_view(), name='price_column_edit'),
     path('price-columns/delete/<int:pk>/', PriceColumnDeleteView.as_view(), name='price_column_delete'),
+
+    path('connect_tariff', tariff_buy),
+
+
 ]

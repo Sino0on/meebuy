@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Отправка сообщения{% endblock %}
+
+{% block content %}
+<div class="container mt-10 mb-20">
+  <div class="flex flex-col w-full gap-10">
+    <h1 class="text-[#2B292C] sm:text-[36px] text-[20px] font-black text-center uppercase">
+       Отправка сообщения
+    </h1>
+    <div class="shadow-card-shadow bg-[#FFFFFF] flex flex-col gap-5 sm:p-10 p-4 rounded-2xl md:w-[50%] mx-auto">
+      <div class="flex items-center gap-[15px]">
+        <a href="{% url 'home' %}"><img src="{% static 'images/icons/prev-arrow.svg' %}" alt=""/></a>
+        <span class="font-semibold text-[#2B292C]">Техподдержка Meebuy</span>
+      </div>
+      <hr class="h-[2px] bg-[#A0A0A0] w-full" />
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-4">
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Ваше ФИО</h6>
+            {{ form.name }}
+          </div>
+          <div class="flex flex-col gap-4">
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Ваш номер телефона</h6>
+            {{ form.phone }}
+          </div>
+          <div class="flex flex-col gap-4">
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Ваш e-mail</h6>
+            {{ form.email }}
+          </div>
+          <div class="flex flex-col gap-4">
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Ваше сообщение</h6>
+            {{ form.message }}
+          </div>
+          <div class="flex flex-col gap-4">
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Основная цель для регистрации</h6>
+            {{ form.regret_to_register }}
+          </div>
+        </div>
+        <!-- confirm -->
+        <div class="flex items-center gap-[10px] mt-2">
+          {{ form.agree_to_policy }}
+          <p class="text-[#777777] text-[16px] font-normal">
+            Я ознакомился и согласен с условиями <a href="#" class="underline">Политики</a>
+          </p>
+        </div>
+        <!-- button -->
+        <button type="submit" class="font-medium text-[#2B292C] uppercase py-4 rounded-lg w-full bg-[#E4DB00] mt-6">
+          отправить
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

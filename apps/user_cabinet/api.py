@@ -45,9 +45,9 @@ class BuyUppingView(GenericAPIView):
         upping = get_object_or_404(Upping, id=kwargs['pk'])
         user = request.user
         if not user.cabinet:
-            return Response(status=HTTP_403_FORBIDDEN)
+            return Response(data={"Error": "Неавторизованный"}, status=HTTP_403_FORBIDDEN)
         if user.cabinet.balance < upping.price:
-            return Response(data={"Info": "Недостаточно средств"}, status=HTTP_400_BAD_REQUEST)
+            return Response(data={"Error": "Недостаточно средств"}, status=HTTP_400_BAD_REQUEST)
         user.cabinet.is_upping = ActiveUpping.objects.create(
             upping=upping,
             end_date=datetime.date.today() + datetime.timedelta(days=upping.days)
@@ -59,4 +59,4 @@ class BuyUppingView(GenericAPIView):
         )
         user.cabinet.balance -= upping.price
         user.cabinet.save()
-        return Response(status=HTTP_200_OK)
+        return Response(data={"Info": "Успешно подключено"}, status=HTTP_200_OK)

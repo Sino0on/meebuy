@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+      <section class="mb-[130px]">
+        <div class="container">
+          <h1
+            class="uppercase font-bold text-center mt-14 lg-md:text-xl lg-md:mt-15"
+          >
+            Проверьте почту
+          </h1>
+          <div
+            class="shadow-card-shadow rounded-[15px] px-5 py-[30px] max-w-[530px] text-[#252B42] mx-auto mt-10 lg-md:p-10"
+          >
+            <p
+              class="bg-[#C3FFA7] py-3 px-[11px] -mx-[11px] rounded-[10px] lg-md:px-5 lg-md:-mx-5"
+            >
+              На ваш адрес была выслана ссылка по которой необходимо перейти,
+              чтобы установить новый пароль
+            </p>
+            <p class="mt-[18px] lg-md:mt-5">
+              Если письмо не приходит в течение нескольких минут, проверьте
+              папку «Спам». Если письма нет, сообщите нам об этом.
+            </p>
+              <a href="{% url 'send_message_logout' %}">
+                <button class="btn-outlined uppercase w-full py-5 mt-[30px]">
+                  техподдержка meebuy
+                </button>
+              </a>
+          </div>
+        </div>
+      </section>
+    </main>
+{% endblock %}

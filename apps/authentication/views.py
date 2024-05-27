@@ -17,7 +17,6 @@ from apps.provider.models import Provider, Category
 from apps.user_cabinet.models import Cabinet
 
 
-
 class HomeView(TemplateView):
     template_name = 'auth/home.html'
 
@@ -28,7 +27,7 @@ class HomeView(TemplateView):
         context['new_providers'] = Provider.objects.filter(is_modered=True)[:4]
         context['categories'] = Category.objects.filter(category=None)
         
-        context['tenders'] = Tender.objects.all()[:8]
+        context['tenders'] = Tender.objects.all()[:4]
         return context
 
 
