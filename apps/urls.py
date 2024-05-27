@@ -95,7 +95,7 @@ urlpatterns = [
     path('user/', UserDetailView.as_view()),
 
     # apis
-    path('category/list/', CategoryListView.as_view())
+    path('category/list/', CategoryListView.as_view()),
 
   
     path('create-category/', ProductCategoryCreateView.as_view(), name='create_category'),

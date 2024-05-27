@@ -57,13 +57,13 @@ document.addEventListener("click", function (event) {
       passwordInput.setAttribute("type", "password");
       showPasswordIcon.setAttribute(
         "src",
-        "../../assets/images/icons/password-close.svg"
+        "/static/assets/images/icons/password-close.svg"
       );
     } else {
       passwordInput.setAttribute("type", "text");
       showPasswordIcon.setAttribute(
         "src",
-        "../../assets/images/icons/password-open.svg"
+        "/static/assets/images/icons/password-open.svg"
       );
     }
   }
