@@ -43,6 +43,7 @@ class Product(models.Model):
     terms_of_sale = models.CharField(max_length=200, blank=True, null=True, verbose_name='Условия продажи')
     country_of_manufacture = models.CharField(max_length=100, blank=True, null=True, verbose_name='Страна производства')
     characterization = models.CharField(max_length=200, blank=True, null=True, verbose_name='Характеристики')
+    product_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на товар')
 
     def __str__(self):
         return f'{self.title}'

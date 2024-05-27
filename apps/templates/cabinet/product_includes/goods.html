@@ -5,7 +5,7 @@
         {% if has_products %}
             {% for i in object_list.all %}
             <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
-                <a href="#" class="flex justify-between items-center">
+                <a href="{% url 'product_update' i.pk %}" class="flex justify-between items-center">
                     <div class="flex items-center gap-5">
                         <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
                             <img class="object-cover h-full"

@@ -15,6 +15,19 @@
                           затем помещать товары в нужную категорию.
                         </p>
                       </div>
+                        {% if category_tree %}
+                        <h6
+                          class="text-[#4D4D4D] font-black lg-md:text-[20px] text-[18px]"
+                        >
+                          Ваши категории
+                        </h6>
+                                                              <ul>
+                            {% for category, level in category_tree %}
+                                <a href="{% url 'edit_category' category.id %}"><li class="text-[#909090] font-normal sm:text-[18px] text-[16px] font-mulish"
+                                        style="margin-left: {{ level }}0px;">{{ category.name }}</li></a>
+                            {% endfor %}
+                        </ul>
+                            {% else %}
                       <div class="mt-1">
                         <p
                           class="text-[#757575] font-normal sm:text-[18px] text-[16px] font-mulish"
@@ -68,39 +81,10 @@
                         </ul>
 
                       </div>
-                      <div class="mt-1">
-                        <h6
-                          class="text-[#4D4D4D] font-black lg-md:text-[20px] text-[18px]"
-                        >
-                          Мужская одежда
-                        </h6>
-                        <ul
-                          class="text-[#757575] font-normal text-[18px] font-mulish"
-                        >
-                          <li
-                            class="text-[#757575] font-bold sm:text-[18px] text-[16px] font-mulish"
-                          >
-                            ---Джинсы
-                          </li>
-                          <li
-                            class="text-[#757575] font-bold sm:text-[18px] text-[16px] font-mulish"
-                          >
-                            ---Футболки
-                          </li>
-                          <li
-                            class="text-[#757575] font-bold sm:text-[18px] text-[16px] font-mulish"
-                          >
-                            ---Костюмы
-                          </li>
-                        </ul>
-                           <ul>
-                            {% for category, level in category_tree %}
-                                <a href="{% url 'edit_category' category.id %}"><li class="text-[#909090] font-normal sm:text-[18px] text-[16px] font-mulish"
-                                        style="margin-left: {{ level }}0px;">{{ category.name }}</li></a>
-                            {% endfor %}
-                        </ul>
+                        {% endif %}
 
-                      </div>
+
+
                     </div>
 
 

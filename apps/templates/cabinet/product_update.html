@@ -1,86 +1,56 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Личный кабинет
 {% endblock %}
-
 {% block css %}
-
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
-    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}" />
-    <link rel="stylesheet" href="{% static 'pages/profile/tenders/index.css' %}" />
-    <link rel="stylesheet" href="{% static 'pages/profile/goods/index.css' %}" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/profile/myCompany/editProfile/index.css' %}">
 {% endblock %}
-
 {% block content %}
-
-    <div class="bg-[#FFFFFC]">
-      <nav class="breadcrumbs">
+<main class="edit__profile">
+    <nav class="breadcrumbs bg-[#FFFFFC]">
         <div class="container">
-          <div class="">
-            <div class="flex gap-4 py-4">
-              <div class="flex items-center gap-4">
-                <img src="{% static 'assets/images/icons/home.svg' %}" alt="" />
-                <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
-              </div>
-              <p class="font-normal font-mulish text-[#A0A0A0]">
-                Личный кабинет
-              </p>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <main class="container mt-14 pb-28">
-        <h1
-          class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl"
-        >
-          Товары
-        </h1>
-        <!--  this section is for avatar  -->
-
-        <div class="flex gap-[30px] lg-md:flex-row flex-col">
-          <section class="profile__navigate lg-md:w-[25%] bg-[#fff]">
             <div class="">
-              <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
-                <!-- upload avatar-->
-                <div class="upload__avatar text-center flex justify-center">
-                  <div class="relative">
-                    <img
-                      class="absolute right-0 bottom-0"
-                      src="{% static 'assets/images/icons/camera-outline.svg' %}"
-                      alt=""
-                    />
-                    <form class="rounded-full overflow-hidden  w-20 h-20" action="">
+                <div class="flex gap-4 py-4">
+                    <div class="flex items-center gap-4">
+                        <img src="{% static 'assets/images/icons/home.svg' %}" alt=""/>
+                        <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/>
+                    </div>
+                    <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="mt-[30px] lg-md:mt-0 lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
+            <!--  this section is for avatar  -->
+            <section class="hidden lg-md:block mt-[30px] lg-md:mt-[50px]">
+                <div class="container">
+                    <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
+                        <!-- upload avatar-->
+                        <div class="upload__avatar text-center flex justify-center">
+                            <div class="relative">
+                                <img class="absolute right-0 bottom-0"
+                                     src="{% static 'assets/images/icons/camera-outline.svg' %}"
+                                     alt="">
+                                <form class="rounded-full overflow-hidden  w-20 h-20" action="">
                                     <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
-                                        {% if user.provider.image %}
-
+                                        {% if user.buyer.image %}
                                         <img class="object-cover h-full" id="avatar"
-                                             src="{{ user.provider.image.url }}" alt="">
+                                             src="{{ user.buyer.image.url }}" alt="">
                                         {% else %}
                                         <img class="object-cover h-full" id="avatar"
                                              src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
                                         {% endif %}
                                     </label>
-                                    {% csrf_token %}
                                     <input id="upload" type="file" class="hidden"/>
                                 </form>
-                  </div>
-                </div>
-
-                <h2 class="text-center text-lg font-semibold mt-2.5">
-                  {{ user.first_name }} {{  user.last_name }}
-                </h2>
-                <!-- dropdown menu-->
+                            </div>
+                        </div>
+                        <h2 class="text-center text-lg font-semibold mt-2.5">{{ user.first_name }}</h2>
+                        <!-- dropdown menu-->
                 <div
                   class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden"
                 >
@@ -143,8 +113,8 @@
                     </li>
                   </ul>
                 </div>
-                <!-- dropdown menu end-->
-                <!-- desktop menu-->
+                        <!-- dropdown menu end-->
+                        <!-- desktop menu-->
                 <div class="hidden lg-md:block">
                   <ul class="flex flex-col">
                     <li class="dropdown__item">
@@ -198,127 +168,567 @@
                     </li>
                   </ul>
                 </div>
-                <!-- desktop menu end-->
+                        <!-- desktop menu end-->
+                    </div>
+                </div>
+            </section>
+            <!-- these sections are for main content  -->
+            <seciton class="main-content lg-md:mt-[50px] lg-md:col-span-2 xl:col-span-3 lg-md:mb-[120px]">
+                <div class="card__wrapper mb-28 h-full tab-content shadow-card-shadow rounded-[10px] lg-md:mb-0">
+                    <div
+                    id="edit-category-block"
+                    class="cards px-10 py-7 rounded-2xl lg-md:w-[797px] bg-[#fff]"
+                  >
+                    <div class="flex flex-col gap-5">
+                          <a href="{% url 'user_products' %}">
+
+                      <div id="test222" class="cursor-pointer flex items-center gap-4">
+                        <svg
+                          width="10"
+                          height="17"
+                          viewBox="0 0 10 17"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+
+                          <path
+                            d="M8.5 1.5L1.5 8.5L8.5 15.5"
+                            stroke="#2B292C"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        </svg>
+
+
+                        <p
+                          class="text-[#2B292C] md:text-[18px] text-[16px] font-semibold font-mulish"
+                        >
+                          Редактирование
+                        </p>
+                      </div>
+                    </a>
+                      <hr class="h-[2px] w-full bg-[#A0A0A0]" />
+
+                      <h6 class="text-[#2B292C] font-bold text-[18px] font-mulish">
+                        Название категории
+                      </h6>
+                      <p class="md:text-[18px] text-[16px] font-normal text-[#4D4D4D]">
+                        Пожалуйста, начните с родительской категории, затем добавляйте
+                        подкатегории
+                      </p>
+    <form id='submit_form' action="{% url 'product_update' object.id %}" method="post">
+        {% csrf_token %}
+          <div class="flex flex-col gap-[30px]">
+            <div class="flex flex-col gap-5">
+              <h6 class="text-[#2B292C] font-bold text-[18px] font-mulish">
+                Категория
+              </h6>
+              <p class="text-[16px] font-normal text-[#4D4D4D]">
+                Вы можете выбрать несколько категорий. Если выбрана
+                вложенная категория, нет необходимости выбирать родительскую
+                категорию, т.к. товар автоматически будет показан во всех
+                родительских категориях
+              </p>
+                <label>
+                    <select
+                      class=" relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                    >
+                    {% for category in categories %}
+                          <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+
+                      <img
+                        class="absolute right-7 top-6 mr-7"
+                        src="{% static 'assets/images/icons/arrow-down.svg' %}"
+                        alt=""
+                      />
+                    </select>
+                </label>
+            </div>
+            <div
+              class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full"
+            >
+              <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Тип товара
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: Обувь
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" value="{{ form.type.value|default_if_none:'' }}" name="type"
+                      />
+                        {% if form.type.errors %}
+                            <div class="text-red-500 text-sm">{{ form.type.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+              <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Название
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: Кожаный кошелек Lacoste
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" name="title" value="{{ form.title.value|default_if_none:'' }}"
+                      />
+                        {% if form.title.errors %}
+                            <div class="text-red-500 text-sm">{{ form.title.errors }}</div>
+                        {% endif %}
+                  </label>
               </div>
             </div>
-          </section>
+            <div class="flex flex-col gap-1 w-full">
+              <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                Описание
+              </h6>
+              <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                    Элегантный кожаный кошелек с разнообразными отделениями для карточек и документов. Идеально подойдет для организации вашего рабочего дня в стиле, а также для хранения наличных средств с безопасностью и комфортом.              </p>
 
-          <!-- these sections are for main content  -->
-          <div
-            id="main-section"
-            style="display: block"
-            class="bg-[#fff] relative"
-          >
-            <section
-              class="flex flex-col md:items-center lg-md:mt-0 mt-10 lg-md:w-[797px]"
+                <label>
+                <textarea name="description"
+                  class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
+                >{{ form.description.value|default_if_none:'' }}</textarea>
+                    {% if form.description.errors %}
+                            <div class="text-red-500 text-sm">{{ form.description.errors }}</div>
+                        {% endif %}
+                </label>
+            </div>
+            <div class="flex flex-col gap-1 w-full">
+              <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Короткое описание
+              </h6>
+              <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                Например: Кожаный кошелек с множеством отделений для карточек.
+              </p>
+                <label>
+                <textarea name="mini_desc"
+                  class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
+                >{{ form.mini_desc.value|default_if_none:'' }}</textarea>
+                    {% if form.mini_desc.errors %}
+                            <div class="text-red-500 text-sm">{{ form.mini_desc.errors }}</div>
+                        {% endif %}
+                </label>
+            </div>
+            <div
+              class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full"
             >
-              <div>
-                <div class="scroll-container">
-                  <div
-                    class="flex items-center justify-start gap-5 mb-[30px] lg:w-[797px] lg-md: overflow-x-scroll"
+              <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Производитель
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: Samsung
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" value="{{ form.manufacturer.value|default_if_none:'' }}" name="manufacturer"
+                      />
+                      {% if form.manufacturer.errors %}
+                            <div class="text-red-500 text-sm">{{ form.manufacturer.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+              <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Цена
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: 1000
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" name="price" value="{{ form.price.value|default_if_none:'' }}"
+                      />
+                      {% if form.price.errors %}
+                            <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+            </div>
+            <div
+              class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full"
+            >
+              <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Валюта
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: KGS
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" value="{{ form.currency.value|default_if_none:'' }}" name="currency"
+                      />
+                      {% if form.currency.errors %}
+                            <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+              <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Минимальное количество заказа
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: 10
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="number" value="{{ form.min_quantity.value|default_if_none:'' }}" name="min_quantity"
+                      />
+                      {% if form.min_quantity.errors %}
+                            <div class="text-red-500 text-sm">{{ form.min_quantity.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+            </div>
+            <div
+              class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full"
+            >
+              <div class="flex flex-col gap-1lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Условия продажи
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: Окончательная продажа
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" value="{{ form.terms_of_sale.value|default_if_none:'' }}" name="terms_of_sale"
+                      />
+                      {% if form.terms_of_sale.errors %}
+                            <div class="text-red-500 text-sm">{{ form.terms_of_sale.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+              <div class="flex w-full flex-col gap-1">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Страна производства
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: Китай
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" value="{{ form.country_of_manufacture.value|default_if_none:'' }}" name="country_of_manufacture"
+                      />
+                      {% if form.country_of_manufacture.errors %}
+                            <div class="text-red-500 text-sm">{{ form.country_of_manufacture.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+            </div>
+            <div
+              class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full"
+            >
+              <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Ссылка на товар на сайте магазина
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: https://example.com
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" value="{{ form.product_link.value|default_if_none:'' }}" name="product_link"
+                      />
+                      {% if form.product_link.errors %}
+                            <div class="text-red-500 text-sm">{{ form.product_link.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+              <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Характеристика товара
+                </h6>
+                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                  Например: Мелкий опт
+                </p>
+                  <label>
+                      <input
+                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                        type="text" value="{{ form.characterization.value|default_if_none:'' }}" name="characterization"
+                      />
+                      {% if form.characterization.errors %}
+                            <div class="text-red-500 text-sm">{{ form.characterization.errors }}</div>
+                        {% endif %}
+                  </label>
+              </div>
+            </div>
+            <!-- photo -->
+            <div class="text-dark-text">
+              <h2 class="font-bold text-[18px]">Фотографии товара</h2>
+              <p class="mt-2 text-[#4D4D4D]">
+                Первая фотография по умолчанию главная
+              </p>
+              <!-- upload 6 photos -->
+              <div
+                class="photos__wrapper mt-6 grid grid-cols-[repeat(auto-fill,minmax(86px,86px))] gap-2.5 lg-md:grid-cols-[repeat(auto-fill,minmax(50px,50px))]"
+              >
+                <form class="relative">
+                  <label
+                    for="file1"
+                    class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]"
                   >
-                    <button
-                      id="goods"
-                      style="background-color: #fffb98"
-                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                    <div
+                      class="h-full w-full flex justify-center items-center"
                     >
-                      Товары
-                    </button>
-                    <button
-                      id="category"
-                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                      <input
+                        type="file"
+                        name="file"
+                        id="file1"
+                        class="photos__input sr-only"
+                      />
+                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                      <img
+                        src="{% static 'assets/images/pink-boots.png' %}"
+                        alt=""
+                        class="hidden object-cover h-full w-full"
+                        id="preview1"
+                      />
+                      <!-- Default icon to show before file selection -->
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        id="icon1"
+                      >
+                        <path
+                          d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                          fill="#BEBEBE"></path>
+                      </svg>
+                    </div>
+                  </label>
+                </form>
+                <form class="relative">
+                  <label
+                    for="file2"
+                    class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]"
+                  >
+                    <div
+                      class="h-full w-full flex justify-center items-center"
                     >
-                      Категории
-                    </button>
-                    <button
-                      id="price"
-                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                      <input
+                        type="file"
+                        name="file"
+                        id="file2"
+                        class="photos__input sr-only"
+                      />
+                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                      <img
+                        src="{% static 'assets/images/pink-boots.png' %}"
+                        alt=""
+                        class="hidden object-cover h-full w-full"
+                        id="preview2"
+                      />
+                      <!-- Default icon to show before file selection -->
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        id="icon2"
+                      >
+                        <path
+                          d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                          fill="#BEBEBE"></path>
+                      </svg>
+                    </div>
+                  </label>
+                </form>
+                <form class="relative">
+                  <label
+                    for="file3"
+                    class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]"
+                  >
+                    <div
+                      class="h-full w-full flex justify-center items-center"
                     >
-                      Цены
-                    </button>
-                    <button
-                      id="autoload"
-                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 lg-md:px-3 md: px-3 border-[#FFFB98] border-2 rounded-2xl"
+                      <input
+                        type="file"
+                        name="file3"
+                        id="file3"
+                        class="photos__input sr-only"
+                      />
+                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                      <img
+                        src="{% static 'assets/images/pink-boots.png' %}"
+                        alt=""
+                        class="hidden object-cover h-full w-full"
+                        id="preview3"
+                      />
+                      <!-- Default icon to show before file selection -->
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        id="icon3"
+                      >
+                        <path
+                          d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                          fill="#BEBEBE"></path>
+                      </svg>
+                    </div>
+                  </label>
+                </form>
+                <form class="relative">
+                  <label
+                    for="file4"
+                    class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]"
+                  >
+                    <div
+                      class="h-full w-full flex justify-center items-center"
                     >
-                      Автозагрузка YML
-                    </button>
-                    <button
-                      id="excel-loader"
-                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 lg-md:px-3 md: p-3 border-[#FFFB98] border-2 rounded-2xl"
+                      <input
+                        type="file"
+                        name="file"
+                        id="file4"
+                        class="photos__input sr-only"
+                      />
+                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                      <img
+                        src="{% static 'assets/images/pink-boots.png' %}"
+                        alt=""
+                        class="hidden object-cover h-full w-full"
+                        id="preview4"
+                      />
+                      <!-- Default icon to show before file selection -->
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        id="icon4"
+                      >
+                        <path
+                          d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                          fill="#BEBEBE"></path>
+                      </svg>
+                    </div>
+                  </label>
+                </form>
+                <form class="relative">
+                  <label
+                    for="file5"
+                    class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]"
+                  >
+                    <div
+                      class="h-full w-full flex justify-center items-center"
                     >
-                      Загрузка Excel
-                    </button>
+                      <input
+                        type="file"
+                        name="file"
+                        id="file5"
+                        class="photos__input sr-only"
+                      />
+                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                      <img
+                        src="{% static 'assets/images/pink-boots.png' %}"
+                        alt=""
+                        class="hidden object-cover h-full w-full"
+                        id="preview5"
+                      />
+                      <!-- Default icon to show before file selection -->
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        id="icon5"
+                      >
+                        <path
+                          d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                          fill="#BEBEBE"></path>
+                      </svg>
+                    </div>
+                  </label>
+                </form>
+                <form class="relative">
+                  <label
+                    for="file6"
+                    class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]"
+                  >
+                    <div
+                      class="h-full w-full flex justify-center items-center"
+                    >
+                      <input
+                        type="file"
+                        name="file"
+                        id="file6"
+                        class="photos__input sr-only"
+                      />
+                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
+                      <img
+                        src="{% static 'assets/images/pink-boots.png' %}"
+                        alt=""
+                        class="hidden object-cover h-full w-full"
+                        id="preview6"
+                      />
+                      <!-- Default icon to show before file selection -->
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        id="icon6"
+                      >
+                        <path
+                          d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                          fill="#BEBEBE"></path>
+                      </svg>
+                    </div>
+                  </label>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-[30px] w-full mt-10">
+            <button form="submit_form"
+              class="bg-[#E4DB00] text-[#2B292C] w-[50%] text-[16px] font-medium font-mulish rounded-lg py-3 px-8 uppercase"
+            >
+              сохранить
+            </button>
+            <button
+              id="close-goods-button"
+              form="submit_form"
+              class="border border-[#2B292C] text-[#2B292C] w-[50%] text-[16px] font-medium font-mulish rounded-lg py-3 px-8 uppercase"
+            >
+              отмена
+            </button>
+          </div>
+        </form>
+                        <form action="{% url 'product_delete' object.id %}" method="post">
+                            <button type="submit">
+                                {% csrf_token %}
+                                <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
+                            </button>
+                        </form>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="cards sm:p-9 p-5">
-                <!-- goods -->
-                  {% include 'cabinet/product_includes/goods.html' %}
-                <!-- category -->
-                  {% include 'cabinet/product_includes/category.html' %}
-                <!-- price -->
-                  {% include 'cabinet/product_includes/price.html' %}
-                <!-- autoload -->
-                  {% include 'cabinet/product_includes/autoload.html' %}
-                <!-- Загрузка Excel -->
-
-                  {% include 'cabinet/product_includes/add_by_excel.html' %}
-              </div>
-            </section>
-          </div>
-
-          <!-- add category -->
-        {% include 'cabinet/product_includes/add_category.html' %}
-          <!-- add goods manually -->
-        {% include 'cabinet/product_includes/add_products_manually.html' %}
+            </seciton>
         </div>
-      </main>
     </div>
-
-{% endblock %}
-{% block js %}
-    <script src="{% static 'pages/profile/goods/index.js' %}"></script>
-    <script src="{% static 'pages/profile/tenders/index.js' %}"></script>
-    <script src="{% static 'pages/profile/profile.js' %}"></script>
-
-    <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const fileInput = document.getElementById('file');
-    if (fileInput) {
-      fileInput.addEventListener("change", function(event) {
-        const fileLabelText = document.getElementById('file-label-text');
-        const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken=')).split('=')[1];
-
-        const files = event.target.files;
-        if (files.length > 0) {
-          fileLabelText.textContent = `Selected file: ${files[0].name}`;
-
-          // Автоматически отправляем форму через 3 секунды
-          setTimeout(() => {
-            const formData = new FormData();
-            formData.append('file', files[0]);
-
-            fetch('{% url 'upload_excel' %}', {
-              method: 'POST',
-              body: formData,
-              headers: {
-                'X-CSRFToken': csrftoken
-            }
-            })
-            .then(response => response.text())
-            .then(data => {
-              console.log(data); // Обработка ответа сервера
-            })
-            .catch(error => {
-              console.error('Ошибка:', error);
-            });
-          }, 1000);
-        } else {
-          fileLabelText.textContent = 'Нажмите, чтобы загрузить файл или перетащите файл в эту область';
-        }
-      });
-    }
-  });
-</script>
+</main>
+<script src="{% static 'pages/profile/myCompany/editProfile/index.js' %}"></script>
+<script src="{% static 'pages/profile/profile.js' %}"></script>
 {% endblock %}
