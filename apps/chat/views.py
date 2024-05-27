@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
+from apps.user_cabinet.models import Contacts
 
 User = get_user_model()
 
@@ -23,8 +24,12 @@ def chats(request):
             'last_message': messages.first(),
             'unread_count': unread_count
         })
-    print(chat_details)
-    return render(request, 'chat_list.html', {'chat_details': chat_details})
+    contacts = Contacts.load()
+
+    return render(request, 'chat_list.html', {
+        'chat_details': chat_details,
+        'contacts': contacts
+    })
 
 
 @login_required(login_url='/login/')

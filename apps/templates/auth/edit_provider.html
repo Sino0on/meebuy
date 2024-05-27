@@ -149,14 +149,12 @@
     <ul>
         {% for field in form %}
             {% for error in field.errors %}
-                <li>{{ error }}</li>
+                <li>{{ field.name }} - {{ error }}</li>
             {% endfor %}
         {% endfor %}
     </ul>
 {% endif %}
-          {% for choice in form.category.field.choices %}
-    {{ choice.0 }}: {{ choice.1 }} <br>
-{% endfor %}
+
             <p class="mt-10 border-b border-b-grey-light pb-[30px]">
               Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем
               качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.
@@ -164,145 +162,249 @@
               ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
             </p>
             <div class="form mt-[30px]">
-              <form id="form" method="post" class="space-y-[30px]">
-                <div class="form__item">
-                  {% csrf_token %}
-                  <label class="label" for="name">Общеизвестное название компании / бренда *</label>
-                  <p class="tooltip">Без кавычек. Например: Headphones</p>
-                  <input id="name" name="title" value="{{ form.title.value }}" type="text" placeholder="Headphones.kg">
-                </div>
-                <div class="form__item">
-                  <label for="description">Краткое описание *</label>
-                  <p class="tooltip">Например: наушники оптом</p>
-                  <input id="description" name="mini-descr" type="text" value="{{ form.mini_descr.value }}" placeholder="Например: наушники оптом">
-                </div>
+<!--              <form id="form" method="post" class="space-y-[30px]">-->
+<!--                <div class="form__item">-->
+<!--                  {% csrf_token %}-->
+<!--                  <label class="label" for="name">Общеизвестное название компании / бренда *</label>-->
+<!--                  <p class="tooltip">Без кавычек. Например: Headphones</p>-->
+<!--                  <input id="name" name="title" value="{{ form.title.value }}" type="text" placeholder="Headphones.kg">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label for="description">Краткое описание *</label>-->
+<!--                  <p class="tooltip">Например: наушники оптом</p>-->
+<!--                  <input id="description" name="mini-descr" type="text" value="{{ form.mini_descr.value }}" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
 
 
-                <!--  Тут заканчиавается  -->
-        <div class="form__item">
-        <label class="label">Основная деятельность вашей компании</label>
-        <div class="mt-6 space-y-4">
-            {% for choice in form.company_core_business.field.choices %}
-                <label class="flex items-center cursor-pointer select-none text-dark">
-                    <div class="relative">
-                        <input type="radio" id="{{ form.company_core_business.id_for_label }}_{{ forloop.counter }}" name="{{ form.company_core_business.name }}" value="{{ choice.0 }}" class="sr-only peer radioInput" {% if form.company_core_business.value == choice.0 %}checked{% endif %}/>
-                        <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">
-                            <span class="dot h-2.5 w-2.5 rounded-full bg-transparent "></span>
+<!--                &lt;!&ndash;  Тут заканчиавается  &ndash;&gt;-->
+<!--        <div class="form__item">-->
+<!--        <label class="label">Основная деятельность вашей компании</label>-->
+<!--        <div class="mt-6 space-y-4">-->
+<!--            {% for choice in form.company_core_business.field.choices %}-->
+<!--                <label class="flex items-center cursor-pointer select-none text-dark">-->
+<!--                    <div class="relative">-->
+<!--                        <input type="radio" id="{{ form.company_core_business.id_for_label }}_{{ forloop.counter }}" name="{{ form.company_core_business.name }}" value="{{ choice.0 }}" class="sr-only peer radioInput" {% if form.company_core_business.value == choice.0 %}checked{% endif %}/>-->
+<!--                        <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">-->
+<!--                            <span class="dot h-2.5 w-2.5 rounded-full bg-transparent "></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    {{ choice.1 }}-->
+<!--                </label>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--    </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Описание</label>-->
+<!--                  <p class="tooltip">Опишите деятельность вашей компании, товары и услуги</p>-->
+<!--                  <textarea class="mt-6" placeholder="Например: наушники оптом" name="description"-->
+<!--                            cols="30">{{ form.description.value }}</textarea>-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Ключевые слова для поиска / Теги</label>-->
+<!--                  <p class="tooltip">Введите через запятую ключевые слова и синонимы по которым будут-->
+<!--                    искать вашу компанию.Например: Мебель для дома, диваны, стулья, кресло, комод,-->
+<!--                    стол</p>-->
+<!--                  <textarea class="mt-6" placeholder="Например: наушники оптом" name="keyWords"-->
+<!--                            cols="30">{{ form.keywords.value }}</textarea>-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Категории</label>-->
+<!--                  <input type="text" placeholder="Поиск в категории" id="categorySearch">-->
+<!--                  &lt;!&ndash;  Отрисовка категорий и под категорий&ndash;&gt;-->
+<!--                  <input type="hidden" id="selectedCategory" name="category">-->
+<!--                  <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash;  крч если это не первая регистрация, то все что ниже находится нужно удалить  &ndash;&gt;-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Город</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом" name="city">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Почтовый индекс</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом" name="postalCode">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Улица, дом</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Как добраться</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Время работы</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Телефоны</label>-->
+<!--                  <p class="tooltip">Публичные номера ваших телефонов. По одному на поле</p>-->
+<!--                  <div class="numberInputs">-->
+<!--                    <div class="flex justify-between items-center pr-7 relative">-->
+<!--                      <input class="numbers" type="tel" name="phoneNumber" placeholder="+996 ХХХ ХХХ ХХХ">-->
+<!--                      <img class="deletePhoneInput absolute top-[60%] right-0 -translate-y-1/2 cursor-pointer" src="{% static '/assets/images/icons/x.svg' %}" alt="">-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <button id="addNumberBtn" type="button"-->
+<!--                          class="btn btn-outlined py-4 px-[31px] border-[#2B292C] text-[#6E6E6E] mt-6 lg-md:mt-[26px]">-->
+<!--                    Добавить телефон-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Факс</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Адрес сайта</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Видео о компании (ссылка на YouTube)</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">E-mail (публичный адрес электронной почты)</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Другие контакты</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Реквизиты</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Количество сотрудников</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="form__item">-->
+<!--                  <label class="label">Дата регистрации юридического лица</label>-->
+<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
+<!--                  <input type="text" placeholder="Например: наушники оптом">-->
+<!--                </div>-->
+<!--                <div class="flex items-center gap-4">-->
+<!--                  <button id="submitBtn" type="submit"-->
+<!--                          class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить-->
+<!--                  </button>-->
+<!--                  <button class="btn-outlined flex-grow py-5 uppercase">Отмена</button>-->
+<!--                </div>-->
+<!--              </form>-->
+                <form id="form" method="post" enctype="multipart/form-data" class="space-y-[30px]">
+                    {% csrf_token %}
+                    <div class="form__item">
+                        <label class="label" for="title">Общеизвестное название компании / бренда *</label>
+                        <p class="tooltip">Без кавычек. Например: Headphones</p>
+                        {{ form.title }}
+                    </div>
+                    <div class="form__item">
+                        <label for="mini_descr">Краткое описание *</label>
+                        <p class="tooltip">Например: наушники оптом</p>
+                        {{ form.mini_descr }}
+                    </div>
+                    {% if form.type %}
+                    <div class="form__item">
+                        <label class="label">Основная деятельность вашей компании</label>
+                        <div class="mt-6 space-y-4">
+                            {{ form.type }}
                         </div>
                     </div>
-                    {{ choice.1 }}
-                </label>
-            {% endfor %}
-        </div>
-    </div>
-                <div class="form__item">
-                  <label class="label">Описание</label>
-                  <p class="tooltip">Опишите деятельность вашей компании, товары и услуги</p>
-                  <textarea class="mt-6" placeholder="Например: наушники оптом" name="description"
-                            cols="30">{{ form.description.value }}</textarea>
-                </div>
-                <div class="form__item">
-                  <label class="label">Ключевые слова для поиска / Теги</label>
-                  <p class="tooltip">Введите через запятую ключевые слова и синонимы по которым будут
-                    искать вашу компанию.Например: Мебель для дома, диваны, стулья, кресло, комод,
-                    стол</p>
-                  <textarea class="mt-6" placeholder="Например: наушники оптом" name="keyWords"
-                            cols="30">{{ form.keywords.value }}</textarea>
-                </div>
-                <div class="form__item">
-                  <label class="label">Категории</label>
-                  <input type="text" placeholder="Поиск в категории" id="categorySearch">
-                  <!--  Отрисовка категорий и под категорий-->
-                  <input type="hidden" id="selectedCategory" name="category">
-                  <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>
-                </div>
-                <!--  крч если это не первая регистрация, то все что ниже находится нужно удалить  -->
-                <div class="form__item">
-                  <label class="label">Город</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом" name="city">
-                </div>
-                <div class="form__item">
-                  <label class="label">Почтовый индекс</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом" name="postalCode">
-                </div>
-                <div class="form__item">
-                  <label class="label">Улица, дом</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Как добраться</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Время работы</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Телефоны</label>
-                  <p class="tooltip">Публичные номера ваших телефонов. По одному на поле</p>
-                  <div class="numberInputs">
-                    <div class="flex justify-between items-center pr-7 relative">
-                      <input class="numbers" type="tel" name="phoneNumber" placeholder="+996 ХХХ ХХХ ХХХ">
-                      <img class="deletePhoneInput absolute top-[60%] right-0 -translate-y-1/2 cursor-pointer" src="{% static '/assets/images/icons/x.svg' %}" alt="">
+                    {% endif %}
+                    <div class="form__item">
+                        <label class="label">Описание</label>
+                        <p class="tooltip">Опишите деятельность вашей компании, товары и услуги</p>
+                        {{ form.description }}
                     </div>
-                  </div>
-                  <button id="addNumberBtn" type="button"
-                          class="btn btn-outlined py-4 px-[31px] border-[#2B292C] text-[#6E6E6E] mt-6 lg-md:mt-[26px]">
-                    Добавить телефон
-                  </button>
-                </div>
-                <div class="form__item">
-                  <label class="label">Факс</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Адрес сайта</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Видео о компании (ссылка на YouTube)</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">E-mail (публичный адрес электронной почты)</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Другие контакты</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Реквизиты</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Количество сотрудников</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="form__item">
-                  <label class="label">Дата регистрации юридического лица</label>
-                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                  <input type="text" placeholder="Например: наушники оптом">
-                </div>
-                <div class="flex items-center gap-4">
-                  <button id="submitBtn" type="submit"
-                          class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить
-                  </button>
-                  <button class="btn-outlined flex-grow py-5 uppercase">Отмена</button>
-                </div>
-              </form>
+
+                    <div class="form__item">
+                      <label class="label">Категории</label>
+                      <input type="text" placeholder="Поиск в категории" id="categorySearch">
+                      <!--  Отрисовка категорий и под категорий-->
+                      <input type="hidden" id="selectedCategory" name="category">
+                      <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Город</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.city }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Почтовый индекс</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.post_index }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Улица, дом</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.address }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Как добраться</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.how_get }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Время работы</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.work_time }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Телефоны</label>
+                        <p class="tooltip">Публичные номера ваших телефонов. По одному на поле</p>
+                        {{ form.phones }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Факс</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.fax }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Адрес сайта</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.web_site }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Видео о компании (ссылка на YouTube)</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.youtube_video }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">E-mail (публичный адрес электронной почты)</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.email }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Реквизиты</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.requisites }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Количество сотрудников</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        {{ form.emp_quantity }}
+                    </div>
+                    <div class="form__item">
+                        <label class="label">Дата регистрации юридического лица</label>
+                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</п>
+                        {{ form.register_ur }}
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button id="submitBtn" type="submit" class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить</button>
+                        <button class="btn-outlined flex-grow py-5 uppercase" type="reset">Отмена</button>
+                    </div>
+                </form>
+
             </div>
           </div>
         </div>

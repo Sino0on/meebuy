@@ -17,6 +17,7 @@ from apps.product.filters import ProductFilter
 from apps.product.models import Product, ProductImg, ProductCategory, PriceColumn
 from apps.product.forms import ProductForm, UploadExcelForm, ProductCategoryForm, PriceColumnForm
 from apps.provider.models import Category, Provider
+from apps.user_cabinet.models import Contacts
 
 
 class ProductListView(ListView):
@@ -35,6 +36,8 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
+        contacts = Contacts.load()
+        context['contacts'] = contacts
         return context
 
 

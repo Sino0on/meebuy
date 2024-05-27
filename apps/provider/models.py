@@ -59,8 +59,9 @@ class Provider(models.Model):
     metro = models.CharField(max_length=123, blank=True, null=True, verbose_name=_('Метро'))
     address = models.CharField(max_length=123, verbose_name=_('Адрес'), blank=True, null=True)
     work_time = models.CharField(max_length=123, verbose_name=_('Время работы'), blank=True, null=True)
-    phones = ArrayField(models.CharField(max_length=123), verbose_name=_('Телефон'), blank=True, null=True)
+    phones = models.CharField(max_length=123, verbose_name=_('Телефон'), blank=True, null=True)
     web_site = models.URLField(verbose_name=_('Вебсайт'), blank=True, null=True)
+    youtube_video = models.URLField(verbose_name=_('Видео с Ютуба'), blank=True, null=True)
     fax = models.CharField(max_length=123, verbose_name=_('Факс'), blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     image = models.ImageField(blank=True, null=True, upload_to='images/providers/avatars/%Y/%m',
@@ -77,7 +78,8 @@ class Provider(models.Model):
     type_pay = models.ManyToManyField('TypePay', blank=True, verbose_name=_('Типы оплаты'),)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True,)
     email = models.EmailField(blank=True, null=True)
-    is_provider = models.BooleanField(default=False)
+    is_provider = models.BooleanField(blank=True, default=False)
+    comment = models.TextField(blank=True, default='Анкета компании заполнена некорректно! Корректно заполните название компании, описание, контактные данные. Затем подайте на перепроверку.')
 
     def __str__(self):
         return f'{self.title}'

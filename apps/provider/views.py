@@ -6,6 +6,7 @@ from apps.provider.filters import ProviderFilter
 from apps.user_cabinet.models import ViewsCountProfile
 from rest_framework.generics import ListAPIView
 from apps.provider.serializers import CategoryListSerializer
+from apps.user_cabinet.models import Contacts
 
 
 class ProviderListView(generic.ListView):
@@ -20,6 +21,8 @@ class ProviderListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         context['types'] = Tag.objects.all()
+        contacts = Contacts.load()
+        context['contacts'] = contacts
         return context
 
 
