@@ -19,4 +19,3 @@ class BuyerListView(generic.ListView):
         contacts = Contacts.load()
         context['contacts'] = contacts
         return context
-

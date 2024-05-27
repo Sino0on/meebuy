@@ -24,11 +24,11 @@ class UserRegistrationForm(forms.ModelForm):
         'placeholder': 'ФИО',
     }))
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
-        'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'class': 'password-input w-full border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl pl-5 pr-10 py-3 text-[#737373]',
         'placeholder': '********'
     }), validators=[validate_password])
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={
-        'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'class': 'password-input w-full border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl pl-5 pr-10 py-3 text-[#737373]',
         'placeholder': '********'
     }))
 
@@ -88,7 +88,7 @@ class UserLoginForm(forms.Form):
         'placeholder': 'example@mail.com'
     }))
     password = forms.CharField(widget=forms.PasswordInput({
-        'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]',
+        'class': 'password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl pl-5 py-3 pr-10 text-[#737373]',
         'placeholder': '*******',
     }))
 
