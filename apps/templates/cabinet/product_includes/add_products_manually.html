@@ -30,7 +30,7 @@
         </p>
       </div>
       <hr class="h-[2px] w-full bg-[#A0A0A0]" />
-        <form id='submit_form' action="{% url 'product_create' %}" method="post">
+    <form id='submit_form' action="{% url 'product_create' %}" method="post">
         {% csrf_token %}
           <div class="flex flex-col gap-[30px]">
             <div class="flex flex-col gap-5">
@@ -72,8 +72,11 @@
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text"
+                        type="text" value="{{ form.type.value|default_if_none:'' }}" name="type"
                       />
+                        {% if form.type.errors %}
+                            <div class="text-red-500 text-sm">{{ form.type.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
               <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
@@ -81,13 +84,16 @@
                   Название
                 </h6>
                 <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                  Например: Мелкий опт
+                  Например: Кожаный кошелек Lacoste
                 </p>
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text" name="title"
+                        type="text" name="title" value="{{ form.title.value|default_if_none:'' }}"
                       />
+                        {% if form.title.errors %}
+                            <div class="text-red-500 text-sm">{{ form.title.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
             </div>
@@ -96,13 +102,31 @@
                 Описание
               </h6>
               <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                Например: Мелкий опт
-              </p>
+                    Элегантный кожаный кошелек с разнообразными отделениями для карточек и документов. Идеально подойдет для организации вашего рабочего дня в стиле, а также для хранения наличных средств с безопасностью и комфортом.              </p>
 
                 <label>
-<textarea
-  class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
-></textarea>
+                <textarea name="description"
+                  class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
+                >{{ form.description.value|default_if_none:'' }}</textarea>
+                    {% if form.description.errors %}
+                            <div class="text-red-500 text-sm">{{ form.description.errors }}</div>
+                        {% endif %}
+                </label>
+            </div>
+            <div class="flex flex-col gap-1 w-full">
+              <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                  Короткое описание
+              </h6>
+              <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                Например: Кожаный кошелек с множеством отделений для карточек.
+              </p>
+                <label>
+                <textarea name="mini_desc"
+                  class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
+                >{{ form.mini_desc.value|default_if_none:'' }}</textarea>
+                    {% if form.mini_desc.errors %}
+                            <div class="text-red-500 text-sm">{{ form.mini_desc.errors }}</div>
+                        {% endif %}
                 </label>
             </div>
             <div
@@ -113,13 +137,16 @@
                   Производитель
                 </h6>
                 <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                  Например: Мелкий опт
+                  Например: Samsung
                 </p>
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text"
+                        type="text" value="{{ form.manufacturer.value|default_if_none:'' }}" name="manufacturer"
                       />
+                      {% if form.manufacturer.errors %}
+                            <div class="text-red-500 text-sm">{{ form.manufacturer.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
               <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
@@ -127,13 +154,16 @@
                   Цена
                 </h6>
                 <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                  Например: Цена за мелкий опт - 100 сом
+                  Например: 1000
                 </p>
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text" name="price"
+                        type="text" name="price" value="{{ form.price.value|default_if_none:'' }}"
                       />
+                      {% if form.price.errors %}
+                            <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
             </div>
@@ -145,13 +175,16 @@
                   Валюта
                 </h6>
                 <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                  Например: Мелкий опт
+                  Например: KGS
                 </p>
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text"
+                        type="text" value="{{ form.currency.value|default_if_none:'' }}" name="currency"
                       />
+                      {% if form.currency.errors %}
+                            <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
               <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
@@ -159,13 +192,16 @@
                   Минимальное количество заказа
                 </h6>
                 <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                  Например: Мелкий опт
+                  Например: 10
                 </p>
                   <label>
                       <input
                         class="pl-5 bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text"
+                        type="number" value="{{ form.min_quantity.value|default_if_none:'' }}" name="min_quantity"
                       />
+                      {% if form.min_quantity.errors %}
+                            <div class="text-red-500 text-sm">{{ form.min_quantity.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
             </div>
@@ -177,13 +213,16 @@
                   Условия продажи
                 </h6>
                 <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                  Например: Мелкий опт
+                  Например: Окончательная продажа
                 </p>
                   <label>
                       <input
                         class="pl-5 bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text"
+                        type="text" value="{{ form.terms_of_sale.value|default_if_none:'' }}" name="terms_of_sale"
                       />
+                      {% if form.terms_of_sale.errors %}
+                            <div class="text-red-500 text-sm">{{ form.terms_of_sale.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
               <div class="flex w-full flex-col gap-1">
@@ -191,13 +230,16 @@
                   Страна производства
                 </h6>
                 <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                  Например: Мелкий опт
+                  Например: Китай
                 </p>
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text"
+                        type="text" value="{{ form.country_of_manufacture.value|default_if_none:'' }}" name="country_of_manufacture"
                       />
+                      {% if form.country_of_manufacture.errors %}
+                            <div class="text-red-500 text-sm">{{ form.country_of_manufacture.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
             </div>
@@ -209,13 +251,16 @@
                   Ссылка на товар на сайте магазина
                 </h6>
                 <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
-                  Например: Мелкий опт
+                  Например: https://example.com
                 </p>
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text"
+                        type="text" value="{{ form.product_link.value|default_if_none:'' }}" name="product_link"
                       />
+                      {% if form.product_link.errors %}
+                            <div class="text-red-500 text-sm">{{ form.product_link.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
               <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
@@ -228,8 +273,11 @@
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text"
+                        type="text" value="{{ form.characterization.value|default_if_none:'' }}" name="characterization"
                       />
+                      {% if form.characterization.errors %}
+                            <div class="text-red-500 text-sm">{{ form.characterization.errors }}</div>
+                        {% endif %}
                   </label>
               </div>
             </div>

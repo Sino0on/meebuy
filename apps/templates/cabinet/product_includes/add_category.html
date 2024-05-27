@@ -37,6 +37,7 @@
                 <form action="{% url 'create_category' %}" id="add_category" method="post">
                         {% csrf_token %}
                     <label for=""></label><select name="parent" id="">
+                    <option value="">-----------</option>
                         {% for category in categories %}
                             <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
