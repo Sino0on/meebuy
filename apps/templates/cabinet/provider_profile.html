@@ -141,9 +141,7 @@
                     <div class="cards grid grid-cols-1 gap-[30px] xl:grid-cols-2">
                         <!--  Анкета  -->
                         <div class="card__item shadow-card-shadow">
-                            <p class="text-[#FF4B4B]">Анкета компании заполнена некорректно! Корректно заполните
-                                название
-                                компании, описание, контактные данные. Затем подайте на перепроверку.</p>
+                            <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
                             <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5"><a href="{% url 'anketa' %}">Редактировать
                                 анкету</a></button>
                             <a href="{% url 'tariffs' %}"

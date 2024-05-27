@@ -33,6 +33,11 @@ class TenderDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.request.GET.get('open'):
+            if self.request.user.is_authenticated:
+                if self.get_object().user.cabinet.user_status.status.is_publish_phone:
+                    context['open'] = 'open'
+            print('das')
         # context['products'] = Provider.products.all()
         return context
 

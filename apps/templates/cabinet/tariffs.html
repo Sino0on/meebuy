@@ -213,7 +213,18 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
           <!-- highest position -->
           <div class="flex items-center flex-col">
-            <img src="{% static 'assets/images/tariffs/graph-premium-standard.svg' %}" alt="Chart" />
+            ${status.priorety === 1 ?
+             "<img src='{% static 'assets/images/tariffs/graph-free.png' %}' alt='Chart'/>"
+            : ''}
+            ${status.priorety === 2 ?
+             "<img src='{% static 'assets/images/tariffs/graph-premium-lite.svg' %}' alt='Chart'/>"
+            : ''}
+            ${status.priorety === 3 ?
+             "<img src='{% static 'assets/images/tariffs/graph-premium-standard.svg' %}' alt='Chart'/>"
+            : ''}
+            ${status.priorety === 4 ?
+             "<img src='{% static 'assets/images/tariffs/graph-premium-max.svg' %}' alt='Chart'/>"
+            : ''}
             <p>Средняя позиция в каталоге, компанию находят чаще</p>
           </div>
           <div class="flex items-center flex-col">
@@ -232,18 +243,24 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="tariffs__info-bonuses">
 
-            <p class="flex gap-2.5">
-              <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" /> Показ Вашего телефона незарегистрированным посетителям
-            </p>
-            <p class="flex gap-2.5">
-              <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" /> Показ Вашего E-mail и ссылки на ваш сайт / соцсети
-            </p>
-            <p class="flex gap-2.5">
-              <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" /> Просмотр сайта без рекламы
-            </p>
-            <p class="flex gap-2.5">
-              <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" /> Просмотр контактов поставщиков
-            </p>
+            ${status.is_publish_phone ?
+                "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Показ Вашего телефона незарегистрированным посетителям</p>"
+                : ''}
+
+            ${status.is_email ?
+            "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Показ Вашего E-mail и ссылки на ваш сайт / соцсети</p>"
+                : ''}
+
+            ${status.is_advertise ?
+            "<p class='flex gap-2.5'> <img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Просмотр сайта без рекламы</p>"
+
+                : ''}
+
+            ${status.is_contact_prov ?
+            "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Просмотр контактов поставщиков</p>"
+
+                : ''}
+
           </div>
           <button class="btn-filled py-5 px-[30px] uppercase mt-auto" onclick="connectTariff(${status.id})">
             Подключить

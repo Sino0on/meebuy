@@ -8,6 +8,7 @@ from .models import User
 from apps.provider.models import Provider
 from django.utils.translation import gettext_lazy as _
 from django.contrib import admin
+from django.contrib.postgres.forms import SimpleArrayField
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -104,13 +105,32 @@ class UserProfileForm(forms.ModelForm):
 
 
 class ProviderForm(forms.ModelForm):
-    category = forms.ModelChoiceField(
-        queryset=ProductCategory.objects.all(),
-        widget=AutocompleteSelect(Provider._meta.get_field('category').remote_field, admin.site)
-    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user and user.user_type == 'buyer':
+            self.fields.pop('type')
 
     class Meta:
-        fields = '__all__'
+        fields = [
+            'title', 'mini_descr', 'type', 'description', 'category',
+            'large_wholesale', 'small_wholesale',
+            'retail', 'official_distributor', 'city', 'how_get', 'post_index',
+            'metro', 'address', 'work_time', 'phones', 'web_site', 'fax',
+            'image', 'banner', 'requisites', 'is_active', 'emp_quantity',
+            'register_ur', 'conditions', 'deliveries', 'is_modered',
+            'type_pay', 'email', 'youtube_video'
+        ]
+        widgets = {
+            'type': forms.RadioSelect(),
+            'phones': forms.TextInput(attrs={'placeholder': '+996 ХХХ ХХХ ХХХ'}),
+            'web_site': forms.TextInput(attrs={'class': 'relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'}),
+            'emp_quantity': forms.TextInput(attrs={'class': 'relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'}),
+            'youtube_video': forms.URLInput(attrs={'class': 'relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'}),
+            'email': forms.TextInput(attrs={'class': 'relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'}),
+            'city': forms.Select(attrs={'class': ' relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'})
+        }
         model = Provider
 
 

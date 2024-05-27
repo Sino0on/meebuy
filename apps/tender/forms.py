@@ -12,4 +12,6 @@ class TenderForm(forms.ModelForm):
 
     class Meta:
         model = Tender
-        fields = ['title', 'phone', 'description', 'email', 'period']
+        fields = ['title', 'phone', 'description',
+                  'email', 'period', 'requirements',
+                  'price', 'place_of_sale', 'quantity']

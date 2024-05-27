@@ -108,21 +108,11 @@ class UppingListView(LoginRequiredMixin, generic.ListView):
 class UserDetailView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/provider_profile.html'
 
-    def get_template_names(self):
-        if self.request.user.user_type == 'buyer':
-            template_name = 'cabinet/buyer_profile.html'
-        else:
-            template_name = self.template_name
-        return template_name
-
     def get_context_data(self, **kwargs):
         print(self.request.user.user_type)
         context = super().get_context_data(**kwargs)
         context_keys = ['one', 'two', 'three', 'four', 'five', 'six']
-        if self.request.user.user_type == 'buyer':
-            images = self.request.user.buyer.images.all()
-        else:
-            images = self.request.user.provider.images.all()
+        images = self.request.user.provider.images.all()
         context_values = (images[i] if i < len(images) else None for i in range(len(context_keys)))
         context.update(dict(zip(context_keys, context_values)))
         contacts = Contacts.load()
@@ -137,36 +127,32 @@ class UserAnketaView(generic.UpdateView, LoginRequiredMixin):
     queryset = Provider.objects.all()
     form_class = ProviderForm
     context_object_name = 'form'
+    success_url = '/profile/'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def get_object(self, queryset=None):
         return self.request.user.provider
-
-    def get_template_names(self):
-        if self.request.user.user_type == 'buyer':
-            print('buyter')
-            template_name = 'auth/edit_buyer.html'
-        else:
-            template_name = self.template_name
-            print('provider')
-        return template_name
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
     def post(self, request, *args, **kwargs):
+        print('post')
         form = self.form_class(request.POST)
-        # print(form)
-        return super().post(request, *args, **kwargs)
+        if form.is_valid():
+            pass
+        else:
+            print(form.errors)
+        obj = super().post(request, *args, **kwargs)
+        self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста подождите пару минут'
+        self.object.save()
+        return obj
 
-    def form_valid(self, form):
-        print("Valid form data:", form.cleaned_data)
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        print("Invalid form data:", form.data)
-        print("Errors:", form.errors)
-        return super().form_invalid(form)
 
 
 @require_POST

@@ -63,6 +63,7 @@ class PackageStatus(models.Model):
     dayly_message = models.PositiveIntegerField(blank=True, default=30, verbose_name='Исходящих сообщений в день')
     is_publish_phone = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего телефона незарегистрированным посетителям')
     months = models.PositiveIntegerField(verbose_name=_('Количество месяцев'))
+    priorety = models.PositiveIntegerField(max_length=1, blank=True, default=1)
 
     def __str__(self):
         return _(f'{self.status.title} - {self.months} месяцев')
@@ -278,6 +279,7 @@ class SiteOpenCount(models.Model):
             user=user,
             created_at__year=today.year
         ).count()
+
 
 class SupportMessage(models.Model):
     CHOICES = (
