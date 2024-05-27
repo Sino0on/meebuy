@@ -3,6 +3,7 @@ from django.views import generic
 from apps.provider.models import Provider, Tag
 from apps.tender.models import Category
 from apps.provider.filters import ProviderFilter
+from apps.user_cabinet.models import ViewsCountProfile
 from rest_framework.generics import ListAPIView
 from apps.provider.serializers import CategoryListSerializer
 
@@ -27,6 +28,14 @@ class ProviderDetailView(generic.DetailView):
     model = Provider
     context_object_name = 'provider'
     # lookup_field = 'id'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user != self.get_object().user:
+            if request.user.is_authenticated:
+                ViewsCountProfile.objects.create(quest=request.user, user=self.get_object().user.cabinet)
+            else:
+                ViewsCountProfile.objects.create(user=self.get_object().user.cabinet)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

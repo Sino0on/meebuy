@@ -45,6 +45,7 @@ class User(AbstractUser):
     auth_provider = models.BooleanField(default=True, verbose_name=_('Провайдер'))
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars/%Y/%m",
                                verbose_name=_('Аватар'))
+    job_title = models.CharField(max_length=123, verbose_name='Должность', blank=True, null=True)
     is_confirm = models.BooleanField(default=False, blank=True, verbose_name=_('Подтверждение почты'))
     position = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('Должность'))
     user_type = models.CharField(max_length=20, verbose_name=_('Тип пользователя'))

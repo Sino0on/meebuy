@@ -94,7 +94,7 @@
                                 <a href="{% url 'favorites' %}">Избранные</a>
                             </li>
                             <li class="dropdown__item">
-                                <a href="">Служба поддержки</a>
+                                <a href="{% url 'send_message' %}">Служба поддержки</a>
                             </li>
                         </ul>
                     </div>
@@ -217,7 +217,7 @@
                                             кружки</p>
                                         <p class="text-dark-text">Бишкек, Кыргызстан</p>
                                     </div>
-                                    <img class="cursor-pointer" src="/assets/images/icons/trash.svg' %}" alt="Trash">
+                                    <img class="cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}" alt="Trash">
                                 </li>
                                 <li class="flex items-center justify-between gap-4 pt-4 lg-md:pt-6 first:pt-0">
                                     <div>
@@ -225,7 +225,7 @@
                                             Кружки</p>
                                         <p class="text-dark-text">Бишкек, Кыргызстан</p>
                                     </div>
-                                    <img class="cursor-pointer" src="/assets/images/icons/trash.svg' %}" alt="Trash">
+                                    <img class="cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}" alt="Trash">
                                 </li>
 
                             </ul>
@@ -291,16 +291,54 @@
                     <!--  opening hours  -->
                     <div id="Tab4"
                          class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
+                        {% if user.tenders.all %}
+                        <div class="card__item">
+
+                          <button
+                            class="max-w-[364px] btn btn-outlined text-sm py-2.5 w-full text-dark-logo uppercase">
+                            <a href="{% url 'tender_create' %}">Доавить новую закупку</a>
+                          </button>
+
+                          <div class="divide-y divide-grey-light space-y-5 lg-md:space-y-[26px] mt-[60px] lg-md:mt-[50px]">
+                              {% for i in user.tenders.all %}
+                            <div class="flex flex-col first:pt-0 pt-5 lg-md:pt-[26px] lg-md:flex-row lg-md:justify-between lg-md:items-center">
+                              <div>
+                                  <a href="{% url 'tender_detail' i.pk %}">
+                                <h2 class="line-clamp-2 text-lg font-extrabold text-dark-logo">{{ i.title }}</h2>
+                                      </a>
+                                <p class=text-dark-text>Опубликовано до {{ i.end_date }} - <br class="lg-md:hidden"><a
+                                  class="underline underline-offset-2" href="{% url 'tender_update' i.pk %}">Продлить</a></p>
+                              </div>
+                              <div class="flex gap-2.5 mt-[30px] justify-end lg-md:mt-0">
+                                  <a href="{% url 'tender_update' i.pk %}">
+                                <img class="w-[17px] h-[17px] cursor-pointer" src="{% static '/assets/images/icons/pen-broken.svg' %}"
+                                     alt="Pencil">
+                                      </a>
+                                  <a href="{% url 'delete_tender' i.pk %}">
+                                <img class="w-[17px] h-[17px] cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}" alt="Trash">
+                                      </a>
+                              </div>
+                            </div>
+                              {% endfor %}
+
+                          </div>
+                        </div>
+                        {% else %}
                         <div class="card__item text-center h-full">
                             <p class=" text-dark-text leading-6 ">Если вы хотите купить товары оптом, добавьте свое
                                 объявление</p>
                             <div class="flex justify-center mt-[30px] lg-md:mt-10">
+
                                 <button class="btn-filled-yellow max-w-[292px] h-[51px] flex items-center justify-center w-full text-dark-logo uppercase lg-md:max-w-[237px]">
-                                    Добавить закупку
+                                    <a href="{% url 'tender_create' %}">Добавить закупку</a>
                                 </button>
                             </div>
                         </div>
-                    </div>
+                        <!-- if empty  -->
+
+                        {% endif %}
+                      </div>
+
                 </section>
             </div>
         </div>
