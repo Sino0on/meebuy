@@ -95,7 +95,7 @@ urlpatterns = [
     path('user/', UserDetailView.as_view()),
 
     # apis
-    path('category/list/', CategoryListView.as_view()),
+    path('category/list/', CategoryListView.as_view())
 
   
     path('create-category/', ProductCategoryCreateView.as_view(), name='create_category'),
@@ -107,6 +107,7 @@ urlpatterns = [
     path('price-columns/delete/<int:pk>/', PriceColumnDeleteView.as_view(), name='price_column_delete'),
 
     path('connect_tariff', tariff_buy),
+
 
 
 ]

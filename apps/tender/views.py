@@ -7,6 +7,7 @@ from apps.tender.forms import TenderForm
 from apps.tender.models import Tender, TenderImg
 from apps.provider.models import Category
 from apps.tender.filters import TenderFilter
+from apps.user_cabinet.models import Contacts
 
 
 class TenderListView(generic.ListView):
@@ -20,6 +21,8 @@ class TenderListView(generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
+        contacts = Contacts.load()
+        context['contacts'] = contacts
         return context
 
 

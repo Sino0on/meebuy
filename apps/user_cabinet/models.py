@@ -134,25 +134,40 @@ class ActiveUpping(models.Model):
         return f'Активное поднятие на  - {self.upping.days} дней'
 
 
-# class SingletonModel(models.Model):
-#     """
-#     Модель, которая всегда имеет только один экземпляр.
-#     """
-#
-#     class Meta:
-#         abstract = True
-#
-#     def save(self, *args, **kwargs):
-#         # Если модель уже существует, удалите ее
-#         self.__class__.objects.exclude(id=self.id).delete()
-#         super(SingletonModel, self).save(*args, **kwargs)
-#
-#     @classmethod
-#     def load(cls):
-#         # Если модель еще не существует, создайте ее
-#         if not cls.objects.exists():
-#             cls.objects.create()
-#         return cls.objects.get()
+class SingletonModel(models.Model):
+    """
+    Модель, которая всегда имеет только один экземпляр.
+    """
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        # Если модель уже существует, удалите ее
+        self.__class__.objects.exclude(id=self.id).delete()
+        super(SingletonModel, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        # Если модель еще не существует, создайте ее
+        if not cls.objects.exists():
+            cls.objects.create()
+        return cls.objects.get()
+
+
+class Contacts(SingletonModel):
+    instagram = models.URLField()
+    whatsapp = models.URLField()
+    telegram = models.URLField()
+    vk = models.URLField()
+    phone = models.CharField(max_length=100)
+
+    def __str__(self):
+        return 'Контактная информация'
+
+    class Meta:
+        verbose_name = 'Контакты'
+        verbose_name_plural = 'Контакты'
 
 
 # class Constants(SingletonModel):
