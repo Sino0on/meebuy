@@ -232,17 +232,20 @@
                     <div id="Tab3"
                          class="card__wrapper h-[calc(100%-70px)] tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
                         {% if user.cabinet.favorite_tenders.exists %}
-                        <div class="space-y-5 hidden lg-md:space-y-0 lg-md:p-5 xl:p-10">
+                        <div class="space-y-5  lg-md:space-y-0 lg-md:p-5 xl:p-10">
+
                             {% for i in user.cabinet.favorite_tenders.all %}
                             <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
-                                <a class="flex justify-between items-center">
+                                <a href="{% url 'tender_detail' i.pk %}" class="flex justify-between items-center">
                                     <div class="flex items-center gap-5">
+                                        {% if i.tender_images.all.exists %}
                                         <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
                                             <img class="object-cover h-full"
-                                                 src="{% static '/assets/images/home/new-companies-logo.jpg' %}"
+                                                 src="{{ i.tender_images.all.first.image.url }}"
                                                  alt="empty icon">
                                         </div>
-                                        <p>Headphones.kg</p>
+                                        {% endif %}
+                                        <p>{{i.title}}</p>
                                     </div>
                                     <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
                                 </a>

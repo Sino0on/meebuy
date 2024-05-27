@@ -56,11 +56,12 @@ class PackageStatus(models.Model):
     price = models.DecimalField(verbose_name=_('Цена'), max_digits=100, decimal_places=1)
     quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
     quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'))
-    image = models.FileField(upload_to='images/packages/', blank=True, default='1')
-    is_advertise = models.BooleanField(default=False, blank=True)
-    is_contact_prov = models.BooleanField(default=False, blank=True)
-    dayly_message = models.PositiveIntegerField(blank=True, default=30)
-    is_publish_phone = models.BooleanField(default=False, blank=True)
+    image = models.FileField(upload_to='images/packages/', blank=True, default='1', verbose_name='Изображение')
+    is_advertise = models.BooleanField(default=False, blank=True, verbose_name='Просмотр сайта без рекламы')
+    is_contact_prov = models.BooleanField(default=False, blank=True, verbose_name='Просмотр контактов поставщиков')
+    is_email = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего E-mail и ссылки на ваш сайт / соцсети')
+    dayly_message = models.PositiveIntegerField(blank=True, default=30, verbose_name='Исходящих сообщений в день')
+    is_publish_phone = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего телефона незарегистрированным посетителям')
     months = models.PositiveIntegerField(verbose_name=_('Количество месяцев'))
 
     def __str__(self):

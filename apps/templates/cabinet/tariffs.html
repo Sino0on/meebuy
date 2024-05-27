@@ -131,104 +131,22 @@
 <!--<script src="{% static 'pages/tariffs/tariffs.js' %}"></script>-->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const tariffsData = [
-    {
-      "id": 1,
-      "statuses": [
-        {
-          "id": 1,
-          "price": "123456.0",
-          "quantity_products": 10,
-          "quantity_tenders": 20,
-          "image": "http://192.168.31.186:9999/media/images/packages/tarif-free.png",
-          "is_advertise": false,
-          "is_contact_prov": true,
-          "dayly_message": 30,
-          "is_publish_phone": true,
-          "months": 1,
-          "status": 1
-        },
-        {
-          "id": 2,
-          "price": "12345.0",
-          "quantity_products": 20,
-          "quantity_tenders": 40,
-          "image": "http://192.168.31.186:9999/media/images/packages/tariff-premium-standard.png",
-          "is_advertise": false,
-          "is_contact_prov": true,
-          "dayly_message": 30,
-          "is_publish_phone": false,
-          "months": 3,
-          "status": 1
-        },
-        {
-          "id": 3,
-          "price": "324513.0",
-          "quantity_products": 23,
-          "quantity_tenders": 243,
-          "image": "http://192.168.31.186:9999/media/1",
-          "is_advertise": false,
-          "is_contact_prov": true,
-          "dayly_message": 30,
-          "is_publish_phone": false,
-          "months": 6,
-          "status": 1
-        }
-      ],
-      "title": "Супер статус",
-      "price_month": "5000.0",
-      "is_recomended": false,
-      "created_date": "2024-05-20T09:46:25.774818+06:00"
-    },
-    {
-      "id": 2,
-      "statuses": [
-        {
-          "id": 4,
-          "price": "345.0",
-          "quantity_products": 345,
-          "quantity_tenders": 345,
-          "image": "http://192.168.31.186:9999/media/images/packages/tarif-premium-lite.png",
-          "is_advertise": true,
-          "is_contact_prov": true,
-          "dayly_message": 30,
-          "is_publish_phone": true,
-          "months": 1,
-          "status": 2
-        }
-      ],
-      "title": "Супер мега тариф",
-      "price_month": "7000.0",
-      "is_recomended": true,
-      "created_date": "2024-05-20T09:46:37.013491+06:00"
-    },
-    {
-      "id": 3,
-      "statuses": [
-        {
-          "id": 5,
-          "price": "123.0",
-          "quantity_products": 123,
-          "quantity_tenders": 123,
-          "image": "http://192.168.31.186:9999/media/images/packages/tariff-premium-standard_fxnHaFQ.png",
-          "is_advertise": true,
-          "is_contact_prov": true,
-          "dayly_message": 12330,
-          "is_publish_phone": true,
-          "months": 1,
-          "status": 3
-        }
-      ],
-      "title": "Суперепупер мега крутой тариф",
-      "price_month": "10000.0",
-      "is_recomended": false,
-      "created_date": "2024-05-20T09:46:47.587517+06:00"
+  let tariffsData = [];
+
+  async function fetchTariffsData() {
+    try {
+      const response = await fetch('/status/list/');
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      tariffsData = await response.json();
+      renderTariffs(tariffsData);
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
     }
-  ];
+  }
 
-  const tariffsWrapper = document.querySelector(".tariffs__wrapper");
-
-  const renderTariff = (tariff, statusIndex) => {
+  function renderTariff(tariff, statusIndex) {
     const status = tariff.statuses[statusIndex];
     return `
       <div
@@ -258,11 +176,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <!-- price -->
           <div class="tariffs__info-price">
             <div class="tariffs__info-price-old">
-              <span class="line-through">${status.price}</span>
+              <span class="line-through">${tariff.price_month}</span>
               <span>сом / в месяц</span>
             </div>
             <div class="tariffs__info-price-discount">
-              ${tariff.price_month}
+              ${status.per_month}
               <span>сом / в месяц</span>
             </div>
           </div>
@@ -270,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="tariffs__info-period">
             <div class="tariffs__info-period_price text-lg">
               <p>При оплате за <span>${status.months}</span></p>
-              <p>Итого: <span>${status.price * status.months} сом</span></p>
+              <p>Итого: <span>${status.price} сом</span></p>
             </div>
             <div class="tariffs__info-period_term mt-10">
               <p class="">Срок подключения</p>
@@ -313,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Лимит товаров</p>
           </div>
           <div class="tariffs__info-bonuses">
+
             <p class="flex gap-2.5">
               <img src="{% static 'assets/images/tariffs/check.svg' %}" alt="Check" /> Показ Вашего телефона незарегистрированным посетителям
             </p>
@@ -332,15 +251,19 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
     `;
-  };
+  }
 
-  tariffsData.forEach((tariff, index) => {
-    tariffsWrapper.innerHTML += renderTariff(tariff, 0);
-  });
+  function renderTariffs(tariffsData) {
+    const tariffsWrapper = document.querySelector(".tariffs__wrapper");
+    tariffsWrapper.innerHTML = ''; // Clear the existing content
+    tariffsData.forEach((tariff, index) => {
+      tariffsWrapper.innerHTML += renderTariff(tariff, 0);
+    });
+  }
 
   window.updateTariff = (tariffId, statusIndex) => {
     const tariffIndex = tariffsData.findIndex(tariff => tariff.id === tariffId);
-    const tariffElement = tariffsWrapper.children[tariffIndex];
+    const tariffElement = document.querySelector(`.tariffs__wrapper > div:nth-child(${tariffIndex + 1})`);
     tariffElement.outerHTML = renderTariff(tariffsData[tariffIndex], statusIndex);
   };
 
@@ -351,23 +274,19 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(response => response.json())
     .then(data => {
       if (data.Info) {
-          console.log('success');
-        console.log(data);
         showToast('success', 'Успешно', 'Вы успешно подключили тариф');
       } else {
-        console.log(data);
-        console.log('error');
         showToast('error', 'Ошибка', data.Error);
       }
     })
     .catch(error => {
-        console.log('недостаточно');
       showToast('error', 'Ошибка', 'Произошла ошибка при подключении тарифа');
       console.error('Error:', error);
     });
   };
-});
 
+  fetchTariffsData();
+});
 
 function showToast(type, title, message) {
   const colors = {
@@ -391,67 +310,49 @@ function showToast(type, title, message) {
     },
   };
 
-  // Create toast container
   const toast = document.createElement('div');
-  toast.className = `fixed bottom-4 right-4 ${colors[type].bg} border-l-4 ${colors[type].border} ${colors[type].text} px-6 py-4 shadow-lg`; // Increased padding
+  toast.className = `fixed bottom-4 right-4 ${colors[type].bg} border-l-4 ${colors[type].border} ${colors[type].text} px-6 py-4 shadow-lg`;
   toast.setAttribute('role', 'alert');
 
-  // Create inner flex container
   const flex = document.createElement('div');
   flex.className = 'flex items-start';
 
-  // Create icon container
   const iconContainer = document.createElement('div');
   iconContainer.className = 'py-1';
 
-  // Create SVG icon
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.className = `fill-current h-8 w-8 ${colors[type].icon} mr-4`; // Increased icon size
+  svg.className = `fill-current h-8 w-8 ${colors[type].icon} mr-4`;
   svg.setAttribute('viewBox', '0 0 20 20');
 
   const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute(
-    'd',
-    'M10 2a8 8 0 100 16 8 8 0 000-16zm1 12H9v-2h2v2zm0-4H9V6h2v4z'
-  );
+  path.setAttribute('d', 'M10 2a8 8 0 100 16 8 8 0 000-16zm1 12H9v-2h2v2zm0-4H9V6h2v4z');
   svg.appendChild(path);
 
-  // Append icon to icon container
   iconContainer.appendChild(svg);
 
-  // Create text container
   const textContainer = document.createElement('div');
 
-  // Create bold text
   const boldText = document.createElement('p');
-  boldText.className = 'font-bold text-lg'; // Increased font size for title
+  boldText.className = 'font-bold text-lg';
   boldText.textContent = title;
 
-  // Create small text
   const smallText = document.createElement('p');
-  smallText.className = 'text-base'; // Increased font size for message
+  smallText.className = 'text-base';
   smallText.textContent = message;
 
-  // Append texts to text container
   textContainer.appendChild(boldText);
   textContainer.appendChild(smallText);
 
-  // Append icon and text container to flex container
   flex.appendChild(iconContainer);
   flex.appendChild(textContainer);
 
-  // Append flex container to toast container
   toast.appendChild(flex);
 
-  // Append toast container to body
   document.body.appendChild(toast);
 
-  // Remove toast after 3 seconds
   setTimeout(() => {
     toast.remove();
   }, 3000);
 }
-
-
 </script>
 {% endblock %}
