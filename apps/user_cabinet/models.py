@@ -156,11 +156,11 @@ class SingletonModel(models.Model):
 
 
 class Contacts(SingletonModel):
-    instagram = models.URLField()
-    whatsapp = models.URLField()
-    telegram = models.URLField()
-    vk = models.URLField()
-    phone = models.CharField(max_length=100)
+    instagram = models.URLField(verbose_name=_('Instagram'), null=True, blank=True)
+    whatsapp = models.URLField(verbose_name=_('WhatsApp'), null=True, blank=True)
+    telegram = models.URLField(verbose_name=_('Telegram'), null=True, blank=True)
+    vk = models.URLField(verbose_name=_('VK'), null=True, blank=True)
+    phone = models.CharField(max_length=100, verbose_name=_('Phone'), null=True, blank=True)
 
     def __str__(self):
         return 'Контактная информация'
