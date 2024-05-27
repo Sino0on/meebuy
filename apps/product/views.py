@@ -96,8 +96,13 @@ class ProductCreateView(CreateView):
 class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
-    template_name = 'products/product_form.html'
-    success_url = '/products'
+    template_name = 'cabinet/product_update.html'
+    success_url = reverse_lazy('user_products')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.all()
+        return context
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -110,7 +115,7 @@ class ProductUpdateView(UpdateView):
 class ProductDeleteView(DeleteView):
     model = Product
     template_name = 'products/product_confirm_delete.html'
-    success_url = reverse_lazy('product_list')
+    success_url = reverse_lazy('user_products')
 
 
 class ExcelTemplateDownloadView(View):
@@ -203,23 +208,26 @@ class ProductCategoryCreateView(CreateView):
 class ProductCategoryUpdateView(UpdateView):
     model = ProductCategory
     form_class = ProductCategoryForm
-    template_name = 'edit_category.html'
-    success_url = reverse_lazy(
-        'user_products')  # Перенаправление на страницу списка категорий после успешного редактирования
+    template_name = 'cabinet/product_includes/edit_category.html'
+    success_url = reverse_lazy('user_products')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.filter(provider__user=self.request.user)
+        return context
 
     def form_valid(self, form):
-        form.instance.provider = self.request.user.provider  # Предполагается, что пользователь связан с провайдером
+        form.instance.provider = self.request.user.provider
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # Вывод ошибок в консоль
         print(form.errors)
         return super().form_invalid(form)
 
 
 class ProductCategoryDeleteView(DeleteView):
     model = ProductCategory
-    template_name = 'delete_category.html'
+    template_name = 'cabinet/product_includes/delete_category.html'
     success_url = reverse_lazy('user_products')
 
 
@@ -230,11 +238,10 @@ class PriceColumnCreateView(CreateView):
     success_url = reverse_lazy('user_products')
 
     def form_valid(self, form):
-        form.instance.provider = self.request.user.provider  # Предполагается, что пользователь связан с провайдером
+        form.instance.provider = self.request.user.provider
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # Вывод ошибок в консоль
         print(form.errors)
         return super().form_invalid(form)
 

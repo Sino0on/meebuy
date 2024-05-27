@@ -273,7 +273,7 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'product_list'
 
     def get_queryset(self):
-        return Product.objects.all()
+        return Product.objects.filter(provider__user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -283,7 +283,10 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         context['categories'] = categories
         category_tree = self.build_category_tree(categories)
         context['category_tree'] = category_tree
-
+        if self.get_queryset().exists():
+            context['has_products'] = True
+        else:
+            context['has_products'] = False
         return context
 
     def build_category_tree(self, categories, parent=None, level=0):
