@@ -59,6 +59,7 @@ downloadExcel.addEventListener("click", openExcelBlock)
 const buttonAddCategory = document.getElementById("add-category");
 const mainSection = document.getElementById("main-section");
 const addCategoryBlock = document.getElementById("add-category-block");
+const GoBackBtn = document.querySelector('#test222')
 
 const toggleAddCategoryBlock = () => {
   if (mainSection.style.display === "block") {
@@ -71,7 +72,7 @@ const toggleAddCategoryBlock = () => {
 };
 
 buttonAddCategory.addEventListener("click", toggleAddCategoryBlock);
-
+GoBackBtn.addEventListener('click', toggleAddCategoryBlock)
 // add goods manually
 const buttonAddGoods = document.getElementById("add-goods-button");
 const closeAddGoods = document.getElementById("close-goods-button");

@@ -14,8 +14,8 @@ from django.core.files.base import ContentFile
 from six import BytesIO
 
 from apps.product.filters import ProductFilter
-from apps.product.models import Product, ProductImg, ProductCategory
-from apps.product.forms import ProductForm, UploadExcelForm
+from apps.product.models import Product, ProductImg, ProductCategory, PriceColumn
+from apps.product.forms import ProductForm, UploadExcelForm, ProductCategoryForm, PriceColumnForm
 from apps.provider.models import Category, Provider
 from apps.user_cabinet.models import Contacts
 
@@ -46,18 +46,31 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
     template_name = 'products/product_detail.html'
 
+    def get_product_prices(self):
+        product = self.get_object()
+        prices = []
+        formulas = PriceColumn.objects.filter(provider__user=self.request.user)
+        for formula in formulas:
+            prices.append({
+                'name': formula.name,
+                'price': formula.apply_formula(product.price)
+            })
+        print(prices)
+        return prices
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product = self.get_object()
         context['categories'] = ProductCategory.objects.all()
         context['similar_products'] = Product.objects.filter(category=product.category).exclude(id=product.id)[:5]
+        context['prices'] = self.get_product_prices()
         return context
 
 
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
-    template_name = 'products/product_form.html'
+    template_name = 'cabinet/products.html'
     success_url = '/products'
 
     def get_context_data(self, **kwargs):
@@ -125,16 +138,14 @@ class ExcelUploadView(FormView):
         provider = Provider.objects.get(user=self.request.user)
 
         for row in sheet.iter_rows(min_row=3, values_only=True):
-            # try:
-                category_instance, _ = ProductCategory.objects.get_or_create(name=row[1])
+            try:
+                category_instance, _ = ProductCategory.objects.get_or_create(name=row[1], provider=provider)
 
                 image_url = row[12]
                 if image_url and isinstance(image_url, str):
                     print(image_url)
                     response = requests.get(image_url)
                     image = Image.open(BytesIO(response.content))
-
-                    # Преобразование изображения в формат WEBP
                     image_io = BytesIO()
                     image.save(image_io, format='WEBP')
                     image_content = ContentFile(image_io.getvalue(), name='image.webp')
@@ -157,12 +168,85 @@ class ExcelUploadView(FormView):
                 )
                 if image_content:
                     product.image.save(image_content.name, image_content)
-            # except Exception as e:
-            #     print(e)
-            #     continue
+            except Exception as e:
+                print(e)
+                continue
 
         return super().form_valid(form)
 
     def get_success_url(self):
 
-        return reverse_lazy('product_list')
+        return reverse_lazy('/products')
+
+
+class ProductCategoryCreateView(CreateView):
+    model = ProductCategory
+    form_class = ProductCategoryForm
+    template_name = 'cabinet/products.html'
+    success_url = reverse_lazy('user_products')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.filter(provider__user=self.request.user)
+        return context
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.provider = Provider.objects.get(user=self.request.user)
+
+        return super().form_valid(form)
+
+
+class ProductCategoryUpdateView(UpdateView):
+    model = ProductCategory
+    form_class = ProductCategoryForm
+    template_name = 'edit_category.html'
+    success_url = reverse_lazy(
+        'user_products')  # Перенаправление на страницу списка категорий после успешного редактирования
+
+    def form_valid(self, form):
+        form.instance.provider = self.request.user.provider  # Предполагается, что пользователь связан с провайдером
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        # Вывод ошибок в консоль
+        print(form.errors)
+        return super().form_invalid(form)
+
+
+class ProductCategoryDeleteView(DeleteView):
+    model = ProductCategory
+    template_name = 'delete_category.html'
+    success_url = reverse_lazy('user_products')
+
+
+class PriceColumnCreateView(CreateView):
+    model = PriceColumn
+    form_class = PriceColumnForm
+    template_name = 'cabinet/products.html'
+    success_url = reverse_lazy('user_products')
+
+    def form_valid(self, form):
+        form.instance.provider = self.request.user.provider  # Предполагается, что пользователь связан с провайдером
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        # Вывод ошибок в консоль
+        print(form.errors)
+        return super().form_invalid(form)
+
+
+class PriceColumnUpdateView(UpdateView):
+    model = PriceColumn
+    form_class = PriceColumnForm
+    template_name = 'cabinet/products.html'
+    success_url = reverse_lazy('user_products')
+
+
+class PriceColumnDeleteView(DeleteView):
+    model = PriceColumn
+    template_name = 'cabinet/products.html'
+    success_url = reverse_lazy('user_products')

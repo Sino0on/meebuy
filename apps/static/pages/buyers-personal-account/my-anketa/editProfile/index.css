@@ -1,0 +1,33 @@
+.edit__profile p {
+    font-size: 17px;
+    color: #757575;
+    line-height: 25.5px;
+}
+
+.edit__profile p.light {
+    font-weight: 300;
+}
+
+.edit__profile .label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B292C;
+    line-height: 27px;
+}
+
+.edit__profile .tooltip {
+    font-size: 16px;
+    font-weight: 300;
+    color: #4D4D4D;
+    margin-top: 20px;
+}
+
+.edit__profile input[type="text"] {
+    margin-top: 24px;
+}
+
+@media (min-width: 992px) {
+    .edit__profile input[type="text"] {
+        margin-top: 26px;
+    }
+}

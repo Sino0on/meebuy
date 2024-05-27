@@ -1,10 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
+from django.db.models import Count
+from datetime import datetime, timedelta
 
 from apps.product.models import Product
 from apps.provider.models import Provider
 from apps.tender.models import Tender
+
 
 User = get_user_model()
 
@@ -53,11 +56,12 @@ class PackageStatus(models.Model):
     price = models.DecimalField(verbose_name=_('Цена'), max_digits=100, decimal_places=1)
     quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
     quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'))
-    image = models.FileField(upload_to='images/packages/', blank=True, default='1')
-    is_advertise = models.BooleanField(default=False, blank=True)
-    is_contact_prov = models.BooleanField(default=False, blank=True)
-    dayly_message = models.PositiveIntegerField(blank=True, default=30)
-    is_publish_phone = models.BooleanField(default=False, blank=True)
+    image = models.FileField(upload_to='images/packages/', blank=True, default='1', verbose_name='Изображение')
+    is_advertise = models.BooleanField(default=False, blank=True, verbose_name='Просмотр сайта без рекламы')
+    is_contact_prov = models.BooleanField(default=False, blank=True, verbose_name='Просмотр контактов поставщиков')
+    is_email = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего E-mail и ссылки на ваш сайт / соцсети')
+    dayly_message = models.PositiveIntegerField(blank=True, default=30, verbose_name='Исходящих сообщений в день')
+    is_publish_phone = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего телефона незарегистрированным посетителям')
     months = models.PositiveIntegerField(verbose_name=_('Количество месяцев'))
 
     def __str__(self):
@@ -106,6 +110,7 @@ class Transaction(models.Model):
     class Meta:
         verbose_name = _('Транзакция')
         verbose_name_plural = _('Транзакции')
+        ordering = ['-created_at']
 
 
 class Upping(models.Model):
@@ -174,6 +179,105 @@ class Contacts(SingletonModel):
 #     class Meta:
 #         verbose_name = _('Константа')
 #         verbose_name_plural = _('Константы')
+
+
+class ViewsCountProfile(models.Model):
+    user = models.ForeignKey(Cabinet, on_delete=models.CASCADE, related_name='views_count')
+    quest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_count_for_today(user):
+        today = datetime.now().date()
+        return ViewsCountProfile.objects.filter(user=user, created_at=today).count()
+
+    @staticmethod
+    def get_count_for_yesterday(user):
+        yesterday = datetime.now().date() - timedelta(days=1)
+        return ViewsCountProfile.objects.filter(user=user, created_at=yesterday).count()
+
+    @staticmethod
+    def get_count_for_month(user):
+        today = datetime.now()
+        return ViewsCountProfile.objects.filter(
+            user=user,
+            created_at__year=today.year,
+            created_at__month=today.month
+        ).count()
+
+    @staticmethod
+    def get_count_for_year(user):
+        today = datetime.now()
+        return ViewsCountProfile.objects.filter(
+            user=user,
+            created_at__year=today.year
+        ).count()
+
+
+class OpenNumberCount(models.Model):
+    user = models.ForeignKey(Cabinet, on_delete=models.CASCADE, related_name='numbers_count')
+    quest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_count_for_today(user):
+        today = datetime.now().date()
+        return OpenNumberCount.objects.filter(user=user, created_at=today).count()
+
+    @staticmethod
+    def get_count_for_yesterday(user):
+        yesterday = datetime.now().date() - timedelta(days=1)
+        return OpenNumberCount.objects.filter(user=user, created_at=yesterday).count()
+
+    @staticmethod
+    def get_count_for_month(user):
+        today = datetime.now()
+        return OpenNumberCount.objects.filter(
+            user=user,
+            created_at__year=today.year,
+            created_at__month=today.month
+        ).count()
+
+    @staticmethod
+    def get_count_for_year(user):
+        today = datetime.now()
+        return OpenNumberCount.objects.filter(
+            user=user,
+            created_at__year=today.year
+        ).count()
+
+
+class SiteOpenCount(models.Model):
+    user = models.ForeignKey(Cabinet, on_delete=models.CASCADE, related_name='sites_count')
+    quest = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_count_for_today(user):
+        today = datetime.now().date()
+        return SiteOpenCount.objects.filter(user=user, created_at=today).count()
+
+    @staticmethod
+    def get_count_for_yesterday(user):
+        yesterday = datetime.now().date() - timedelta(days=1)
+        return SiteOpenCount.objects.filter(user=user, created_at=yesterday).count()
+
+    @staticmethod
+    def get_count_for_month(user):
+        today = datetime.now()
+        return SiteOpenCount.objects.filter(
+            user=user,
+            created_at__year=today.year,
+            created_at__month=today.month
+        ).count()
+
+    @staticmethod
+    def get_count_for_year(user):
+        today = datetime.now()
+        return SiteOpenCount.objects.filter(
+            user=user,
+            created_at__year=today.year
+        ).count()
 
 class SupportMessage(models.Model):
     CHOICES = (

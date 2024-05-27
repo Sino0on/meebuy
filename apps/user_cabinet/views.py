@@ -6,11 +6,14 @@ from rest_framework.generics import ListAPIView, GenericAPIView
 from apps.authentication.forms import ProviderForm, UserUpdateForm
 from apps.product.models import Product, ProductCategory
 from apps.user_cabinet.models import Status, Upping
-from apps.provider.models import ProvideImg, Provider
+from apps.provider.models import ProvideImg, Provider, Category
 from apps.buyer.models import BuyerImg
+from apps.chat.models import Message
 from django.contrib.auth import get_user_model
 from django.views import generic
 from apps.user_cabinet.seriazliers import StatusSerializer
+from apps.user_cabinet.models import (PackageStatus, ActiveUserStatus, Transaction, ViewsCountProfile,
+                                      SiteOpenCount, OpenNumberCount)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -28,7 +31,62 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 
 from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
+
 from .models import Contacts
+
+import plotly.graph_objs as go
+from plotly.offline import plot
+
+
+def generate_chart(user):
+    # Пример данных
+    labels = ['Сегодня', 'Вчера', 'Месяц', 'Год']
+    print(ViewsCountProfile.get_count_for_today(user))
+    page_visitors = [
+        ViewsCountProfile.get_count_for_today(user), ViewsCountProfile.get_count_for_yesterday(user),
+        ViewsCountProfile.get_count_for_month(user), ViewsCountProfile.get_count_for_year(user)
+    ]
+    phone_opens = [
+        OpenNumberCount.get_count_for_today(user), OpenNumberCount.get_count_for_yesterday(user),
+        OpenNumberCount.get_count_for_month(user), OpenNumberCount.get_count_for_year(user)
+    ]
+    site_transitions = [
+        SiteOpenCount.get_count_for_today(user), SiteOpenCount.get_count_for_yesterday(user),
+        SiteOpenCount.get_count_for_month(user), SiteOpenCount.get_count_for_year(user)
+    ]
+    incoming_messages = [
+        Message.get_count_for_today_recipient(user.user), Message.get_count_for_yesterday_recipient(user.user),
+        Message.get_count_for_month_recipient(user.user), Message.get_count_for_year_recipient(user.user)
+    ]
+    outgoing_messages = [
+        Message.get_count_for_today(user.user), Message.get_count_for_yesterday(user.user),
+        Message.get_count_for_month(user.user), Message.get_count_for_year(user.user)
+    ]
+
+    fig = go.Figure(data=[
+        go.Bar(name='Посетители страницы', x=labels, y=page_visitors, marker_color='navy'),
+        go.Bar(name='Открытие телефона', x=labels, y=phone_opens, marker_color='purple'),
+        go.Bar(name='Переходы на сайт', x=labels, y=site_transitions, marker_color='lightgray'),
+        go.Bar(name='Входящие сообщения', x=labels, y=incoming_messages, marker_color='lightblue'),
+        go.Bar(name='Исходящие сообщения', x=labels, y=outgoing_messages, marker_color='skyblue')
+    ])
+
+    fig.update_layout(
+        barmode='group',
+        title='Статистика',
+        legend=dict(
+            orientation="h",  # Горизонтальная ориентация
+            yanchor="bottom",
+            y=-0.3,
+            xanchor="center",
+            x=0.5
+        )
+    )
+    plot_div = plot(fig, output_type='div')
+
+    return plot_div
+
+
 
 User = get_user_model()
 
@@ -156,6 +214,7 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
     template_name = 'auth/settings.html'
     form_class = UserUpdateForm
     model = User
+    success_url = '/profile/settings/'
     context_object_name = 'form'
 
     def get_object(self, queryset=None):
@@ -166,6 +225,32 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
         contacts = Contacts.load()
         context['contacts'] = contacts
         return context
+
+    def get_initial(self):
+        initial = super().get_initial()
+        user = self.request.user
+        initial.update({
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'phone': user.phone,
+            'job_title': user.job_title,
+
+        })
+        return initial
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        self.object = self.get_object()
+        form = self.form_class(request.POST, instance=self.object)
+        if form.is_valid():
+            das = form.save()
+            print(das.phone)
+            return redirect(self.success_url)
+        else:
+            print(form.errors)
+            return self.form_invalid(form)
+
 
 
 class BalanceView(generic.TemplateView, LoginRequiredMixin):
@@ -196,18 +281,32 @@ class TenderListCabinetView(generic.TemplateView, LoginRequiredMixin):
         return context
 
 
-class ProductListCabinetView(generic.ListView, LoginRequiredMixin):
-    object = Product
+class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
+    model = Product
     template_name = 'cabinet/products.html'
-    queryset = Product.objects.all()
+    context_object_name = 'product_list'
+
+    def get_queryset(self):
+        return Product.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = ProductCategory.objects.all()
         contacts = Contacts.load()
         context['contacts'] = contacts
+        categories = ProductCategory.objects.filter(provider__user=self.request.user)
+        context['categories'] = categories
+        category_tree = self.build_category_tree(categories)
+        context['category_tree'] = category_tree
+
         return context
 
+    def build_category_tree(self, categories, parent=None, level=0):
+        tree = []
+        for category in categories:
+            if category.parent == parent:
+                tree.append((category, level))
+                tree.extend(self.build_category_tree(categories, category, level + 1))
+        return tree
 
 class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/likes.html'
@@ -394,7 +493,7 @@ def add_provider_fav_api(request, pk):
     else:
         request.user.cabinet.favorite_providers.add(provider)
         request.user.cabinet.save()
-    return JsonResponse({'ok': 'ok'}, status=200)
+    return JsonResponse({'Info': 'ok'}, status=200)
 
 
 @require_GET
@@ -408,7 +507,7 @@ def add_product_fav_api(request, pk):
     else:
         request.user.cabinet.favorite_products.add(product)
         request.user.cabinet.save()
-    return JsonResponse({'ok': 'ok'}, status=200)
+    return JsonResponse({'Info': 'ok'}, status=200)
 
 
 def delete_provider_fav(request, pk):
@@ -421,3 +520,38 @@ def add_provider_fav(request, pk):
     provider = get_object_or_404(Provider, id=pk)
     request.user.cabinet.favorite_providers.add(provider)
     return redirect(f'/provider/detail/{pk}/')
+
+
+
+def tariff_buy(request):
+    status = get_object_or_404(PackageStatus, id=int(request.GET.get('id')))
+    user = request.user
+    if user.cabinet.balance < status.price:
+        return JsonResponse({"Error": "Недостаточно средств"}, status=400)
+    if user.cabinet.user_status:
+        if user.cabinet.user_status.status.status == status.status:
+            user.cabinet.user_status.end_date += datetime.timedelta(days=status.months * 30)
+            user.cabinet.balance -= status.price
+            user.cabinet.save()
+            user.cabinet.user_status.save()
+            Transaction.objects.create(
+                user=user.cabinet,
+                total=-status.price,
+                description=f"Транзакция покупки статуса пользователя {status.status.title} - {status.months} месяцев"
+            )
+            return JsonResponse(data={"Info": "ok"}, status=200)
+
+    user.cabinet.user_status = ActiveUserStatus.objects.create(
+        status=status,
+        end_date=datetime.date.today() + datetime.timedelta(days=status.months * 30)
+    )
+    Transaction.objects.create(
+        user=user.cabinet,
+        total=-status.price,
+        description=f"Транзакция покупки статуса пользователя {status.status.title}"
+    )
+    user.cabinet.balance -= status.price
+    user.cabinet.save()
+    return JsonResponse(data={"Info": "ok"}, status=200)
+
+
