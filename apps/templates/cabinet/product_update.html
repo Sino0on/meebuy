@@ -468,7 +468,7 @@
             </div>
             <!-- photo -->
             <div class="text-dark-text">
-              <h2 class="font-bold text-[18px]">Фотографии товара</h2>
+              <h2 class="font-bold text-[18px]">Заменить фотографии товара</h2>
               <p class="mt-2 text-[#4D4D4D]">
                 Первая фотография по умолчанию главная
               </p>
@@ -490,9 +490,9 @@
                         class="photos__input sr-only"
                       />
                       <!-- Image placeholder that will be replaced or shown when file is chosen -->
-                        {% if object.image %}
-    <img src="{{ object.image.url }}" alt="Product Image 1">
-{% endif %}
+{#                        {% if object.image %}#}
+{#    <img src="{{ object.image.url }}" alt="Product Image 1">#}
+{#{% endif %}#}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -529,9 +529,9 @@
                         class="photos__input sr-only"
                       />
                       <!-- Image placeholder that will be replaced or shown when file is chosen -->
-                        {% if object.images.count > 0 %}
-    <img src="{{ object.images.all.0.image.url }}" alt="Product Image 2">
-{% endif %}
+{#                        {% if object.images.count > 0 %}#}
+{#    <img src="{{ object.images.all.0.image.url }}" alt="Product Image 2">#}
+{#{% endif %}#}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -567,9 +567,9 @@
                         class="photos__input sr-only"
                       />
                       <!-- Image placeholder that will be replaced or shown when file is chosen -->
-                        {% if object.images.count > 1 %}
-    <img src="{{ object.images.all.1.image.url }}" alt="Product Image 3">
-{% endif %}
+{#                        {% if object.images.count > 1 %}#}
+{#    <img src="{{ object.images.all.1.image.url }}" alt="Product Image 3">#}
+{#{% endif %}#}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -605,9 +605,9 @@
                         class="photos__input sr-only"
                       />
                       <!-- Image placeholder that will be replaced or shown when file is chosen -->
-                        {% if object.images.count > 2 %}
-    <img src="{{ object.images.all.2.image.url }}" alt="Product Image 4">
-{% endif %}
+{#                        {% if object.images.count > 2 %}#}
+{#    <img src="{{ object.images.all.2.image.url }}" alt="Product Image 4">#}
+{#{% endif %}#}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -643,9 +643,9 @@
                         class="photos__input sr-only"
                       />
                       <!-- Image placeholder that will be replaced or shown when file is chosen -->
-                        {% if object.images.count > 3 %}
-    <img src="{{ object.images.all.3.image.url }}" alt="Product Image 5">
-{% endif %}
+{#                        {% if object.images.count > 3 %}#}
+{#    <img src="{{ object.images.all.3.image.url }}" alt="Product Image 5">#}
+{#{% endif %}#}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -687,9 +687,9 @@
                         id="preview6"
                       />
                       <!-- Default icon to show before file selection -->
-                        {% if object.images.count > 4 %}
-    <img src="{{ object.images.all.4.image.url }}" alt="Product Image 6">
-{% endif %}
+{#                        {% if object.images.count > 4 %}#}
+{#    <img src="{{ object.images.all.4.image.url }}" alt="Product Image 6">#}
+{#{% endif %}#}
                       <svg
                         width="14"
                         height="14"
