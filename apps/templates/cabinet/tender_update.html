@@ -158,7 +158,7 @@
                     <div class="form__item">
                         <label class="label" for="name">Что вы хотите купить (кратко)</label>
                         <p class="tooltip">Например: Купим оптом женскую одежду и обувь</p>
-                        <input id="name" name="title" value="{{ form.email.value }}" type="text" placeholder="Например: наушники оптом">
+                        <input id="name" name="title" value="{{ form.title.value }}" type="text" placeholder="Например: наушники оптом">
                         {% if form.title.errors %}
                             <div class="text-red-500 text-sm">{{ form.title.errors }}</div>
                         {% endif %}
@@ -168,7 +168,7 @@
                         <label for="description">Описание</label>
                         <p class="tooltip" style="margin-bottom: 10px">Укажите что хотите заказать, объем поставок, сроки, условия доставки
                             Не публикуйте контактные данные в описании</p>
-                        <textarea id="description" name="description" type="text" placeholder="Например: наушники оптом">{{ form.email.value }}</textarea>
+                        <textarea id="description" name="description" type="text" placeholder="Например: наушники оптом">{{ form.description.value }}</textarea>
                         {% if form.description.errors %}
                             <div class="text-red-500 text-sm">{{ form.description.errors }}</div>
                         {% endif %}

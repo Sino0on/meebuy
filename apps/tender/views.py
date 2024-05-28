@@ -7,7 +7,7 @@ from apps.tender.forms import TenderForm
 from apps.tender.models import Tender, TenderImg
 from apps.provider.models import Category
 from apps.tender.filters import TenderFilter
-from apps.user_cabinet.models import Contacts
+from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 
 class TenderListView(generic.ListView):
@@ -36,6 +36,7 @@ class TenderDetailView(generic.DetailView):
         if self.request.GET.get('open'):
             if self.request.user.is_authenticated:
                 if self.get_object().user.cabinet.user_status.status.is_publish_phone:
+                    OpenNumberCount.objects.create(user=self.get_object().user.cabinet)
                     context['open'] = 'open'
             print('das')
         # context['products'] = Provider.products.all()

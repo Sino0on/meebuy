@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from apps.provider.models import Provider, Tag
 from apps.tender.models import Category
@@ -16,6 +16,12 @@ class ProviderListView(generic.ListView):
     paginate_by = '10'
     filter_class = ProviderFilter
     context_object_name = 'providers'
+
+    def get_queryset(self):
+        query = self.queryset
+        filter = self.filter_class(self.request.GET, queryset=query)
+        query = filter.qs
+        return query
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -50,5 +56,4 @@ class ProviderDetailView(generic.DetailView):
 class CategoryListView(ListAPIView):
     serializer_class = CategoryListSerializer
     queryset = Category.objects.filter(category=None)
-
 

@@ -93,6 +93,7 @@ urlpatterns = [
 
     # user
     path('user/', UserDetailView.as_view()),
+    path('redirect_to_site/<int:pk>/', redirect_to_site),
 
     # apis
     path('category/list/', CategoryListView.as_view()),

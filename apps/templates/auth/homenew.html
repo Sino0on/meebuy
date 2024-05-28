@@ -10,9 +10,9 @@
 Главная
 {% endblock %}
 {% block content %}
-<main>
+  <main>
     <!-- hero -->
-    <section class="hero animate__animated" style="background: url({%static 'assets/images/home/hero-bg.jpg' %}) center no-repeat;">
+    <section class="hero animate__animated">
       <div class="container">
         <div class="hero__content sm:max-w-[410px]">
           <h2 class="uppercase text-[1.375rem] font-black text-white overflow-hidden sm:text-[26px]">
@@ -20,20 +20,15 @@
             <div class="overflow-hidden inline-flex"><span id="heroTitle" class="inline-block">товары</span>
             </div>
           </h2>
-          <form action="/product/list/" class="relative mt-[30px]">
+          <form class="relative mt-[30px]">
             <button type="button" id="heroFormBtn"
-
               class="btn-filled absolute top-0 uppercase font-medium text-sm text-dark-logo transition-opacity duration-[1000ms] ease-in-out z-[1]">Я
               ищу</button>
             <div id="heroSearchWrapper" class="relative w-0 overflow-hidden transition-all duration-[1500ms] ease-out">
               <div class="absolute inset-y-0 end-0 flex items-center pe-3">
-                <img id="heroSearchIconImg" src="{% static 'assets/images/icons/search.svg' %}" alt="Search icon">
+                <img id="heroSearchIconImg" src="../../assets/images/icons/search.svg" alt="Search icon">
               </div>
               <input id="default-search"
-                       type="text"
-                  name="title"
-                  value=""
-                  autocomplete="off"
                 class="block w-full p-2 pe-10 text-sm text-gray-900 border border-logo-color rounded-md lg-md:py-[18px] lg-md:pl-[30px] lg-md:text-lg"
                 placeholder="АКСЕССУАРЫ" required />
             </div>
@@ -76,8 +71,9 @@
     <section class="category black bg-dark text-white py-[60px]">
       <div class="container">
         <div>
-          <h2 class="text-center text-lg font-black uppercase md:text-2xl xl:text-3xl">Категории поставщиков</h2>
+          <h2 class="text-center text-lg font-black uppercase md:text-2xl xl:text-3xl">Категории товаров</h2>
           <ul class="grid grid-cols-1 gap-9 text-base mt-5 md:grid-cols-2 lg-md:gap-[30px] lg-md:grid-cols-3 xl:text-lg">
+
             {% for i in categories %}
             <li class="">
               <a class="flex items-center gap-[10px] w-fit" href="/provider/list/?category={{ i.pk }}">
@@ -94,7 +90,7 @@
     </section>
     <!-- recommended products -->
     <section class="recommended__products mt-12">
-      <div class="container relative">
+      <div class="container relative md: z-0">
         <h2 class="section__title text-lg md:text-2xl xl:text-3xl">рекомендуемые товары</h2>
         <div class="swiper recommended__slider mt-7">
           <div class="swiper-wrapper">
@@ -113,6 +109,7 @@
               </div>
             </div>
             {% endfor %}
+            <!-- more slides -->
           </div>
         </div>
         <div class="swiper-button-next custom-recommended-next">
@@ -143,6 +140,7 @@
               </div>
             </div>
             {% endfor %}
+            <!-- other slides -->
           </div>
         </div>
         <div class="swiper-button-next swiper-button-next-new custom-new-next">
@@ -222,6 +220,7 @@
             </div>
           </div>
           {% endfor %}
+          <!-- add cards -->
         </div>
       </div>
     </section>
@@ -266,35 +265,15 @@
           {% endfor %}
           <!-- other cards -->
         </div>
-      </div>
     </section>
   </main>
+
+ <!-- mobile menu -->
+
+
 {% endblock %}
 
 {% block js %}
 <script src="{% static 'pages/home/index.js' %}"></script>
+<script src="{% static 'pages/menu-mobile/menu-mobile.js' %}"></script>
 {% endblock %}
-
-<!--{% load socialaccount %}-->
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge" />-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
-<!--    <title>Google Sign In</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--    <h2>Google Login</h2>-->
-<!--    <a href="{% provider_login_url 'google' %}?next=/login_redirect/">Login With Google</a>-->
-<!--    <h2>Facebook Login</h2>-->
-<!--    <a href="{% provider_login_url 'facebook' %}?next=/login_redirect/">Login With Facebook</a>-->
-<!--    <h2>VK Login</h2>-->
-<!--    <a href="{% provider_login_url 'vk' %}?next=/login_redirect/">Login With VK</a>-->
-<!--    <h2>Yandex Login</h2>-->
-<!--    <a href="{% provider_login_url 'yandex' %}?next=/login_redirect/">Login With Yandex</a>-->
-<!--</body>-->
-<!--</html>-->
-

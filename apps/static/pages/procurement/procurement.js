@@ -1,8 +1,13 @@
+// Select
 const selectContainer = document.getElementById("selectContainer");
-const toggleLink = document.getElementById("toggleLink");
 const openIcon = document.querySelector(".openIcon");
 const closeIcon = document.querySelector(".closeIcon");
 const selectModal = document.getElementById("selectModal");
+const selectedSort = selectModal.querySelectorAll(".selected");
+const recommendedList = document.getElementById("recommended-list");
+const recommended = document.getElementById("recommended");
+const newSelectList = document.getElementById("new-list");
+const newSelect = document.getElementById("new");
 
 const toggleSelectModal = () => {
   if (
@@ -18,6 +23,42 @@ const toggleSelectModal = () => {
     closeIcon.style.display = "none";
   }
 };
+const checkedSelect = (element) => {
+  const select = [recommended, newSelect];
+  for (let i = 0; i < select.length; i++) {
+    if (select[i] === element) {
+      select[i].style.display = "block";
+      setTimeout(() => {
+        selectModal.style.display = "none";
+        openIcon.style.display = "block";
+        closeIcon.style.display = "none";
+      }, 200);
+    } else {
+      select[i].style.display = "none";
+    }
+  }
+};
+document.addEventListener("DOMContentLoaded", function () {
+  selectedSort.forEach(function (item) {
+    item.addEventListener("click", function (event) {
+      event.preventDefault();
+      const text = item.textContent;
+      changeButtonText(text);
+      openSort();
+    });
+  });
+});
+
+function changeButtonText(text) {
+  selectContainer.querySelector("p").textContent = text;
+}
+
+recommendedList.addEventListener("click", () => {
+  checkedSelect(recommended);
+});
+newSelectList.addEventListener("click", () => {
+  checkedSelect(newSelect);
+});
 selectContainer.addEventListener("click", toggleSelectModal);
 
 // card read & unread bg-color
@@ -34,6 +75,24 @@ const toggleCardHandler = (event) => {
 
 toggleCards.forEach((card) => {
   card.addEventListener("click", toggleCardHandler);
+});
+
+// like
+const hearts = document.querySelectorAll("#heart");
+
+const toggleHeartHandler = (event) => {
+  event.stopPropagation();
+  const heart = event.currentTarget;
+  const insideHeart = heart.querySelector("#inside-heart");
+  const borderHeart = heart.querySelector("#border-heart");
+
+  insideHeart.classList.toggle("red");
+  heart.classList.toggle("heart-active-color");
+  borderHeart.classList.toggle("border-heart");
+};
+
+hearts.forEach((heart) => {
+  heart.addEventListener("click", toggleHeartHandler);
 });
 
 const pagination = document.getElementById("pagination");
@@ -63,7 +122,6 @@ function goToNextPage() {
   }
 }
 const currentPageItems = pagination.querySelectorAll(".page");
-console.log(currentPageItems, "nnn");
 currentPageItems.forEach((page) => {
   page.addEventListener("click", setCurrentPage);
 });
@@ -112,4 +170,31 @@ document.addEventListener("DOMContentLoaded", () => {
       updatePagination(index);
     });
   });
+});
+
+// filter
+const filterContainer = document.getElementById("filterContainer");
+// const closeFilterContainer = document.getElementById("close-filter-container");
+const toggleFilter = document.getElementById("toggleFilter");
+const openFilter = document.getElementById("openFilter");
+
+const toggleFilterModal = () => {
+  openFilter.style.display =
+    openFilter.style.display === "none" ? "block" : "none";
+};
+const toggleCloseFilterModal = () => {
+  openFilter.style.display = "none";
+};
+
+filterContainer.addEventListener("click", toggleFilterModal);
+// closeFilterContainer.addEventListener("click", toggleCloseFilterModal);
+
+document.addEventListener("click", (event) => {
+  if (
+    openFilter.style.display === "block" &&
+    !filterContainer.contains(event.target) &&
+    !openFilter.contains(event.target)
+  ) {
+    openFilter.style.display = "none";
+  }
 });
