@@ -6,9 +6,9 @@
 .suppliers-wrapper {
   background: url(../../assets/images/home/purchases.jpg) center no-repeat;
   background-size: cover;
-  height: 350px;
+  /* height: 350px; */
   width: 86%;
-  animation: revealContent 1s;
+  animation: revealContent 1.6s;
   background-size: cover;
   position: relative;
   display: flex;
@@ -65,7 +65,7 @@
   }
   .suppliers-wrapper {
     width: 94%;
-    height: 160px;
+    height: 180px;
     animation: revealContent 2s;
   }
   @keyframes revealContent {
@@ -81,7 +81,7 @@
     80% {
       width: 94%;
       opacity: 0.9;
-      height: 160px;
+      height: 180px;
     }
     100% {
       opacity: 0.8;
@@ -178,7 +178,7 @@
   padding: 0;
   margin: 0;
 }
-.heart:hover .red {
+.heart-active-color {
   fill: red;
   transition: fill 0.3s;
 }
@@ -187,6 +187,25 @@
   fill: red;
   transition: fill 0.3s;
 }
-.heart:hover .yellow {
+.border-heart {
   fill: red;
+}
+
+/* filter */
+.filter-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #0000004d;
+  z-index: 9;
+}
+input[type="checkbox"] {
+  accent-color: #bab306 !important;
+  color: white !important;
+}
+
+.heart-active-color {
+  color: red;
 }
