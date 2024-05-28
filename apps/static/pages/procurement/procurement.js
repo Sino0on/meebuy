@@ -81,7 +81,6 @@ toggleCards.forEach((card) => {
 const hearts = document.querySelectorAll("#heart");
 
 const toggleHeartHandler = (event) => {
-  console.log('heart')
   event.stopPropagation();
   const heart = event.currentTarget;
   const insideHeart = heart.querySelector("#inside-heart");

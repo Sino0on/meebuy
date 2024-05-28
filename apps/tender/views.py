@@ -35,6 +35,7 @@ class TenderDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         if self.request.GET.get('open'):
             if self.request.user.is_authenticated:
+                print(self.get_object().user)
                 if self.get_object().user.cabinet.user_status.status.is_publish_phone:
                     OpenNumberCount.objects.create(user=self.get_object().user.cabinet)
                     context['open'] = 'open'

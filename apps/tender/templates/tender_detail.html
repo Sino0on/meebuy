@@ -85,7 +85,7 @@
                                 <img class="cursor-pointer" src="{% static 'assets/images/icons/new.svg' %}" alt="New">
                                 <img class="cursor-pointer w-6 h-6" src="{% static 'assets/images/icons/premium.svg' %}"
                                     alt="Diamond">
-                                <img class="cursor-pointer" src="{% static 'assets/images/icons/letter.svg' %}" alt="Letter">
+                                <a href="{% if user.is_authenticated %}{% url 'chat_create' tender.user.pk %}{% endif %}"><img class="cursor-pointer" src="{% static 'assets/images/icons/letter.svg' %}" alt="Letter"></a>
                                 <img class="cursor-pointer" src="{% static 'assets/images/icons/phone.svg' %}" alt="Phone">
                                 <svg class="cursor-pointer transition-colors" id="heart" width="24" height="24"
                                     viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
