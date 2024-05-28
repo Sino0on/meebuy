@@ -23,7 +23,7 @@ from apps.user_cabinet.models import Contacts
 class ProductListView(ListView):
     model = Product
     context_object_name = 'products'
-    paginate_by = 20
+    paginate_by = 10
     template_name = 'products/product_list.html'
     filter_class = ProductFilter
 

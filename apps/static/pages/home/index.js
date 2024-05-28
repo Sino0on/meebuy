@@ -1,7 +1,7 @@
 // burger menu
 const burgerMenu = document.querySelector('#burgerMenu');
 const burgerIcon = document.querySelector('#burgerIcon');
-const closeIcon = document.querySelector('#closeIcon');
+const closeBurgerIcon  = document.querySelector('#closeIcon');
 // search
 const searchForm = document.querySelector('#searchForm');
 const searchIcon = document.querySelector('#searchIconImg');
@@ -27,7 +27,7 @@ const toggleMenu = () => {
 };
 
 burgerIcon.addEventListener('click', toggleMenu);
-closeIcon.addEventListener('click', toggleMenu);
+closeBurgerIcon.addEventListener('click', toggleMenu);
 
 // search
 
@@ -42,7 +42,7 @@ const heroToggleFormWidth = () => {
 };
 
 searchIcon.addEventListener('click', toggleFormWidth);
-heroSearchIconImg.addEventListener('click', heroToggleFormWidth);
+heroSearchIconImg?.addEventListener('click', heroToggleFormWidth);
 
 const itemsToSearch = [
   { label: 'товары', color: 'rgba(228, 219, 0, 1)' },
@@ -65,7 +65,7 @@ const heroFormToggle = () => {
 };
 
 // Обработчик клика на кнопке "Я ищу"
-heroFormBtn.addEventListener('click', heroFormToggle);
+heroFormBtn?.addEventListener('click', heroFormToggle);
 
 // hero title
 
@@ -74,6 +74,7 @@ const changingTextElement = document.querySelector('#heroTitle');
 let currentWordIndex = 0;
 
 function changeWord() {
+  if(!changingTextElement) return;
   changingTextElement.style.animation = 'text-out 500ms ease-out';
 
   setTimeout(() => {
@@ -89,7 +90,7 @@ function changeWord() {
 
 setInterval(changeWord, 1500);
 
-changingTextElement.style.animation = 'text-in 500ms ease-out';
+changingTextElement ? changingTextElement.style.animation = 'text-in 500ms ease-out' : '';
 
 // slider
 

@@ -21,185 +21,267 @@
             </div>
         </div>
     </nav>
-    {% include 'products/product_list_includes/category_filter.html' %}
-    <main class="products">
-        <section class="hero">
-            <div class="hero__wrapper container">
-                <div class="relative z-20 flex flex-col justify-center w-full">
-                    <h2 style="font-size: 36px" class="text-white font-extrabold sm:pb-8 text-center uppercase">
-                        товары
-                    </h2>
-                    <form class="mt-3">
-                        <div class="relative md:w-[600px] sm:w-[400px] m-auto">
-                            <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-                                <img src="{% static 'assets/images/icons/search.svg' %}" alt="Search icon" />
-                            </div>
-                            <label for="default-search"></label>
-                            <input id="default-search"
-                            class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
-                            placeholder="Например: автозапчасти" />
-                        </div>
-                    </form>
+   <main class="products relative">
 
+      <!-- animation -->
+      <div class="product-wrapper">
+        <div class="container">
+          <div class="relative z-50 flex flex-col justify-center w-full">
+            <h2
+              style="font-size: 36px"
+              class="text-white font-extrabold sm:pb-8 text-center uppercase"
+            >
+            товары
+            </h2>
+            <form class="mt-3">
+              <div class="relative md:w-[600px] sm:w-[400px] m-auto">
+                <div
+                  class="absolute inset-y-0 end-0 flex items-center pe-2"
+                >
+                  <img
+                    src="{% static 'assets/images/icons/search.svg' %}"
+                    alt="Search icon"
+                  />
                 </div>
+                  <label for="default-search"></label><input
+                  id="default-search"
+                  class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                  placeholder="Например: автозапчасти"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- products -->
+      <section class="mt-10 lg:mt-[70px] mb-24">
+        <div class="container">
+          <!-- filters -->
+          <div class="flex gap-4 lg:gap-5">
+            <!-- filter -->
+            <div
+              id="filterContainer"
+              class="relative cursor-pointer flex z-50 shadow-card-shadow items-center rounded-[15px] py-3 px-6"
+            >
+              Фильтр
+              <img class="ml-2" src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}" alt=""/>
+            <!-- filter modal-->
+            <div id="openFilter" style="display: none" class="filter-container">
+              <div
+                class="absolute left-0 top-[60px]  w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
+              >
+                <form class="">
+                  <div class="flex flex-col gap-4">
+                    <p class="text-[#2B292C] font-bold text-[18px]">Цена</p>
+                    <div class="flex items-center gap-5 w-full">
+                        <label>
+                            <input
+                              class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
+                              placeholder="От"
+                              type="text"
+                            />
+                        </label>
+                        <label>
+                            <input
+                            class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
+                            placeholder="До"
+                            type="text"
+                          />
+                        </label>
+                    </div>
+                  </div>
+                  <button
+                    id="filterBtn"
+                    type="submit"
+                    class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
+                  >
+                    Применить
+                  </button>
+                </form>
+              </div>
             </div>
-        </section>
-        <!-- products -->
-        <section class="mt-10 lg:mt-[70px] mb-24">
-            <div class="container">
-                <!-- filters -->
-                <div class="flex gap-4 lg:gap-5">
-                    <div id="categoryBtn"
-                        class="flex items-center gap-2.5 shadow-card-shadow p-4 rounded-[10px] text-lg text-dark-logo font-normal">
-                        <span class="hidden lg-md:block">Категория</span>
-                        <img src="{% static 'assets/images/icons/solid_menu.svg' %}" alt="Menu">
-                    </div>
-                    <div
-                        class="flex items-center gap-2.5 shadow-card-shadow p-4 rounded-[10px] text-lg text-dark-logo font-normal">
-                        <span class="hidden lg-md:block">Фильтр</span>
-                        <img src="{% static 'assets/images/icons/filter.svg' %}" alt="Filter">
-                    </div>
-                    <div
-                        class="flex items-center gap-2.5 shadow-card-shadow p-4 rounded-[10px] text-lg text-dark-logo font-normal">
-                        <span class="">Рекомендуем</span>
-                        <a class="toggle-icon" id="toggleLink">
-                            <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}" alt="" />
-                        </a>
-                    </div>
-                </div>
-                <!-- items -->
-                <div class="card__wrapper w-fit mx-auto gap-4 mt-[30px] lg:mt-10 lg-md:gap-[30px]">
-                    {% for product in products %}
-                    <div class="card shadow-card-shadow p-2.5 relative rounded-[10px] flex flex-col">
-                        <!-- if favorite add class "active" -->
-                        {% if user.is_authenticated %}
-                            {% if product in user.cabinet.favorite_products.all %}
-                            <svg onclick="sendLikeProductRequest({{ product.pk }})" class="heart__icon transition-colors absolute right-2.5 lg-md:hidden active" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path class="transition-colors"
-                                d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z"
-                                fill="transparent"></path>
-                            <path class="transition-colors"
-                                d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z"
-                                fill="currentColor"></path>
-                        </svg>
-                            {% else %}
-                            <svg onclick="sendLikeProductRequest({{ product.pk }})" class="heart__icon transition-colors absolute right-2.5 lg-md:hidden" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path class="transition-colors"
-                                d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z"
-                                fill="transparent"></path>
-                            <path class="transition-colors"
-                                d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z"
-                                fill="currentColor"></path>
-                        </svg>
-                            {% endif %}
-                          {% else %}
-                        <svg onclick="showToast('error', 'Error', 'This is an error toast notification.')" class="heart__icon transition-colors absolute right-2.5 lg-md:hidden" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path class="transition-colors"
-                                d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z"
-                                fill="transparent"></path>
-                            <path class="transition-colors"
-                                d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z"
-                                fill="currentColor"></path>
-                        </svg>
-
-                          {% endif %}
-
-                        <!-- card image -->
-                        <div class="rounded-[10px] overflow-hidden w-full">
-                            <img class="aspect-square" src="{% if product.image%} {{ product.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}" alt="">
-                        </div>
-                        <h2 class="text-dar text-lg font-bold mt-5 line-clamp-1">{{ product.title }}</h2>
-                        <p class="text-dark-text mt-4 line-clamp-2 min-h-10 mb-[18px]">{{ product.mini_desc }}</p>
-                        <div class="mt-auto lg-md:flex justify-between items-end">
-                            <button class="btn-filled w-full py-3 lg-md:max-w-[139px]"><a href="/product/detail/{{ product.pk }}/">Подробнее</a></button>
-                            {% if user.is_authenticated %}
-                            {% if product in user.cabinet.favorite_products.all %}
-                            <svg onclick="sendLikeProductRequest({{ product.pk }})" class="heart__icon hidden transition-colors right-2.5 lg-md:block active" width="24"
-                                height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path class="transition-colors"
-                                    d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z"
-                                    fill="transparent" />
-                                <path class="transition-colors"
-                                    d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z"
-                                    fill="currentColor" />
-                            </svg>
-                            {% else %}
-                            <svg onclick="sendLikeProductRequest({{ product.pk }})" class="heart__icon hidden transition-colors right-2.5 lg-md:block" width="24"
-                                height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path class="transition-colors"
-                                    d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z"
-                                    fill="transparent" />
-                                <path class="transition-colors"
-                                    d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z"
-                                    fill="currentColor" />
-                            </svg>
-                            {% endif %}
-                          {% else %}
-                            <svg onclick="showToast('error', 'Error', 'This is an error toast notification.')" class="heart__icon hidden transition-colors right-2.5 lg-md:block" width="24"
-                                height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path class="transition-colors"
-                                    d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z"
-                                    fill="transparent" />
-                                <path class="transition-colors"
-                                    d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z"
-                                    fill="currentColor" />
-                            </svg>
-
-                          {% endif %}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <!-- pagination -->
-                <div class="lg-md:flex hidden justify-between items-center mt-12">
-    <div class="flex items-center gap-5">
-        {% if page_obj.has_previous %}
-            <div class="flex items-center gap-2">
-                <a href="?page={{ page_obj.previous_page_number }}">
-                    <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}" alt="" />
-                    <p>Назад</p>
-                </a>
             </div>
-        {% endif %}
 
-        <ul class="pagination">
-            {% for num in page_obj.paginator.page_range %}
-                {% if num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <li {% if num == page_obj.number %}class="active"{% endif %}>
-                        <a href="?page={{ num }}">{{ num }}</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+          <!-- select -->
+          <div
+            class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
+            id="selectContainer"
+          >
+            <p>Рекомендуем</p>
+            <a class="toggle-icon" id="toggleLink">
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+                alt="Open"
+                class="openIcon"
+                style="display: block"
+              />
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
+                alt="Close"
+                class="closeIcon"
+                style="display: none"
+              />
+            </a>
+          <!-- select modal -->
+            <form>
+              <ul
+                id="selectModal"
+                class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
+                style="display: none"
+              >
+                <li
+                  id="recommended-list"
+                  class="cursor-pointer selected border-b pb-2 mb-2 flex items-center justify-between"
+                >
+                  Рекомендуем
+                  <img
+                    id="recommended"
+                    style="display: none"
+                    src="{% static 'assets/images/icons/check.svg' %}"
+                    alt="check"
+                  />
+                </li>
+                <li
+                  id="new-list"
+                  class="cursor-pointer selected flex items-center justify-between"
+                >
+                  Новые
+                  <img
+                    id="new"
+                    style="display: none"
+                    src="{% static 'assets/images/icons/check.svg' %}"
+                    alt="check"
+                  />
+                </li>
+            </ul>
+          </form>
+          </div>
+        </div>
+<!-- items -->
+          <div
+            class="card__wrapper w-fit mx-auto gap-4 mt-[30px] lg:mt-10 lg-md:gap-[30px]"
+          >
+            <div
+              class="card shadow-card-shadow p-2.5 relative rounded-[10px] flex flex-col"
+            >
+              <!-- if favorite add class "active" -->
+              <svg
+                class="heart__icon transition-colors absolute right-2.5 lg-md:hidden"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  class="transition-colors"
+                  d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z"
+                  fill="transparent"></path>
+                <path
+                  class="transition-colors"
+                  d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z"
+                  fill="currentColor"></path>
+              </svg>
 
-        {% if page_obj.has_next %}
-            <div class="flex items-center gap-2">
-                <p>Вперед</p>
-                <a href="?page={{ page_obj.next_page_number }}">
-                    <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="" />
-                </a>
+                {% for object in object_list %}
+                <!-- card image -->
+              <div class="rounded-[10px] overflow-hidden w-full">
+                <img
+                  class="aspect-square"
+                  src="{% if object.image %}{{ object.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png {% endif %}"
+                  alt=""
+                />
+              </div>
+              <h2 class="text-dar text-lg font-bold mt-5 line-clamp-1">{{ object.title }}</h2>
+              <p class="text-dark-text mt-4 line-clamp-2 min-h-10 mb-[18px]">
+                  {{ object.mini_desc }}
+              </p>
+              <div class="mt-auto lg-md:flex justify-between items-end">
+                  <a href="{% url 'product_detail' object.id %}">
+                    <button class="btn-filled w-full py-3 lg-md:max-w-[139px]">
+                      Подробнее
+                    </button>
+                  </a>
+                <svg
+                  class="heart__icon hidden transition-colors right-2.5 lg-md:block"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="transition-colors"
+                    d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z"
+                    fill="transparent"></path>
+                  <path
+                    class="transition-colors"
+                    d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z"
+                    fill="currentColor"></path>
+                </svg>
+              </div>
             </div>
-        {% endif %}
-    </div>
-    <div class="flex items-center gap-3">
-        <p>Перейти на страницу</p>
-        <form>
-            <input type="text" name="page" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 p-2.5" />
-            <button type="submit">
-                <img class="bg-[#FFFCB7] p-2 rounded-[5px]"
-                    src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="" />
-            </button>
-        </form>
-    </div>
+            <div
+              class="card shadow-card-shadow p-2.5 relative rounded-[10px] flex flex-col"
+            >
+              <!-- card image -->
+                {% endfor %}
+
+              </div>
+            </div>
+          </div>
+
+          <!-- pagination -->
+<div class="lg-md:flex hidden justify-between items-center">
+      <div class="flex items-center gap-5">
+          <div class="flex items-center gap-2">
+              {% if page_obj.has_previous %}
+                  <a href="?page={{ page_obj.previous_page_number }}" id="prevPagee">
+                      <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}" alt="Назад">
+                  </a>
+                  <p id="prevPage" class="cursor-pointer"><a href="?page={{ page_obj.previous_page_number }}">Назад</a></p>
+              {% else %}
+                  <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}" alt="Назад" id="prevPagee">
+                  <p id="prevPage" class="cursor-pointer">Назад</p>
+              {% endif %}
+          </div>
+          <ul class="pagination" id="pagination">
+              {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                      <li class="page active"><a href="?page={{ num }}">{{ num }}</a></li>
+                  {% else %}
+                      <li class="page"><a href="?page={{ num }}">{{ num }}</a></li>
+                  {% endif %}
+              {% endfor %}
+          </ul>
+          <div class="flex items-center gap-2">
+              {% if page_obj.has_next %}
+                  <p id="nextPage" class="cursor-pointer"><a href="?page={{ page_obj.next_page_number }}">Вперед</a></p>
+                  <a href="?page={{ page_obj.next_page_number }}" id="nextPagee">
+                      <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Вперед">
+                  </a>
+              {% else %}
+                  <p id="nextPage" class="cursor-pointer">Вперед</p>
+                  <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Вперед" id="nextPagee">
+              {% endif %}
+          </div>
+      </div>
+      <div class="flex items-center gap-3">
+          <p>Перейти на страницу</p>
+          <form method="get">
+              <input type="text" name="page" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4">
+              <button type="submit">
+                  <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Перейти">
+              </button>
+          </form>
+      </div>
+  </div>
+  </div>
 </div>
 
-            </div>
-        </section>
+      </section>
     </main>
 {% endblock %}
 {% block js %}
-<script src="{% static './pages/products/index.js' %}"></script>
+<script src="{% static 'pages/products/index.js' %}"></script>
 {% endblock %}

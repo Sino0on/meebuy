@@ -15,11 +15,11 @@ const toggleSelectModal = () => {
   ) {
     selectModal.style.display = "block";
     openIcon.style.display = "none";
-    closeBurgerIcon.style.display = "block";
+    closeIcon.style.display = "block";
   } else {
     selectModal.style.display = "none";
     openIcon.style.display = "block";
-    closeBurgerIcon.style.display = "none";
+    closeIcon.style.display = "none";
   }
 };
 const checkedSelect = (element) => {
@@ -30,7 +30,7 @@ const checkedSelect = (element) => {
       setTimeout(() => {
         selectModal.style.display = "none";
         openIcon.style.display = "block";
-        closeBurgerIcon.style.display = "none";
+        closeIcon.style.display = "none";
       }, 300);
     } else {
       select[i].style.display = "none";
@@ -49,7 +49,7 @@ selectContainer.addEventListener("click", toggleSelectModal);
 // filter
 const filterContainer = document.getElementById("filterContainer");
 const closeFilterContainer = document.getElementById("close-filter-container");
-const toggleFilter = document.getElementById("toggleFilter");
+// const toggleFilter = document.getElementById("toggleFilter");
 const openFilter = document.getElementById("openFilter");
 
 const toggleFilterModal = () => {
