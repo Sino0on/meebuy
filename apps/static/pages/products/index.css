@@ -1,149 +1,191 @@
-.products .hero__wrapper {
-    background: url(../../assets/images/products/hero-bg.jpeg) center no-repeat;
-    background-size: cover;
-    height: 50vmin;
-    position: relative;
-    display: flex;
-    align-items: center;
-    animation: revealContent 2s;
-    border-radius: 20px;
-    margin: auto;
-}
-
-.products .hero__wrapper::before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 20px;
-    animation: revealContentHover 5s;
-}
-
 .products .heart__icon {
-    fill: none;
+  fill: none;
 }
 
-.products .heart__icon.active {
-    path {
+.products .heart__icon.active  path {
+    fill: #e53835;
+  }
 
-        fill: #E53835;
-    }
-}
 
 .products .card__wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(167px, 380px))
+  display: grid;
+  grid-template-columns: repeat(2, minmax(167px, 380px));
 }
 
 /* <!-- pagination --> */
 
 .pagination {
-    list-style: none;
-    padding: 0;
-    display: flex;
+  list-style: none;
+  padding: 0;
+  display: flex;
 }
 
 .pagination li {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .pagination li a {
-    display: block;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-radius: 3px;
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 3px;
 }
 
 .pagination li a:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .pagination li.active a {
-    background-color: #e4db00;
-    color: #4d4d4d;
-    border-color: #e4db00;
+  background-color: #e4db00;
+  color: #4d4d4d;
+  border-color: #e4db00;
 }
 
 .pagination .ellipsis {
-    pointer-events: none;
-    display: flex;
-    align-items: end;
+  pointer-events: none;
+  display: flex;
+  align-items: end;
+}
+
+.breadcrumbs {
+  animation: breadcrumbsAnimation 2s;
+}
+
+@keyframes breadcrumbsAnimation {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: 56px;
+  }
+}
+
+@media (min-width: 992px) {
+  .products .card__wrapper {
+    grid-template-columns: repeat(3, minmax(167px, 380px));
+  }
+}
+
+@media (min-width: 992px) {
+  .products .card img {
+    aspect-ratio: 340 / 300;
+  }
+
+}#filterContainer {
+  position: relative;
+}
+
+/* псевдоэлемент */
+#filterContainer:before {
+  position: fixed;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+  background-color: #0000004d;
+  content: "";
+  transition: width 0.3s ease, height 0.3s ease;
+  z-index: -1;
+}
+
+#filterContainer.active:before {
+  width: 100%;
+  height: 100%;
+}
+
+
+.product-wrapper {
+  background-size: cover;
+  height: 350px;
+  width: 86%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  animation: revealContent 1.6s;
+  border-radius: 20px;
+  margin: auto;
+
+  background: url(../../assets/images/products/hero-bg.jpeg) center no-repeat;
+}
+
+.product-wrapper::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  animation: revealContentHover 1s;
 }
 
 @keyframes revealContent {
-    0% {
-        max-width: 100vw;
-        width: 100vw;
-        height: calc(60vmin);
-        border-radius: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    100% {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  0% {
+    width: 100%;
+    border-radius: 0;
+    transform: scale(1.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  80% {
+    width: 86%;
+    height: 350px;
+  }
+  100% {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1);
+  }
 }
-
 @keyframes revealContentHover {
-    0% {
-        border-radius: 0;
-    }
+  0% {
+    border-radius: 0;
+  }
 }
-
-
-.breadcrumbs {
-    animation: breadcrumbsAnimation 2s;
-}
-
-
-
-@keyframes breadcrumbsAnimation {
-    0% {
-        height: 0;
-    }
-
-    100% {
-        height: 56px;
-    }
-}
-
-@keyframes revealContentHover {
-    0% {
-        border-radius: 0;
-    }
-}
-
 
 @media only screen and (max-width: 768px) {
-    .hero {
-        width: 100%;
-        margin-right: auto;
-        margin-left: auto;
-        padding-right: 1rem;
-        padding-left: 1rem;
+  .suppliers-animation-container {
+    position: inherit;
+    height: 260px;
+  }
+  .product-wrapper {
+    width: 94%;
+    height: 160px;
+    animation: revealContent 1s;
+  }
+  @keyframes revealContent {
+    0% {
+      width: 100%;
+      opacity: 1;
+      border-radius: 0;
+      transform: scale(1.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-}
-
-@media (min-width: 992px) {
-    .products .card__wrapper {
-        grid-template-columns: repeat(3, minmax(167px, 380px))
+    80% {
+      width: 94%;
+      opacity: 0.9;
+      height: 160px;
     }
-}
-
-
-@media (min-width: 992px) {
-    .products .card img {
-        aspect-ratio: 340 / 300;
+    100% {
+      opacity: 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: scale(1);
     }
+  }
+  @keyframes revealContentHover {
+    0% {
+      border-radius: 0;
+    }
+  }
 }
