@@ -33,7 +33,7 @@ closeBurgerIcon.addEventListener('click', toggleMenu);
 
 const toggleFormWidth = () => {
   searchForm.classList.toggle('w-3/4'); // Используйте toggle для переключения класса
-  searchForm.classList.toggle('w-min'); // Используйте toggle для переключения класса
+  searchForm.classList.toggle('w-[50px]'); // Используйте toggle для переключения класса
 };
 
 const heroToggleFormWidth = () => {
