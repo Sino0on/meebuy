@@ -198,7 +198,7 @@
                     </div>
 
                     <div id="Tab2"
-                         class="card__wrapper h-[calc(100%-70px)] tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
+                         class="card__wrapper h-[calc(100%-70px)] hidden tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
                         {% if user.cabinet.favorite_products.exists %}
                         <div class="space-y-5 lg-md:space-y-0 lg-md:p-5 xl:p-10">
                             {% for i in user.cabinet.favorite_products.all %}
@@ -234,7 +234,7 @@
                     </div>
 
                     <div id="Tab3"
-                         class="card__wrapper h-[calc(100%-70px)] tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
+                         class="card__wrapper h-[calc(100%-70px)] hidden tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
                         {% if user.cabinet.favorite_tenders.exists %}
                         <div class="space-y-5  lg-md:space-y-0 lg-md:p-5 xl:p-10">
 
