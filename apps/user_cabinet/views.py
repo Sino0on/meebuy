@@ -1,10 +1,12 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST, require_GET
 from rest_framework.generics import ListAPIView, GenericAPIView
 from apps.authentication.forms import ProviderForm, UserUpdateForm
-from apps.product.models import Product, ProductCategory
+from apps.product.models import Product, ProductCategory, PriceColumn
 from apps.user_cabinet.models import Status, Upping
 from apps.provider.models import ProvideImg, Provider, Category
 from apps.buyer.models import BuyerImg
@@ -283,11 +285,13 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         context['categories'] = categories
         category_tree = self.build_category_tree(categories)
         context['category_tree'] = category_tree
+        context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
         if self.get_queryset().exists():
             context['has_products'] = True
         else:
             context['has_products'] = False
         return context
+
 
     def build_category_tree(self, categories, parent=None, level=0):
         tree = []

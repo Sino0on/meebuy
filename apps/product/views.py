@@ -149,7 +149,7 @@ class ExcelTemplateDownloadView(View):
 class ExcelUploadView(FormView):
     template_name = 'products/upload_file.html'
     form_class = UploadExcelForm
-    success_url = reverse_lazy('success_url_name')
+    success_url = reverse_lazy('user_products')
 
     def form_valid(self, form):
         form = self.form_class(self.request.POST, self.request.FILES)
@@ -196,9 +196,6 @@ class ExcelUploadView(FormView):
 
         return super().form_valid(form)
 
-    def get_success_url(self):
-
-        return reverse_lazy('/products')
 
 
 class ProductCategoryCreateView(CreateView):
@@ -256,6 +253,7 @@ class PriceColumnCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.provider = self.request.user.provider
+        print(form.cleaned_data)
         return super().form_valid(form)
 
     def form_invalid(self, form):

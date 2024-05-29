@@ -23,43 +23,22 @@ const toggleTab = (element) => {
       tabs[i].style.backgroundColor = "#FFFB98";
       blocks[i].style.display = "block";
     } else {
-      tabs[i].style.backgroundColor = "";
+      tabs[i].style.backgroundColor ?  tabs[i].style.backgroundColor = "" : '';
       blocks[i].style.display = "none";
     }
   }
 };
-
 goods.addEventListener("click", () => toggleTab(goods));
 category.addEventListener("click", () => toggleTab(category));
 price.addEventListener("click", () => toggleTab(price));
 autoloader.addEventListener("click", () => toggleTab(autoloader));
 excelLoader.addEventListener("click", () => toggleTab(excelLoader));
 
-
-//excel open block
-const downloadExcel = document.getElementsByClassName("download-excel")[0]
-
-const openExcelBlock = () => {
-  if(goodsBlock.style.display === 'block'){
-        goodsBlock.style.display = 'none'
-    goods.style.backgroundColor = ''
-     excelLoader.style.backgroundColor = "#FFFB98";
-     excelLoaderBlock.style.display = "block";
-
-  }else{
-     excelLoader.style.display = "block";
-    goods.style.backgroundColor = "#FFFB98";
-    goodsBlock.style.display = 'none'
-  }
-}
-downloadExcel.addEventListener("click", openExcelBlock)
-
 // add category
 
 const buttonAddCategory = document.getElementById("add-category");
 const mainSection = document.getElementById("main-section");
 const addCategoryBlock = document.getElementById("add-category-block");
-const GoBackBtn = document.querySelector('#test222')
 
 const toggleAddCategoryBlock = () => {
   if (mainSection.style.display === "block") {
@@ -72,7 +51,6 @@ const toggleAddCategoryBlock = () => {
 };
 
 buttonAddCategory.addEventListener("click", toggleAddCategoryBlock);
-GoBackBtn.addEventListener('click', toggleAddCategoryBlock)
 // add goods manually
 const buttonAddGoods = document.getElementById("add-goods-button");
 const closeAddGoods = document.getElementById("close-goods-button");
@@ -93,7 +71,6 @@ const closeAddGoodsBlock = () => {
 };
 buttonAddGoods.addEventListener("click", toggleAddGoodsBlock);
 closeAddGoods.addEventListener("click", closeAddGoodsBlock);
-
 // photos upload
 const fileInputs = document.querySelectorAll(".photos__input");
 
@@ -109,7 +86,6 @@ fileInputs.forEach((input, index) => {
   input.addEventListener("change", () => {
     const file = input.files[0];
     if (file) {
-      console.log(input.id.substring(4));
       const reader = new FileReader();
       reader.onload = function (event) {
         handleFileLoad(event, index);
@@ -118,33 +94,67 @@ fileInputs.forEach((input, index) => {
     }
   });
 });
+// upload xsl file in excel blo
+document.getElementById("file").addEventListener("change", function (event) {
+  const fileLabelText = document.getElementById("file-label-text");
+  const files = event.target.files;
+  if (files.length > 0) {
+ fileLabelText.textContent = `Selected file: ${files[0].name}`;
+  } else {
+    fileLabelText.textContent =
+      "Нажмите, чтобы загрузить файл или перетащите файл в эту область";
+  }
+});
+// add column
+document.addEventListener("DOMContentLoaded", function () {
+  const addButton = document.getElementById("column-button");
+  const columnContainers = document.getElementsByClassName("column-container");
 
-// upload xsl file in excel block
+  if (columnContainers.length === 0) {
+    console.error("No column containers found");
+    return;
+  }
 
-// document.getElementById('file').addEventListener("change", function(event) {
-//   const fileLabelText = document.getElementById('file-label-text');
-//   const files = event.target.files;
-//   if (files.length > 0) {
-//     fileLabelText.textContent = `Selected file: ${files[0].name}`;
-//
-//     // Автоматически отправляем форму через 3 секунды
-//     setTimeout(() => {
-//       const formData = new FormData();
-//       formData.append('file', files[0]);
-//
-//       fetch('http://localhost:8080', {
-//         method: 'POST',
-//         body: formData,
-//       })
-//       .then(response => response.text())
-//       .then(data => {
-//         console.log(data); // Обработка ответа сервера
-//       })
-//       .catch(error => {
-//         console.error('Ошибка:', error);
-//       });
-//     }, 3000);
-//   } else {
-//     fileLabelText.textContent = 'Нажмите, чтобы загрузить файл или перетащите файл в эту область';
-//   }
-// });
+  const columnContainer = columnContainers[0]; // Assuming you only have one container
+
+  function createNewColumn(event) {
+    event.preventDefault();
+    const newColumn = columnContainer.firstElementChild.cloneNode(true);
+
+    // Clear the input values in the cloned column
+    const inputs = newColumn.querySelectorAll("input");
+    inputs.forEach((input) => {
+      input.value = "";
+    });
+
+    // Add the new column to the end of the container
+    columnContainer.appendChild(newColumn);
+  }
+
+  addButton.addEventListener("click", createNewColumn);
+
+  // Add event listener for delete buttons
+  columnContainer.addEventListener("click", function (event) {
+    if (event.target.classList.contains("delete-button")) {
+      const column = event.target.closest(".column");
+
+      if (columnContainer.children.length > 1) {
+        column.remove();
+      }
+    }
+  });
+});
+
+
+// delete
+const columnContainer = document.getElementById("column-container");
+
+columnContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("delete-button")) {
+    const column = event.target.closest(".column");
+
+    if (column !== columnContainer.querySelector(".column")) {
+      column.remove();
+    }
+  }
+});
