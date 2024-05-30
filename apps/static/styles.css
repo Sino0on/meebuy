@@ -17677,3 +17677,7 @@ input{
 .lg-md\:w-\[350px\]{
   width: 350px;
 }
+
+.h-dvh{
+  height: 100dvh;
+}
