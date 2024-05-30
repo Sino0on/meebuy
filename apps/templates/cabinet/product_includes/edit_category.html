@@ -173,7 +173,7 @@
                 </div>
             </section>
             <!-- these sections are for main content  -->
-            <seciton class="main-content lg-md:mt-[50px] lg-md:col-span-2 xl:col-span-3 lg-md:mb-[120px]">
+            <section class="main-content lg-md:mt-[50px] lg-md:col-span-2 xl:col-span-3 lg-md:mb-[120px]">
                 <div class="card__wrapper mb-28 h-full tab-content shadow-card-shadow rounded-[10px] lg-md:mb-0">
                     <div
                     id="edit-category-block"
@@ -230,18 +230,20 @@
 
                             </select>
                             <br>
-                            <label>
-                                <input
-                                  class="bg-[#F9F9F9] rounded-2xl pl-5 py-4 border border-[#E6E6E6]"
-                                  type="text" name="name"
-                                  value="{{ form.name.value }}"
-                                />
-                            </label>
-                            <button form="add_category"
-                            class="text-[#2B292C] bg-[#E4DB00] rounded-[7px] py-4 text-[16px] font-medium font-mulish uppercase"
-                          >
-                            изменить категорию
-                          </button>
+                            <div class="flex flex-col gap-4">
+                                <label>
+                                  <input
+                                    class="bg-[#F9F9F9] w-full rounded-2xl pl-5 py-4 border border-[#E6E6E6]"
+                                    type="text" name="name"
+                                    value="{{ form.name.value }}"
+                                  />
+                                </label>
+                                <button form="add_category"
+                                class="text-[#2B292C] bg-[#E4DB00] rounded-[7px] py-4 text-[16px] font-medium font-mulish uppercase"
+                              >
+                                изменить категорию
+                              </button>
+                            </div>
                         </form>
                         <form action="{% url 'delete_category' object.id %}" method="post">
                             <button type="submit">
@@ -252,7 +254,7 @@
                     </div>
                   </div>
                 </div>
-            </seciton>
+              </section>
         </div>
     </div>
 </main>
