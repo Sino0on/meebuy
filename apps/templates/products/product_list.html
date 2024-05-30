@@ -29,8 +29,7 @@
           <div class="relative z-50 flex flex-col justify-center w-full">
             <h2
               style="font-size: 36px"
-              class="text-white font-extrabold sm:pb-8 text-center uppercase"
-            >
+              class="text-white font-extrabold sm:pb-8 text-center uppercase">
             товары
             </h2>
             <form class="mt-3">
@@ -70,33 +69,35 @@
               <div
                 class="absolute left-0 top-[60px]  w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
               >
-                <form class="">
-                  <div class="flex flex-col gap-4">
+                <form method="get" action="{% url 'product_list' %}" id="products_filter">
+                    <div class="flex flex-col gap-4">
                     <p class="text-[#2B292C] font-bold text-[18px]">Цена</p>
                     <div class="flex items-center gap-5 w-full">
                         <label>
                             <input
                               class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
-                              placeholder="От"
+                              placeholder="От" name="price_min"
                               type="text"
                             />
                         </label>
                         <label>
                             <input
                             class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
-                            placeholder="До"
+                            placeholder="До" name="price_max"
                             type="text"
+
                           />
                         </label>
                     </div>
                   </div>
-                  <button
-                    id="filterBtn"
-                    type="submit"
-                    class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
-                  >
-                    Применить
-                  </button>
+                    <button
+                            form="products_filter"
+                        id="filterBtn"
+                        type="submit"
+                        class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
+                    >
+                        Применить
+                    </button>
                 </form>
               </div>
             </div>
@@ -223,12 +224,13 @@
               </div>
             </div>
 
+
               {% endfor %}
             </div>
-          </div>
-
-          <!-- pagination -->
+                        <!-- pagination -->
         {% include 'basic_includes/pagination.html' %}
+
+              </div>
 
 
       </section>

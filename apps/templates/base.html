@@ -178,16 +178,16 @@
         </form>
         <ul class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm">
           <li class="font-medium uppercase">
-            <a href="/pages/suppliers/suppliers.html"> Поставщики </a>
+            <a href="{% url 'provider_list' %}"> Поставщики </a>
           </li>
           <li class="font-medium uppercase">
-            <a href="/tender/list/"> Закупки </a>
+            <a href="{% url 'tender_list' %}"> Закупки </a>
           </li>
           <li class="font-medium uppercase">
-            <a href="/product/list/"> Товары </a>
+            <a href="{% url 'product_list' %}"> Товары </a>
           </li>
           <li class="font-medium uppercase">
-            <a href="/buyer/list/"> Покупатели </a>
+            <a href="{% url 'buyer_list' %}"> Покупатели </a>
           </li>
         </ul>
         <div class="hidden lg-md:flex gap-4">
@@ -234,10 +234,10 @@
           <li class="uppercase font-mulish font-extrabold">
             <h6 class="text-[#FFFFFC]">поставщикам</h6>
           </li>
-          <li class="">Добавить компанию</li>
-          <li>Поиск закупок</li>
-          <li>Поиск покупателей</li>
-          <li>Тарифы</li>
+            <li class=""><a href="{% url 'view_profile' %}">Добавить компанию</a></li>
+            <li><a href="{% url 'tender_list' %}">Поиск закупок</a></li>
+            <li><a href="{% url 'buyer_list' %}">Поиск покупателей</a></li>
+            <li><a href="{% url 'tender_list' %}">Тарифы</a></li>
         </ul>
         <ul class="font-mulish flex flex-col gap-6 text-[18px]">
           <li class="uppercase font-extrabold">
@@ -248,17 +248,17 @@
               Поставщики
             </a>
           </li>
-          <li>Производители</li>
-          <li>Поиск товаров</li>
+          <li><a href="{% url 'provider_list' %}">Производители</a></li>
+            <li><a href="{% url 'product_list' %}">Поиск товаров</a></li>
         </ul>
         <ul class="font-mulish flex flex-col gap-6 text-[18px]">
           <li class="uppercase font-mulish font-extrabold">
             <h6 class="text-[#FFFFFC]">о компании</h6>
           </li>
-          <li>Тарифы</li>
-          <li>Баннерная реклама</li>
-          <li>Правила</li>
-          <li>Техподдержка</li>
+          <li><a href="{% url 'tariffs' %}">Тарифы</a></li>
+{#          <li><a href="{% url '' %}">Баннерная реклама</a></li>#}
+{#          <li><a href="{% url '' %}">Правила</a></li>#}
+          <li><a href="{% url 'send_message' %}">Техподдержка</a></li>
         </ul>
       </div>
     </div>
@@ -287,14 +287,12 @@
           stroke="#2B292C"
           stroke-width="2"
           stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+          stroke-linejoin="round"></path>
         <path
           d="M9 23V12H15V23"
           stroke="#FFFFFC"
           stroke-width="2"
-          stroke-linejoin="round"
-        />
+          stroke-linejoin="round"></path>
       </svg>
     </div>
     <span class="text-[#4D4D4D] text-[12px] font-mulish">Главная</span>
