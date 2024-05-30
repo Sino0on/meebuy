@@ -17669,3 +17669,11 @@ input{
 .w-\[50px\]{
   width: 50px;
 }
+
+.w-\[350px\]{
+  width: 350px;
+}
+
+.lg-md\:w-\[350px\]{
+  width: 350px;
+}
