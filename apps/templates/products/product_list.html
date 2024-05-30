@@ -6,6 +6,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'pages/products/index.css' %}">
+<link rel="stylesheet" href="{% static 'pages/filters/index.css' %}" />
 {% endblock %}
 {% block content %}
     <nav class="breadcrumbs bg-[#FFFFFC]">
@@ -158,7 +159,7 @@
           </form>
           </div>
         </div>
-<!-- items -->
+       <!-- items -->
           <div
             class="card__wrapper w-fit mx-auto gap-4 mt-[30px] lg:mt-10 lg-md:gap-[30px]"
           >
@@ -227,6 +228,8 @@
 
               {% endfor %}
             </div>
+
+
                         <!-- pagination -->
         {% include 'basic_includes/pagination.html' %}
 
@@ -238,4 +241,5 @@
 {% endblock %}
 {% block js %}
 <script src="{% static 'pages/products/index.js' %}"></script>
+<script src="{% static 'pages/filters/filter.js' %}"></script>
 {% endblock %}
