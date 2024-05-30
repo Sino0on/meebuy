@@ -80,6 +80,7 @@ class Provider(models.Model):
     email = models.EmailField(blank=True, null=True)
     is_provider = models.BooleanField(blank=True, default=False)
     comment = models.TextField(blank=True, default='Анкета компании заполнена некорректно! Корректно заполните название компании, описание, контактные данные. Затем подайте на перепроверку.')
+    decimal_places = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return f'{self.title}'

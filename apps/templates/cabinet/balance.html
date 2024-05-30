@@ -13,11 +13,11 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
     <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}" />
-    <link rel="stylesheet" href="{% static 'pages/tenders/index.css' %}" />
     <link rel="stylesheet" href="{% static 'pages/profile/addProductToBuy/index.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/profile/balance/index.css' %}" />
 {% endblock %}
   {% block content %}
-    <div class="bg-[#FFFFFC]">
+    <div class="relative bg-[#FFFFFC]">
       <nav class="breadcrumbs">
         <div class="container">
           <div class="">
@@ -248,14 +248,14 @@
                     <p class="text-[#2B292C] text-[18px] font-semibold">
                       Оплата
                     </p>
-                    <div class="flex items-center gap-[10px]">
-                      <input class="h-[24px] w-[24px]" type="radio" />
+                    <label for="kr" class="flex items-center gap-[10px]">
+                      <input id="kr" class="h-[24px] w-[24px]" type="radio" name="country" />
                       <p>Из Кыргызстана</p>
-                    </div>
-                    <div class="flex items-center gap-[10px]">
-                      <input class="h-[24px] w-[24px]" type="radio" />
+                    </label>
+                    <label for="otherCountry" class="flex items-center gap-[10px]">
+                      <input id="otherCountry" class="h-[24px] w-[24px]" type="radio" name="country" />
                       <p>Из другой страны</p>
-                    </div>
+                    </label>
                   </div>
                   <div class="flex flex-col gap-3 w-full">
                     <h6 class="text-[#2B292C] text-[18px] font-semibold">
@@ -327,6 +327,7 @@
                       <div class="confirm-modal">
                         <div id="close_confirm" class="flex justify-end">
                           <svg
+                            class="cursor-pointer"
                             width="32"
                             height="32"
                             viewBox="0 0 32 32"

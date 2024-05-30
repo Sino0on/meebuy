@@ -18,3 +18,13 @@ input[type="checkbox"] {
 .scroll-container {
   scrollbar-width: thin;
 }
+.file-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 2px dashed #bebebe;
+  border-radius: 10px;
+  cursor: pointer;
+}

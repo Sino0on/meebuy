@@ -20,7 +20,7 @@ from apps.user_cabinet.api import BuyStatusView, BuyUppingView
 
 
 urlpatterns = [
-    path('provider/list/', ProviderListView.as_view()),
+    path('provider/list/', ProviderListView.as_view(), name='provider_list'),
     path('provider/detail/<int:pk>/', ProviderDetailView.as_view(), name='provider_detail'),
     path('chat/<str:pk>/', chat_detail, name='chat_detail'),
     path('chat/create/<str:pk>/', create_chat, name='chat_create'),

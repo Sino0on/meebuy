@@ -46,7 +46,7 @@ class UploadExcelForm(forms.Form):
 class ProductCategoryForm(forms.ModelForm):
     class Meta:
         model = ProductCategory
-        fields = ['name', 'parent',]
+        fields = ['name', 'parent', ]
 
 
 class PriceColumnForm(forms.ModelForm):
@@ -54,4 +54,4 @@ class PriceColumnForm(forms.ModelForm):
         model = PriceColumn
         fields = ['name', 'formula', 'min_order_amount']
 
-# PriceColumnFormSet = modelformset_factory(PriceColumn, form=PriceColumnForm, extra=1)
+
