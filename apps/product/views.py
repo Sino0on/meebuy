@@ -50,12 +50,20 @@ class ProductDetailView(DetailView):
         product = self.get_object()
         prices = []
         formulas = PriceColumn.objects.filter(provider__user=self.request.user)
-        for formula in formulas:
+        decimal = product.provider.decimal_places
+        if formulas:
+            for formula in formulas:
+                prices.append({
+                    'name': formula.name,
+                    'price': formula.apply_formula(product.price),
+                    'decimal': decimal
+                })
+        else:
             prices.append({
-                'name': formula.name,
-                'price': formula.apply_formula(product.price)
+                'name': 'Цена',
+                'price': product.price,
+                'decimal': decimal
             })
-        print(prices)
         return prices
 
     def get_context_data(self, **kwargs):
@@ -253,12 +261,34 @@ class PriceColumnCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.provider = self.request.user.provider
-        print(form.cleaned_data)
+
+        # Получаем данные из формы
+        post_data = self.request.POST
+        names = post_data.getlist('name')
+        formulas = post_data.getlist('formula')
+        min_order_amounts = post_data.getlist('min_order_amount')
+        decimal = post_data.get('decimal')
+        form.instance.provider.decimal_places = decimal
+        form.instance.provider.save()
+        print(form.instance.provider.decimal_places)
+        PriceColumn.objects.filter(provider__user=self.request.user).delete()
+        # Обработка данных
+        for index, (name, formula, min_order_amount) in enumerate(zip(names, formulas, min_order_amounts)):
+            # Если текущий индекс не равен последнему индексу в списке, создаем объект PriceColumn
+            if index != len(names) - 1:
+                PriceColumn.objects.create(
+                    provider=form.instance.provider,
+                    name=name,
+                    formula=formula,
+                    min_order_amount=min_order_amount
+                )
+
         return super().form_valid(form)
 
     def form_invalid(self, form):
         print(form.errors)
         return super().form_invalid(form)
+
 
 
 class PriceColumnUpdateView(UpdateView):

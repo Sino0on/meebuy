@@ -286,10 +286,12 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         category_tree = self.build_category_tree(categories)
         context['category_tree'] = category_tree
         context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
+        context['decimal'] = self.request.user.provider.decimal_places
         if self.get_queryset().exists():
             context['has_products'] = True
         else:
             context['has_products'] = False
+
         return context
 
 

@@ -9,7 +9,7 @@
                 {{ price.name }}
               </p>
               <span class="text-[#2B292C] text-[18px] font-extrabold"
-                >{{ price.price }} сом</span
+                >{{ price.price|floatformat:price.decimal }} сом</span
               >
             </div>
 
