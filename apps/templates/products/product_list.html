@@ -161,6 +161,7 @@
           <div
             class="card__wrapper w-fit mx-auto gap-4 mt-[30px] lg:mt-10 lg-md:gap-[30px]"
           >
+              {% for object in object_list %}
             <div
               class="card shadow-card-shadow p-2.5 relative rounded-[10px] flex flex-col"
             >
@@ -183,7 +184,7 @@
                   fill="currentColor"></path>
               </svg>
 
-                {% for object in object_list %}
+
                 <!-- card image -->
               <div class="rounded-[10px] overflow-hidden w-full">
                 <img
@@ -197,11 +198,11 @@
                   {{ object.mini_desc }}
               </p>
               <div class="mt-auto lg-md:flex justify-between items-end">
-                  <a href="{% url 'product_detail' object.id %}">
+
                     <button class="btn-filled w-full py-3 lg-md:max-w-[139px]">
-                      Подробнее
+                     <a href="{% url 'product_detail' object.id %}"> Подробнее</a>
                     </button>
-                  </a>
+
                 <svg
                   class="heart__icon hidden transition-colors right-2.5 lg-md:block"
                   width="24"
@@ -221,18 +222,14 @@
                 </svg>
               </div>
             </div>
-            <div
-              class="card shadow-card-shadow p-2.5 relative rounded-[10px] flex flex-col"
-            >
-              <!-- card image -->
-                {% endfor %}
 
-              </div>
+              {% endfor %}
             </div>
           </div>
 
           <!-- pagination -->
         {% include 'basic_includes/pagination.html' %}
+
 
       </section>
     </main>

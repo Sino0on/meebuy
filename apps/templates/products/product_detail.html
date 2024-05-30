@@ -32,10 +32,10 @@
         >
 
           <div class="flex gap-5 items-center">
-            <img
-              src="{% static 'assets/images/icons/ear-phones-org.svg' %}"
-              alt=""
-            />
+            <div class="w-[50px] h-[50px] overflow-hidden">
+                <img class="w-full h-full object-cover" src="{% if product.provider.image %}{{ product.provider.image.url }}{% endif %}" alt=""
+              />
+            </div>
             <p class="font-black font-mulish">{{ product.provider.title }}</p>
           </div>
           <div class="lg-md:flex hidden items-center gap-5 text-[14px]">
@@ -61,7 +61,7 @@
             class="fixed flex sticky-left left-0 top-0 z-0 flex-col lg-md: items-center gap-7"
           >
             <img
-              class="lg-mg: w-[350px]"
+              class="lg-mg:w-[350px]"
               src="{% if product.image %}{{ product.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}"
               alt=""
             />
@@ -96,7 +96,7 @@
                 src="{% static 'assets/images/icons/next.svg' %}"
                 alt=""
               />
-              <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+              <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
 
               <!-- Initialize Swiper -->
             </div>

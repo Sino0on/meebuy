@@ -12,13 +12,15 @@ const heroFormBtn = document.querySelector('#heroFormBtn');
 // hero title
 const heroTitle = document.querySelector('#heroTitle');
 // heart
-const hearts = document.querySelectorAll('.heart');
+const heart = document.querySelector('#heart');
 
 const toggleMenu = () => {
   if (burgerMenu.classList.contains('translate-x-0')) {
     burgerMenu.classList.remove('translate-x-0');
     burgerMenu.classList.add('translate-x-full');
+    enableScroll();
   } else {
+    disableScroll();
     burgerMenu.classList.add('translate-x-0');
     burgerMenu.classList.remove('translate-x-full');
   }
@@ -31,7 +33,7 @@ closeBurgerIcon.addEventListener('click', toggleMenu);
 
 const toggleFormWidth = () => {
   searchForm.classList.toggle('w-3/4'); // Используйте toggle для переключения класса
-  searchForm.classList.toggle('w-min'); // Используйте toggle для переключения класса
+  searchForm.classList.toggle('w-[50px]'); // Используйте toggle для переключения класса
 };
 
 const heroToggleFormWidth = () => {
@@ -122,9 +124,52 @@ const newSlide = new Swiper('.new__slider', {
 
 // heart
 
-hearts.forEach(heart => {
-    heart.addEventListener('click', () => {
-        heart.classList.toggle('text-logo-color');
+const toggleActive = () => {
+  heart.classList.toggle('text-logo-color');
+};
+
+heart.addEventListener('click', toggleActive);
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Удаляем анимацию выхода, если она есть
+        entry.target.classList.remove('animate__fadeOutDown');
+        // Добавляем анимацию входа с задержкой
+        entry.target.style.animationDelay = `${index * 0.3}s`; // Задержка увеличивается на 0.5s с каждым следующим элементом
+        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+        observer.unobserve(entry.target); // Отключаем наблюдение после начала анимации
+      } else {
+        // Убираем задержку для анимации выхода
+        entry.target.style.animationDelay = '0s';
+        // Добавляем анимацию выхода
+        entry.target.classList.remove('animate__fadeInUp');
+        entry.target.classList.add('animate__animated', 'animate__fadeOutDown');
+      }
     });
+  },
+  {
+    threshold: [0, 0.25, 0.5, 0.75, 1],
+  }
+);
+
+document.querySelectorAll('.activities').forEach((element) => {
+  observer.observe(element);
 });
 
+function disableScroll() {
+  if (window.innerWidth > 992) {
+    return;
+  }
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden'; // Для поддержки разных браузеров
+}
+
+function enableScroll() {
+  if (window.innerWidth > 992) {
+    return;
+  }
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = ''; // Возвращаем стандартное поведение
+}

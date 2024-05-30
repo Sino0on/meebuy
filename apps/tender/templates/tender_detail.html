@@ -65,7 +65,7 @@
 
                             <div class="swiper product__slider mt-[30px] lg:mt-10">
                                 <div class="swiper-wrapper">
-                                    {% for i in tender.tender_image.all %}
+                                    {% for i in tender.tender_images.all %}
                                     <div class="swiper-slide">
                                         <div class="aspect-square rounded-[10px] overflow-hidden">
                                             <img class="w-full h-full"
@@ -85,7 +85,7 @@
                                 <img class="cursor-pointer" src="{% static 'assets/images/icons/new.svg' %}" alt="New">
                                 <img class="cursor-pointer w-6 h-6" src="{% static 'assets/images/icons/premium.svg' %}"
                                     alt="Diamond">
-                                <img class="cursor-pointer" src="{% static 'assets/images/icons/letter.svg' %}" alt="Letter">
+                                <a href="{% if user.is_authenticated %}{% url 'chat_create' tender.user.pk %}{% endif %}"><img class="cursor-pointer" src="{% static 'assets/images/icons/letter.svg' %}" alt="Letter"></a>
                                 <img class="cursor-pointer" src="{% static 'assets/images/icons/phone.svg' %}" alt="Phone">
                                 <svg class="cursor-pointer transition-colors" id="heart" width="24" height="24"
                                     viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -139,8 +139,7 @@
                                             fill="#2B292C" />
                                     </svg>
 
-                                    <span>Телефон</span> <a href="" class="underline">{{ tender.user.provider.phones }}<span
-                                            class="text-grey-light">-xx - xx</span></a>
+                                    <span>Телефон</span> <a href="" class="underline">{{ tender.user.provider.phones }}</a>
                                 </li>
                                 <li class="flex items-center gap-1 mt-5">
                                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
@@ -150,7 +149,7 @@
                                             fill="#2B292C" />
                                     </svg>
 
-                                    <span>Сайт</span> <a href="" class="underline text-grey-light">xxxxxxxxxxx</a>
+                                    <span>Сайт</span> <a href="/redirect_to_site/{{ tender.user.cabinet.pk }}/" class="underline text-grey-light">{{ tender.user.provider.web_site }}</a>
                                 </li>
                             </ul>
                             {% else %}
@@ -166,7 +165,7 @@
                                             fill="currentColor" />
                                     </svg>
 
-                                    <p>Наш адрес <a href="" class="underline">{{ tender.user.provider.address }}</a></p>
+                                    <p>Наш адрес <a href="" class="underline">****************</a></p>
                                 </li>
                                 <li class="flex items-center gap-1 mt-5">
                                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
@@ -177,7 +176,7 @@
                                     </svg>
 
                                     <span>E-mail</span> <a href=""
-                                        class="underline text-grey-light">{{ tender.user.provider.email }}</a>
+                                        class="underline text-grey-light">*************</a>
                                 </li>
                                 <li class="flex items-center gap-1 mt-5">
                                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
@@ -187,7 +186,7 @@
                                             fill="#2B292C" />
                                     </svg>
 
-                                    <span>Телефон</span> <a href="" class="underline">{{ tender.user.provider.phones }}<span
+                                    <span>Телефон</span> <a href="" class="underline">***********<span
                                             class="text-grey-light">-xx - xx</span></a>
                                 </li>
                                 <li class="flex items-center gap-1 mt-5">

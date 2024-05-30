@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST, require_GET
 from rest_framework.generics import ListAPIView, GenericAPIView
 from apps.authentication.forms import ProviderForm, UserUpdateForm
 from apps.product.models import Product, ProductCategory, PriceColumn
-from apps.user_cabinet.models import Status, Upping
+from apps.user_cabinet.models import Status, Upping, Cabinet
 from apps.provider.models import ProvideImg, Provider, Category
 from apps.buyer.models import BuyerImg
 from apps.chat.models import Message
@@ -319,6 +319,7 @@ class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['uppings'] = Upping.objects.all()
+        context['chart'] = generate_chart(self.request.user.cabinet)
         contacts = Contacts.load()
         context['contacts'] = contacts
         return context
@@ -550,3 +551,7 @@ def tariff_buy(request):
     return JsonResponse(data={"Info": "ok"}, status=200)
 
 
+def redirect_to_site(request, pk):
+    provider = get_object_or_404(Cabinet, id=pk)
+    SiteOpenCount.objects.create(user=provider)
+    return redirect(provider.user.provider.web_site)
