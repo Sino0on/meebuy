@@ -3,6 +3,7 @@
 {% block title %}Закупки{% endblock %}
 {% block css %}
 <link href="{% static 'pages/procurement/procurement.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'pages/filters/index.css' %}" />
 {% endblock %}
 {% block content %}
     <!-- main section -->
@@ -79,148 +80,164 @@
 
     <div class="bg-[#FFFFFC] pb-16">
       <div class="container">
+        <!-- filters -->
         <div
-          class="flex gap-6 lg-md: items-center md:my-10 md: mb-5 lg-md: mt-10"
+        class="flex gap-6 lg-md: items-center md:my-10 md: mb-5 lg-md: mt-10"
+      >
+        <!-- filter -->
+        <div
+          id="filterContainer"
+          class="relative cursor-pointer z-50 shadow-card-shadow rounded-[15px] py-3 px-6"
         >
-          <!-- filter -->
-          <div
-            id="filterContainer"
-            class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6"
-          >
+          <div class="flex items-center gap-4">
             Фильтр
             <img
               src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
               alt=""
             />
           </div>
-          <!-- filter modal -->
+          <!-- filter modal-->
           <div id="openFilter" style="display: none" class="filter-container">
             <div
-              class="absolute md:top-[18%] top-[10%] sm:left-28 left-5 flex flex-col gap-5 bg-[#fff] rounded-[15px] py-8 px-10 sm:w-[408px] w-[90%]"
+              class="absolute left-0 top-[60px] flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8 sm:w-[408px] w-auto"
             >
-              <div class="w-full">
-                <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                  Дата создания
-                </h2>
-                <input
-                  class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                  type="text"
-                  placeholder="Дата создания"
-                />
-              </div>
+              <form>
+                <div class="flex flex-col gap-4">
+                  <div class="w-full">
+                    <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                      Дата создания
+                    </h2>
+                    <input
+                      class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                      type="text"
+                      placeholder="Дата создания"
+                    />
+                  </div>
+                  <div class="w-full">
+                    <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                      Бюджет
+                    </h2>
+                    <div class="flex items-center gap-5">
+                      <input
+                        class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                        type="text"
+                        placeholder="От"
+                      />
+                      <input
+                        class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                        type="text"
+                        placeholder="До"
+                      />
+                    </div>
+                  </div>
+                  <div class="w-full">
+                    <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                      Исключить слова
+                    </h2>
+                    <input
+                      class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                      type="text"
+                      placeholder="Исключить слова"
+                    />
+                  </div>
 
-              <div class="w-full">
-                <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                  Бюджет
-                </h2>
-                <div class="flex items-center gap-5">
-                  <input
-                    class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                    type="text"
-                    placeholder="От"
-                  />
-                  <input
-                    class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                    type="text"
-                    placeholder="До"
-                  />
-                </div>
-              </div>
-              <div class="w-full">
-                <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                  Исключить слова
-                </h2>
-                <input
-                  class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                  type="text"
-                  placeholder="Исключить слова"
-                />
-              </div>
+                  <div class="w-full">
+                    <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                      Контакты
+                    </h2>
+                    <div class="flex items-center gap-[10px]">
+                      <input class="h-[18px] w-[18px]" type="checkbox" />
+                      <p class="text-[#777777] font-normal">
+                        Только с телефонами
+                      </p>
+                    </div>
+                  </div>
 
-              <div class="w-full">
-                <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                  Контакты
-                </h2>
-                <div class="flex items-center gap-[10px]">
-                  <input class="h-[18px] w-[18px]" type="checkbox" />
-                  <p class="text-[#777777] font-normal">Только с телефонами</p>
+                  <div class="w-full">
+                    <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                      Регион
+                    </h2>
+                    <div class="flex flex-col gap-5">
+                      <input
+                        class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                        type="text"
+                        placeholder="Страна"
+                      />
+                      <input
+                        class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                        type="text"
+                        placeholder="Город"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <div class="w-full">
-                <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                  Регион
-                </h2>
-                <div class="flex flex-col gap-5">
-                  <input
-                    class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                    type="text"
-                    placeholder="Страна"
-                  />
-                  <input
-                    class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                    type="text"
-                    placeholder="Город"
-                  />
-                </div>
-              </div>
-              <!-- button -->
-              <button class="text-[#2B292C] bg-[#E4DB00] py-3 px-7 rounded-lg">
-                Применить
-              </button>
+                <button
+                  id="filterBtn"
+                  type="submit"
+                  class="bg-[#E4DB00] w-full rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
+                >
+                  Применить
+                </button>
+              </form>
             </div>
           </div>
-
-          <!-- select -->
-          <div
-            class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6"
-            id="selectContainer"
-          >
-            <p>Рекомендуем</p>
-            <a class="toggle-icon" id="toggleLink">
-              <img
-                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-                alt="Open"
-                class="openIcon"
-                style="display: block"
-              />
-              <img
-                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
-                alt="Close"
-                class="closeIcon"
-                style="display: none"
-              />
-            </a>
-          </div>
         </div>
-        <!-- select modal -->
-        <ul
-          id="selectModal"
-          class="modal cards absolute md:left-[21%] left-[26%] md:top-[17.6%] top-[9.5%] z-50 rounded-2xl right-8 bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
-          style="display: none"
+        <!-- select -->
+        <div
+          class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
+          id="selectContainer"
         >
-          <li
-            id="recommended-list"
-            class="selected border-b pb-2 mb-2 flex items-center justify-between"
-          >
-            Рекомендуем
+          <p>Рекомендуем</p>
+          <a class="toggle-icon" id="toggleLink">
             <img
-              id="recommended"
-              style="display: none"
-              src="{% static 'assets/images/icons/check.svg' %}"
-              alt="check"
+              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+              alt="Open"
+              class="openIcon"
+              style="display: block"
             />
-          </li>
-          <li id="new-list" class="selected flex items-center justify-between">
-            Новые
             <img
-              id="new"
+              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
+              alt="Close"
+              class="closeIcon"
               style="display: none"
-              src="{% static 'assets/images/icons/check.svg' %}"
-              alt="check"
             />
-          </li>
-        </ul>
+          </a>
+          <!-- select modal -->
+          <form>
+            <ul
+              id="selectModal"
+              class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
+              style="display: none"
+            >
+              <li
+                id="recommended-list"
+                class="cursor-pointer selected border-b pb-2 mb-2 flex items-center justify-between"
+              >
+                Рекомендуем
+                <img
+                  id="recommended"
+                  style="display: none"
+                  src="{% static 'assets/images/icons/check.svg' %}"
+                  alt="check"
+                />
+              </li>
+              <li
+                id="new-list"
+                class="cursor-pointer selected flex items-center justify-between"
+              >
+                Новые
+                <img
+                  id="new"
+                  style="display: none"
+                  src="{% static 'assets/images/icons/check.svg' %}"
+                  alt="check"
+                />
+              </li>
+            </ul>
+          </form>
+        </div>
+        </div>
+
         <!-- card list -->
         <div class="flex flex-col gap-7">
           {% for tender in tenders %}
@@ -240,7 +257,7 @@
               <li class="icon-container">
                 <img
                   id="burgerIcon"
-                  src="{% static 'assets/images/icons/email.svg' %}""
+                  src="{% static 'assets/images/icons/email.svg' %}"
                   alt=""
                 />
                 <span class="icon-text">Указан E-mail</span>
@@ -365,49 +382,49 @@
         <!-- pagination -->
 
         <div class="lg-md:flex hidden justify-between items-center">
-      <div class="flex items-center gap-5">
-          <div class="flex items-center gap-2">
-              {% if page_obj.has_previous %}
-                  <a href="?page={{ page_obj.previous_page_number }}" id="prevPagee">
-                      <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"" alt="Назад">
-                  </a>
-                  <p id="prevPage" class="cursor-pointer"><a href="?page={{ page_obj.previous_page_number }}">Назад</a></p>
-              {% else %}
-                  <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"" alt="Назад" id="prevPagee">
-                  <p id="prevPage" class="cursor-pointer">Назад</p>
-              {% endif %}
-          </div>
-          <ul class="pagination" id="pagination">
-              {% for num in page_obj.paginator.page_range %}
-                  {% if page_obj.number == num %}
-                      <li class="page active"><a href="?page={{ num }}">{{ num }}</a></li>
+          <div class="flex items-center gap-5">
+              <div class="flex items-center gap-2">
+                  {% if page_obj.has_previous %}
+                      <a href="?page={{ page_obj.previous_page_number }}" id="prevPagee">
+                          <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"" alt="Назад">
+                      </a>
+                      <p id="prevPage" class="cursor-pointer"><a href="?page={{ page_obj.previous_page_number }}">Назад</a></p>
                   {% else %}
-                      <li class="page"><a href="?page={{ num }}">{{ num }}</a></li>
+                      <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"" alt="Назад" id="prevPagee">
+                      <p id="prevPage" class="cursor-pointer">Назад</p>
                   {% endif %}
-              {% endfor %}
-          </ul>
-          <div class="flex items-center gap-2">
-              {% if page_obj.has_next %}
-                  <p id="nextPage" class="cursor-pointer"><a href="?page={{ page_obj.next_page_number }}">Вперед</a></p>
-                  <a href="?page={{ page_obj.next_page_number }}" id="nextPagee">
-                      <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"" alt="Вперед">
-                  </a>
-              {% else %}
-                  <p id="nextPage" class="cursor-pointer">Вперед</p>
-                  <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"" alt="Вперед" id="nextPagee">
-              {% endif %}
+              </div>
+              <ul class="pagination" id="pagination">
+                  {% for num in page_obj.paginator.page_range %}
+                      {% if page_obj.number == num %}
+                          <li class="page active"><a href="?page={{ num }}">{{ num }}</a></li>
+                      {% else %}
+                          <li class="page"><a href="?page={{ num }}">{{ num }}</a></li>
+                      {% endif %}
+                  {% endfor %}
+              </ul>
+              <div class="flex items-center gap-2">
+                  {% if page_obj.has_next %}
+                      <p id="nextPage" class="cursor-pointer"><a href="?page={{ page_obj.next_page_number }}">Вперед</a></p>
+                      <a href="?page={{ page_obj.next_page_number }}" id="nextPagee">
+                          <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"" alt="Вперед">
+                      </a>
+                  {% else %}
+                      <p id="nextPage" class="cursor-pointer">Вперед</p>
+                      <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"" alt="Вперед" id="nextPagee">
+                  {% endif %}
+              </div>
           </div>
-      </div>
-      <div class="flex items-center gap-3">
-          <p>Перейти на страницу</p>
-          <form method="get">
+          <div class="flex items-center gap-3">
+             <p>Перейти на страницу</p>
+              <form class="flex items-center gap-3" method="get">
               <input type="text" name="page" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4">
               <button type="submit">
                   <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}"" alt="Перейти">
               </button>
-          </form>
-      </div>
-  </div>
+             </form>
+         </div>
+        </div>
   </div>
 </div>
       </div>
@@ -416,4 +433,5 @@
 
 {% block js %}
 <script src="{% static 'pages/procurement/procurement.js' %}"></script>
+<script src="{% static 'pages/filters/filter.js' %}"></script>
 {% endblock %}

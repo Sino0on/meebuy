@@ -191,16 +191,6 @@
   fill: red;
 }
 
-/* filter */
-.filter-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #0000004d;
-  z-index: 9;
-}
 input[type="checkbox"] {
   accent-color: #bab306 !important;
   color: white !important;
