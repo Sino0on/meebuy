@@ -13,8 +13,8 @@
       <div>
         <div class="menu">
           <div class="container flex gap-4 py-4">
-            <img src="../../../assets/images/icons/home.svg" alt="" />
-            <img src="../../../assets/images/icons/arrow-prev.svg" alt="" />
+            <img src="{% static '' %}assets/images/icons/home.svg" alt="" />
+            <img src="{% static '' %}assets/images/icons/arrow-prev.svg" alt="" />
             <p class="font-normal font-mulish text-[#A0A0A0]">покупатели</p>
           </div>
         </div>
@@ -31,7 +31,7 @@
                 <div class="relative md:w-[600px] sm:w-[400px] m-auto">
                   <div class="absolute inset-y-0 end-0 flex items-center pe-2">
                     <img
-                      src="../../../assets/images/icons/search.svg"
+                      src="{% static 'assets/images/icons/search.svg' %}"
                       alt="Search icon"
                     />
                   </div>
@@ -89,7 +89,7 @@
           >
             Фильтр
             <img
-              src="../../assets/images/suppliers/suppliers/icons/filter.svg"
+              src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
               alt=""
             />
           </div>
@@ -153,13 +153,13 @@
             <p>Рекомендуем</p>
             <a class="toggle-icon" id="toggleLink">
               <img
-                src="../../assets/images/suppliers/suppliers/icons/arrow-down.svg"
+                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
                 alt="Open"
                 class="openIcon"
                 style="display: block"
               />
               <img
-                src="../../assets/images/suppliers/suppliers/icons/arrow-up.svg"
+                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
                 alt="Close"
                 class="closeIcon"
                 style="display: none"
@@ -181,7 +181,7 @@
             <img
               id="recommended"
               style="display: none"
-              src="../../assets/images/icons/check.svg"
+              src="{% static 'assets/images/icons/check.svg' %}"
               alt="check"
             />
           </li>
@@ -190,7 +190,7 @@
             <img
               id="new"
               style="display: none"
-              src="../../assets/images/icons/check.svg"
+              src="{% static 'assets/images/icons/check.svg' %}"
               alt="check"
             />
           </li>
@@ -206,7 +206,7 @@
               class="flex md:flex-row flex-col gap-7 md:items-center items-start"
             >
               <img
-                src="{{ i.image.url }}"
+                src="{% if i.image %}{{ i.image.url }}{% endif %}"
                 alt=""
               />
               <div class="flex flex-col gap-9">
@@ -313,52 +313,7 @@
 
         <!-- pagination -->
 
-        <div class="lg-md:flex hidden justify-between items-center">
-          <div class="flex items-center gap-5">
-            <div class="flex items-center gap-2">
-              <img
-                src="../../assets/images/suppliers/suppliers/icons/prev.svg"
-                alt=""
-                id="prevPagee"
-              />
-              <p id="prevPage" class="cursor-pointer">Назад</p>
-            </div>
-            <ul class="pagination" id="pagination">
-              <li class="page"><a href="#">1</a></li>
-              <li class="page"><a href="#">2</a></li>
-              <li class="page"><a href="#">3</a></li>
-              <li class="page"><a href="#">4</a></li>
-              <li class="page"><a href="#">5</a></li>
-              <li class="ellipsis">...</li>
-              <li class="page"><a href="#">6</a></li>
-              <li class="page active"><a href="#">7</a></li>
-              <li class="page"><a href="#">8</a></li>
-              <li class="page"><a href="#">9</a></li>
-              <li class="page"><a href="#">10</a></li>
-              <li class="ellipsis">...</li>
-            </ul>
-            <div class="flex items-center gap-2">
-              <p id="nextPage" class="cursor-pointer">Вперед</p>
-              <img
-                src="../../assets/images/suppliers/suppliers/icons/next.svg"
-                alt=""
-                id="nextPagee"
-              />
-            </div>
-          </div>
-          <div class="flex items-center gap-3">
-            <p>Перейти на страницу</p>
-            <input
-              type="text"
-              class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4"
-            />
-            <img
-              class="bg-[#FFFCB7] p-2 rounded-[5px]"
-              src="../../assets/images/suppliers/suppliers/icons/next.svg"
-              alt=""
-            />
-          </div>
-        </div>
+      {% include 'basic_includes/pagination.html' %}
       </div>
     </div>
 {% endblock %}
