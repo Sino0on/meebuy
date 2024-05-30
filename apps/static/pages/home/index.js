@@ -12,7 +12,7 @@ const heroFormBtn = document.querySelector('#heroFormBtn');
 // hero title
 const heroTitle = document.querySelector('#heroTitle');
 // heart
-const heart = document.querySelector('#heart');
+const hearts = document.querySelectorAll('.heart');
 
 const toggleMenu = () => {
   if (burgerMenu.classList.contains('translate-x-0')) {
@@ -124,11 +124,13 @@ const newSlide = new Swiper('.new__slider', {
 
 // heart
 
-const toggleActive = () => {
-  heart.classList.toggle('text-logo-color');
+const toggleActive = (e) => {
+  e.target.classList.toggle('text-logo-color');
 };
 
-heart.addEventListener('click', toggleActive);
+hearts.forEach((heart ) => {
+  heart.addEventListener('click', toggleActive);
+})
 
 const observer = new IntersectionObserver(
   (entries) => {

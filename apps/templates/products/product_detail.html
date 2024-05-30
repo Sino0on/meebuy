@@ -11,104 +11,104 @@
 {% endblock %}
 {% block content %}
 
-    <nav class="bg-[#FFFFFC]">
-      <div class="container">
-        <div class="">
-          <div class="flex gap-4 py-4">
-            <div class="lg-md:flex hidden items-center gap-4">
-              <a href="/"><img src="{% static 'assets/images/suppliers/icons/home.svg' %}" alt="" /></a>
+<nav class="bg-[#FFFFFC]">
+  <div class="container">
+    <div class="">
+      <div class="flex gap-4 py-4">
+        <div class="lg-md:flex hidden items-center gap-4">
+          <a href="/"><img src="{% static 'assets/images/suppliers/icons/home.svg' %}" alt="" /></a>
               <img src="{% static 'assets/images/icons/arrow-prev.svg' %}"  alt="" />
               <a href="/provider/list/" class="font-normal font-mulish text-[#A0A0A0]">Поставщики</a>
-            </div>
-            <img src="{% static 'assets/images/icons/arrow-prev.svg' %}"  alt="" />
+        </div>
+        <img src="{% static 'assets/images/icons/arrow-prev.svg' %}"  alt="" />
             <a href="/provider/detail/{{ product.provider.pk }}/" class="font-normal font-mulish text-[#A0A0A0]">{{ product.provider.title }}</a>
             <img src="{% static 'assets/images/icons/arrow-prev.svg' %}"  alt="" />
             <p class="font-normal font-mulish text-[#A0A0A0]">{{ product.title }}</p>
-          </div>
-        </div>
-        <a href="/provider/detail/{{ product.provider.pk }}/">
-        <div
-          class="cards flex items-center gap-6 bg-[#ffffff] p-5 rounded-2xl mt-8 mb-16"
-        >
-
-          <div class="flex gap-5 items-center">
-            <div class="w-[50px] h-[50px] overflow-hidden">
-                <img class="w-full h-full object-cover" src="{% if product.provider.image %}{{ product.provider.image.url }}{% endif %}" alt=""
-              />
-            </div>
-            <p class="font-black font-mulish">{{ product.provider.title }}</p>
-          </div>
-          <div class="lg-md:flex hidden items-center gap-5 text-[14px]">
-            <p class="font-medium">{{ product.provider.mini_desc }}</p>
-            <div class="flex items-center gap-2 text-[#4D4D4D]">
-              <img
-                class="text-[#4D4D4D]"
-                src="{% static 'assets/images/icons/location.svg' %}"
-                alt=""
-              />
-              <p class="text-[#4D4D4D]">{{ product.provider.address }}</p>
-            </div>
-          </div>
-        </div></a>
       </div>
-    </nav>
+    </div>
+    <div
+      class="cards flex items-center gap-6 bg-[#ffffff] p-5 rounded-2xl mt-8 mb-16"
+    >
 
-    <main>
-      <div class="container flex md:flex-row flex-col gap-14 mb-18">
-        <!-- left side -->
-        <div class="lg-md:sticky-left">
-          <div
-            class="fixed flex sticky-left left-0 top-0 z-0 flex-col lg-md: items-center gap-7"
-          >
-            <img
-              class="lg-mg:w-[350px]"
-              src="{% if product.image %}{{ product.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}"
-              alt=""
-            />
-            <!-- slider -->
-            <div
-              class="mt-5 mb-7 relative lg-md:w-[357px] w-[340px] lg-md:h-[82px] h-[80px]"
-            >
-              <img
-                style="left: -16px"
-                class="swiper-button-prev prev"
-                src="{% static 'assets/images/icons/prev.svg' %}"
-                alt=""
-              />
-              <div class="swiper swiper1">
-                <div class="swiper-wrapper ml-4">
-                  {% for image in product.images.all %}
-                  <div class="swiper-slide">
-                    <img
-                      class="rounded-xl lg-md:w-[92px] lg-md:h-[82px] h-[80px]"
-                      src="{{ image.image.url }}"
-                      alt=""
-                    />
-                  </div>
-                  {% endfor %}
-                </div>
+      <div class="flex gap-5 items-center">
+        <img
+          class="w-[50px] h-[50px] rounded-full"
+          src="{% if product.provider.image %}{{ product.provider.image.url }}{% endif %}"
+          alt=""
+        />
+        <p class="font-black font-mulish">{{ product.provider.title }}</p>
+      </div>
+      <div class="lg-md:flex hidden items-center gap-5 text-[14px]">
+        <p class="font-medium">{{ product.provider.mini_desc }}</p>
+        <div class="flex items-center gap-2 text-[#4D4D4D]">
+          <img
+            class="text-[#4D4D4D]"
+            src="{% static 'assets/images/icons/location.svg' %}"
+            alt=""
+          />
+          <p class="text-[#4D4D4D]">{{ product.provider.address }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 
-                <div class="swiper-pagination"></div>
+<main>
+  <div class="container flex md:flex-row flex-col gap-14 mb-18">
+    <!-- left side -->
+    <div class="lg-md:sticky-left">
+      <div
+        class="fixed flex sticky-left left-0 top-0 z-0 flex-col lg-md: items-center gap-7"
+      >
+        <img
+          class="w-[350px] rounded-[10px]"
+          src="{% if product.image %}{{ product.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}"
+          alt=""
+        />
+        <!-- slider -->
+        <div
+          class="mt-5 mb-7 relative lg-md:w-[357px] w-[340px] lg-md:h-[82px] h-[80px]"
+        >
+          <img
+            style="left: -16px"
+            class="swiper-button-prev prev"
+            src="{% static 'assets/images/icons/prev.svg' %}"
+            alt=""
+          />
+          <div class="swiper swiper1">
+            <div class="swiper-wrapper ml-4">
+              {% for image in product.images.all %}
+              <div class="swiper-slide">
+                <img
+                  class="rounded-xl lg-md:w-[92px] lg-md:h-[82px] h-[80px]"
+                  src="{{ image.image.url }}"
+                  alt=""
+                />
               </div>
-              <img
-                style="right: -16px"
-                class="swiper-button-next absolute"
-                src="{% static 'assets/images/icons/next.svg' %}"
-                alt=""
-              />
-              <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
-
-              <!-- Initialize Swiper -->
+              {% endfor %}
             </div>
+
+            <div class="swiper-pagination"></div>
+          </div>
+          <img
+            style="right: -16px"
+            class="swiper-button-next absolute"
+            src="{% static 'assets/images/icons/next.svg' %}"
+            alt=""
+          />
+          <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
+
+          <!-- Initialize Swiper -->
+        </div>
 
             <!-- provider contacts -->
           {% include 'products/product_detail_includes/provider_contacts.html' %}
-          </div>
-        </div>
-        <!-- right side -->
-        {% include 'products/product_detail_includes/product_info.html' %}
       </div>
-    </main>
+    </div>
+    <!-- right side -->
+    {% include 'products/product_detail_includes/product_info.html' %}
+  </div>
+</main>
 
 {% include 'products/product_detail_includes/similar_products.html' %}
 {% endblock %}
