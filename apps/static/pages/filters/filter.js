@@ -71,13 +71,19 @@ const toggleFilterModal = () => {
   openFilter.style.display =
     openFilter.style.display === "none" ? "block" : "none";
 };
-const toggleCloseFilterModal = () => {
-  openFilter.style.display = "none";
-};
 
+const toggleCloseFilterModal = (event) => {
+  if (
+    openFilter.style.display === "block" &&
+    !filterContainer.contains(event.target) &&
+    !openFilter.contains(event.target)
+  ) {
+    return (openFilter.style.display = "none");
+  }
+};
 filterBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  toggleCloseFilterModal();
+  closeFilterModal();
 });
 
 openFilter.addEventListener("click", (e) => {

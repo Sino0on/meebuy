@@ -68,7 +68,7 @@
             <!-- filter modal-->
             <div id="openFilter" style="display: none" class="filter-container">
               <div
-                class="absolute left-0 top-[60px]  w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
+                class="absolute z-50 left-0 top-[60px]  w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
               >
                 <form method="get" action="{% url 'product_list' %}" id="products_filter">
                     <div class="flex flex-col gap-4">
@@ -103,7 +103,6 @@
               </div>
             </div>
             </div>
-
           <!-- select -->
           <div
             class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
