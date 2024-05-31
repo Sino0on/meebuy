@@ -102,7 +102,7 @@
             <div
               class="absolute z-50 left-0 top-[60px] flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8 sm:w-[408px] w-auto"
             >
-              <form>
+                <form method="get" type="submit" action="{% url 'tender_list' %}">
                 <div class="flex flex-col gap-4">
                   <div class="w-full">
                     <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
@@ -123,11 +123,13 @@
                         class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
                         type="text"
                         placeholder="От"
+                        name="price_from"
                       />
                       <input
                         class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
                         type="text"
                         placeholder="До"
+                        name="price_to"
                       />
                     </div>
                   </div>
@@ -139,6 +141,7 @@
                       class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
                       type="text"
                       placeholder="Исключить слова"
+                      name="exclude_words"
                     />
                   </div>
 
@@ -265,7 +268,7 @@
               <li class="icon-container">
                 <img
                   id="burgerIcon"
-                  src="{% static 'assets/images/icons/call.svg' %}""
+                  src="{% static 'assets/images/icons/call.svg' %}"
                   alt=""
                 />
                 <span class="icon-text">Указан номер телефона</span>

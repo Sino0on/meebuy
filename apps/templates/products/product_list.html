@@ -70,7 +70,7 @@
               <div
                 class="absolute z-50 left-0 top-[60px]  w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
               >
-                <form method="get" action="{% url 'product_list' %}" id="products_filter">
+                <form method="get" type="submit" action="{% url 'product_list' %}" id="products_filter">
                     <div class="flex flex-col gap-4">
                     <p class="text-[#2B292C] font-bold text-[18px]">Цена</p>
                     <div class="flex items-center gap-5 w-full">
@@ -92,11 +92,9 @@
                     </div>
                   </div>
                     <button
-                            form="products_filter"
                         id="filterBtn"
                         type="submit"
-                        class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
-                    >
+                        class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7">
                         Применить
                     </button>
                 </form>
