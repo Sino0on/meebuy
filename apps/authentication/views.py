@@ -40,7 +40,7 @@ class RegisterView(FormView):
         user = form.save(commit=False)
         user.auth_provider = False
         form.save()
-        Cabinet.objects.create(user=user)
+        Cabinet.objects.get_or_create(user=user)
         authenticated_user = authenticate(email=user.email, password=form.cleaned_data['password1'])
         if authenticated_user is not None:
             auth_login(self.request, authenticated_user)
