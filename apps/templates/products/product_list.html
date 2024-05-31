@@ -68,22 +68,22 @@
             <!-- filter modal-->
             <div id="openFilter" style="display: none" class="filter-container">
               <div
-                class="absolute z-50 left-0 top-[60px]  w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
+                class="absolute w-[90vw] z-50 left-0 top-[60px]  lg-md:w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
               >
                 <form method="get" type="submit" action="{% url 'product_list' %}" id="products_filter">
                     <div class="flex flex-col gap-4">
                     <p class="text-[#2B292C] font-bold text-[18px]">Цена</p>
                     <div class="flex items-center gap-5 w-full">
-                        <label>
+                        <label class="w-1/2 lg-md:w-full">
                             <input
-                              class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
+                              class="border w-full border-[#E6E6E6] rounded-2xl py-3 px-5"
                               placeholder="От" name="price_min"
                               type="text"
                             />
                         </label>
-                        <label>
+                        <label class="w-1/2 lg-md:w-full">
                             <input
-                            class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
+                            class="border w-full border-[#E6E6E6] rounded-2xl py-3 px-5"
                             placeholder="До" name="price_max"
                             type="text"
 

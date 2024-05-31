@@ -17694,3 +17694,11 @@ input{
   --tw-text-opacity: 1;
   color: rgb(228 219 0 / var(--tw-text-opacity));
 }
+
+.w-\[90vw\]{
+  width: 90vw;
+}
+
+.lg-md\:w-auto{
+  width: auto;
+}
