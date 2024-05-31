@@ -71,7 +71,7 @@
                 fill="black"
               />
             </svg>
-            <button><a href="/tender/create/">Добавить закупку</a></button>
+            <button><a href="{% if user.is_authenticated %}{% url 'tender_create' %}{% else %}{% url 'login' %}{% endif %}">Добавить закупку</a></button>
           </div>
         </div>
       </div>

@@ -235,7 +235,7 @@
           <li class="uppercase font-mulish font-extrabold">
             <h6 class="text-[#FFFFFC]">поставщикам</h6>
           </li>
-            <li class=""><a href="{% url 'view_profile' %}">Добавить компанию</a></li>
+            <li class=""><a href="{% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'login' %}{% endif %}">Добавить компанию</a></li>
             <li><a href="{% url 'tender_list' %}">Поиск закупок</a></li>
             <li><a href="{% url 'buyer_list' %}">Поиск покупателей</a></li>
             <li><a href="{% url 'tender_list' %}">Тарифы</a></li>
