@@ -34,6 +34,7 @@ class TenderFilter(django_filters.FilterSet):
         return queryset
 
     def filter_by_order(self, queryset, name, value):
+        print(value)
         if value == 'yesterday':
             start_date = timezone.now() - timezone.timedelta(days=1)
             return queryset.filter(created_at__date=start_date.date())

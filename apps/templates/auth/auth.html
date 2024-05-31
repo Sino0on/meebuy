@@ -13,8 +13,9 @@
     <div class="suppliers-animation-container">
       <div class="menu">
         <div class="container flex gap-4 py-4">
-          <img src="{% static 'assets/images/icons/home.svg' %}" alt="home" />
+          <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" alt="home" /></a>
           <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+
           <p class="font-normal font-mulish text-[#A0A0A0]">Регистрация</p>
         </div>
       </div>
@@ -34,7 +35,9 @@
      <div class="cards flex lg-md:flex-row flex-col lg-md:justify-center  lg-md:w-[1000px]   rounded-2xl">
       <div class="lg-md:w-[534px] w-[390px] p-8 mx-auto ">
        <!-- register -->
+
         <div id="register-form" style="display: flex; flex-direction: column; gap: 15px; z-index: 0; position: relative" class="overflow-hidden w-full mb-6 pb-[2px]">
+
 <form class="flex flex-col gap-5" method="post" action="{% url 'register' %}">
     {% csrf_token %}
     <div class="flex flex-col gap-3 w-full">
@@ -60,6 +63,7 @@
     </div>
     <div id="password" class="input flex lg-md:flex-row flex-col gap-2">
         <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
+
             <label for="">Придумайте пароль *</label>
             {{ register_form.password1 }}
             {% for error in register_form.password1.errors %}
@@ -68,14 +72,13 @@
             <div class="absolute right-3 top-12">
                 <img
                   class="show-password w-[24px] h-[24px]"
-                  style="display: block"
                   src="{% static 'assets/images/icons/password-close.svg' %}"
                   alt=""
                 />
-              </div>
             </div>
         </div>
         <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
+
             <label for="">Подтвердите пароль *</label>
             {{ register_form.password2 }}
             {% for error in register_form.password2.errors %}
@@ -84,29 +87,26 @@
             <div class="absolute right-3 top-12">
                 <img
                   class="show-password w-[24px] h-[24px]"
-                  style="display: block"
                   src="{% static 'assets/images/icons/password-close.svg' %}"
                   alt=""
                 />
-              </div>
             </div>
-          </div>
-          <div id="confirm" class="input flex items-center gap-2">
-            <input type="checkbox" class="w-[25px] h-[25px] lg-md: mr-1" />
-            <p class="text-[16px] font-normal font-mulish text-[#777777]">
-              Я ознакомился и согласен с условиями
-              <a class="underline decoration-1 text-[#777777]" href="/"
-                >Политики</a
-              >
-            </p>
-          </div>
-          <button
-            id="register"
-            class="text-[16px] font-medium font-mulish py-3 border border-[#2B292C] rounded-lg uppercase"
-          >
-            зарегистрироваться
-          </button>
-        </form>
+        </div>
+    </div>
+    <div id="confirm" class="input flex items-center gap-2">
+        <input type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1" />
+        <p class="text-[16px] font-normal font-mulish text-[#777777]">
+            Я ознакомился и согласен с условиями
+            <a class="underline decoration-1 text-[#777777]" href="/">Политики</a>
+        </p>
+    </div>
+    <button
+        id="register"
+        class="text-[16px] font-medium font-mulish py-3 border border-[#2B292C] rounded-lg uppercase"
+    >
+        Зарегистрироваться
+    </button>
+</form>
           <div class="flex flex-col items-center gap-5">
             <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
               <ul class="flex items-center gap-5 w-[323px]">

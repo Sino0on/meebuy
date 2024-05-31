@@ -6,6 +6,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'pages/products/index.css' %}">
+<link rel="stylesheet" href="{% static 'pages/filters/index.css' %}" />
 {% endblock %}
 {% block content %}
     <nav class="breadcrumbs bg-[#FFFFFC]">
@@ -29,8 +30,7 @@
           <div class="relative z-50 flex flex-col justify-center w-full">
             <h2
               style="font-size: 36px"
-              class="text-white font-extrabold sm:pb-8 text-center uppercase"
-            >
+              class="text-white font-extrabold sm:pb-8 text-center uppercase">
             товары
             </h2>
             <form class="mt-3">
@@ -68,40 +68,39 @@
             <!-- filter modal-->
             <div id="openFilter" style="display: none" class="filter-container">
               <div
-                class="absolute left-0 top-[60px]  w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
+                class="absolute z-50 left-0 top-[60px]  w-auto flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
               >
-                <form class="">
-                  <div class="flex flex-col gap-4">
+                <form method="get" type="submit" action="{% url 'product_list' %}" id="products_filter">
+                    <div class="flex flex-col gap-4">
                     <p class="text-[#2B292C] font-bold text-[18px]">Цена</p>
                     <div class="flex items-center gap-5 w-full">
                         <label>
                             <input
                               class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
-                              placeholder="От"
+                              placeholder="От" name="price_min"
                               type="text"
                             />
                         </label>
                         <label>
                             <input
                             class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
-                            placeholder="До"
+                            placeholder="До" name="price_max"
                             type="text"
+
                           />
                         </label>
                     </div>
                   </div>
-                  <button
-                    id="filterBtn"
-                    type="submit"
-                    class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
-                  >
-                    Применить
-                  </button>
+                    <button
+                        id="filterBtn"
+                        type="submit"
+                        class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7">
+                        Применить
+                    </button>
                 </form>
               </div>
             </div>
             </div>
-
           <!-- select -->
           <div
             class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
@@ -157,7 +156,7 @@
           </form>
           </div>
         </div>
-<!-- items -->
+       <!-- items -->
           <div
             class="card__wrapper w-fit mx-auto gap-4 mt-[30px] lg:mt-10 lg-md:gap-[30px]"
           >
@@ -223,61 +222,21 @@
               </div>
             </div>
 
+
               {% endfor %}
             </div>
-          </div>
 
-          <!-- pagination -->
-    <div class="lg-md:flex hidden justify-between items-center">
-      <div class="flex items-center gap-5">
-          <div class="flex items-center gap-2">
-              {% if page_obj.has_previous %}
-                  <a href="?page={{ page_obj.previous_page_number }}" id="prevPagee">
-                      <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}" alt="Назад">
-                  </a>
-                  <p id="prevPage" class="cursor-pointer"><a href="?page={{ page_obj.previous_page_number }}">Назад</a></p>
-              {% else %}
-                  <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}" alt="Назад" id="prevPagee">
-                  <p id="prevPage" class="cursor-pointer">Назад</p>
-              {% endif %}
-          </div>
-          <ul class="pagination" id="pagination">
-              {% for num in page_obj.paginator.page_range %}
-                  {% if page_obj.number == num %}
-                      <li class="page active"><a href="?page={{ num }}">{{ num }}</a></li>
-                  {% else %}
-                      <li class="page"><a href="?page={{ num }}">{{ num }}</a></li>
-                  {% endif %}
-              {% endfor %}
-          </ul>
-          <div class="flex items-center gap-2">
-              {% if page_obj.has_next %}
-                  <p id="nextPage" class="cursor-pointer"><a href="?page={{ page_obj.next_page_number }}">Вперед</a></p>
-                  <a href="?page={{ page_obj.next_page_number }}" id="nextPagee">
-                      <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Вперед">
-                  </a>
-              {% else %}
-                  <p id="nextPage" class="cursor-pointer">Вперед</p>
-                  <img src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Вперед" id="nextPagee">
-              {% endif %}
-          </div>
-      </div>
-      <div class="flex items-center gap-3">
-          <p>Перейти на страницу</p>
-          <form method="get">
-              <input type="text" name="page" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4">
-              <button type="submit">
-                  <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Перейти">
-              </button>
-          </form>
-      </div>
-  </div>
-  </div>
-</div>
+
+                        <!-- pagination -->
+        {% include 'basic_includes/pagination.html' %}
+
+              </div>
+
 
       </section>
     </main>
 {% endblock %}
 {% block js %}
 <script src="{% static 'pages/products/index.js' %}"></script>
+<script src="{% static 'pages/filters/filter.js' %}"></script>
 {% endblock %}
