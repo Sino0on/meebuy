@@ -217,10 +217,10 @@ SOCIALACCOUNT_PROVIDERS = {
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': BASE_DIR / 'db.sqlite3',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 AUTHENTICATION_BACKENDS = (
