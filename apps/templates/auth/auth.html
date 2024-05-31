@@ -41,21 +41,21 @@
 <form class="flex flex-col gap-5" method="post" action="{% url 'register' %}">
     {% csrf_token %}
     <div class="flex flex-col gap-3 w-full">
-        <label class="text-[18px] font-mulish">Ваш адрес электронной почты Email *</label>
+        <label class="text-base lg-md:text-[18px] text-[#252B42] font-mulish">Ваш адрес электронной почты Email *</label>
         {{ register_form.email }}
         {% for error in register_form.email.errors %}
             <p style="color: red">{{ error }}</p>
         {% endfor %}
     </div>
-    <div id="name" class="input flex flex-col gap-3">
-        <label for="">Ваше ФИО*</label>
+    <div id="name" class="input  flex flex-col gap-3">
+        <label class="text-base lg-md:text-[18px] text-[#252B42]" for="">Ваше ФИО*</label>
         {{ register_form.first_name }}
         {% for error in register_form.first_name.errors %}
             <p style="color: red">{{ error }}</p>
         {% endfor %}
     </div>
     <div id="number" class="input flex flex-col gap-3">
-        <label for="">Ваш номер телефона*</label>
+        <label class="text-base lg-md:text-[18px] text-[#252B42]" for="">Ваш номер телефона*</label>
         {{ register_form.phone }}
         {% for error in register_nform.phone.errors %}
             <p style="color: red">{{ error }}</p>
@@ -64,7 +64,7 @@
     <div id="password" class="input flex lg-md:flex-row flex-col gap-2">
         <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
 
-            <label for="">Придумайте пароль *</label>
+            <label class="text-base lg-md:text-[18px] text-[#252B42]" for="">Придумайте пароль *</label>
             {{ register_form.password1 }}
             {% for error in register_form.password1.errors %}
                 <p style="color: red">{{ error }}</p>
@@ -79,7 +79,7 @@
         </div>
         <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
 
-            <label for="">Подтвердите пароль *</label>
+            <label class="text-base lg-md:text-[18px] text-[#252B42]" for="">Подтвердите пароль *</label>
             {{ register_form.password2 }}
             {% for error in register_form.password2.errors %}
                 <p style="color: red">{{ error }}</p>
@@ -162,22 +162,22 @@
 
         <!-- login -->
 
-          <div id="login-form" style="display: flex; flex-direction: column; gap: 30px" class=" login-form overflow-hidden w-full mb-6 pb-[2px]">
+            <form method="post">
+              <div id="login-form" style="display: flex; flex-direction: column; gap: 30px" class=" login-form overflow-hidden w-full mb-6 pb-[2px]">
             {% for field, errors in form.errors.items %}
                 {% for error in errors %}
                     <p style="color: red">{{ error }}</p>
                 {% endfor %}
             {% endfor %}
-          <div class="flex flex-col gap-3  w-full">
-            <form method="post">
-            <label clas="text-[18px] font-mulish" for=""
+            <div class="flex flex-col gap-3  w-full">
+            <label class="text-base lg-md:text-[18px] text-[#252B42] font-mulish" for=""
               >Ваш адрес электронной почты Email *</label
             >
             {{ form.email }}
             {% csrf_token %}
           </div>
           <div id="passwordLog" class="flex flex-col gap-3 relative">
-            <label for="">Ваш пароль*</label>
+            <label class="text-base lg-md:text-[18px] text-[#252B42]" for="">Ваш пароль*</label>
             {{ form.password }}
           <div class="absolute right-3 top-12">
             <img
