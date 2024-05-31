@@ -275,7 +275,7 @@
               </li>
               <li class="icon-container">
                 <svg
-                  class="heart transition-colors"
+                  class="tenderLike transition-colors"
                   width="36"
                   height="36"
                   viewBox="10 0 30 36"
@@ -283,16 +283,15 @@
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    class="red"
+                    id="inside-heart"
                     d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
                     fill=""
                   />
                   <path
-                    class="yellow"
+                    id="border-heart"
                     d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
                     fill="#2B292C"
                   />
-                </svg>
                 </svg>
 
                 <span class="icon-text">Избранные</span>
@@ -345,41 +344,14 @@
           {% endfor %}
         </div>
         <!--  -->
-        <div
-          class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
+        <a
+          class="flex my-7 rounded-[15px] cursor-pointer"
         >
           <img
-            src="{% static 'assets/images/suppliers/suppliers/img/res-cross.png' %}"
+            src="{% static 'assets/images/suppliers/suppliers/img/exampleImage.png' %}"
             alt=""
           />
-          <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
-            <div>
-              <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
-                Nike Air Max 90 Futura
-              </h5>
-              <p class="font-mulish text-[#2B292C]">
-                Оригинальные кроссовки Nike Air Max 90 Futura
-              </p>
-            </div>
-            <div class="flex md: justify-center gap-1">
-              <img
-                class="md:max-w-[100px]"
-                src="{% static 'assets/images/suppliers/suppliers/img/pink-cross.png' %}"
-                alt=""
-              />
-              <img
-                class="max-w-[106px]"
-                src="{% static 'assets/images/suppliers/suppliers/img/white-croos.png' %}"
-                alt=""
-              />
-              <img
-                class="max-w-[106px]"
-                src="{% static 'assets/images/suppliers/suppliers/img/hakki-cross.png' %}"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
+        </a>
 
 
         <!-- pagination -->
@@ -387,14 +359,15 @@
      
         {% include 'includes/pagination.html' %}
 
-  </div>
-</div>
+      </div>
+    </div>
       </div>
     </div>
     </div>
 {% endblock %}
 
 {% block js %}
+<script src="{% static 'pages/home/index.js' %}"></script>
 <script src="{% static 'pages/procurement/procurement.js' %}"></script>
 <script src="{% static 'pages/filters/filter.js' %}"></script>
 {% endblock %}

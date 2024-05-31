@@ -91,7 +91,7 @@ const toggleCloseFilterModal = () => {
 };
 
 filterContainer.addEventListener("click", toggleFilterModal);
-closeFilterContainer.addEventListener("click", toggleCloseFilterModal);
+closeFilterContainer?.addEventListener("click", toggleCloseFilterModal);
 
 document.addEventListener("click", (event) => {
   if (
