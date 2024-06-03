@@ -40,10 +40,10 @@
   <div class="suppliers-animation-container">
     <div>
       <div class="menu">
-        <div class="container flex gap-4 py-4">
+        <div class="container items-center flex gap-4 py-4">
           <a href="/"
             ><img
-              src="{% static 'assets/images/suppliers/icons/home.svg' %}"
+              src="{% static 'assets/images/icons/home.svg' %}"
               alt=""
           /></a>
           <img
@@ -554,38 +554,14 @@
         {% endfor %}
       </div>
       <div
-        class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
+        class="cards md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
       >
-        <img
-          src="{% static 'assets/images/suppliers/suppliers/img/res-cross.png' %}"
-        />
-        <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
-          <div>
-            <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
-              Nike Air Max 90 Futura
-            </h5>
-            <p class="font-mulish text-[#2B292C]">
-              Оригинальные кроссовки Nike Air Max 90 Futura
-            </p>
-          </div>
-          <div class="flex md: justify-center gap-1">
-            <img
-              class="md:max-w-[100px]"
-              src="{% static 'assets/images/suppliers/suppliers/img/pink-cross.png' %}"
-            />
-            <img
-              class="max-w-[106px]"
-              src="{% static 'assets/images/suppliers/suppliers/img/white-croos.png' %}"
-            />
-            <img
-              class="max-w-[106px]"
-              src="{% static 'assets/images/suppliers/suppliers/img/hakki-cross.png' %}"
-            />
-          </div>
-        </div>
+       <img src="{% static 'assets/images/suppliers/suppliers/img/examplePng.png' %}" alt="">
       </div>
 
       <!-- pagination -->
+      {% include 'includes/pagination.html' %}
+
     </div>
   </div>
 </div>
