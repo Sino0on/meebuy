@@ -55,7 +55,7 @@ function createTree(treeArray, depth = 0) {
     });
 
     const toggleIcon = document.createElement("img");
-    toggleIcon.src = "/assets/images/icons/ios-arrow.svg";
+    toggleIcon.src = "/static/assets/images/icons/ios-arrow.svg";
     toggleIcon.alt = "Expand";
     toggleIcon.className = "toggle-icon transform transition-transform";
 
