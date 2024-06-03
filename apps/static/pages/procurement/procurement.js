@@ -15,7 +15,7 @@ toggleCards.forEach((card) => {
 });
 
 // like
-const hearts = document.querySelectorAll("#heart");
+const tenderHearts = document.querySelectorAll("#heart");
 
 const toggleHeartHandler = (event) => {
   event.stopPropagation();
@@ -28,7 +28,7 @@ const toggleHeartHandler = (event) => {
   borderHeart.classList.toggle("border-heart");
 };
 
-hearts.forEach((heart) => {
+tenderHearts.forEach((heart) => {
   heart.addEventListener("click", toggleHeartHandler);
 });
 
