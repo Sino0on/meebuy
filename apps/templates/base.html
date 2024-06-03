@@ -62,16 +62,16 @@
               class="hidden lg-md:flex text-white justify-center items-center gap-5 text-sm"
             >
               <li class="font-medium uppercase">
-                <a href="/provider/list/"> Поставщики </a>
+                <a href="{% url 'provider_list' %}"> Поставщики </a>
               </li>
               <li class="font-medium uppercase">
-                <a href="/tender/list/"> Закупки </a>
+                <a href="{% url 'tender_list' %}"> Закупки </a>
               </li>
               <li class="font-medium uppercase">
-                <a href="/product/list/"> Товары </a>
+                <a href="{% url 'product_list' %}"> Товары </a>
               </li>
               <li class="font-medium uppercase">
-                <a href="/buyer/list/"> Покупатели </a>
+                <a href="{% url 'buyer_list' %}"> Покупатели </a>
               </li>
             </ul>
             <div class="hidden lg-md:flex gap-4">
@@ -400,7 +400,7 @@
               <h6 class="text-[#FFFFFC]">покупателям</h6>
             </li>
             <li>Купить оптом</li>
-            <li><a href="/pages/suppliers/suppliers.html"> Поставщики </a></li>
+            <li><a href="{% url 'provider_list' %}"> Поставщики </a></li>
             <li><a href="{% url 'provider_list' %}">Производители</a></li>
             <li><a href="{% url 'product_list' %}">Поиск товаров</a></li>
           </ul>
@@ -493,7 +493,7 @@
       <a
         id="menu-procurement"
         class="menu-tab flex flex-col gap-[10px] items-center"
-        href="/pages/procurement/procurement.html"
+        href="{% url 'tender_list' %}"
       >
         <img
           id="procurement-none-active"
@@ -538,7 +538,7 @@
       <a
         id="menu-profile"
         class="menu-tab flex flex-col gap-[10px] items-center"
-        href="/pages/profile/myCompany/index.html"
+        href="{% if user.is_authenticated %}{% url 'user_profile' %}{% else %}{% url 'login' %}{% endif %}"
       >
         <img
           id="profile-none-active"
