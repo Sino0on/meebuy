@@ -89,7 +89,6 @@ def generate_chart(user):
     return plot_div
 
 
-
 User = get_user_model()
 
 
@@ -154,7 +153,6 @@ class UserAnketaView(generic.UpdateView, LoginRequiredMixin):
         self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста подождите пару минут'
         self.object.save()
         return obj
-
 
 
 @require_POST
@@ -240,7 +238,6 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
             return self.form_invalid(form)
 
 
-
 class BalanceView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/balance.html'
 
@@ -294,7 +291,6 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
 
         return context
 
-
     def build_category_tree(self, categories, parent=None, level=0):
         tree = []
         for category in categories:
@@ -302,6 +298,7 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
                 tree.append((category, level))
                 tree.extend(self.build_category_tree(categories, category, level + 1))
         return tree
+
 
 class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/likes.html'
@@ -341,7 +338,6 @@ class TariffsCabinetView(generic.ListView, LoginRequiredMixin):
 class StatusListView(ListAPIView):
     serializer_class = StatusSerializer
     queryset = Status.objects.all()
-
 
 
 @login_required
@@ -477,7 +473,6 @@ def send_message_logout(request):
     return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
 
 
-
 @require_GET
 def add_provider_fav_api(request, pk):
     if not request.user.is_authenticated:
@@ -516,7 +511,6 @@ def add_provider_fav(request, pk):
     provider = get_object_or_404(Provider, id=pk)
     request.user.cabinet.favorite_providers.add(provider)
     return redirect(f'/provider/detail/{pk}/')
-
 
 
 def tariff_buy(request):

@@ -1,5 +1,8 @@
-{% extends 'base.html' %} {% load static %} {% block title %} Продукты
-{%endblock %} {% block css %}
+{% extends 'base.html' %} {% load static %}
+{% block title %}
+    Продукты
+{%endblock %}
+{% block css %}
 <link rel="stylesheet" href="{% static 'pages/filters/index.css' %}" />
 <link rel="stylesheet" href="{% static 'pages/buyers/buyers.css' %}" />
 {% endblock %} {% block content %}
@@ -19,8 +22,7 @@
           <div class="relative z-50 flex flex-col justify-center w-full">
             <h2
               style="font-size: 36px"
-              class="text-white font-extrabold sm:pb-8 text-center uppercase"
-            >
+              class="text-white font-extrabold sm:pb-8 text-center uppercase">
               покупатели
             </h2>
             <form class="mt-3">
