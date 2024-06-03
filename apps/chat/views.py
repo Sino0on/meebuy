@@ -11,7 +11,7 @@ from apps.user_cabinet.models import Contacts
 
 User = get_user_model()
 
-@login_required
+@login_required(login_url='login')
 def chats(request):
     chat_rooms = Chat.objects.filter(models.Q(user_first=request.user) | models.Q(user_second=request.user))
     chat_details = []
