@@ -1,16 +1,17 @@
 from django.shortcuts import render
 from django.views import generic
 
+from apps.authentication.models import User
 from apps.buyer.filters import BuyerFilter
-from apps.buyer.models import Buyer
+from apps.provider.models import Provider
 from apps.user_cabinet.models import Contacts
 
 
 class BuyerListView(generic.ListView):
     template_name = 'buyer/buyers.html'
     context_object_name = 'buyers'
-    model = Buyer
-    queryset = Buyer.objects.all()
+    model = User
+    queryset = User.objects.filter(tenders__isnull=False)
     filter_class = BuyerFilter
     paginate_by = 20
 

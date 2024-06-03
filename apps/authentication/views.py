@@ -33,19 +33,29 @@ class HomeView(TemplateView):
 
 class RegisterView(FormView):
     form_class = UserRegistrationForm
-    template_name = 'auth/register.html'
+    template_name = 'auth/auth.html'
     success_url = reverse_lazy('select_user_type')
 
     def form_valid(self, form):
         user = form.save(commit=False)
         user.auth_provider = False
         form.save()
-        Cabinet.objects.create(user=user)
+        Cabinet.objects.get_or_create(user=user)
         authenticated_user = authenticate(email=user.email, password=form.cleaned_data['password1'])
         if authenticated_user is not None:
             auth_login(self.request, authenticated_user)
 
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return self.render_to_response(self.get_context_data(register_form=form))
+
+    def get_context_data(self, **kwargs):
+        context = {'register_form': UserRegistrationForm()}
+        context.update(super().get_context_data(**kwargs))
+
+        return context
 
 
 class LoginView(FormView):
@@ -64,7 +74,6 @@ class LoginView(FormView):
                 authenticated_user = authenticate(email=user.email, password=register_form.clean_password2())
                 if authenticated_user is not None:
                     auth_login(self.request, authenticated_user)
-                    print('dastan')
                     return redirect(reverse_lazy('choice'))
             else:
                 print(register_form.errors)

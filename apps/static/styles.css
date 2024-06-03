@@ -17681,3 +17681,7 @@ input{
 .h-dvh{
   height: 100dvh;
 }
+
+.pb-\[2px\]{
+  padding-bottom: 2px;
+}

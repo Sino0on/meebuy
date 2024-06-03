@@ -198,7 +198,7 @@
               {% endif %}
             </div>
             <div class="w-[30%] h-[30%] rounded-[10px] overflow-hidden lg-md:w-[120px] lg-md:h-[120px]">
-              <img class="w-full h-full object-cover" src="{{ i.image.url }}" alt="" />
+              <img class="w-full h-full object-cover" src="{% if i.image %}{{ i.image.url }}{% endif %}" alt="" />
             </div>
             <div class="mt-6 lg-md:w-[70%]">
               <div>

@@ -82,8 +82,8 @@ const toggleCloseFilterModal = (event) => {
   }
 };
 filterBtn.addEventListener("click", (e) => {
-  e.preventDefault();
   closeFilterModal();
+  toggleCloseFilterModal();
 });
 
 openFilter.addEventListener("click", (e) => {

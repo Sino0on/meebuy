@@ -22,7 +22,10 @@
             <div class="flex gap-4 py-4">
                 <div class="flex items-center gap-4">
                     <img src="{% static 'assets/images/icons/home.svg' %}" alt="" />
+                    <a href="{% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'home' %}{% endif %}">
                     <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+                    </a>
+
                 </div>
                 <p class="font-normal font-mulish text-[#A0A0A0]">Тарифы</p>
             </div>

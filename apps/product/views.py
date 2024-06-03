@@ -49,7 +49,7 @@ class ProductDetailView(DetailView):
     def get_product_prices(self):
         product = self.get_object()
         prices = []
-        formulas = PriceColumn.objects.filter(provider__user=self.request.user)
+        formulas = PriceColumn.objects.filter(provider=self.object.provider)
         decimal = product.provider.decimal_places
         if formulas:
             for formula in formulas:
