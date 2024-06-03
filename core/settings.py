@@ -20,7 +20,8 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
-# Application definition
+# Application definitio makemigrations
+
 
 PROJECT_APPS = [
     'daphne',
