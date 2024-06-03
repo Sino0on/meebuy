@@ -262,32 +262,53 @@
                     </div>
                     <!--  opening hours  -->
                     <div id="Tab3"
-                         class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
+                        class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
                         <div class="card__item h-full">
                             <div class="relative mt-2">
-                                <!--  selected  -->
-                                <button type="button"
-                                        class="flex items-center gap-2.5 max-w-[239px] cursor-pointer rounded-[15px] bg-white py-2.5 px-5 text-center text-dark-text  ring-1 ring-inset ring-grey-light focus:outline-none sm:text-sm sm:leading-6">
-                                    <span class="ml-3 block truncate">За все время</span>
-                                    <img src="{% static '/assets/images/icons/ios-arrow.svg' %}" alt="Arrow">
-                                </button>
-                                <!--  variants  -->
-                                <ul class="absolute hidden z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-grey-light ring-opacity-5 focus:outline-none sm:text-sm">
-                                    <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
-                                        id="listbox-option-0" role="option">
-                                        <div class="flex items-center cursor-pointer">
-                                            <span class="font-normal ml-3 block truncate">За 365 дней</span>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <form id="selectForm" method="POST" action="/your-backend-endpoint/">
+                                    {% csrf_token %}
+                                    <!-- selected -->
+                                    <button type="button" id="selectButton"
+                                        class="flex items-center gap-2.5 max-w-[239px] cursor-pointer rounded-[15px] bg-white py-2.5 px-5 text-center text-dark-text ring-1 ring-inset ring-grey-light focus:outline-none sm:text-sm sm:leading-6">
+                                        <span id="selectedOption" class="ml-3 block truncate">За все время</span>
+                                        <img src="{% static '/assets/images/icons/ios-arrow.svg' %}" alt="Arrow">
+                                    </button>
+                                    <!-- hidden input to store the selected value -->
+                                    <input type="hidden" name="selectedOption" id="hiddenSelectedOption" value="За все время">
+                                    <!-- variants -->
+                                    <ul id="optionsList"
+                                        class="absolute hidden z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-grey-light ring-opacity-5 focus:outline-none sm:text-sm">
+                                        <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" data-value="За неделю">
+                                            <div class="flex items-center cursor-pointer">
+                                                <span class="font-normal ml-3 block truncate">За неделю</span>
+                                            </div>
+                                        </li>
+                                        <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" data-value="За месяц">
+                                            <div class="flex items-center cursor-pointer">
+                                                <span class="font-normal ml-3 block truncate">За месяц</span>
+                                            </div>
+                                        </li>
+                                        <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" data-value="За год">
+                                            <div class="flex items-center cursor-pointer">
+                                                <span class="font-normal ml-3 block truncate">За год</span>
+                                            </div>
+                                        </li>
+                                        <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" data-value="За все время">
+                                            <div class="flex items-center cursor-pointer">
+                                                <span class="font-normal ml-3 block truncate">За все время</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </form>
                             </div>
                             <div class="relative flex justify-center items-center min-h-[388px] h-full">
                                 <img class="absolute -z-[1] w-2/5 -rotate-[210.12deg]"
-                                     src="{% static '/assets/images/icons/bg-yellow-icon.svg' %}" alt="">
+                                    src="{% static '/assets/images/icons/bg-yellow-icon.svg' %}" alt="">
                                 <span class="text-sm font-semibold text-dark-text lg-md:text-lg">Тут пока пусто</span>
                             </div>
                         </div>
                     </div>
+
                     <!--  opening hours  -->
                     <div id="Tab4"
                          class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
