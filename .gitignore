@@ -15,7 +15,7 @@ __pycache__/
 .env2
 .venv
 venv
-
+settings.py
 postgres/
 
 apps/static/admin

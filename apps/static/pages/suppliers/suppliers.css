@@ -143,8 +143,6 @@
   column-count: 3;
 }
 
-
-
 input[type="checkbox"] {
   accent-color: #bab306 !important;
   color: white !important;
@@ -190,4 +188,8 @@ input[type="checkbox"] {
     transform: translateY(-50%);
     z-index: -1;
   }
+}
+
+.filter-width {
+  width: 1000px;
 }
