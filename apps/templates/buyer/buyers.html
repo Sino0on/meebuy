@@ -1,307 +1,340 @@
-{% extends 'base.html' %} {% load static %} {% block title %} Продукты {%
-endblock %} {% block css %}
+{% extends 'base.html' %} {% load static %} {% block title %} Продукты
+{%endblock %} {% block css %}
+<link rel="stylesheet" href="{% static 'pages/filters/index.css' %}" />
 <link rel="stylesheet" href="{% static 'pages/buyers/buyers.css' %}" />
 {% endblock %} {% block content %}
-<!-- main section -->
-<div class="suppliers-animation-container">
-  <div>
-    <div class="menu">
-      <div class="container flex gap-4 py-4">
-        <img src="{% static '' %}assets/images/icons/home.svg" alt="" />
-        <img src="{% static '' %}assets/images/icons/arrow-prev.svg" alt="" />
-        <p class="font-normal font-mulish text-[#A0A0A0]">покупатели</p>
+<div class="relative">
+  <!-- main section -->
+  <div class="suppliers-animation-container">
+    <div>
+      <div class="menu">
+        <div class="container flex gap-4 py-4">
+          <img src="{% static '' %}assets/images/icons/home.svg" alt="" />
+          <img src="{% static '' %}assets/images/icons/arrow-prev.svg" alt="" />
+          <p class="font-normal font-mulish text-[#A0A0A0]">покупатели</p>
+        </div>
       </div>
-    </div>
-    <div class="suppliers-wrapper">
-      <div class="container">
-        <div class="relative z-50 flex flex-col justify-center w-full">
-          <h2
-            style="font-size: 36px"
-            class="text-white font-extrabold sm:pb-8 text-center uppercase"
-          >
-            покупатели
-          </h2>
-          <form class="mt-3">
-            <div class="relative md:w-[600px] sm:w-[400px] m-auto">
-              <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-                <img
-                  src="{% static 'assets/images/icons/search.svg' %}"
-                  alt="Search icon"
+      <div class="suppliers-wrapper">
+        <div class="container">
+          <div class="relative z-50 flex flex-col justify-center w-full">
+            <h2
+              style="font-size: 36px"
+              class="text-white font-extrabold sm:pb-8 text-center uppercase"
+            >
+              покупатели
+            </h2>
+            <form class="mt-3">
+              <div class="relative md:w-[600px] sm:w-[400px] m-auto">
+                <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                  <img
+                    src="{% static 'assets/images/icons/search.svg' %}"
+                    alt="Search icon"
+                  />
+                </div>
+                <input
+                  id="default-search"
+                  class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                  placeholder="Например: автозапчасти"
                 />
               </div>
-              <input
-                id="default-search"
-                class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
-                placeholder="Например: автозапчасти"
-              />
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- product categories -->
+  <!-- product categories -->
 
-<div class="pb-4">
-  <div class="container">
-    <h6
-      class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
-    >
-      категории товаров
-    </h6>
-    <ul class="grid gap-8 lg-md:grid-cols-3 sm: grid-cols-1">
-      {% for i in categories %}
-      <li class="text-[18px]">
-        <a class="flex items-center gap-[10px] w-fit" href="">
-          <div
-            class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
-          >
-            <img src="{{ i.icon.url }}" alt="" />
-          </div>
-          <span>{{ i.title }}</span>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-
-<!-- buyers -->
-
-<div class="bg-[#FFFFFC] pb-16 pt-2">
-  <div class="container">
-    <div class="flex gap-6 lg-md: items-center md:my-10 md: mb-5 lg-md: mt-10">
-      <!-- filter -->
-      <div
-        id="filterContainer"
-        class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6"
+  <div class="pb-4">
+    <div class="container">
+      <h6
+        class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
       >
-        Фильтр
-        <img
-          src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
-          alt=""
-        />
-      </div>
-      <!-- filter modal -->
-      <div id="openFilter" style="display: none" class="filter-container">
+        категории товаров
+      </h6>
+      <ul class="grid gap-8 lg-md:grid-cols-3 sm: grid-cols-1">
+        {% for i in categories %}
+        <li class="text-[18px]">
+          <a class="flex items-center gap-[10px] w-fit" href="">
+            <div
+              class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+            >
+              <img src="{{ i.icon.url }}" alt="" />
+            </div>
+            <span>{{ i.title }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- buyers -->
+
+  <div class="bg-[#FFFFFC] pb-16 pt-2">
+    <div class="container">
+      <!-- filters -->
+      <div class="flex gap-4 lg:gap-5">
+        <!-- filter -->
         <div
-          class="absolute lg:top-[32%] md:top-[45%] sm:top-[28%] s: top-[28%] sm:left-28 left-5 flex flex-col gap-5 bg-[#fff] rounded-[15px] py-8 px-10 sm:w-[408px] w-[90%]"
+          id="filterContainer"
+          class="relative cursor-pointer flex z-50 shadow-card-shadow items-center rounded-[15px] py-3 px-6"
         >
-          <div class="w-full">
-            <h2 class="text-[#2B292C] text-[18px] font-extrabold mb-4">
-              Регион
-            </h2>
-            <div class="flex items-center gap-5 mb-4">
-              <h2 class="text-[#2B292C] text-[16px] font-bold">Кыргызстан</h2>
+          Фильтр
+          <img
+            class="ml-2"
+            src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
+            alt=""
+          />
+          <!-- filter modal-->
+          <div
+            id="openFilter"
+            style="display: none"
+            class="filter-container w-[408px]"
+          >
+            <div
+              class="absolute z-50 left-0 top-[60px] flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8"
+            >
+              <form
+                method="get"
+                action="{% url 'product_list' %}"
+                id="products_filter"
+              >
+                <div class="flex flex-col gap-4">
+                  <p class="text-[#2B292C] font-bold text-[18px]">Регион</p>
+                  <div class="flex items-center gap-6">
+                    <p class="text-[#4D4D4D] font-bold">Кыргызстан</p>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_2879_13037)">
+                        <path
+                          d="M10.8938 6.21128C10.9579 6.15157 11.0095 6.07984 11.0458 6.00017C11.0822 5.9205 11.1024 5.83445 11.1055 5.74695C11.1086 5.65945 11.0944 5.5722 11.0637 5.49018C11.033 5.40816 10.9865 5.33299 10.9268 5.26895C10.8671 5.20491 10.7954 5.15325 10.7157 5.11694C10.636 5.08062 10.55 5.06035 10.4625 5.05728C10.375 5.05422 10.2877 5.06842 10.2057 5.09908C10.1237 5.12973 10.0485 5.17624 9.98449 5.23595L8.03383 7.05462L6.21516 5.10328C6.09347 4.97864 5.92783 4.90659 5.75369 4.90253C5.57955 4.89846 5.41073 4.96272 5.28336 5.08155C5.156 5.20038 5.0802 5.36434 5.07219 5.53835C5.06418 5.71235 5.12459 5.88258 5.24049 6.01262L7.05916 7.96328L5.10783 9.78195C5.04152 9.84105 4.9877 9.91281 4.94952 9.993C4.91133 10.0732 4.88956 10.1602 4.88547 10.2489C4.88139 10.3377 4.89507 10.4263 4.92573 10.5097C4.95638 10.593 5.00338 10.6694 5.06397 10.7344C5.12456 10.7993 5.19752 10.8515 5.27856 10.8879C5.3596 10.9242 5.44709 10.944 5.53589 10.9461C5.62469 10.9482 5.713 10.9325 5.79565 10.8999C5.8783 10.8674 5.95361 10.8187 6.01716 10.7566L7.96783 8.93862L9.78649 10.8893C9.84522 10.9568 9.91693 11.0118 9.99737 11.051C10.0778 11.0903 10.1653 11.1129 10.2547 11.1176C10.3441 11.1223 10.4334 11.1089 10.5175 11.0783C10.6016 11.0477 10.6787 11.0005 10.7442 10.9394C10.8096 10.8784 10.8621 10.8048 10.8985 10.7231C10.9349 10.6414 10.9545 10.5531 10.9561 10.4636C10.9577 10.3742 10.9413 10.2853 10.9078 10.2023C10.8743 10.1193 10.8244 10.0439 10.7612 9.98062L8.94316 8.02995L10.8938 6.21128Z"
+                          fill="#4D4D4D"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M0.666992 7.9974C0.666992 3.9474 3.95033 0.664062 8.00033 0.664062C12.0503 0.664062 15.3337 3.9474 15.3337 7.9974C15.3337 12.0474 12.0503 15.3307 8.00033 15.3307C3.95033 15.3307 0.666992 12.0474 0.666992 7.9974ZM8.00033 13.9974C7.21239 13.9974 6.43218 13.8422 5.70423 13.5407C4.97627 13.2391 4.31484 12.7972 3.75768 12.24C3.20053 11.6829 2.75858 11.0215 2.45705 10.2935C2.15552 9.56554 2.00033 8.78533 2.00033 7.9974C2.00033 7.20947 2.15552 6.42925 2.45705 5.7013C2.75858 4.97334 3.20053 4.31191 3.75768 3.75476C4.31484 3.1976 4.97627 2.75565 5.70423 2.45412C6.43218 2.15259 7.21239 1.9974 8.00033 1.9974C9.59162 1.9974 11.1177 2.62954 12.243 3.75476C13.3682 4.87997 14.0003 6.4061 14.0003 7.9974C14.0003 9.58869 13.3682 11.1148 12.243 12.24C11.1177 13.3653 9.59162 13.9974 8.00033 13.9974Z"
+                          fill="#4D4D4D"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2879_13037">
+                          <rect width="16" height="16" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
+                  <div class="flex flex-col items-center gap-5 w-full">
+                    <label>
+                      <input
+                        class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
+                        placeholder="Страна"
+                        name="price_min"
+                        type="text"
+                      />
+                    </label>
+                    <label>
+                      <input
+                        class="border border-[#E6E6E6] rounded-2xl py-3 px-5"
+                        placeholder="Город"
+                        name="price_max"
+                        type="text"
+                      />
+                    </label>
+                  </div>
+                </div>
+                <button
+                  form="products_filter"
+                  id="filterBtn"
+                  type="submit"
+                  class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
+                >
+                  Применить
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- select -->
+        <div
+          class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
+          id="selectContainer"
+        >
+          <p>Рекомендуем</p>
+          <a class="toggle-icon" id="toggleLink">
+            <img
+              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+              alt="Open"
+              class="openIcon"
+              style="display: block"
+            />
+            <img
+              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
+              alt="Close"
+              class="closeIcon"
+              style="display: none"
+            />
+          </a>
+          <!-- select modal -->
+          <form>
+            <ul
+              id="selectModal"
+              class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
+              style="display: none"
+            >
+              <li
+                id="recommended-list"
+                class="cursor-pointer selected border-b pb-2 mb-2 flex items-center justify-between"
+              >
+                Рекомендуем
+                <img
+                  id="recommended"
+                  style="display: none"
+                  src="{% static 'assets/images/icons/check.svg' %}"
+                  alt="check"
+                />
+              </li>
+              <li
+                id="new-list"
+                class="cursor-pointer selected flex items-center justify-between"
+              >
+                Новые
+                <img
+                  id="new"
+                  style="display: none"
+                  src="{% static 'assets/images/icons/check.svg' %}"
+                  alt="check"
+                />
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+      <!-- card list -->
+      <div class="flex flex-col gap-7">
+        {% for i in buyers %}
+        <div
+          class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+        >
+          <div
+            class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+          >
+            <img src="{% if i.image %}{{ i.image.url }}{% endif %}" alt="" />
+            <div class="flex flex-col gap-9">
+              <div class="pt-2">
+                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                  Headphones.kg
+                </h6>
+                <p>Наушники и другие аксессуары для гаджетов</p>
+              </div>
+              <div class="flex gap-4">
+                <button class="bg-[#E4DB00] px-6 py-2 rounded-[7px]">
+                  Подробнее
+                </button>
+                <button
+                  class="border border-solid border-[#2B292C] px-6 py-2 rounded-[7px]"
+                >
+                  Написать
+                </button>
+              </div>
+            </div>
+          </div>
+          <ul class="flex items-center gap-2 sm: absolute right-4">
+            <li>
+              <img
+                src="../../assets/images/suppliers/suppliers/icons/diamand.svg"
+                alt=""
+              />
+            </li>
+            <li class="checIcon">
               <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
+                class="checkIcon transition-colors"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M10.8938 6.21128C10.9579 6.15157 11.0095 6.07984 11.0458 6.00017C11.0822 5.9205 11.1024 5.83445 11.1055 5.74695C11.1086 5.65945 11.0944 5.5722 11.0637 5.49018C11.033 5.40816 10.9865 5.33299 10.9268 5.26895C10.8671 5.20491 10.7954 5.15325 10.7157 5.11694C10.636 5.08062 10.55 5.06035 10.4625 5.05728C10.375 5.05422 10.2877 5.06842 10.2057 5.09908C10.1237 5.12973 10.0485 5.17624 9.98449 5.23595L8.03383 7.05462L6.21516 5.10328C6.09347 4.97864 5.92783 4.90659 5.75369 4.90253C5.57955 4.89846 5.41073 4.96272 5.28336 5.08155C5.156 5.20038 5.0802 5.36434 5.07219 5.53835C5.06418 5.71235 5.12459 5.88258 5.24049 6.01262L7.05916 7.96328L5.10783 9.78195C5.04152 9.84105 4.9877 9.91281 4.94952 9.993C4.91133 10.0732 4.88956 10.1602 4.88547 10.2489C4.88139 10.3377 4.89507 10.4263 4.92573 10.5097C4.95638 10.593 5.00338 10.6694 5.06397 10.7344C5.12456 10.7993 5.19752 10.8515 5.27856 10.8879C5.3596 10.9242 5.44709 10.944 5.53589 10.9461C5.62469 10.9482 5.713 10.9325 5.79565 10.8999C5.8783 10.8674 5.95361 10.8187 6.01716 10.7566L7.96783 8.93862L9.78649 10.8893C9.84522 10.9568 9.91693 11.0118 9.99737 11.051C10.0778 11.0903 10.1653 11.1129 10.2547 11.1176C10.3441 11.1223 10.4334 11.1089 10.5175 11.0783C10.6016 11.0477 10.6787 11.0005 10.7442 10.9394C10.8096 10.8784 10.8621 10.8048 10.8985 10.7231C10.9349 10.6414 10.9545 10.5531 10.9561 10.4636C10.9577 10.3742 10.9413 10.2853 10.9078 10.2023C10.8743 10.1193 10.8244 10.0439 10.7612 9.98062L8.94316 8.02995L10.8938 6.21128Z"
-                  fill="#4D4D4D"
+                  style="stroke: rgb(43, 41, 44)"
+                  class="iconGreen green"
+                  d="M9.5 11.5389L11.8077 13.8466L19.5 6.1543"
+                  stroke="#2B292C"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M0.666992 7.9974C0.666992 3.9474 3.95033 0.664062 8.00033 0.664062C12.0503 0.664062 15.3337 3.9474 15.3337 7.9974C15.3337 12.0474 12.0503 15.3307 8.00033 15.3307C3.95033 15.3307 0.666992 12.0474 0.666992 7.9974ZM8.00033 13.9974C7.21239 13.9974 6.43218 13.8422 5.70423 13.5407C4.97627 13.2391 4.31484 12.7972 3.75768 12.24C3.20053 11.6829 2.75858 11.0215 2.45705 10.2935C2.15552 9.56554 2.00033 8.78533 2.00033 7.9974C2.00033 7.20947 2.15552 6.42925 2.45705 5.7013C2.75858 4.97334 3.20053 4.31191 3.75768 3.75476C4.31484 3.1976 4.97627 2.75565 5.70423 2.45412C6.43218 2.15259 7.21239 1.9974 8.00033 1.9974C9.59162 1.9974 11.1177 2.62954 12.243 3.75476C13.3682 4.87997 14.0003 6.4061 14.0003 7.9974C14.0003 9.58869 13.3682 11.1148 12.243 12.24C11.1177 13.3653 9.59162 13.9974 8.00033 13.9974Z"
-                  fill="#4D4D4D"
+                  style="stroke: rgb(43, 41, 44)"
+                  class="iconGreen green"
+                  d="M20 12V18.2222C20 18.6937 19.8127 19.1459 19.4793 19.4793C19.1459 19.8127 18.6937 20 18.2222 20H5.77778C5.30628 20 4.8541 19.8127 4.5207 19.4793C4.1873 19.1459 4 18.6937 4 18.2222V5.77778C4 5.30628 4.1873 4.8541 4.5207 4.5207C4.8541 4.1873 5.30628 4 5.77778 4H15.5556"
+                  stroke="#2B292C"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
               </svg>
-            </div>
-            <div class="flex flex-col gap-5">
-              <input
-                class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                type="text"
-                placeholder="Страна"
+            </li>
+            <li>
+              <img
+                src="../../assets/images/icons/retail-company-icons.svg"
+                alt=""
               />
-              <input
-                class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                type="text"
-                placeholder="Город"
-              />
-            </div>
-          </div>
-          <!-- button -->
-          <button class="text-[#2B292C] bg-[#E4DB00] py-3 px-7 rounded-lg">
-            Применить
-          </button>
+            </li>
+          </ul>
         </div>
+        {% endfor %}
       </div>
-
-      <!-- select -->
       <div
-        class="cards flex gap-2 items-center shadow shadow-[#B1B1B14D] rounded-[15px] py-3 px-6"
-        id="selectContainer"
+        class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
       >
-        <p>Рекомендуем</p>
-        <a class="toggle-icon" id="toggleLink">
-          <img
-            src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-            alt="Open"
-            class="openIcon"
-            style="display: block"
-          />
-          <img
-            src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
-            alt="Close"
-            class="closeIcon"
-            style="display: none"
-          />
-        </a>
-      </div>
-    </div>
-    <!-- select modal -->
-    <ul
-      id="selectModal"
-      class="modal cards absolute md:left-[21%] left-[26%] lg:top-[31.6%] md:top-[45.6%] sm:top-[28%] top-[28%] z-50 rounded-2xl right-8 bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
-      style="display: none"
-    >
-      <li
-        id="recommended-list"
-        class="selected border-b pb-2 mb-2 flex items-center justify-between"
-      >
-        Рекомендуем
         <img
-          id="recommended"
-          style="display: none"
-          src="{% static 'assets/images/icons/check.svg' %}"
-          alt="check"
+          src="../../assets/images/suppliers/suppliers/img/res-cross.png"
+          alt=""
         />
-      </li>
-      <li id="new-list" class="selected flex items-center justify-between">
-        Новые
-        <img
-          id="new"
-          style="display: none"
-          src="{% static 'assets/images/icons/check.svg' %}"
-          alt="check"
-        />
-      </li>
-    </ul>
-
-    <!-- card list -->
-    <div class="flex flex-col gap-7">
-      {% for i in buyers %}
-      <div
-        class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
-      >
-        <div
-          class="flex md:flex-row flex-col gap-7 md:items-center items-start"
-        >
-          <img src="{% if i.image %}{{ i.image.url }}{% endif %}" alt="" />
-          <div class="flex flex-col gap-9">
-            <div class="pt-2">
-              <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                Headphones.kg
-              </h6>
-              <p>Наушники и другие аксессуары для гаджетов</p>
-            </div>
-            <div class="flex gap-4">
-              <button class="bg-[#E4DB00] px-6 py-2 rounded-[7px]">
-                Подробнее
-              </button>
-              <button
-                class="border border-solid border-[#2B292C] px-6 py-2 rounded-[7px]"
-              >
-                Написать
-              </button>
-            </div>
+        <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
+          <div>
+            <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
+              Nike Air Max 90 Futura
+            </h5>
+            <p class="font-mulish text-[#2B292C]">
+              Оригинальные кроссовки Nike Air Max 90 Futura
+            </p>
           </div>
-        </div>
-        <ul class="flex items-center gap-2 sm: absolute right-4">
-          <li>
+          <div class="flex md: justify-center gap-1">
             <img
-              src="../../assets/images/suppliers/suppliers/icons/diamand.svg"
+              class="md:max-w-[100px]"
+              src="../../assets/images/suppliers/suppliers/img/pink-cross.png"
               alt=""
             />
-          </li>
-          <li class="checIcon">
-            <svg
-              class="checkIcon transition-colors"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                style="stroke: rgb(43, 41, 44)"
-                class="iconGreen green"
-                d="M9.5 11.5389L11.8077 13.8466L19.5 6.1543"
-                stroke="#2B292C"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                style="stroke: rgb(43, 41, 44)"
-                class="iconGreen green"
-                d="M20 12V18.2222C20 18.6937 19.8127 19.1459 19.4793 19.4793C19.1459 19.8127 18.6937 20 18.2222 20H5.77778C5.30628 20 4.8541 19.8127 4.5207 19.4793C4.1873 19.1459 4 18.6937 4 18.2222V5.77778C4 5.30628 4.1873 4.8541 4.5207 4.5207C4.8541 4.1873 5.30628 4 5.77778 4H15.5556"
-                stroke="#2B292C"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </li>
-          <li>
             <img
-              src="../../assets/images/icons/retail-company-icons.svg"
+              class="max-w-[106px]"
+              src="../../assets/images/suppliers/suppliers/img/white-croos.png"
               alt=""
             />
-          </li>
-        </ul>
-      </div>
-      {% endfor %}
-    </div>
-    <div
-      class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
-    >
-      <img
-        src="../../assets/images/suppliers/suppliers/img/res-cross.png"
-        alt=""
-      />
-      <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
-        <div>
-          <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
-            Nike Air Max 90 Futura
-          </h5>
-          <p class="font-mulish text-[#2B292C]">
-            Оригинальные кроссовки Nike Air Max 90 Futura
-          </p>
-        </div>
-        <div class="flex md: justify-center gap-1">
-          <img
-            class="md:max-w-[100px]"
-            src="../../assets/images/suppliers/suppliers/img/pink-cross.png"
-            alt=""
-          />
-          <img
-            class="max-w-[106px]"
-            src="../../assets/images/suppliers/suppliers/img/white-croos.png"
-            alt=""
-          />
-          <img
-            class="max-w-[106px]"
-            src="../../assets/images/suppliers/suppliers/img/hakki-cross.png"
-            alt=""
-          />
+            <img
+              class="max-w-[106px]"
+              src="../../assets/images/suppliers/suppliers/img/hakki-cross.png"
+              alt=""
+            />
+          </div>
         </div>
       </div>
+
+      <!-- pagination -->
+
+      {% include 'basic_includes/pagination.html' %}
     </div>
-
-    <!-- pagination -->
-
-    {% include 'basic_includes/pagination.html' %}
   </div>
 </div>
 {% endblock %} {% block js %}
-<script src="{% static '/pages/buyers/buyers.js' %}"></script>
-<script src="{% static '/pages//buyers.js' %}"></script>
+<script src="{% static 'pages/filters/filter.js' %}"></script>
+<script src="{% static 'pages/buyers/buyers.js' %}"></script>
 {% endblock %}
