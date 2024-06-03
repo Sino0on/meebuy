@@ -204,18 +204,17 @@
               class="flex md:flex-row flex-col gap-7 md:items-center items-start"
             >
               <img
-                src="{% if i.image %}{{ i.image.url }}{% endif %}"
+                src="{% if i.provider.image %}{{ i.provider.image.url }}{% endif %}"
                 alt=""
               />
               <div class="flex flex-col gap-9">
                 <div class="pt-2">
                   <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                      {{ i.name }}
+                      {{ i.provider.title }}
                   </h6>
-                  <p>{{ i.midi_desc }}</p>
+                  <p>{{ i.provider.midi_desc }}</p>
                 </div>
                 <div class="flex gap-4">
-{#                    <a href="{% buyer_detail i.id %}"></a>#}
                   <button class="bg-[#E4DB00] px-6 py-2 rounded-[7px]">
                     Подробнее
                   </button>

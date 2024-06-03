@@ -11,7 +11,7 @@ class BuyerListView(generic.ListView):
     template_name = 'buyer/buyers.html'
     context_object_name = 'buyers'
     model = User
-    queryset = User.objects.filter(tenders=not None)
+    queryset = User.objects.filter(tenders__isnull=False)
     filter_class = BuyerFilter
     paginate_by = 20
 
