@@ -20,543 +20,547 @@
         />
                       </a>
         <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
+
       </div>
-    </div>
-    <div class="suppliers-wrapper">
-      <div class="container">
-        <div class="relative z-50 flex flex-col justify-center w-full">
-          <h2
-            style="font-size: 36px"
-            class="text-white font-extrabold sm:pb-8 text-center"
-          >
-            поставщики
-          </h2>
-          <form class="mt-3">
-            <div class="relative md:w-[600px] sm:w-[400px] m-auto">
-              <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-                <img
-                  src="{% static 'assets/images/icons/search.svg' %}"
-                  alt="Search icon"
+      <div class="suppliers-wrapper">
+        <div class="container">
+          <div class="relative z-50 flex flex-col justify-center w-full">
+            <h2
+              style="font-size: 36px"
+              class="text-white font-extrabold sm:pb-8 text-center"
+            >
+              поставщики
+            </h2>
+            <form class="mt-3">
+              <div class="relative md:w-[600px] sm:w-[400px] m-auto">
+                <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                  <img
+                    src="{% static 'assets/images/icons/search.svg' %}"
+                    alt="Search icon"
+                  />
+                </div>
+                <input
+                  id="default-search"
+                  class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                  placeholder="Например: автозапчасти"
                 />
               </div>
-              <input
-                id="default-search"
-                class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
-                placeholder="Например: автозапчасти"
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- product categories -->
+
+  <div class="pb-10">
+    <div class="container">
+      <h6
+        class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
+      >
+        категории товаров
+      </h6>
+      <ul class="grid grid-cols-3 gap-4">
+        {% for i in categories %}
+        <li class="">
+          <a
+            class="flex items-center gap-[10px] w-fit"
+            href="?category={{ i.pk }}"
+          >
+            <div
+              class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+            >
+              <img src="{{ i.icon.url }}" alt="" />
+            </div>
+            <span>{{ i.title }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Suppliers -->
+  <div class="bg-[#FFFFFC] py-16">
+    <div class="container">
+      <h6 class="text-start lg-md:text-xl font-semibold uppercase font-mulish">
+        ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
+      </h6>
+      <div
+        class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10"
+      >
+        <ul
+          class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]"
+        >
+          <li
+            id="first"
+            class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]"
+          >
+            <a href="/provider/list/">все</a>
+            <img
+              class="lg-md:hidden block"
+              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+            />
+          </li>
+          <div class="lg-md:flex hidden">
+            {% for i in types %}
+            <li
+              id="{{ i.pk }}"
+              class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]"
+            >
+              <a href="?type={{i.pk}}" data-type="{{ i.pk }}">{{ i.title }}</a>
+            </li>
+            {% endfor %}
+          </div>
+        </ul>
+
+        <!-- filters -->
+        <div class="flex gap-4 lg:gap-5">
+          <!-- filter -->
+          <div
+            id="filterContainer"
+            class="w-full z-50 cursor-pointer shadow-card-shadow rounded-[15px] py-3 px-6"
+          >
+            <div class="flex items-center">
+              Фильтр
+              <img
+                class="ml-2"
+                src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
+                alt=""
               />
             </div>
-          </form>
+            <!-- filter modal-->
+            <div
+              id="openFilter"
+              style="display: none"
+              class="filter-width filter-container z-50"
+            >
+              <div
+                class="flex flex-col gap-8 rounded-[15px] py-8 px-10 bg-[#fff]"
+              >
+                <form>
+                  <div class="flex lg-md:flex-row flex-col">
+                    <div
+                      class="flex flex-col items-start gap-5 lg-md:mr-5 lg-md:border-r-2 pr-8"
+                    >
+                      <h6
+                        class="text-[#2B292C] text-[18px] font-mulish font-extrabold"
+                      >
+                        Регион
+                      </h6>
+                      <input
+                        type="text"
+                        placeholder="Страна"
+                        class="bg-[#F9F9F9] lg-md:w-[210px] w-full border rounded-[15px] py-3 px-6 text-[#737373] text-[16px] font-mulish"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Город"
+                        class="bg-[#F9F9F9] border lg-md:w-[210px] w-full rounded-[15px] py-3 px-6 text-[#737373] text-[16px] font-mulish"
+                      />
+                      <img
+                        id="close-filter-container"
+                        class="absolute right-7 top-5"
+                        src="../../assets/images/icons/x.svg"
+                        alt=""
+                      />
+                    </div>
+                    <ul
+                      class="flex lg-md:flex-row flex-col items-start gap-8 pl-3 lg-md: my-8"
+                    >
+                      <div class="flex flex-col gap-3">
+                        <li>
+                          <h6
+                            class="text-[#2B292C] text-[18px] font-mulish font-extrabold"
+                          >
+                            Объем
+                          </h6>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Крупный опт</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Мелкий опт</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Поштучно</p>
+                        </li>
+                        <!-- Условия -->
+                        <li>
+                          <h6
+                            class="text-[#2B292C] text-[18px] font-mulish font-extrabold pt-3"
+                          >
+                            Условия
+                          </h6>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Возможна рассрочка</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Возможен кредит</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Возможен депозит</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Возможна передача под реализацию</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Возможен дропшиппинг</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Есть шоурум</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Разрешена продажа на маркетплейсах</p>
+                        </li>
+                      </div>
+                      <!-- Доставка -->
+                      <div class="flex flex-col gap-3">
+                        <li>
+                          <h6
+                            class="text-[#2B292C] text-[18px] font-mulish font-extrabold"
+                          >
+                            Доставка
+                          </h6>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Самовывоз</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Транспортной компаней</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Автомобилем</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Авиатранспортом</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Железной дорогой</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Курьером</p>
+                        </li>
+                        <!-- Оплата -->
+                        <li>
+                          <h6
+                            class="text-[#2B292C] text-[18px] font-mulish font-extrabold pt-3"
+                          >
+                            Оплата
+                          </h6>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Наличными</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Безналичная оплата</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Кредитные карты</p>
+                        </li>
+                        <li
+                          class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            class="checkboxx h-[18px] w-[18px] text-[#fff]"
+                          />
+                          <p>Электронные деньги</p>
+                        </li>
+                      </div>
+                    </ul>
+                  </div>
+                  <button
+                    id="filterBtn"
+                    type="submit"
+                    class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
+                  >
+                    Применить
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- select -->
+          <div
+            class="relative cards lg:flex hidden cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
+            id="selectContainer"
+          >
+            <p>Рекомендуем</p>
+            <a class="toggle-icon" id="toggleLink">
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+                alt="Open"
+                class="openIcon"
+                style="display: block"
+              />
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
+                alt="Close"
+                class="closeIcon"
+                style="display: none"
+              />
+            </a>
+            <!-- select modal -->
+            <form>
+              <ul
+                id="selectModal"
+                class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
+                style="display: none"
+              >
+                <li
+                  id="recommended-list"
+                  class="cursor-pointer selected border-b pb-2 mb-2 flex items-center justify-between"
+                >
+                  Рекомендуем
+                  <img
+                    id="recommended"
+                    style="display: none"
+                    src="{% static 'assets/images/icons/check.svg' %}"
+                    alt="check"
+                  />
+                </li>
+                <li
+                  id="new-list"
+                  class="cursor-pointer selected flex items-center justify-between"
+                >
+                  Новые
+                  <img
+                    id="new"
+                    style="display: none"
+                    src="{% static 'assets/images/icons/check.svg' %}"
+                    alt="check"
+                  />
+                </li>
+              </ul>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- product categories -->
-
-<div class="pb-10">
-  <div class="container">
-    <h6
-      class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
-    >
-      категории товаров
-    </h6>
-    <ul class="grid grid-cols-3 gap-4">
-      {% for i in categories %}
-      <li class="">
-        <a
-          class="flex items-center gap-[10px] w-fit"
-          href="?category={{ i.pk }}"
+      <div class="flex flex-col gap-7">
+        {% for provider in providers %}
+        <div
+          class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
         >
           <div
-            class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+            class="flex md:flex-row flex-col gap-7 md:items-center items-start"
           >
-            <img src="{{ i.icon.url }}" alt="" />
-          </div>
-          <span>{{ i.title }}</span>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-
-<!-- Suppliers -->
-<div id="filterContainer" class="bg-[#FFFFFC] py-16">
-  <div class="container">
-    <h6 class="text-start lg-md:text-xl font-semibold uppercase font-mulish">
-      ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
-    </h6>
-    <div
-      class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10"
-    >
-      <ul
-        class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]"
-      >
-        <li
-          id="first"
-          class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]"
-        >
-          <a href="/provider/list/">все</a>
-          <img
-            class="lg-md:hidden block"
-            src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-          />
-        </li>
-        <div class="lg-md:flex hidden">
-          {% for i in types %}
-          <li
-            id="{{ i.pk }}"
-            class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]"
-          >
-            <a href="?type={{i.pk}}" data-type="{{ i.pk }}">{{ i.title }}</a>
-          </li>
-          {% endfor %}
-        </div>
-      </ul>
-
-      <!-- filters -->
-      <div class="flex gap-4 lg:gap-5">
-        <!-- filter -->
-        <div
-          id=""
-          class="z-50 cursor-pointer shadow-card-shadow rounded-[15px] py-3 px-6"
-        >
-          <div class="flex items-center">
-            Фильтр
-            <img
-              class="ml-2"
-              src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
-              alt=""
-            />
-          </div>
-          <!-- filter modal-->
-          <div id="openFilter" style="display: none" class="filter-container">
-            <div
-              class="absolute right-0 mr-10 z-50 bg-[#fff] rounded-[15px] py-8 px-10"
-            >
-              <form>
-                <div class="flex lg-md:flex-row flex-col">
-                  <div
-                    class="flex flex-col items-start gap-5 lg-md:mr-5 lg-md:border-r-2 pr-8"
-                  >
-                    <h6
-                      class="text-[#2B292C] text-[18px] font-mulish font-extrabold"
-                    >
-                      Регион
-                    </h6>
-                    <input
-                      type="text"
-                      placeholder="Страна"
-                      class="bg-[#F9F9F9] lg-md:w-[210px] w-full border rounded-[15px] py-3 px-6 text-[#737373] text-[16px] font-mulish"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Город"
-                      class="bg-[#F9F9F9] border lg-md:w-[210px] w-full rounded-[15px] py-3 px-6 text-[#737373] text-[16px] font-mulish"
-                    />
-                    <img
-                      id="close-filter-container"
-                      class="absolute right-7 top-5"
-                      src="../../assets/images/icons/x.svg"
-                      alt=""
-                    />
-                  </div>
-                  <ul
-                    class="flex lg-md:flex-row flex-col items-start gap-8 pl-3 lg-md: my-8"
-                  >
-                    <div class="flex flex-col gap-3">
-                      <li>
-                        <h6
-                          class="text-[#2B292C] text-[18px] font-mulish font-extrabold"
-                        >
-                          Объем
-                        </h6>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Крупный опт</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Мелкий опт</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Поштучно</p>
-                      </li>
-                      <!-- Условия -->
-                      <li>
-                        <h6
-                          class="text-[#2B292C] text-[18px] font-mulish font-extrabold pt-3"
-                        >
-                          Условия
-                        </h6>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Возможна рассрочка</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Возможен кредит</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Возможен депозит</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Возможна передача под реализацию</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Возможен дропшиппинг</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Есть шоурум</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Разрешена продажа на маркетплейсах</p>
-                      </li>
-                    </div>
-                    <!-- Доставка -->
-                    <div class="flex flex-col gap-3">
-                      <li>
-                        <h6
-                          class="text-[#2B292C] text-[18px] font-mulish font-extrabold"
-                        >
-                          Доставка
-                        </h6>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Самовывоз</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Транспортной компаней</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Автомобилем</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Авиатранспортом</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Железной дорогой</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Курьером</p>
-                      </li>
-                      <!-- Оплата -->
-                      <li>
-                        <h6
-                          class="text-[#2B292C] text-[18px] font-mulish font-extrabold pt-3"
-                        >
-                          Оплата
-                        </h6>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Наличными</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Безналичная оплата</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Кредитные карты</p>
-                      </li>
-                      <li
-                        class="flex items-center text-[#777777] text-[16px] font-mulish gap-2"
-                      >
-                        <input
-                          type="checkbox"
-                          id="myCheckbox"
-                          class="checkboxx h-[18px] w-[18px] text-[#fff]"
-                        />
-                        <p>Электронные деньги</p>
-                      </li>
-                    </div>
-                  </ul>
-                </div>
-                <button
-                  id="filterBtn"
-                  type="submit"
-                  class="bg-[#E4DB00] rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
-                >
-                  Применить
+            <img class="w-[100px] h-[100px]" src="{% if provider.image %}{{ provider.image.url }}{% endif %}" />
+            <div class="flex flex-col gap-6">
+              <div>
+                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                  {{ provider.title }}
+                </h6>
+                <p>{{ provider.mini_descr }}</p>
+              </div>
+              <div class="flex gap-4">
+                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                  <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                 </button>
-              </form>
+                <a
+                  href="{% url 'chat_create' provider.user.pk %}"
+                  class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                >
+                  Написать
+                </a>
+              </div>
             </div>
           </div>
+          <ul class="flex gap-2 sm: absolute right-4">
+            <li>
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+              />
+            </li>
+            <li>
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+              />
+            </li>
+            <li>
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+              />
+            </li>
+          </ul>
         </div>
-
-        <!-- select -->
-        <div
-          class="relative cards lg:flex hidden cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
-          id="selectContainer"
-        >
-          <p>Рекомендуем</p>
-          <a class="toggle-icon" id="toggleLink">
-            <img
-              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-              alt="Open"
-              class="openIcon"
-              style="display: block"
-            />
-            <img
-              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
-              alt="Close"
-              class="closeIcon"
-              style="display: none"
-            />
-          </a>
-          <!-- select modal -->
-          <form>
-            <ul
-              id="selectModal"
-              class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
-              style="display: none"
-            >
-              <li
-                id="recommended-list"
-                class="cursor-pointer selected border-b pb-2 mb-2 flex items-center justify-between"
-              >
-                Рекомендуем
-                <img
-                  id="recommended"
-                  style="display: none"
-                  src="{% static 'assets/images/icons/check.svg' %}"
-                  alt="check"
-                />
-              </li>
-              <li
-                id="new-list"
-                class="cursor-pointer selected flex items-center justify-between"
-              >
-                Новые
-                <img
-                  id="new"
-                  style="display: none"
-                  src="{% static 'assets/images/icons/check.svg' %}"
-                  alt="check"
-                />
-              </li>
-            </ul>
-          </form>
-        </div>
+        {% endfor %}
       </div>
-    </div>
-    <div class="flex flex-col gap-7">
-      {% for provider in providers %}
       <div
-        class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+        class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
       >
-        <div
-          class="flex md:flex-row flex-col gap-7 md:items-center items-start"
-        >
-          <img class="w-[100px] h-[100px]" src="{% if provider.image %}{{ provider.image.url }}{% endif %}" />
-          <div class="flex flex-col gap-6">
-            <div>
-              <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                {{ provider.title }}
-              </h6>
-              <p>{{ provider.mini_descr }}</p>
-            </div>
-            <div class="flex gap-4">
-              <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
-              </button>
-              <a
-                href="{% url 'chat_create' provider.user.pk %}"
-                class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
-              >
-                Написать
-              </a>
-            </div>
+        <img
+          src="{% static 'assets/images/suppliers/suppliers/img/res-cross.png' %}"
+        />
+        <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
+          <div>
+            <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
+              Nike Air Max 90 Futura
+            </h5>
+            <p class="font-mulish text-[#2B292C]">
+              Оригинальные кроссовки Nike Air Max 90 Futura
+            </p>
+          </div>
+          <div class="flex md: justify-center gap-1">
+            <img
+              class="md:max-w-[100px]"
+              src="{% static 'assets/images/suppliers/suppliers/img/pink-cross.png' %}"
+            />
+            <img
+              class="max-w-[106px]"
+              src="{% static 'assets/images/suppliers/suppliers/img/white-croos.png' %}"
+            />
+            <img
+              class="max-w-[106px]"
+              src="{% static 'assets/images/suppliers/suppliers/img/hakki-cross.png' %}"
+            />
           </div>
         </div>
-        <ul class="flex gap-2 sm: absolute right-4">
-          <li>
-            <img
-              src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-            />
-          </li>
-          <li>
-            <img
-              src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
-            />
-          </li>
-          <li>
-            <img
-              src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
-            />
-          </li>
-        </ul>
       </div>
-      {% endfor %}
-    </div>
-    <div
-      class="cards flex md:flex-row flex-col justify-center items-center bg-[#F6F6F6] my-7 rounded-[15px]"
-    >
-      <img
-        src="{% static 'assets/images/suppliers/suppliers/img/res-cross.png' %}"
-      />
-      <div class="flex flex-col gap-20 justify-between lg-md: mb-10">
-        <div>
-          <h5 class="text-[#934655] md:text-[34px] text-[20px] font-black">
-            Nike Air Max 90 Futura
-          </h5>
-          <p class="font-mulish text-[#2B292C]">
-            Оригинальные кроссовки Nike Air Max 90 Futura
-          </p>
-        </div>
-        <div class="flex md: justify-center gap-1">
-          <img
-            class="md:max-w-[100px]"
-            src="{% static 'assets/images/suppliers/suppliers/img/pink-cross.png' %}"
-          />
-          <img
-            class="max-w-[106px]"
-            src="{% static 'assets/images/suppliers/suppliers/img/white-croos.png' %}"
-          />
-          <img
-            class="max-w-[106px]"
-            src="{% static 'assets/images/suppliers/suppliers/img/hakki-cross.png' %}"
-          />
-        </div>
-      </div>
-    </div>
 
     <!-- pagination -->
     {% include 'includes/pagination.html' %}
     
+
   </div>
 </div>
-
 {% endblock %} {% block js %}
 <script>
   const firstitem = document.getElementById("first");
