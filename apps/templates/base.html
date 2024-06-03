@@ -163,6 +163,7 @@
             </div>
           </form>
 
+            <a href="{% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'login' %}{% endif %}">
           <svg
             class="text-dark-text"
             width="36"
@@ -178,6 +179,7 @@
               fill="currentColor"
             ></path>
           </svg>
+                </a>
         </div>
       </div>
       <!-- burger menu -->
