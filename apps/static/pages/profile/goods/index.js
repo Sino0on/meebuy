@@ -1,21 +1,18 @@
 const goods = document.getElementById("goods");
 const category = document.getElementById("category");
 const price = document.getElementById("price");
-const autoloader = document.getElementById("autoload");
 const excelLoader = document.getElementById("excel-loader");
 const goodsBlock = document.getElementById("goods-block");
 const categoryBlock = document.getElementById("category-block");
 const priceBlock = document.getElementById("price-block");
-const autoloaderBlock = document.getElementById("autoload-block");
 const excelLoaderBlock = document.getElementById("excel-loader-block");
 
 const toggleTab = (element) => {
-  const tabs = [goods, category, price, autoloader, excelLoader];
+  const tabs = [goods, category, price, excelLoader];
   const blocks = [
     goodsBlock,
     categoryBlock,
     priceBlock,
-    autoloaderBlock,
     excelLoaderBlock,
   ];
   for (let i = 0; i <= tabs.length; i++) {
@@ -31,7 +28,6 @@ const toggleTab = (element) => {
 goods.addEventListener("click", () => toggleTab(goods));
 category.addEventListener("click", () => toggleTab(category));
 price.addEventListener("click", () => toggleTab(price));
-autoloader.addEventListener("click", () => toggleTab(autoloader));
 excelLoader.addEventListener("click", () => toggleTab(excelLoader));
 
 // add category
