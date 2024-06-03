@@ -81,7 +81,7 @@
                   <button
                     class="dropdown__btn px-2.5 w-full flex items-center justify-between text-dark-text"
                   >
-                    <p class="text-lg font-bold">Статистика</p>
+                    <p class="text-lg font-bold">Баланс</p>
                     <img
                       class="w-5 h-5"
                       src="{% static 'assets/images/icons/ios-arrow.svg' %}"
@@ -122,8 +122,8 @@
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="{% url 'balance' %}"
-                        Баланс</a>
+                      <a href="{% url 'balance' %}">
+                        Статистика</a>
                     </li>
                     <li class="dropdown__item">
                       <a href="{% url 'favorites' %}"

@@ -139,24 +139,24 @@
                 </div>
             </section>
             <!-- these sections are for main content  -->
-            <seciton class="main-content block mt-10 mb-28 lg-md:mt-[50px] lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
+            <section class="main-content block mt-10 mb-28 lg-md:mt-[50px] lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
                 <div class="container">
                     <div class="card__item shadow-card-shadow  rounded-[10px]">
                         <form method="post" class="form space-y-[26px] lg-md:space-y-[30px]">
-                            <label for="email" class="label block">
+                            <label for="email" class="label text-lg block">
                                 Ваш адрес электронной почты Email *
                                 {{ form.email }}
                             </label>
-                            <label for="name" class="label block">
+                            <label for="name" class="label text-lg block">
                                 Ваше ФИО*
                                 {{ form.first_name }}
                             </label>
-                            <label for="phoneNumber" class="label block">
+                            <label for="phoneNumber" class="label text-lg block">
                                 Ваш номер телефона
                                 {{ form.phone }}
                                 {% csrf_token %}
                             </label>
-                            <label for="job_title" class="label block">
+                            <label for="job_title" class="label text-lg block">
                                 Ваша должность
                                 {{ form.job_title }}
                             </label>
@@ -170,7 +170,7 @@
                         </form>
                     </div>
                 </div>
-            </seciton>
+            </section>
         </div>
     </div>
 </main>
