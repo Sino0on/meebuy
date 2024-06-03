@@ -164,7 +164,11 @@
                             <a class="flex items-center gap-2.5 pb-[28px] lg-md:pb-[30px] border-b border-b-grey-light font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg"
                                href="{% url 'chat_list' %}">
                                 <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="">
-                                {{ chat.user_second.provider.title }}
+                                {% if  %}
+                                    {{ chat.user_second.provider.title }}
+                                {% else %}
+                                    Назад
+                                {% endif %}
                             </a>
                         </div>
                         <div id="messageContainer" class="flex flex-col max-h-[440px] overflow-scroll px-[3px] py-[25px]">
