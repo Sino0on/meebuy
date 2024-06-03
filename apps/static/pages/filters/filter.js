@@ -111,3 +111,14 @@ document
   .addEventListener("click", function () {
     this.classList.toggle("active");
   });
+
+// delete buyers block
+
+document.addEventListener("click", function (event) {
+  if (event.target.closest(".delete-button")) {
+    const country = event.target.closest(".country");
+    if (country) {
+      country.remove();
+    }
+  }
+});
