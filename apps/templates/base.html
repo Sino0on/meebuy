@@ -538,7 +538,7 @@
       <a
         id="menu-profile"
         class="menu-tab flex flex-col gap-[10px] items-center"
-        href="{% if user.is_authenticated %}{% url 'user_profile' %}{% else %}{% url 'login' %}{% endif %}"
+        href="{% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'login' %}{% endif %}"
       >
         <img
           id="profile-none-active"
