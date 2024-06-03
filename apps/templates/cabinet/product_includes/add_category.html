@@ -1,64 +1,70 @@
-          <div
-            id="add-category-block"
-            style="display: none"
-            class="cards px-10 py-7 rounded-2xl lg-md:w-[797px] bg-[#fff]"
-          >
-            <div class="flex flex-col gap-5">
-              <div id="test222" class="cursor-pointer flex items-center gap-4">
-                <svg
-                  width="10"
-                  height="17"
-                  viewBox="0 0 10 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8.5 1.5L1.5 8.5L8.5 15.5"
-                    stroke="#2B292C"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"></path>
-                </svg>
-                <p
-                  class="text-[#2B292C] md:text-[18px] text-[16px] font-semibold font-mulish"
-                >
-                  Редактирование категории
-                </p>
-              </div>
-              <hr class="h-[2px] w-full bg-[#A0A0A0]" />
+<div
+  id="add-category-block"
+  style="display: none"
+  class="cards px-10 py-7 rounded-2xl lg-md:w-[797px] bg-[#fff]"
+>
+  <div class="flex flex-col gap-5">
+    <div id="test222" class="cursor-pointer">
+      <a class="flex items-center gap-4" href="/profile/product/list/">
+        <svg
+          width="10"
+          height="17"
+          viewBox="0 0 10 17"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8.5 1.5L1.5 8.5L8.5 15.5"
+            stroke="#2B292C"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
 
-              <h6 class="text-[#2B292C] font-bold text-[18px] font-mulish">
-                Название категории
-              </h6>
-              <p class="md:text-[18px] text-[16px] font-normal text-[#4D4D4D]">
-                Пожалуйста, начните с родительской категории, затем добавляйте
-                подкатегории
-              </p>
-                <form action="{% url 'create_category' %}" id="add_category" method="post">
-                        {% csrf_token %}
-                    <label for=""></label><select name="parent" id="">
-                    <option value="">-----------</option>
-                        {% for category in categories %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
+        <p
+          class="text-[#2B292C] md:text-[18px] text-[16px] font-semibold font-mulish"
+        >
+          Добавление категории
+        </p>
+      </a>
+    </div>
+    <hr class="h-[2px] w-full bg-[#A0A0A0]" />
 
-                    </select>
-                    <br>
-                    <br>
-                    <div class="flex flex-col gap-4">
-                      <label>
-                        <input
-                          class="bg-[#F9F9F9] w-full rounded-2xl pl-5 py-4 border border-[#E6E6E6]"
-                          type="text" name="name"
-                          placeholder="Например: Женская одежда"
-                        />
-                      </label>
-                      <button form="add_category"
-                      class="text-[#2B292C] bg-[#E4DB00] rounded-[7px] py-4 text-[16px] font-medium font-mulish uppercase"
-                    >
-                      добавить категорию
-                    </button>
-                    </div>
-                </form>
-            </div>
-          </div>
+    <h6 class="text-[#2B292C] font-bold text-[18px] font-mulish">
+      Название категории
+    </h6>
+    <p class="md:text-[18px] text-[16px] font-normal text-[#4D4D4D]">
+      Пожалуйста, начните с родительской категории, затем добавляйте
+      подкатегории
+    </p>
+    <form action="{% url 'create_category' %}" id="add_category" method="post">
+      {% csrf_token %}
+      <label for=""></label
+      ><select name="parent" id="">
+        <option value="">-----------</option>
+        {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+      </select>
+      <br />
+      <br />
+      <div class="flex flex-col gap-4">
+        <label>
+          <input
+            class="bg-[#F9F9F9] w-full rounded-2xl pl-5 py-4 border border-[#E6E6E6]"
+            type="text"
+            name="name"
+            placeholder="Например: Женская одежда"
+          />
+        </label>
+        <button
+          form="add_category"
+          class="text-[#2B292C] bg-[#E4DB00] rounded-[7px] py-4 text-[16px] font-medium font-mulish uppercase"
+        >
+          добавить категорию
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
