@@ -29,26 +29,6 @@ const toggleFormWidth = () => {
 
 searchIcon.addEventListener('click', toggleFormWidth);
 
-const slider = new Swiper('.supplier__detail-slider', {
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-  mousewheel: {
-    enabled: true,
-    sensitivity: 2,
-  },
-  breakpoints: {
-    992: {
-      slidesPerView: 4,
-      spaceBetween: 30,
-    },
-    640: {
-      slidesPerView: 2,
-      spaceBetween: 30,
-    },
-  },
-});
 
 const toggleActive = () => {
   heart.classList.toggle('text-logo-color');
