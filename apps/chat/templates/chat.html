@@ -164,7 +164,7 @@
                             <a class="flex items-center gap-2.5 pb-[28px] lg-md:pb-[30px] border-b border-b-grey-light font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg"
                                href="{% url 'chat_list' %}">
                                 <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="">
-                                {% if  %}
+                                {% if chat.user_second.provider.title %}
                                     {{ chat.user_second.provider.title }}
                                 {% else %}
                                     Назад
