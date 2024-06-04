@@ -69,7 +69,7 @@
                                     <div class="swiper-slide">
                                         <div class="aspect-square rounded-[10px] overflow-hidden">
                                             <img class="w-full h-full"
-                                                src="{{ i.image.url }}"
+                                                src="{% if i.image  %}{{ i.image.url }}{% endif %}"
                                                 alt="product">
                                         </div>
                                     </div>
