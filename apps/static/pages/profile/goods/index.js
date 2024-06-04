@@ -9,18 +9,13 @@ const excelLoaderBlock = document.getElementById("excel-loader-block");
 
 const toggleTab = (element) => {
   const tabs = [goods, category, price, excelLoader];
-  const blocks = [
-    goodsBlock,
-    categoryBlock,
-    priceBlock,
-    excelLoaderBlock,
-  ];
+  const blocks = [goodsBlock, categoryBlock, priceBlock, excelLoaderBlock];
   for (let i = 0; i <= tabs.length; i++) {
     if (tabs[i] === element) {
       tabs[i].style.backgroundColor = "#FFFB98";
       blocks[i].style.display = "block";
     } else {
-      tabs[i].style.backgroundColor ?  tabs[i].style.backgroundColor = "" : '';
+      tabs[i].style.backgroundColor ? (tabs[i].style.backgroundColor = "") : "";
       blocks[i].style.display = "none";
     }
   }
@@ -29,6 +24,18 @@ goods.addEventListener("click", () => toggleTab(goods));
 category.addEventListener("click", () => toggleTab(category));
 price.addEventListener("click", () => toggleTab(price));
 excelLoader.addEventListener("click", () => toggleTab(excelLoader));
+
+// go to upload excel block from goods
+
+const buttonToExcel = document.querySelectorAll(".download-excel");
+
+const toggleGoUploadExcelBlock = () => {
+  toggleTab(excelLoader);
+};
+
+buttonToExcel.forEach((button) => {
+  button.addEventListener("click", toggleGoUploadExcelBlock);
+});
 
 // add category
 
@@ -95,7 +102,7 @@ document.getElementById("file").addEventListener("change", function (event) {
   const fileLabelText = document.getElementById("file-label-text");
   const files = event.target.files;
   if (files.length > 0) {
- fileLabelText.textContent = `Selected file: ${files[0].name}`;
+    fileLabelText.textContent = `Selected file: ${files[0].name}`;
   } else {
     fileLabelText.textContent =
       "Нажмите, чтобы загрузить файл или перетащите файл в эту область";
@@ -113,8 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const columnContainer = columnContainers[0]; // Assuming you only have one container
 
-  function createNewColumn(event) {
-    event.preventDefault();
+  function createNewColumn() {
     const newColumn = columnContainer.firstElementChild.cloneNode(true);
 
     // Clear the input values in the cloned column
@@ -140,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-
 
 // delete
 const columnContainer = document.getElementById("column-container");
