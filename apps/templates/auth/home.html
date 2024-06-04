@@ -154,6 +154,8 @@
       <div class="container">
         <h2 class="section__title text-lg md:text-2xl xl:text-3xl">Новые компании</h2>
         <div class="grid grid-cols-1 gap-4 mt-7 lg-md:grid-cols-2 lg-md:mt-14">
+        {% if new_providers %}
+
           {% for i in new_providers %}
           <div
             class="card flex flex-col relative p-[20px] rounded-[15px] lg-md:flex-row lg-md:items-center lg-md:gap-6">
@@ -222,7 +224,10 @@
             </div>
           </div>
           {% endfor %}
+        {% endif %}
+
         </div>
+
       </div>
     </section>
     <!-- new purchases -->
