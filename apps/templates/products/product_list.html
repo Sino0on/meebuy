@@ -37,7 +37,7 @@
         >
           товары
         </h2>
-        <form class="mt-3">
+        <form class="mt-3" action="/product/list/" method="get">
           <div class="relative md:w-[600px] sm:w-[400px] m-auto">
             <div class="absolute inset-y-0 end-0 flex items-center pe-2">
               <img
@@ -46,7 +46,7 @@
               />
             </div>
             <label for="default-search"></label
-            ><input
+            ><input name="title"
               id="default-search"
               class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
               placeholder="Например: автозапчасти"
