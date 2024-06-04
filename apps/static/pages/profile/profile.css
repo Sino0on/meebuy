@@ -79,7 +79,7 @@
         width: 33px;
         height: 33px;
         content: " ";
-        background-image: url('/assets/images/icons/bg-yellow-circle.svg');
+        background-image: url('{% static "assets/images/icons/bg-yellow-circle.svg" %}');
         position: absolute;
         left: -11px;
         top: 50%;
