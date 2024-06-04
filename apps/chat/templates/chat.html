@@ -243,15 +243,15 @@
 
   function sendMessage() {
     var input = document.getElementById("messageInput");
-    if (input.value.trim() !== "") {
-      ws.send(JSON.stringify({
-                'message': input.value,
-                'user': "{{ user.id }}" // Предполагается, что `user.username` доступно в вашем шаблоне
-            }));
-      input.value = ""; // Clear input after send
-      messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
+    if (ws.readyState === WebSocket.OPEN && input.value.trim() !== "") {
+        ws.send(JSON.stringify({
+            'message': input.value,
+            'user': "{{ user.id }}"
+        }));
+        input.value = ""; // Clear input after send
+        messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
     }
-  }
+}
 
   document.getElementById("messageInput").addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
@@ -259,6 +259,15 @@
 
     }
   });
+  ws.onclose = function(event) {
+    console.log("Disconnected from the chat server. Code:", event.code, "Reason:", event.reason);
+    // Здесь можно добавить код для переподключения или уведомления пользователя
+};
+
+ws.onerror = function(error) {
+    console.log("WebSocket error:", error);
+    // Обработка ошибки, например, показ уведомления
+};
 </script>
 {% endblock %}
 {% block js %}
