@@ -50,20 +50,20 @@ class UserRegistrationForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("This email is already taken")
+            raise forms.ValidationError("Этот email уже используется")
         return email
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
         if User.objects.filter(phone=phone).exists():
-            raise forms.ValidationError("This phone number is already taken")
+            raise forms.ValidationError("Этот телефон уже используется")
         return phone
     
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords do not match")
+            raise forms.ValidationError("Пароли не совпадают")
         return password2
     
     def save(self, commit=True):
