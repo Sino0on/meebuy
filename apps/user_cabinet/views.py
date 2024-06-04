@@ -25,7 +25,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import login
@@ -106,12 +106,13 @@ class UppingListView(LoginRequiredMixin, generic.ListView):
     queryset = Upping.objects.all()
 
 
-class UserDetailView(generic.TemplateView, LoginRequiredMixin):
+class UserDetailView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/provider_profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context_keys = ['one', 'two', 'three', 'four', 'five', 'six']
+
         provider, _ = Provider.objects.get_or_create(user=self.request.user, description='')
 
         images = provider.images.all()
@@ -124,7 +125,7 @@ class UserDetailView(generic.TemplateView, LoginRequiredMixin):
         return context
 
 
-class UserAnketaView(generic.UpdateView, LoginRequiredMixin):
+class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'auth/edit_provider.html'
     model = Provider
     queryset = Provider.objects.all()
@@ -198,7 +199,7 @@ def change_image(request):
     return JsonResponse({'message': 'Avatar updated successfully'}, status=200)
 
 
-class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
+class UserSettingsView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'auth/settings.html'
     form_class = UserUpdateForm
     model = User
@@ -240,7 +241,7 @@ class UserSettingsView(generic.UpdateView, LoginRequiredMixin):
             return self.form_invalid(form)
 
 
-class BalanceView(generic.TemplateView, LoginRequiredMixin):
+class BalanceView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/balance.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -254,11 +255,11 @@ class BalanceView(generic.TemplateView, LoginRequiredMixin):
         return context
 
 
-class CreateTenderView(generic.TemplateView, LoginRequiredMixin):
+class CreateTenderView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/create_tender.html'
 
 
-class TenderListCabinetView(generic.TemplateView, LoginRequiredMixin):
+class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/tenders.html'
 
     def get_context_data(self, **kwargs):
@@ -302,7 +303,7 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         return tree
 
 
-class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
+class FavoritesCabinetView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/likes.html'
 
     def get_context_data(self, **kwargs):
@@ -312,7 +313,7 @@ class FavoritesCabinetView(generic.TemplateView, LoginRequiredMixin):
         return context
 
 
-class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
+class AnalyticCabinetView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/analytic.html'
 
     def get_context_data(self, **kwargs):
@@ -324,7 +325,7 @@ class AnalyticCabinetView(generic.TemplateView, LoginRequiredMixin):
         return context
 
 
-class TariffsCabinetView(generic.ListView, LoginRequiredMixin):
+class TariffsCabinetView(LoginRequiredMixin, generic.ListView):
     template_name = 'cabinet/tariffs.html'
     model = Status
     queryset = Status.objects.all()
