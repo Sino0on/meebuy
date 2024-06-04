@@ -300,3 +300,8 @@ class SupportMessage(models.Model):
     class Meta:
         verbose_name = _('Сообщение поддержки')
         verbose_name_plural = _('Сообщения поддержки')
+
+
+class FAQ(models.Model):
+    question = models.CharField(max_length=255, verbose_name=_('Вопрос'))
+    answer = models.TextField(verbose_name=_('Ответ'))

@@ -62,15 +62,14 @@
                 </h2>
                 <!-- dropdown menu-->
                 <div
-                  class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden"
-                >
+                  class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden">
                   <button
                     class="dropdown__btn px-2.5 w-full flex items-center justify-between text-dark-text"
                   >
                     <p class="text-lg font-bold">Моя компания</p>
                     <img
                       class="w-5 h-5"
-                      src="{% static 'assets/images/icons/ios-arrow.svg"
+                      src="{% static 'assets/images/icons/ios-arrow.svg' %}"
                       alt=""
                     />
                   </button>
@@ -78,45 +77,45 @@
                     class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg"
                   >
                     <li class="dropdown__item">
-                      <a href="/pages/profile/purchases/myCompany.html"
+                      <a href="{% url 'tender_list' %}"
                         >Закупки</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/products/myCompany.html"
+                      <a href="{% url 'product_list' %}"
                         >Товары</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/messages/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}"
                         >Сообщения</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/statistics/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'analytic' %}{% else %}{% url 'login' %}{% endif %}"
                         >Статистика</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/premiumRates/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'tariffs' %}{% else %}{% url 'login' %}{% endif %}"
                         >Premium тарифы</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/settings/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'settings' %}{% else %}{% url 'login' %}{% endif %}"
                         >Настройки аккаунта</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                      <a href="{% if user.is_authenticated %}{% url 'balance' %}{% else %}{% url 'login' %}{% endif %}">Баланс</a>
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/favorites/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'favorites' %}{% else %}{% url 'login' %}{% endif %}"
                         >Избранные</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/supportService/myCompany.html"
+                      <a href="{% url 'send_message' %}"
                         >Служба поддержки</a
                       >
                     </li>
@@ -127,50 +126,50 @@
                 <div class="hidden lg-md:block">
                   <ul class="flex flex-col">
                     <li class="dropdown__item active">
-                      <a href="/pages/profile/purchases/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'login' %}{% endif %}"
                         >Моя компания</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/purchases/myCompany.html"
+                      <a href="{% url 'tender_list' %}"
                         >Закупки</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/products/myCompany.html"
+                      <a href="{% url 'product_list' %}"
                         >Товары</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/messages/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}"
                         >Сообщения</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/statistics/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'analytic' %}{% else %}{% url 'login' %}{% endif %}"
                         >Статистика</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/premiumRates/myCompany.html"
+                      <a href="{% url 'tariffs' %}"
                         >Premium тарифы</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/settings/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'settings' %}{% else %}{% url 'login' %}{% endif %}"
                         >Настройки аккаунта</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/balance/myCompany.html">Баланс</a>
+                      <a href="{% if user.is_authenticated %}{% url 'balance' %}{% else %}{% url 'login' %}{% endif %}">Баланс</a>
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/favorites/myCompany.html"
+                      <a href="{% if user.is_authenticated %}{% url 'favorites' %}{% else %}{% url 'login' %}{% endif %}"
                         >Избранные</a
                       >
                     </li>
                     <li class="dropdown__item">
-                      <a href="/pages/profile/supportService/myCompany.html"
+                      <a href="{% url 'send_message' %}"
                         >Служба поддержки</a
                       >
                     </li>
