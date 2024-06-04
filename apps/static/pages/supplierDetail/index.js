@@ -37,3 +37,15 @@ const toggleActive = () => {
 
 heart.addEventListener('click', toggleActive);
 heart1.addEventListener('click', toggleActive);
+const filterByButtons = document.querySelectorAll('.filterBy');
+
+filterByButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    filterByButtons.forEach(otherButton => {
+      if (otherButton !== button) {
+        otherButton.classList.remove('bg-yellow-second');
+      }
+    });
+    button.classList.toggle('bg-yellow-second');
+  });
+});
