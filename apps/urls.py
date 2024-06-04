@@ -7,12 +7,10 @@ from apps.user_cabinet.views import *
 from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
 
 from apps.chat.views import chat_detail, chats, create_chat
-from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
+from apps.authentication.views import HomeView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
 
-from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
-
-from apps.authentication.views import HomeView, RegisterView, SelectUserTypeView, ViewProfile, LogoutView, LoginView
+from apps.authentication.views import HomeView, SelectUserTypeView, LogoutView, LoginView
 from apps.tender.views import TenderListView, TenderDetailView, delete_tender, TenderCreateView, TenderUpdateView
 from apps.user_cabinet.views import UserStatusListView, UppingListView
 from apps.buyer.views import BuyerListView
@@ -29,7 +27,6 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
 
 
-    path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('choice/', SelectUserTypeView.as_view(), name='choice'),
     path('select_user_type/', SelectUserTypeView.as_view(), name='select_user_type'),

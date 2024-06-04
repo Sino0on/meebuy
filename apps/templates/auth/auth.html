@@ -38,7 +38,7 @@
 
         <div id="register-form" style="display: flex; flex-direction: column; gap: 15px; z-index: 0; position: relative" class="overflow-hidden w-full mb-6 pb-[2px]">
 
-<form class="flex flex-col gap-5" method="post" action="{% url 'register' %}">
+<form class="flex flex-col gap-5" method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <div class="flex flex-col gap-3 w-full">
         <label class="text-[18px] font-mulish">Ваш адрес электронной почты Email *</label>
