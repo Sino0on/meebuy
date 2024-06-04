@@ -33,7 +33,7 @@ class Provider(models.Model):
     title = models.CharField(max_length=123, verbose_name='Название', blank=True, null=True)
     mini_descr = models.CharField(max_length=250, verbose_name='Короткое описание', blank=True, null=True)
     type = models.ForeignKey('Tag', on_delete=models.SET_NULL, null=True, verbose_name=_('Тип'), blank=True)
-    description = models.TextField()
+    description = models.TextField(verbose_name='Описание')
     category = models.ManyToManyField(Category, related_name='providers', verbose_name=_('Категории'), blank=True)
 
     class BusinessType(models.TextChoices):
@@ -51,8 +51,9 @@ class Provider(models.Model):
     large_wholesale = models.BooleanField(default=False, verbose_name=_('Крупный опт'))
     small_wholesale = models.BooleanField(default=False, verbose_name=_('Мелкий опт'))
     retail = models.BooleanField(default=False, verbose_name=_('Поштучно'))
-    official_distributor = models.BooleanField(verbose_name=_('Официальный дестрибьютор'), blank=True, null=True)
+    official_distributor = models.BooleanField(verbose_name=_('Официальный дистрибьютор'), blank=True, null=True)
 
+    # City Information
     city = models.ForeignKey('tender.City', on_delete=models.SET_NULL, blank=True, null=True)
     how_get = models.CharField(max_length=200, verbose_name=_('Как добраться'), blank=True, null=True)
     post_index = models.CharField(max_length=123, blank=True, null=True, verbose_name=_('Почтовый индекс'))
@@ -63,24 +64,47 @@ class Provider(models.Model):
     web_site = models.URLField(verbose_name=_('Вебсайт'), blank=True, null=True)
     youtube_video = models.URLField(verbose_name=_('Видео с Ютуба'), blank=True, null=True)
     fax = models.CharField(max_length=123, verbose_name=_('Факс'), blank=True, null=True)
-    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    user = models.OneToOneField(User, on_delete=models.PROTECT, verbose_name='Пользователь')
     image = models.ImageField(blank=True, null=True, upload_to='images/providers/avatars/%Y/%m',
                               verbose_name=_('Аватар'))
     banner = models.ImageField(blank=True, null=True, upload_to='images/providers/banners/%Y/%m',
                                verbose_name=_('Банер'))
-    requisites = models.TextField(blank=True, null=True)
-    is_active = models.BooleanField(blank=True, default=True, verbose_name=_('Активность'))
+    requisites = models.TextField(blank=True, null=True, verbose_name='Реквизиты')
+    is_active = models.BooleanField(default=True, verbose_name=_('Активность'))
     emp_quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('Кол-во работников'))
-    register_ur = models.DateField(verbose_name=_('Дата регистрации юр лица'), blank=True, null=True)
-    conditions = models.ManyToManyField('Condition', blank=True, verbose_name=_('Условия'))
-    deliveries = models.ManyToManyField('Delivery', blank=True, verbose_name=_('Доставка'))
-    is_modered = models.BooleanField(default=False, blank=True, verbose_name=_('Прошла модерацию'), null=True)
-    type_pay = models.ManyToManyField('TypePay', blank=True, verbose_name=_('Типы оплаты'),)
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True,)
-    email = models.EmailField(blank=True, null=True)
-    is_provider = models.BooleanField(blank=True, default=False)
-    comment = models.TextField(blank=True, default='Анкета компании заполнена некорректно! Корректно заполните название компании, описание, контактные данные. Затем подайте на перепроверку.')
-    decimal_places = models.PositiveSmallIntegerField(default=0)
+    register_ur = models.DateField(blank=True, null=True, verbose_name=_('Дата регистрации юр лица'))
+
+    # Conditions
+    installment = models.BooleanField(default=False, verbose_name=_('Возможна рассрочка'))
+    credit = models.BooleanField(default=False, verbose_name=_('Возможен кредит'))
+    deposit = models.BooleanField(default=False, verbose_name=_('Возможен депозит'))
+    consignment = models.BooleanField(default=False, verbose_name=_('Возможна передача под реализацию'))
+    dropshipping = models.BooleanField(default=False, verbose_name=_('Возможен дропшиппинг'))
+    showroom = models.BooleanField(default=False, verbose_name=_('Есть шоурум'))
+    marketplace_sale = models.BooleanField(default=False, verbose_name=_('Разрешена продажа на маркетплейсах'))
+
+    # Deliveries
+    pickup = models.BooleanField(default=False, verbose_name=_('Самовывоз'))
+    transport_company = models.BooleanField(default=False, verbose_name=_('Транспортной компанией'))
+    by_car = models.BooleanField(default=False, verbose_name=_('Автомобилем'))
+    air_transport = models.BooleanField(default=False, verbose_name=_('Авиатранспортом'))
+    rail_transport = models.BooleanField(default=False, verbose_name=_('Железной дорогой'))
+    courier = models.BooleanField(default=False, verbose_name=_('Курьером'))
+
+    # Payment Types
+    cash = models.BooleanField(default=False, verbose_name=_('Наличными'))
+    bank_transfer = models.BooleanField(default=False, verbose_name=_('Безналичная оплата'))
+    credit_card = models.BooleanField(default=False, verbose_name=_('Кредитные карты'))
+    electronic_money = models.BooleanField(default=False, verbose_name=_('Электронные деньги'))
+
+    is_modered = models.BooleanField(default=False, blank=True, null=True, verbose_name=_('Прошла модерацию'))
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='Дата создания')
+    email = models.EmailField(blank=True, null=True, verbose_name='Электронная почта')
+    is_provider = models.BooleanField(default=False, verbose_name='Поставщик')
+    comment = models.TextField(blank=True,
+                               default='Анкета компании заполнена некорректно! Корректно заполните название компании, описание, контактные данные. Затем подайте на перепроверку.',
+                               verbose_name='Комментарий')
+    decimal_places = models.PositiveSmallIntegerField(default=0, verbose_name='Десятичные разряды')
 
     def __str__(self):
         return f'{self.title}'
@@ -99,28 +123,6 @@ class Tag(models.Model):
     class Meta:
         verbose_name = _("Тэг")
         verbose_name_plural = _("Тэги")
-
-
-class Condition(models.Model):
-    title = models.CharField(max_length=123, verbose_name='Состояние')
-
-    def __str__(self):
-        return f'{self.title}'
-
-    class Meta:
-        verbose_name = _("Условия")
-        verbose_name_plural = _("Условии")
-
-
-class Delivery(models.Model):
-    title = models.CharField(max_length=123, verbose_name='Доставка')
-
-    def __str__(self):
-        return f'{self.title}'
-
-    class Meta:
-        verbose_name = _("Доставка")
-        verbose_name_plural = _("Доставки")
 
 
 class ProvideImg(models.Model):
@@ -146,13 +148,3 @@ class ProvideFiles(models.Model):
         verbose_name = _("Файл Поставщика")
         verbose_name_plural = _("Файлы Поставщика")
 
-
-class TypePay(models.Model):
-    title = models.CharField(max_length=123)
-
-    def __str__(self):
-        return f'{self.title}'
-
-    class Meta:
-        verbose_name = _('Вариант оплаты')
-        verbose_name_plural = _('Варианты оплаты')

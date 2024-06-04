@@ -245,15 +245,15 @@
                                 {% else %}
                                 <p class="text-[#222222] mt-5 text-lg">{{ i.chat.user_first }}</p>
                                 {% endif %}
-                                <p class="text-grey-light mt-[14px] line-clamp-2 lg-md:line-clamp-1">{{
-                                    i.last_message.content|truncatechars:30 }}</p>
+                                <p class="text-grey-light mt-[14px] line-clamp-2 lg-md:line-clamp-1">
+                                    {{ i.last_message.content|truncatechars:30 }}</p>
                             </div>
                             <!-- item title and description end  -->
                             <!-- content with position  -->
                             <img class="absolute top-2.5 right-5 cursor-pointer"
                                 src="{% static 'assets/images/icons/pencil_dots-y.svg' %}" alt="">
-                            <p class="text-right mt-5 lg-md:absolute text-grey-light right-5 bottom-5">{{
-                                i.last_message.created_at|naturaltime }}</p>
+                            <p class="text-right mt-5 lg-md:absolute text-grey-light right-5 bottom-5">
+                                {{ i.last_message.created_at|naturaltime }}</p>
                         </a>
                         {% endfor %}
 
@@ -297,15 +297,15 @@
                                 {% else %}
                                 <p class="text-[#222222] mt-5 text-lg">{{ i.chat.user_first }}</p>
                                 {% endif %}
-                                <p class="text-grey-light mt-[14px] line-clamp-2 lg-md:line-clamp-1">{{
-                                    i.last_message.content|truncatechars:30 }}</p>
+                                <p class="text-grey-light mt-[14px] line-clamp-2 lg-md:line-clamp-1">
+                                    {{ i.last_message.content|truncatechars:30 }}</p>
                             </div>
                             <!-- item title and description end  -->
                             <!-- content with position  -->
                             <img class="absolute top-2.5 right-5 cursor-pointer"
                                 src="{% static 'assets/images/icons/pencil_dots-y.svg' %}" alt="">
-                            <p class="text-right mt-5 lg-md:absolute text-grey-light right-5 bottom-5">{{
-                                i.last_message.created_at|naturaltime }}</p>
+                            <p class="text-right mt-5 lg-md:absolute text-grey-light right-5 bottom-5">
+                                {{ i.last_message.created_at|naturaltime }}</p>
                         </a>
                         {% endfor %}
 

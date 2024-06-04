@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from django.db import models
 from django.contrib.auth import get_user_model
-from apps.provider.models import Category, TypePay
+from apps.provider.models import Category
 from django.utils.translation import gettext_lazy as _
 
 
@@ -59,9 +59,14 @@ class Tender(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     end_date = models.DateField(blank=True, null=True)
     place_of_sale = models.CharField(max_length=123, blank=True, null=True)
-    type_pay = models.ForeignKey(TypePay, on_delete=models.PROTECT, blank=True, null=True)
+
     is_phone = models.BooleanField(default=False, blank=True, null=True)
     is_active = models.BooleanField(default=True, blank=True, null=True)
+    # Payment Types
+    cash = models.BooleanField(default=False, verbose_name=_('Наличными'))
+    bank_transfer = models.BooleanField(default=False, verbose_name=_('Безналичная оплата'))
+    credit_card = models.BooleanField(default=False, verbose_name=_('Кредитные карты'))
+    electronic_money = models.BooleanField(default=False, verbose_name=_('Электронные деньги'))
 
     def __str__(self):
         return f'{self.title}'

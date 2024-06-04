@@ -31,12 +31,13 @@ class CityAdmin(admin.ModelAdmin):
 
 
 class TenderAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'city', 'user', 'created_at', 'end_date', 'type_pay', 'is_phone']
+    list_display = ['title', 'category', 'city', 'user', 'created_at', 'end_date', 'is_phone']
     list_filter = ['created_at', 'end_date', 'city__region__country', 'city__region', 'city', 'category']
     search_fields = ['title', 'description', 'requirements', 'place_of_sale']
-    autocomplete_fields = ['category', 'city', 'user', 'type_pay']
+    autocomplete_fields = ['category', 'city', 'user']
     date_hierarchy = 'created_at'
-    fields = ('title', 'description', 'price', 'quantity', 'category', 'city', 'user', 'requirements', 'created_at', 'updated_at', 'end_date', 'place_of_sale', 'type_pay', 'is_phone')
+    fields = ('title', 'description', 'price', 'quantity', 'category', 'city', 'user', 'requirements', 'created_at',
+              'updated_at', 'end_date', 'place_of_sale', 'is_phone')
     readonly_fields = ('created_at', 'updated_at')
     inlines = [TenderImgInline]
 

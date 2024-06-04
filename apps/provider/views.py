@@ -11,22 +11,24 @@ from apps.user_cabinet.models import Contacts
 
 class ProviderListView(generic.ListView):
     model = Provider
-    queryset = Provider.objects.filter(is_modered=True)
     template_name = 'providers/provider_list.html'
-    paginate_by = '10'
-    filter_class = ProviderFilter
+    paginate_by = 10
     context_object_name = 'providers'
 
-    def get_queryset(self):
-        query = self.queryset
-        filter = self.filter_class(self.request.GET, queryset=query)
-        query = filter.qs
-        return query
+    def __init__(self):
+        super().__init__()
+        self.filter = None
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_queryset(self):
+        queryset = Provider.objects.filter(is_modered=True, is_provider=True)
+        self.filter = ProviderFilter(self.request.GET, queryset=queryset)
+        return self.filter.qs
+
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         context['types'] = Tag.objects.all()
+        context['filter'] = self.filter
         contacts = Contacts.load()
         context['contacts'] = contacts
         return context

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Category, Provider, Tag, Condition, Delivery, ProvideImg, ProvideFiles, TypePay
+from .models import Category, Provider, Tag, ProvideImg, ProvideFiles
 
 
 class ProvideImgInline(admin.TabularInline):
@@ -24,12 +24,7 @@ class ProviderAdmin(admin.ModelAdmin):
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "category":
             kwargs["queryset"] = Category.objects.all()
-        if db_field.name == "conditions":
-            kwargs["queryset"] = Condition.objects.all()
-        if db_field.name == "deliveries":
-            kwargs["queryset"] = Delivery.objects.all()
-        if db_field.name == "type_pay":
-            kwargs["queryset"] = TypePay.objects.all()
+
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
@@ -46,24 +41,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
-
-
-@admin.register(Condition)
-class ConditionAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
-
-
-@admin.register(Delivery)
-class DeliveryAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
-
-
-@admin.register(TypePay)
-class TypePayAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
 

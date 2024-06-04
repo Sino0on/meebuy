@@ -119,8 +119,8 @@ class ProviderForm(forms.ModelForm):
             'retail', 'official_distributor', 'city', 'how_get', 'post_index',
             'metro', 'address', 'work_time', 'phones', 'web_site', 'fax',
             'image', 'banner', 'requisites', 'is_active', 'emp_quantity',
-            'register_ur', 'conditions', 'deliveries', 'is_modered',
-            'type_pay', 'email', 'youtube_video'
+            'register_ur', 'is_modered',
+            'email', 'youtube_video'
         ]
         widgets = {
             'type': forms.RadioSelect(),

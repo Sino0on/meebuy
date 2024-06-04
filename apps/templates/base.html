@@ -309,6 +309,7 @@
             </li>
           </ul>
           <div class="hidden lg-md:flex gap-4">
+              <a href="{% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'login' %}{% endif %}">
             <svg
               class="lg-md:block text-logo-color"
               width="36"
@@ -324,12 +325,14 @@
                 fill="currentColor"
               ></path>
             </svg>
-
+</a>
+              <a href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}">
             <img
-              class="lg-md:block"
+              class="lg-md:block mt-2"
               src="{% static 'assets/images/icons/headerLetter.svg' %}"
               alt=""
             />
+              </a>
           </div>
         </div>
       </div>
