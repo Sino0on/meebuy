@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, logout, login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -31,33 +30,6 @@ class HomeView(TemplateView):
         return context
 
 
-class RegisterView(FormView):
-    form_class = UserRegistrationForm
-    template_name = 'auth/auth.html'
-    success_url = reverse_lazy('select_user_type')
-
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        user.auth_provider = False
-        form.save()
-        Cabinet.objects.get_or_create(user=user)
-        authenticated_user = authenticate(email=user.email, password=form.cleaned_data['password1'])
-        if authenticated_user is not None:
-            auth_login(self.request, authenticated_user)
-
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        print(form.errors)
-        return self.render_to_response(self.get_context_data(register_form=form))
-
-    def get_context_data(self, **kwargs):
-        context = {'register_form': UserRegistrationForm()}
-        context.update(super().get_context_data(**kwargs))
-
-        return context
-
-
 class LoginView(FormView):
     form_class = UserLoginForm
     template_name = 'auth/auth.html'
@@ -70,7 +42,7 @@ class LoginView(FormView):
                 user = register_form.save(commit=False)
                 user.auth_provider = False
                 user.save()
-                Cabinet.objects.create(user=user)
+                Cabinet.objects.get_or_create(user=user)
                 authenticated_user = authenticate(email=user.email, password=register_form.clean_password2())
                 if authenticated_user is not None:
                     auth_login(self.request, authenticated_user)
