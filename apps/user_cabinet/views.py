@@ -112,7 +112,9 @@ class UserDetailView(generic.TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context_keys = ['one', 'two', 'three', 'four', 'five', 'six']
-        images = self.request.user.provider.images.all()
+        provider, _ = Provider.objects.get_or_create(user=self.request.user, description='')
+
+        images = provider.images.all()
         context_values = (images[i] if i < len(images) else None for i in range(len(context_keys)))
         context.update(dict(zip(context_keys, context_values)))
         contacts = Contacts.load()

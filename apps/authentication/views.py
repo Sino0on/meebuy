@@ -124,7 +124,7 @@ class SelectAuthUserTypeView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.user_type:
-            return redirect(reverse_lazy('profile'))
+            return redirect(reverse_lazy('view_profile'))
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -134,7 +134,7 @@ class SelectAuthUserTypeView(FormView):
             print(form.cleaned_data['user_type'])
             user_profile.save()
             if user_profile.user_type == 'provider':
-                Provider.objects.create(user=user_profile)
+                Provider.objects.get_or_create(user=user_profile)
             elif user_profile.user_type == 'buyer':
                 Buyer.objects.create(user=user_profile)
         return super().form_valid(form)
