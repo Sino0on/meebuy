@@ -61,18 +61,18 @@
                       alt=""
                     />
                     <form class="rounded-full overflow-hidden  w-20 h-20" action="">
-                                    <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
-                                        {% if user.provider.image %}
+                        <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
+                            {% if user.provider.image %}
 
-                                        <img class="object-cover h-full" id="avatar"
-                                             src="{{ user.provider.image.url }}" alt="">
-                                        {% else %}
-                                        <img class="object-cover h-full" id="avatar"
-                                             src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
-                                        {% endif %}
-                                    </label>
-                                    {% csrf_token %}
-                                    <input id="upload" type="file" class="hidden"/>
+                            <img class="object-cover h-full" id="avatar"
+                                 src="{{ user.provider.image.url }}" alt="">
+                            {% else %}
+                            <img class="object-cover h-full" id="avatar"
+                                 src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                            {% endif %}
+                        </label>
+                        {% csrf_token %}
+                        <input id="upload" type="file" class="hidden"/>
                     </form>
                   </div>
                 </div>

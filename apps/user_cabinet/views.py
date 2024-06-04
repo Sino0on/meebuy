@@ -110,7 +110,6 @@ class UserDetailView(generic.TemplateView, LoginRequiredMixin):
     template_name = 'cabinet/provider_profile.html'
 
     def get_context_data(self, **kwargs):
-        print(self.request.user.user_type)
         context = super().get_context_data(**kwargs)
         context_keys = ['one', 'two', 'three', 'four', 'five', 'six']
         images = self.request.user.provider.images.all()
@@ -118,6 +117,7 @@ class UserDetailView(generic.TemplateView, LoginRequiredMixin):
         context.update(dict(zip(context_keys, context_values)))
         contacts = Contacts.load()
         context['contacts'] = contacts
+        context['products'] = Product.objects.filter(provider__user=self.request.user)[:5]
 
         return context
 
