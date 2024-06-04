@@ -73,6 +73,7 @@
               class="absolute z-50 left-0 top-[50px] flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] p-5 sm:w-[408px] w-[318px]"
             >
               <form
+                class="w-full"
                 method="get"
                 action="{% url 'product_list' %}"
                 id="products_filter"
@@ -81,13 +82,13 @@
                   <p class="text-[#2B292C] font-bold text-[18px]">Цена</p>
                   <div class="flex items-center gap-5">
                     <input
-                      class="border border-[#E6E6E6] rounded-2xl py-3 pl-4 w-[154px]"
+                      class="border border-[#E6E6E6] rounded-2xl py-3 pl-4 w-1/2"
                       placeholder="От"
                       name="price_min"
                       type="text"
                     />
                     <input
-                      class="border border-[#E6E6E6] rounded-2xl py-3 pl-4"
+                      class="border border-[#E6E6E6] rounded-2xl py-3 pl-4 w-1/2"
                       placeholder="До"
                       name="price_max"
                       type="text"
