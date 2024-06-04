@@ -198,7 +198,7 @@
     </div>
 </main>
 <script>
-  var ws = new WebSocket(`wss://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
+  var ws = new WebSocket(`ws://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
 
   ws.onopen = function() {
     console.log("Connected to the chat server.");
