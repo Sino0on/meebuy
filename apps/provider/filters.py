@@ -5,6 +5,15 @@ from apps.tender.models import City, Country, Region
 
 
 class ProviderFilter(django_filters.FilterSet):
+    ORDER_CHOICES = [
+        ('name', 'Имя (A-Z)'),
+        ('-name', 'Имя (Z-A)'),
+        ('created_at', 'Дата добавления (сначала новые)'),
+        ('-created_at', 'Дата добавления (сначала старые)'),
+    ]
+
+    order_by = django_filters.ChoiceFilter(label='Сортировка', choices=ORDER_CHOICES, method='filter_by_order')
+
     title = django_filters.CharFilter(field_name='title', lookup_expr='icontains', label='Имя')
     country = django_filters.ModelChoiceFilter(
         queryset=Country.objects.all(),
@@ -92,6 +101,8 @@ class ProviderFilter(django_filters.FilterSet):
             'bank_transfer',
             'credit_card',
             'electronic_money',
+            'order_by',
+
         ]
 
     def filter_by_country(self, queryset, name, value):
@@ -109,4 +120,9 @@ class ProviderFilter(django_filters.FilterSet):
             return queryset
         if value in [True, 'True', 'on']:
             return queryset.filter(**{name: True})
+        return queryset
+
+    def filter_by_order(self, queryset, name, value):
+        if value:
+            return queryset.order_by(value)
         return queryset

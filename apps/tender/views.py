@@ -12,19 +12,26 @@ from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 class TenderListView(generic.ListView):
     model = Tender
-    queryset = Tender.objects.all()
     template_name = 'tender_list.html'
-    paginate_by = '10'
-    filter_class = TenderFilter
+    paginate_by = 10
     context_object_name = 'tenders'
+
+    def __init__(self):
+        super().__init__()
+        self.filter = None
+
+    def get_queryset(self):
+        queryset = Tender.objects.all()
+        self.filter = TenderFilter(self.request.GET, queryset=queryset)
+
+        return self.filter.qs
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
-        contacts = Contacts.load()
-        context['contacts'] = contacts
+        context['contacts'] = Contacts.load()
+        context['filter'] = self.filter
         return context
-
 
 class TenderDetailView(generic.DetailView):
     template_name = 'tender_detail.html'
