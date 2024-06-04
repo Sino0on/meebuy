@@ -75,7 +75,7 @@ class Provider(models.Model):
     register_ur = models.DateField(blank=True, null=True, verbose_name=_('Дата регистрации юр лица'))
 
     # Conditions
-    installment = models.BooleanField(default=False, verbose_name=_('Возможна рассрочка'))
+    installment = models.BooleanField(default=False, verbose_name=_('Возможна рассрочка'), blank=True)
     credit = models.BooleanField(default=False, verbose_name=_('Возможен кредит'))
     deposit = models.BooleanField(default=False, verbose_name=_('Возможен депозит'))
     consignment = models.BooleanField(default=False, verbose_name=_('Возможна передача под реализацию'))
