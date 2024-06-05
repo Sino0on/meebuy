@@ -7,18 +7,26 @@ const categoryBlock = document.getElementById("category-block");
 const priceBlock = document.getElementById("price-block");
 const excelLoaderBlock = document.getElementById("excel-loader-block");
 
+
 const toggleTab = (element) => {
-  const tabs = [goods, category, price, excelLoader];
+
+console.log(element.id)
+if(element){
+ const tabs = [goods, category, price, excelLoader];
   const blocks = [goodsBlock, categoryBlock, priceBlock, excelLoaderBlock];
   for (let i = 0; i <= tabs.length; i++) {
     if (tabs[i] === element) {
+    console.log('price === price', tabs[i],element)
       tabs[i].style.backgroundColor = "#FFFB98";
       blocks[i].style.display = "block";
+      return;
     } else {
       tabs[i].style.backgroundColor ? (tabs[i].style.backgroundColor = "") : "";
       blocks[i].style.display = "none";
     }
   }
+}
+
 };
 goods.addEventListener("click", () => toggleTab(goods));
 category.addEventListener("click", () => toggleTab(category));
@@ -120,7 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const columnContainer = columnContainers[0]; // Assuming you only have one container
 
-  function createNewColumn() {
+  function createNewColumn(e) {
+    e.preventDefault()
+    console.log("should create new column")
     const newColumn = columnContainer.firstElementChild.cloneNode(true);
 
     // Clear the input values in the cloned column
@@ -133,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
     columnContainer.appendChild(newColumn);
   }
 
-  addButton.addEventListener("click", createNewColumn);
+  addButton.addEventListener("click", (e) => createNewColumn(e));
 
   // Add event listener for delete buttons
   columnContainer.addEventListener("click", function (event) {
@@ -148,14 +158,3 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // delete
-const columnContainer = document.getElementById("column-container");
-
-columnContainer.addEventListener("click", function (event) {
-  if (event.target.classList.contains("delete-button")) {
-    const column = event.target.closest(".column");
-
-    if (column !== columnContainer.querySelector(".column")) {
-      column.remove();
-    }
-  }
-});
