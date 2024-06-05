@@ -441,9 +441,13 @@
                 </div>
               </div>
 
-              <div class="cards sm:p-9 p-5">
+              <div class="">
                 <!-- goods -->
-                <div id="goods-block" style="display: block">
+                <div
+                  id="goods-block"
+                  style="display: block"
+                  class="cards sm:p-9 p-5"
+                >
                   <div class="flex flex-col gap-7 font-mulish">
                     <div>
                       <h6 class="text-[20px] font-bold">
@@ -768,76 +772,6 @@
                           отмена
                         </button>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Автозагрузка -->
-                <div id="autoload-block" style="display: none">
-                  <div class="flex flex-col items-start gap-10 font-mulish">
-                    <p class="text-[#4D4D4D] text-[18px] font-normal">
-                      Вы можете настроить автоматическую регулярную загрузку
-                      товаров на сайт. Для этого вам нужно указать ссылку
-                      на свои товары в формате Яндекс YML (формат совместимый
-                      с Яндекс.Маркетом). Файл может быть заархивирован
-                      в формате .zip или .gz. Для проверки валидности вашей
-                      ссылки YML используйте этот сервис. Дополнительно
-                      вы можете настроить правила изменения цены при загрузке
-                      товаров.
-                    </p>
-                    <div class="flex flex-col gap-3 w-full">
-                      <p class="text-[#2B292C] text-[18px] font-semibold">
-                        Адрес каталога в YML формате *
-                      </p>
-                      <p class="text-[16px] font-light text-[#4D4D4D] mb-2">
-                        Например: http://mysite.ru/catalog.xml
-                      </p>
-                      <input
-                        class="bg-[#F9F9F9] border border-[#E6E6E6] py-3 pl-5 rounded-2xl"
-                        type="text"
-                      />
-                    </div>
-                    <button
-                      class="text-[#4D4D4D] lg-md:w-[40%] w-full uppercase text-[16px] font-medium rounded-lg py-4 px-12 border border-[#4D4D4D]"
-                    >
-                      добавить ещё
-                    </button>
-                    <div class="flex flex-col gap-6 w-full">
-                      <p class="text-[18px] text-[#2B292C] font-semibold">
-                        Периодичность обновления
-                      </p>
-                      <div
-                        class="relative lg-md:w-[40%] w-full bg-[#F9F9F9] border-[#E6E6E6] py-4 rounded-[15px]"
-                      >
-                        <input class="bg-[#F9F9F9] pl-5" type="text" />
-                        <img
-                          class="absolute right-4 top-6"
-                          src="../../../assets/images/icons/arrow-down.svg"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <div class="flex flex-col gap-6">
-                      <p class="text-[18px] text-[#2B292C] font-semibold">
-                        Публикация цен
-                      </p>
-                      <div class="flex items-center gap-[10px]">
-                        <input class="h-6 w-6" type="checkbox" />
-                        <p class="text-[#777777] text-[16px] font-normal">
-                          Скрыть цены (вместо цены слово «по запросу»)
-                        </p>
-                      </div>
-                    </div>
-                    <div class="flex gap-[10px] w-full">
-                      <button
-                        class="bg-[#E4DB00] text-[#2B292C] w-[50%] text-[16px] font-medium font-mulish rounded-lg py-3 px-8 uppercase"
-                      >
-                        сохранить
-                      </button>
-                      <button
-                        class="border border-[#2B292C] text-[#2B292C] w-[50%] text-[16px] font-medium font-mulish rounded-lg py-3 px-8 uppercase"
-                      >
-                        отмена
-                      </button>
                     </div>
                   </div>
                 </div>

@@ -503,6 +503,18 @@ def add_product_fav_api(request, pk):
         request.user.cabinet.save()
     return JsonResponse({'Info': 'ok'}, status=200)
 
+@require_GET
+def add_buyer_fav_api(request, pk):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+    product = get_object_or_404(Product, id=pk)
+    if product in request.user.cabinet.favorite_products.all():
+        request.user.cabinet.favorite_products.remove(product)
+        request.user.cabinet.save()
+    else:
+        request.user.cabinet.favorite_products.add(product)
+        request.user.cabinet.save()
+    return JsonResponse({'Info': 'ok'}, status=200)
 
 def delete_provider_fav(request, pk):
     provider = get_object_or_404(Provider, id=pk)

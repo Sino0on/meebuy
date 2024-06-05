@@ -83,8 +83,10 @@ urlpatterns = [
     path('upping/buy/<int:pk>', BuyUppingView.as_view()),
 
 
-    path('fav/provider/<int:pk>/', add_provider_fav_api),
+    path('fav/proviuder/<int:pk>/', add_provider_fav_api),
     path('fav/product/<int:pk>/', add_product_fav_api),
+    path('fav/buyer/<int:pk>/', add_buyer_fav_api),
+
     path('delete/fav/provider/<int:pk>/', delete_provider_fav),
     path('add_provider_favorite/<int:pk>/', add_provider_fav),
 
