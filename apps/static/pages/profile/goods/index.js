@@ -8,22 +8,20 @@ const priceBlock = document.getElementById("price-block");
 const excelLoaderBlock = document.getElementById("excel-loader-block");
 
 const toggleTab = (element) => {
-  if (element) {
-    const tabs = [goods, category, price, excelLoader];
-    const blocks = [goodsBlock, categoryBlock, priceBlock, excelLoaderBlock];
-    for (let i = 0; i <= tabs.length; i++) {
-      if (tabs[i] === element) {
-        tabs[i].style.backgroundColor = "#FFFB98";
-        blocks[i].style.display = "block";
-        return;
-      } else {
-        tabs[i].style.backgroundColor
-          ? (tabs[i].style.backgroundColor = "")
-          : "";
-        blocks[i].style.display = "none";
-      }
+  // if (element) {
+  const tabs = [goods, category, price, excelLoader];
+  const blocks = [goodsBlock, categoryBlock, priceBlock, excelLoaderBlock];
+  for (let i = 0; i <= tabs.length; i++) {
+    if (tabs[i] === element) {
+      tabs[i].style.backgroundColor = "#FFFB98";
+      blocks[i].style.display = "block";
+      // return;
+    } else {
+      tabs[i].style.backgroundColor ? (tabs[i].style.backgroundColor = "") : "";
+      blocks[i].style.display = "none";
     }
   }
+  // }
 };
 goods.addEventListener("click", () => toggleTab(goods));
 category.addEventListener("click", () => toggleTab(category));
@@ -57,8 +55,8 @@ const toggleAddCategoryBlock = () => {
     addCategoryBlock.style.display = "none";
   }
 };
-
 buttonAddCategory.addEventListener("click", toggleAddCategoryBlock);
+
 // add goods manually
 const buttonAddGoods = document.getElementById("add-goods-button");
 const closeAddGoods = document.getElementById("close-goods-button");
