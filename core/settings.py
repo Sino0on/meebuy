@@ -139,6 +139,27 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int),
     }
 }
+STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+
+STATIC_URL = "/static/"
+
+# Extra places for collectstatic to find static files.
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
@@ -217,12 +238,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SOCIALACCOUNT_QUERY_EMAIL = True
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -277,15 +293,6 @@ MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 
 MODELTRANSLATION_LANGUAGES = ('ru', 'ky')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
-
-STATIC_URL = "/static/"
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "apps/media")
 MEDIA_URL = "/media/"
