@@ -7,26 +7,25 @@ const categoryBlock = document.getElementById("category-block");
 const priceBlock = document.getElementById("price-block");
 const excelLoaderBlock = document.getElementById("excel-loader-block");
 
-
 const toggleTab = (element) => {
-
-console.log(element.id)
-if(element){
- const tabs = [goods, category, price, excelLoader];
-  const blocks = [goodsBlock, categoryBlock, priceBlock, excelLoaderBlock];
-  for (let i = 0; i <= tabs.length; i++) {
-    if (tabs[i] === element) {
-    console.log('price === price', tabs[i],element)
-      tabs[i].style.backgroundColor = "#FFFB98";
-      blocks[i].style.display = "block";
-      return;
-    } else {
-      tabs[i].style.backgroundColor ? (tabs[i].style.backgroundColor = "") : "";
-      blocks[i].style.display = "none";
+  console.log(element.id);
+  if (element) {
+    const tabs = [goods, category, price, excelLoader];
+    const blocks = [goodsBlock, categoryBlock, priceBlock, excelLoaderBlock];
+    for (let i = 0; i <= tabs.length; i++) {
+      if (tabs[i] === element) {
+        console.log("price === price", tabs[i], element);
+        tabs[i].style.backgroundColor = "#FFFB98";
+        blocks[i].style.display = "block";
+        return;
+      } else {
+        tabs[i].style.backgroundColor
+          ? (tabs[i].style.backgroundColor = "")
+          : "";
+        blocks[i].style.display = "none";
+      }
     }
   }
-}
-
 };
 goods.addEventListener("click", () => toggleTab(goods));
 category.addEventListener("click", () => toggleTab(category));
@@ -119,7 +118,7 @@ document.getElementById("file").addEventListener("change", function (event) {
 // add column
 document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.getElementById("column-button");
-  console.log(addButton)
+  console.log(addButton);
   const columnContainers = document.getElementsByClassName("column-container");
 
   if (columnContainers.length === 0) {
@@ -127,11 +126,10 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  const columnContainer = columnContainers[0]; // Assuming you only have one container
+  const columnContainer = columnContainers[0];
 
   function createNewColumn(e) {
-    e.preventDefault()
-    console.log("should create new column")
+    e.preventDefault();
     const newColumn = columnContainer.firstElementChild.cloneNode(true);
 
     // Clear the input values in the cloned column
@@ -159,3 +157,14 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // delete
+const columnContainer = document.getElementById("column-container");
+
+columnContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("delete-button")) {
+    const column = event.target.closest(".column");
+
+    if (column !== columnContainer.querySelector(".column")) {
+      column.remove();
+    }
+  }
+});
