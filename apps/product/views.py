@@ -259,6 +259,21 @@ class PriceColumnCreateView(CreateView):
     template_name = 'cabinet/products.html'
     success_url = reverse_lazy('user_products')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        categories = ProductCategory.objects.filter(provider__user=self.request.user)
+        context['categories'] = categories
+        context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
+        context['decimal'] = self.request.user.provider.decimal_places
+        if self.get_queryset().exists():
+            context['has_products'] = True
+        else:
+            context['has_products'] = False
+
+        return context
+
     def form_valid(self, form):
         form.instance.provider = self.request.user.provider
 
@@ -297,8 +312,38 @@ class PriceColumnUpdateView(UpdateView):
     template_name = 'cabinet/products.html'
     success_url = reverse_lazy('user_products')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        categories = ProductCategory.objects.filter(provider__user=self.request.user)
+        context['categories'] = categories
+        context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
+        context['decimal'] = self.request.user.provider.decimal_places
+        if self.get_queryset().exists():
+            context['has_products'] = True
+        else:
+            context['has_products'] = False
+
+        return context
+
 
 class PriceColumnDeleteView(DeleteView):
     model = PriceColumn
     template_name = 'cabinet/products.html'
     success_url = reverse_lazy('user_products')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        categories = ProductCategory.objects.filter(provider__user=self.request.user)
+        context['categories'] = categories
+        context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
+        context['decimal'] = self.request.user.provider.decimal_places
+        if self.get_queryset().exists():
+            context['has_products'] = True
+        else:
+            context['has_products'] = False
+
+        return context

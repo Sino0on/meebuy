@@ -119,6 +119,7 @@ document.getElementById("file").addEventListener("change", function (event) {
 // add column
 document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.getElementById("column-button");
+  console.log(addButton)
   const columnContainers = document.getElementsByClassName("column-container");
 
   if (columnContainers.length === 0) {
