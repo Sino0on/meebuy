@@ -106,6 +106,8 @@ class ProviderFilter(django_filters.FilterSet):
         ]
 
     def filter_by_country(self, queryset, name, value):
+        print(name)
+        print(value)
         if value:
             return queryset.filter(city__region__country=value)
         return queryset

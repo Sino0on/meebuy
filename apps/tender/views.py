@@ -47,6 +47,7 @@ class TenderDetailView(generic.DetailView):
                     if self.get_object().user.cabinet.user_status.status.is_publish_phone:
                         OpenNumberCount.objects.create(user=self.get_object().user.cabinet)
                         context['open'] = 'open'
+            # context['open'] = 'open'
 
             print('das')
         # context['products'] = Provider.products.all()
