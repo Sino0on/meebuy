@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductImg, ProductCategory
+from .models import Product, ProductImg, ProductCategory, PriceColumn
 
 
 @admin.register(ProductCategory)
@@ -39,3 +39,4 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImg)  # If you want basic management for ProductImg outside the inline
+admin.site.register(PriceColumn)
