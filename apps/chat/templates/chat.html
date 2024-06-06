@@ -155,7 +155,7 @@
                                 {% endif %}
                             </a>
                         </div>
-                        <div id="messageContainer" class="flex flex-col h-full max-h-[440px] overflow-scroll px-[3px] py-[25px]">
+                        <div id="messageContainer" style="min-height: 440px;" class="flex flex-col h-full max-h-[440px] overflow-scroll px-[3px] py-[25px]">
 
                             {% for message in messages %}
                             {% if message.sender == user %}
@@ -182,7 +182,7 @@
     </div>
 </main>
 <script>
-  var ws = new WebSocket(`wss://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
+  var ws = new WebSocket(`ws://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
 
 
   ws.onopen = function() {
