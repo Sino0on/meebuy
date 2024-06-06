@@ -333,14 +333,17 @@
           <div class="font-mulish flex flex-col text-[#FFFFFC] gap-8">
             <h6 class="uppercase text-[20px] font-semibold">мы в соцсетях</h6>
             <ul class="flex gap-3">
-              <li>
-                <a href="{{ contacts.instagram }}" target="_blank">
-                  <img
-                    src="{% static 'assets/images/icons/footer/socials/instagram.svg' %}"
-                    alt="Instagram"
-                  />
-                </a>
-              </li>
+                {% if contacts.instagram %}
+                    <li>
+                    <a href="{{ contacts.instagram }}" target="_blank">
+                      <img
+                        src="{% static 'assets/images/icons/footer/socials/instagram.svg' %}"
+                        alt="Instagram"
+                      />
+                    </a>
+                  </li>
+                {% endif %}
+              {% if contacts.whatsapp %}
               <li>
                 <a href="{{ contacts.whatsapp }}" target="_blank">
                   <img
@@ -349,6 +352,8 @@
                   />
                 </a>
               </li>
+              {% endif %}
+              {% if contacts.telegram %}
               <li>
                 <a href="{{ contacts.telegram }}" target="_blank">
                   <img
@@ -357,6 +362,8 @@
                   />
                 </a>
               </li>
+              {% endif %}
+              {% if contacts.vk %}
               <li>
                 <a href="{{ contacts.vk }}" target="_blank">
                   <img
@@ -365,6 +372,7 @@
                   />
                 </a>
               </li>
+              {% endif %}
             </ul>
               {% if contacts.phone %}
                           <p class="font-poppins">{{ contacts.phone }}</p>
