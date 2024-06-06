@@ -50,7 +50,7 @@ class TenderDetailView(generic.DetailView):
             # context['open'] = 'open'
 
             print('das')
-        # context['products'] = Provider.products.all()
+        context['tenders'] = Tender.objects.exclude(id=self.object.id)
         return context
 
 

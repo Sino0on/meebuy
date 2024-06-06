@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-from django.contrib.postgres.fields import ArrayField
 
 User = get_user_model()
 
@@ -17,7 +16,7 @@ class Category(models.Model):
     def get_category_descendants(cls, category):
         """ Рекурсивно получает все подкатегории для указанной категории. """
         categories = [category]
-        for child in category.categor.all():  # используем related_name
+        for child in category.categor.all():
             categories.extend(cls.get_category_descendants(child))
         return categories
 

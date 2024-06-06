@@ -56,8 +56,8 @@
                                 <div class="hidden lg-md:flex items-center gap-[10px]">
                                     <img class="w-6 h-6 cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}"
                                         alt="">
-                                    <a href="{% if provider in user.cabinet.favorite_providers.all %}/delete/fav/provider/{{object.provider.pk}}/{% else %}/add_provider_favorite/{{ object.provider.pk }}{% endif %}">
-                                    <svg  class="transition-colors w-6 h-6 cursor-pointer {% if provider in user.cabinet.favorite_providers.all %}text-logo-color{% endif %}" id="heart2" width="40"
+                                    <a href="{% if object.provider in user.cabinet.favorite_providers.all %}/delete/fav/provider/{{object.provider.pk}}/{% else %}/add_provider_favorite/{{ object.provider.pk }}{% endif %}">
+                                    <svg  class="transition-colors w-6 h-6 cursor-pointer {% if object.provider in user.cabinet.favorite_providers.all %}text-logo-color{% endif %}" id="heart2" width="40"
                                         height="40" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
                                         <path
@@ -142,27 +142,87 @@
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Объем поставок</p>
-                                <p class="mt-2.5">Крупный опт</p>
+                                {% if object.provider.large_wholesale %}
+                                    <p class="mt-2.5">Крупный опт</p>
+                                {% endif %}
+                                {% if object.provider.small_wholesale %}
+                                    <p class="mt-2.5">Мелкий опт</p>
+                                {% endif %}
+                                {% if object.provider.retail %}
+                                    <p class="mt-2.5">Поштучно</p>
+                                {% endif %}
+                                {% if object.provider.official_distributor %}
+                                    <p class="mt-2.5">Официальный дистрибьютор</p>
+                                {% endif %}
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Минимальный заказ</p>
-                                <p class="mt-2.5">100</p>
+                                {% if object.provider.minimum_order %}
+                                    <p class="mt-2.5">{{ object.provider.minimum_order }}</p>
+                                {% else %}
+                                    <p class="mt-2.5">Без ограничений</p>
+                                {% endif %}
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Услуги</p>
-                                <p class="mt-2.5">Рассрочка</p>
+                                {% if object.provider.installment %}
+                                    <p class="mt-2.5">Возможна рассрочка</p>
+                                {% endif %}
+                                {% if object.provider.credit %}
+                                    <p class="mt-2.5">Возможен кредит</p>
+                                {% endif %}
+                                {% if object.provider.deposit %}
+                                    <p class="mt-2.5">Возможен депозит</p>
+                                {% endif %}
+                                {% if object.provider.consignment %}
+                                    <p class="mt-2.5">Возможна передача под реализацию</p>
+                                {% endif %}
+                                {% if object.provider.dropshipping %}
+                                    <p class="mt-2.5">Возможен дропшиппинг</p>
+                                {% endif %}
+                                {% if object.provider.showroom %}
+                                    <p class="mt-2.5">Есть шоурум</p>
+                                {% endif %}
+                                {% if object.provider.marketplace_sale %}
+                                    <p class="mt-2.5">Разрешена продажа на маркетплейсах</p>
+                                {% endif %}
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Варианты оплаты</p>
-                                {% for i in object.provider.type_pay.all %}
-                                <p class="mt-2.5">{{ i.title }}</p>
-                                {% endfor %}
+                          {% if object.provider.cash %}
+                                <p class="mt-2.5">Наличными</p>
+                            {% endif %}
+                            {% if object.provider.bank_transfer %}
+                                <p class="mt-2.5">Безналичная оплата</p>
+                            {% endif %}
+                            {% if object.provider.credit_card %}
+                                <p class="mt-2.5">Кредитные карты</p>
+                            {% endif %}
+                            {% if object.provider.electronic_money %}
+                                <p class="mt-2.5">Электронные деньги</p>
+                            {% endif %}
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Способы доставки</p>
-                                {% for i in object.provider.deliveries.all %}
-                                <p class="mt-2.5">{{ i.title }}</p>
-                                {% endfor %}
+                                 {% if object.provider.pickup %}
+                                <p class="mt-2.5">Самовывоз</p>
+                            {% endif %}
+                            {% if object.provider.transport_company %}
+                                <p class="mt-2.5">Транспортной компанией</p>
+                            {% endif %}
+                            {% if object.provider.by_car %}
+                                <p class="mt-2.5">Автомобилем</p>
+                            {% endif %}
+                            {% if object.provider.air_transport %}
+                                <p class="mt-2.5">Авиатранспортом</p>
+                            {% endif %}
+                            {% if object.provider.rail_transport %}
+                                <p class="mt-2.5">Железной дорогой</p>
+                            {% endif %}
+                            {% if object.provider.courier %}
+                                <p class="mt-2.5">Курьером</p>
+                            {% endif %}
+
                             </li>
                         </ul>
                     </div>
@@ -219,10 +279,12 @@
         </section>
         <section class="supplier__detail-simila__companies my-[100px] lg:my-[120px]">
             <div class="container relative pb-16">
-                <h2 class="font-bold text-dark-logo uppercase lg-md:text-xl">Похожие компании</h2>
+                <h2 class="font-bold text-dark-logo uppercase lg-md:text-xl">Похожие покупатели</h2>
                 <div class="swiper supplier__detail-slider mt-[30px] lg:mt-10">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide">
+
+                        {% for buyer in buyers %}
+                                              <div class="swiper-slide">
                         <div
                           class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
                         >
@@ -238,79 +300,10 @@
                           <div class="mt-6">
                             <div>
                               <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                                Headphones.kg
+                                {{ buyer.title }}
                               </h6>
                               <p class="text-base text-dark-logo line-clamp-2">
-                                Наушники и другие аксессуары для гаджетовНаушники и
-                                другие аксессуары для гаджетовНаушники и другие
-                                аксессуары для гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для гаджетов
-                              </p>
-                              <p
-                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
-                              >
-                                <img
-                                  class="mr-[6px]"
-                                  src="{% static 'assets/images/icons/location-with-map.svg' %}"
-                                  alt=""
-                                />
-                                г. Бишкек, Кыргызстан
-                              </p>
-                            </div>
-                            <div class="flex mt-4 gap-4">
-                              <button class="flex-grow btn-filled py-[7px]">
-                                Подробнее
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- other slides -->
-                      <div class="swiper-slide">
-                        <div
-                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
-                        >
-                          <div
-                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"
-                          >
-                            <img
-                              class="w-full h-full object-cover"
-                              src="{% static 'assets/images/home/headphones-white.svg' %}"
-                              alt=""
-                            />
-                          </div>
-                          <div class="mt-6">
-                            <div>
-                              <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                                Headphones.kg
-                              </h6>
-                              <p class="text-base text-dark-logo line-clamp-2">
-                                Наушники и другие аксессуары для гаджетовНаушники и
-                                другие аксессуары для гаджетовНаушники и другие
-                                аксессуары для гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для гаджетов
+                                  {{ buyer.mini_desc }}
                               </p>
                               <p
                                 class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
@@ -320,288 +313,21 @@
                                   src="{% static 'assets/images/home/headphones-white.svg' %}"
                                   alt=""
                                 />
-                                г. Бишкек, Кыргызстан
+                                {{ buyer.city }} {{ buyer.city.region.country }}
                               </p>
                             </div>
+
                             <div class="flex mt-4 gap-4">
-                              <button class="flex-grow btn-filled py-[7px]">
+                                <a class="flex-grow text-center btn-filled py-[7px] w-full" href="{% url 'buyer_detail' buyer.id %}">
                                 Подробнее
-                              </button>
+                                    </a>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="swiper-slide">
-                        <div
-                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
-                        >
-                          <div
-                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"
-                          >
-                            <img
-                              class="w-full h-full object-cover"
-                              src="{% static 'assets/images/home/headphones-white.svg' %}"
-                              alt=""
-                            />
-                          </div>
-                          <div class="mt-6">
-                            <div>
-                              <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                                Headphones.kg
-                              </h6>
-                              <p class="text-base text-dark-logo line-clamp-2">
-                                Наушники и другие аксессуары для гаджетовНаушники и
-                                другие аксессуары для гаджетовНаушники и другие
-                                аксессуары для гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для гаджетов
-                              </p>
-                              <p
-                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
-                              >
-                                <img
-                                  class="mr-[6px]"
-                                  src="{% static 'assets/images/home/headphones-white.svg' %}"
-                                  alt=""
-                                />
-                                г. Бишкек, Кыргызстан
-                              </p>
-                            </div>
-                            <div class="flex mt-4 gap-4">
-                              <button class="flex-grow btn-filled py-[7px]">
-                                Подробнее
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="swiper-slide">
-                        <div
-                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
-                        >
-                          <div
-                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"
-                          >
-                            <img
-                              class="w-full h-full object-cover"
-                              src="{% static 'assets/images/home/headphones-white.svg' %}"
-                              alt=""
-                            />
-                          </div>
-                          <div class="mt-6">
-                            <div>
-                              <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                                Headphones.kg
-                              </h6>
-                              <p class="text-base text-dark-logo line-clamp-2">
-                                Наушники и другие аксессуары для гаджетовНаушники и
-                                другие аксессуары для гаджетовНаушники и другие
-                                аксессуары для гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для гаджетов
-                              </p>
-                              <p
-                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
-                              >
-                                <img
-                                  class="mr-[6px]"
-                                  src="{% static 'assets/images/home/headphones-white.svg' %}"
-                                  alt=""
-                                />
-                                г. Бишкек, Кыргызстан
-                              </p>
-                            </div>
-                            <div class="flex mt-4 gap-4">
-                              <button class="flex-grow btn-filled py-[7px]">
-                                Подробнее
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="swiper-slide">
-                        <div
-                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
-                        >
-                          <div
-                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"
-                          >
-                            <img
-                              class="w-full h-full object-cover"
-                              src="{% static 'assets/images/home/headphones-white.svg' %}"
-                              alt=""
-                            />
-                          </div>
-                          <div class="mt-6">
-                            <div>
-                              <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                                Headphones.kg
-                              </h6>
-                              <p class="text-base text-dark-logo line-clamp-2">
-                                Наушники и другие аксессуары для гаджетовНаушники и
-                                другие аксессуары для гаджетовНаушники и другие
-                                аксессуары для гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для гаджетов
-                              </p>
-                              <p
-                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
-                              >
-                                <img
-                                  class="mr-[6px]"
-                                  src="{% static 'assets/images/home/headphones-white.svg' %}"
-                                  alt=""
-                                />
-                                г. Бишкек, Кыргызстан
-                              </p>
-                            </div>
-                            <div class="flex mt-4 gap-4">
-                              <button class="flex-grow btn-filled py-[7px]">
-                                Подробнее
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="swiper-slide">
-                        <div
-                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
-                        >
-                          <div
-                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"
-                          >
-                            <img
-                              class="w-full h-full object-cover"
-                              src="{% static 'assets/images/home/headphones-white.svg' %}"
-                              alt=""
-                            />
-                          </div>
-                          <div class="mt-6">
-                            <div>
-                              <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                                Headphones.kg
-                              </h6>
-                              <p class="text-base text-dark-logo line-clamp-2">
-                                Наушники и другие аксессуары для гаджетовНаушники и
-                                другие аксессуары для гаджетовНаушники и другие
-                                аксессуары для гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для гаджетов
-                              </p>
-                              <p
-                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
-                              >
-                                <img
-                                  class="mr-[6px]"
-                                  src="{% static 'assets/images/home/headphones-white.svg' %}"
-                                  alt=""
-                                />
-                                г. Бишкек, Кыргызстан
-                              </p>
-                            </div>
-                            <div class="flex mt-4 gap-4">
-                              <button class="flex-grow btn-filled py-[7px]">
-                                Подробнее
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="swiper-slide">
-                        <div
-                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
-                        >
-                          <div
-                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"
-                          >
-                            <img
-                              class="w-full h-full object-cover"
-                              src="{% static 'assets/images/home/headphones-white.svg' %}"
-                              alt=""
-                            />
-                          </div>
-                          <div class="mt-6">
-                            <div>
-                              <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                                Headphones.kg
-                              </h6>
-                              <p class="text-base text-dark-logo line-clamp-2">
-                                Наушники и другие аксессуары для гаджетовНаушники и
-                                другие аксессуары для гаджетовНаушники и другие
-                                аксессуары для гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для гаджетов
-                              </p>
-                              <p
-                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
-                              >
-                                <img
-                                  class="mr-[6px]"
-                                  src="{% static 'assets/images/home/headphones-white.svg' %}"
-                                  alt=""
-                                />
-                                г. Бишкек, Кыргызстан
-                              </p>
-                            </div>
-                            <div class="flex mt-4 gap-4">
-                              <button class="flex-grow btn-filled py-[7px]">
-                                Подробнее
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- other slides end -->
+
+                        {% endfor %}
+
                     </div>
                   </div>
                 <div class="swiper-pagination"></div>

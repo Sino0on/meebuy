@@ -226,17 +226,9 @@
             <div class="container">
                 <h2 class="text-base font-bold uppercase text-dark-logo lg-md:text-lg xl:text-xl">Похожие закупки</h2>
                 <div class="flex py-2 pl-[5px] gap-4 mt-[30px] text-dark-text overflow-auto lg:gap-[30px] lg:mt-10">
-                    <a class="py-2 px-2.5  rounded-[15px] text-lg font-bold text-nowrap" href="">Куплю
-                        кружки</a>
-                    <a class="py-2 px-2.5  rounded-[15px] text-lg font-bold text-nowrap" href="">Сервиз
-                        на 24 персоны</a>
-                    <a class="py-2 px-2.5  rounded-[15px] text-lg font-bold text-nowrap" href="">Посуда</a>
-                    <a class="py-2 px-2.5  rounded-[15px] text-lg font-bold text-nowrap" href="">Оптом
-                        посуду куплю</a>
-                    <a class="py-2 px-2.5  rounded-[15px] text-lg font-bold text-nowrap" href="">Пиалы</a>
-                    <a class="py-2 px-2.5  rounded-[15px] text-lg font-bold text-nowrap" href="">Сервиз на 6 персон</a>
-                    <a class="py-2 px-2.5  rounded-[15px] text-lg font-bold text-nowrap" href="">Куплю
-                        кружки</a>
+                    {% for tender in tenders %}
+                        <a class="py-2 px-2.5  rounded-[15px] text-lg font-bold text-nowrap" href="{% url 'tender_detail' tender.id %}">{{ tender.title }}</a>
+                    {% endfor %}
                 </div>
             </div>
         </section>
