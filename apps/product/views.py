@@ -10,6 +10,8 @@ from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, FormView
 from urllib.parse import quote
 from django.core.files.base import ContentFile
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from six import BytesIO
 
@@ -301,9 +303,8 @@ class PriceColumnCreateView(CreateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        print(form.errors)
-        return super().form_invalid(form)
-
+        PriceColumn.objects.filter(provider__user=self.request.user).delete()
+        return HttpResponseRedirect(reverse('user_products'))
 
 
 class PriceColumnUpdateView(UpdateView):

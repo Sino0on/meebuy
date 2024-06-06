@@ -15,7 +15,7 @@ const toggleTab = (element) => {
     if (tabs[i] === element) {
       tabs[i].style.backgroundColor = "#FFFB98";
       blocks[i].style.display = "block";
-      // return;
+      return;
     } else {
       tabs[i].style.backgroundColor ? (tabs[i].style.backgroundColor = "") : "";
       blocks[i].style.display = "none";
@@ -118,12 +118,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const columnContainers = document.querySelectorAll(".column-container");
 
   if (columnContainers.length === 0) {
-    console.error("No column containers found");
-    return;
+   createNewColumn();
   }
 
-  function createNewColumn(e) {
-    e.preventDefault();
+  function createNewColumn() {
+
     const newColumnHTML = `
               <div
                 class="column-container flex flex-col gap-5"
@@ -210,7 +209,10 @@ document.addEventListener("DOMContentLoaded", function () {
     testDiv.appendChild(newColumn);
   }
 
-  addButton.addEventListener("click", (e) => createNewColumn(e));
+  addButton.addEventListener("click", (e) => {
+   e.preventDefault();
+   createNewColumn()
+  });
 
   columnContainers.forEach((content) => {
     content.addEventListener("click", function (event) {
