@@ -21,24 +21,10 @@
                           <div class="mt-6">
                             <div>
                               <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
-                                Headphones.kg
+                                {{ company.title }}
                               </h6>
                               <p class="text-base text-dark-logo line-clamp-2">
-                                Наушники и другие аксессуары для гаджетовНаушники и
-                                другие аксессуары для гаджетовНаушники и другие
-                                аксессуары для гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для
-                                гаджетовНаушники и другие аксессуары для гаджетов
+                               {{ company.mini_descr }}
                               </p>
                               <p
                                 class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
@@ -48,13 +34,13 @@
                                   src="{% static 'assets/images/icons/location-with-map.svg' %}"
                                   alt=""
                                 />
-                                г. Бишкек, Кыргызстан
+                                {{ company.city }} {{ company.city.region.country }}
                               </p>
                             </div>
                             <div class="flex mt-4 gap-4">
-                              <button class="flex-grow btn-filled py-[7px]">
+                                <a class="flex-grow text-center btn-filled py-[7px] w-full" href="{% url 'provider_detail' company.id %}">
                                 Подробнее
-                              </button>
+                                    </a>
                             </div>
                           </div>
                         </div>

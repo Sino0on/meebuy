@@ -11,9 +11,13 @@ class BuyerListView(generic.ListView):
     template_name = 'buyer/buyers.html'
     context_object_name = 'buyers'
     model = User
-    queryset = User.objects.filter(tenders__isnull=False)
-    filter_class = BuyerFilter
     paginate_by = 20
+
+    def get_queryset(self):
+        queryset = User.objects.filter(is_active=True)
+        self.filter = BuyerFilter(self.request.GET, queryset=queryset)
+        return self.filter.qs
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
