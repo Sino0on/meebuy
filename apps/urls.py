@@ -35,6 +35,8 @@ urlpatterns = [
     path('profile/', UserDetailView.as_view(), name='view_profile'),
     path('profile/settings/', UserSettingsView.as_view(), name='settings'),
     path('profile/anketa/', UserAnketaView.as_view(), name='anketa'),
+    path('profile/anketa/buyer/', UserAnketaBuyerView.as_view(), name='anketa_buyer'),
+
     path('profile/balance/', BalanceView.as_view(), name='balance'),
     path('profile/tender/list/', TenderListCabinetView.as_view(), name='user_tenders'),
     path('profile/product/list/', ProductListCabinetView.as_view(), name='user_products'),

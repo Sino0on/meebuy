@@ -1,0 +1,126 @@
+{% load static %}
+<section class="supplier__detail-simila__companies my-[100px] lg:my-[120px]">
+            <div class="container relative pb-16">
+                <h2 class="font-bold text-dark-logo uppercase lg-md:text-xl">Похожие компании</h2>
+                <div class="swiper supplier__detail-slider mt-[30px] lg:mt-10">
+                    <div class="swiper-wrapper">
+                        {% for company in companies  %}
+                          <div class="swiper-slide">
+                        <div
+                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
+                        >
+                          <div
+                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"
+                          >
+                            <img
+                              class="w-full h-full object-cover"
+                              src="{% if company.image %}{{ company.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                              alt=""
+                            />
+                          </div>
+                          <div class="mt-6">
+                            <div>
+                              <h6 class="pb-2 text-[18px] font-bold line-clamp-1">
+                                Headphones.kg
+                              </h6>
+                              <p class="text-base text-dark-logo line-clamp-2">
+                                Наушники и другие аксессуары для гаджетовНаушники и
+                                другие аксессуары для гаджетовНаушники и другие
+                                аксессуары для гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для
+                                гаджетовНаушники и другие аксессуары для гаджетов
+                              </p>
+                              <p
+                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
+                              >
+                                <img
+                                  class="mr-[6px]"
+                                  src="{% static 'assets/images/icons/location-with-map.svg' %}"
+                                  alt=""
+                                />
+                                г. Бишкек, Кыргызстан
+                              </p>
+                            </div>
+                            <div class="flex mt-4 gap-4">
+                              <button class="flex-grow btn-filled py-[7px]">
+                                Подробнее
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                        {% endfor %}
+
+                      <!-- other slides -->
+{#                      <div class="swiper-slide">#}
+{#                        <div#}
+{#                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"#}
+{#                        >#}
+{#                          <div#}
+{#                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"#}
+{#                          >#}
+{#                            <img#}
+{#                              class="w-full h-full object-cover"#}
+{#                              src="{% static 'assets/images/home/headphones-white.svg' %}"#}
+{#                              alt=""#}
+{#                            />#}
+{#                          </div>#}
+{#                          <div class="mt-6">#}
+{#                            <div>#}
+{#                              <h6 class="pb-2 text-[18px] font-bold line-clamp-1">#}
+{#                                Headphones.kg#}
+{#                              </h6>#}
+{#                              <p class="text-base text-dark-logo line-clamp-2">#}
+{#                                Наушники и другие аксессуары для гаджетовНаушники и#}
+{#                                другие аксессуары для гаджетовНаушники и другие#}
+{#                                аксессуары для гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для#}
+{#                                гаджетовНаушники и другие аксессуары для гаджетов#}
+{#                              </p>#}
+{#                              <p#}
+{#                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"#}
+{#                              >#}
+{#                                <img#}
+{#                                  class="mr-[6px]"#}
+{#                                  src="{% static 'assets/images/home/headphones-white.svg' %}"#}
+{#                                  alt=""#}
+{#                                />#}
+{#                                г. Бишкек, Кыргызстан#}
+{#                              </p>#}
+{#                            </div>#}
+{#                            <div class="flex mt-4 gap-4">#}
+{#                              <button class="flex-grow btn-filled py-[7px]">#}
+{#                                Подробнее#}
+{#                              </button>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                        </div>#}
+{#                      </div>#}
+
+                      <!-- other slides end -->
+                    </div>
+                  </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>

@@ -162,145 +162,6 @@
               ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
             </p>
             <div class="form mt-[30px]">
-<!--              <form id="form" method="post" class="space-y-[30px]">-->
-<!--                <div class="form__item">-->
-<!--                  {% csrf_token %}-->
-<!--                  <label class="label" for="name">Общеизвестное название компании / бренда *</label>-->
-<!--                  <p class="tooltip">Без кавычек. Например: Headphones</p>-->
-<!--                  <input id="name" name="title" value="{{ form.title.value }}" type="text" placeholder="Headphones.kg">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label for="description">Краткое описание *</label>-->
-<!--                  <p class="tooltip">Например: наушники оптом</p>-->
-<!--                  <input id="description" name="mini-descr" type="text" value="{{ form.mini_descr.value }}" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-
-
-<!--                &lt;!&ndash;  Тут заканчиавается  &ndash;&gt;-->
-<!--        <div class="form__item">-->
-<!--        <label class="label">Основная деятельность вашей компании</label>-->
-<!--        <div class="mt-6 space-y-4">-->
-<!--            {% for choice in form.company_core_business.field.choices %}-->
-<!--                <label class="flex items-center cursor-pointer select-none text-dark">-->
-<!--                    <div class="relative">-->
-<!--                        <input type="radio" id="{{ form.company_core_business.id_for_label }}_{{ forloop.counter }}" name="{{ form.company_core_business.name }}" value="{{ choice.0 }}" class="sr-only peer radioInput" {% if form.company_core_business.value == choice.0 %}checked{% endif %}/>-->
-<!--                        <div class="flex items-center justify-center w-5 h-5 mr-4 border border-gray-300 rounded-full">-->
-<!--                            <span class="dot h-2.5 w-2.5 rounded-full bg-transparent "></span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    {{ choice.1 }}-->
-<!--                </label>-->
-<!--            {% endfor %}-->
-<!--        </div>-->
-<!--    </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Описание</label>-->
-<!--                  <p class="tooltip">Опишите деятельность вашей компании, товары и услуги</p>-->
-<!--                  <textarea class="mt-6" placeholder="Например: наушники оптом" name="description"-->
-<!--                            cols="30">{{ form.description.value }}</textarea>-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Ключевые слова для поиска / Теги</label>-->
-<!--                  <p class="tooltip">Введите через запятую ключевые слова и синонимы по которым будут-->
-<!--                    искать вашу компанию.Например: Мебель для дома, диваны, стулья, кресло, комод,-->
-<!--                    стол</p>-->
-<!--                  <textarea class="mt-6" placeholder="Например: наушники оптом" name="keyWords"-->
-<!--                            cols="30">{{ form.keywords.value }}</textarea>-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Категории</label>-->
-<!--                  <input type="text" placeholder="Поиск в категории" id="categorySearch">-->
-<!--                  &lt;!&ndash;  Отрисовка категорий и под категорий&ndash;&gt;-->
-<!--                  <input type="hidden" id="selectedCategory" name="category">-->
-<!--                  <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>-->
-<!--                </div>-->
-<!--                &lt;!&ndash;  крч если это не первая регистрация, то все что ниже находится нужно удалить  &ndash;&gt;-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Город</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом" name="city">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Почтовый индекс</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом" name="postalCode">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Улица, дом</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Как добраться</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Время работы</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Телефоны</label>-->
-<!--                  <p class="tooltip">Публичные номера ваших телефонов. По одному на поле</p>-->
-<!--                  <div class="numberInputs">-->
-<!--                    <div class="flex justify-between items-center pr-7 relative">-->
-<!--                      <input class="numbers" type="tel" name="phoneNumber" placeholder="+996 ХХХ ХХХ ХХХ">-->
-<!--                      <img class="deletePhoneInput absolute top-[60%] right-0 -translate-y-1/2 cursor-pointer" src="{% static '/assets/images/icons/x.svg' %}" alt="">-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <button id="addNumberBtn" type="button"-->
-<!--                          class="btn btn-outlined py-4 px-[31px] border-[#2B292C] text-[#6E6E6E] mt-6 lg-md:mt-[26px]">-->
-<!--                    Добавить телефон-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Факс</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Адрес сайта</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Видео о компании (ссылка на YouTube)</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">E-mail (публичный адрес электронной почты)</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Другие контакты</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Реквизиты</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Количество сотрудников</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="form__item">-->
-<!--                  <label class="label">Дата регистрации юридического лица</label>-->
-<!--                  <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>-->
-<!--                  <input type="text" placeholder="Например: наушники оптом">-->
-<!--                </div>-->
-<!--                <div class="flex items-center gap-4">-->
-<!--                  <button id="submitBtn" type="submit"-->
-<!--                          class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить-->
-<!--                  </button>-->
-<!--                  <button class="btn-outlined flex-grow py-5 uppercase">Отмена</button>-->
-<!--                </div>-->
-<!--              </form>-->
                 <form id="form" method="post" enctype="multipart/form-data" class="space-y-[30px]">
                     {% csrf_token %}
                     <div class="form__item">
@@ -396,7 +257,7 @@
                     </div>
                     <div class="form__item">
                         <label class="label">Дата регистрации юридического лица</label>
-                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</п>
+                        <p class="tooltip">Введите дату в формате 2000-01-01</p>
                         {{ form.register_ur }}
                     </div>
                         <div class="form__item">
@@ -404,25 +265,31 @@
                         <div class="mt-6">
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base"
+                                {% if form.large_wholesale %}checked{% endif %}
+                                >
                                 Крупный опт
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="small_wholesale" class="w-[25px] h-[25px] text-base">
+                                <input
+                                        type="checkbox" name="small_wholesale" class="w-[25px] h-[25px] text-base"
+                                {% if form.small_wholesale %}checked{% endif %}>
                                 Мелкий опт
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="retail" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="retail" class="w-[25px] h-[25px] text-base"
+                                {% if form.retail %}checked{% endif %}>
                                 Поштучно
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="official_distributor" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="official_distributor" class="w-[25px] h-[25px] text-base"
+                                {% if form.official_distributor %}checked{% endif %}>
                                 Официальный дистрибьютор
                             </label>
                         </div>
@@ -434,43 +301,50 @@
                     <div class="mt-6">
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="installment" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="installment" class="w-[25px] h-[25px] text-base"
+                                {% if form.installment %}checked{% endif %}>
                                 Возможна рассрочка
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="credit" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="credit" class="w-[25px] h-[25px] text-base"
+                                {% if form.credit %}checked{% endif %}>
                                 Возможен кредит
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="deposit" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="deposit" class="w-[25px] h-[25px] text-base"
+                                {% if form.deposit %}checked{% endif %}>
                                 Возможен депозит
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="consignment" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="consignment" class="w-[25px] h-[25px] text-base"
+                                {% if form.consignment %}checked{% endif %}>
                                 Возможна передача под реализацию
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="dropshipping" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="dropshipping" class="w-[25px] h-[25px] text-base"
+                                {% if form.dropshipping %}checked{% endif %}>
                                 Возможен дропшиппинг
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="showroom" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="showroom" class="w-[25px] h-[25px] text-base"
+                                {% if form.showroom %}checked{% endif %}>
                                 Есть шоурум
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="marketplace_sale" class="w-[25px] h-[25px] text-base">
+                                <input type="checkbox" name="marketplace_sale" class="w-[25px] h-[25px] text-base"
+                                {% if form.marketplace_sale %}checked{% endif %}>
                                 Разрешена продажа на маркетплейсах
                             </label>
                         </div>
@@ -478,16 +352,85 @@
 
                     </div>
                  <div class="form__item">
-                        <label class="label">Объем закупок</label>
-                        <div class="mt-6 space-y-4">
-                            <label for=""
-                                   class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base"/>
-                                Крупный опт
+                        <label class="label">Способы оплаты</label>
+                    <div class="mt-6">
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="cash" class="w-[25px] h-[25px] text-base"
+                                {% if form.cash %}checked{% endif %}>
+                                Наличными
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="bank_transfer" class="w-[25px] h-[25px] text-base"
+                                {% if form.bank_transfer %}checked{% endif %}>
+                                Безналичная оплата
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="credit_card" class="w-[25px] h-[25px] text-base"
+                                {% if form.credit_card %}checked{% endif %}>
+                                Кредитные карты
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="electronic_money" class="w-[25px] h-[25px] text-base"
+                                {% if form.electronic_money %}checked{% endif %}>
+                                Электронные деньги
                             </label>
                         </div>
                     </div>
-
+                    </div>
+                                 <div class="form__item">
+                        <label class="label">Способы доставки</label>
+                    <div class="mt-6">
+            <div class="mb-4">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                    <input type="checkbox" name="pickup" class="w-[25px] h-[25px] text-base"
+                    {% if form.pickup.value %}checked{% endif %}>
+                    Самовывоз
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                    <input type="checkbox" name="transport_company" class="w-[25px] h-[25px] text-base"
+                    {% if form.transport_company.value %}checked{% endif %}>
+                    Транспортной компанией
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                    <input type="checkbox" name="by_car" class="w-[25px] h-[25px] text-base"
+                    {% if form.by_car.value %}checked{% endif %}>
+                    Автомобилем
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                    <input type="checkbox" name="air_transport" class="w-[25px] h-[25px] text-base"
+                    {% if form.air_transport.value %}checked{% endif %}>
+                    Авиатранспортом
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                    <input type="checkbox" name="rail_transport" class="w-[25px] h-[25px] text-base"
+                    {% if form.rail_transport.value %}checked{% endif %}>
+                    Железной дорогой
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                    <input type="checkbox" name="courier" class="w-[25px] h-[25px] text-base"
+                    {% if form.courier.value %}checked{% endif %}>
+                    Курьером
+                </label>
+            </div>
+                    </div>
+                    </div>
                     <div class="flex items-center gap-4">
                         <button id="submitBtn" type="submit" class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить</button>
                         <button class="btn-outlined flex-grow py-5 uppercase" type="reset">Отмена</button>

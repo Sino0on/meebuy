@@ -143,22 +143,50 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
     def get_object(self, queryset=None):
         return self.request.user.provider
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()  # Получаем объект, который будет обновляться
+        form = self.form_class(request.POST, instance=self.object)  # Передаем instance для обновления
+
+        if form.is_valid():
+            self.object = form.save(commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
+            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите пару минут'
+
+            self.object.save()  # Сохраняем изменения в объект
+            return redirect(self.get_success_url())  # Переадресация на страницу успеха
+        else:
+            print(form.errors)  # Вывод ошибок на консоль для отладки
+            return self.form_invalid(form)
+
+
+class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'auth/edit_buyer.html'
+    model = Provider
+    queryset = Provider.objects.all()
+    form_class = ProviderForm
+    context_object_name = 'form'
+    success_url = '/profile/'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_object(self, queryset=None):
+        return self.request.user.provider
 
     def post(self, request, *args, **kwargs):
-        print('post')
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            pass
-        else:
-            print(form.errors)
-        obj = super().post(request, *args, **kwargs)
-        self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста подождите пару минут'
-        self.object.save()
-        return obj
+        self.object = self.get_object()  # Получаем объект, который будет обновляться
+        form = self.form_class(request.POST, instance=self.object)  # Передаем instance для обновления
 
+        if form.is_valid():
+            self.object = form.save(commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
+            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите пару минут'
+
+            self.object.save()  # Сохраняем изменения в объект
+            return redirect(self.get_success_url())  # Переадресация на страницу успеха
+        else:
+            print(form.errors)  # Вывод ошибок на консоль для отладки
+            return self.form_invalid(form)
 
 @require_POST
 def change_avatar(request):

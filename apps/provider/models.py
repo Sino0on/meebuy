@@ -35,6 +35,7 @@ class Provider(models.Model):
     type = models.ForeignKey('Tag', on_delete=models.SET_NULL, null=True, verbose_name=_('Тип'), blank=True)
     description = models.TextField(verbose_name='Описание')
     category = models.ManyToManyField(Category, related_name='providers', verbose_name=_('Категории'), blank=True)
+    minimum_order = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Минимальный заказ'), blank=True, null=True)
 
     class BusinessType(models.TextChoices):
         WHOLESALE = 'wholesale', _('Оптовая продажа товаров (вы поставщик)')
