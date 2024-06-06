@@ -110,14 +110,6 @@ ASGI_APPLICATION = 'core.asgi.application'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# CHANNEL_LAYERS = {
-#     'default': {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)],
-#         },
-#     }
-# }
 
 CHANNEL_LAYERS = {
     'default': {
@@ -139,7 +131,7 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int),
     }
 }
-STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
 #
 # DATABASES = {
@@ -148,8 +140,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
-
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
 # Static files (CSS, JavaScript, Images)
