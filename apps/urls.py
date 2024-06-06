@@ -6,7 +6,7 @@ from apps.provider.views import ProviderListView, ProviderDetailView, CategoryLi
 from apps.user_cabinet.views import *
 from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
 
-from apps.chat.views import chat_detail, chats, create_chat
+from apps.chat.views import chat_detail, chats, create_chat, add_to_favorites, delete_chat, remove_from_favorites, remove_from_deleted
 
 from apps.authentication.views import HomeView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
 
@@ -23,6 +23,11 @@ urlpatterns = [
     path('chat/<str:pk>/', chat_detail, name='chat_detail'),
     path('chat/create/<str:pk>/', create_chat, name='chat_create'),
     path('chat_list/', chats, name='chat_list'),
+    path('add_to_favorites/<int:chat_id>/', add_to_favorites, name='add_to_favorites'),
+    path('remove_from_favorites/<int:chat_id>/', remove_from_favorites, name='remove_from_favorites'),
+    path('delete_chat/<int:chat_id>/', delete_chat, name='delete_chat'),
+    path('undelete_chat/<int:chat_id>/', remove_from_deleted, name='undelete_chat'),
+
     # path('', ProviderHomeListView.as_view()),
     path('', HomeView.as_view(), name='home'),
 

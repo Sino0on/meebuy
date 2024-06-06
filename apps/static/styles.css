@@ -3269,6 +3269,16 @@ input{
   background-color: rgb(228 219 0 / var(--tw-bg-opacity));
 }
 
+.-translate-x-1\/2{
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
 .bg-\[\#E74040\]{
   --tw-bg-opacity: 1;
   background-color: rgb(231 64 64 / var(--tw-bg-opacity));
