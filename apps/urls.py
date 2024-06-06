@@ -13,7 +13,7 @@ from apps.authentication.views import HomeView, SelectUserTypeView, ViewProfile,
 from apps.authentication.views import HomeView, SelectUserTypeView, LogoutView, LoginView
 from apps.tender.views import TenderListView, TenderDetailView, delete_tender, TenderCreateView, TenderUpdateView
 from apps.user_cabinet.views import UserStatusListView, UppingListView
-from apps.buyer.views import BuyerListView
+from apps.buyer.views import BuyerListView, BuyerDetailView
 from apps.user_cabinet.api import BuyStatusView, BuyUppingView
 
 
@@ -59,6 +59,7 @@ urlpatterns = [
 
 
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),
+    path('buyer/detail/<int:pk>/', BuyerDetailView.as_view(), name='buyer_detail'),
 
     # products
     path('product/list/', ProductListView.as_view(), name='product_list'),

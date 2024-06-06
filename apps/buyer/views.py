@@ -20,3 +20,8 @@ class BuyerListView(generic.ListView):
         contacts = Contacts.load()
         context['contacts'] = contacts
         return context
+
+
+class BuyerDetailView(generic.DetailView):
+    template_name = 'buyer/buyer_detail.html'
+    model = User

@@ -1,4 +1,5 @@
 import django_filters
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Q
 from apps.tender.models import Tender, City, Country
@@ -23,15 +24,13 @@ class TenderFilter(django_filters.FilterSet):
         label='Наличие телефона'
     )
 
-    country = django_filters.ModelChoiceFilter(
+    country = django_filters.CharFilter(
         field_name='user__provider__city__region__country',
-        queryset=Country.objects.all(),
         label='Страна',
         method='filter_by_country'
     )
-    city = django_filters.ModelChoiceFilter(
+    city = django_filters.CharFilter(
         field_name='user__provider__city',
-        queryset=City.objects.all(),
         label='Город',
         method='filter_by_city'
     )
@@ -61,14 +60,20 @@ class TenderFilter(django_filters.FilterSet):
 
     def filter_by_country(self, queryset, name, value):
         if value:
-            print(f"Filtering by country: {value}")  # Отладочное сообщение
-            return queryset.filter(user__provider__city__region__country=value)
+            try:
+                country = Country.objects.get(title=value)  # Используем обычный get
+                return queryset.filter(user__provider__city__region__country=country.id)
+            except Country.DoesNotExist:
+                return queryset.none()  # Возвращаем пустой QuerySet, если страна не найдена
         return queryset
 
     def filter_by_city(self, queryset, name, value):
         if value:
-            print(f"Filtering by city: {value}")  # Отладочное сообщение
-            return queryset.filter(user__provider__city=value)
+            try:
+                city = City.objects.get(title=value)  # Используем обычный get вместо get_object_or_404
+                return queryset.filter(user__provider__city=city.id)
+            except City.DoesNotExist:
+                return queryset.none()  # Возвращаем пустой QuerySet, если город не найден
         return queryset
 
     def filter_by_phone(self, queryset, name, value):

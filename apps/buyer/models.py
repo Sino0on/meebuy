@@ -9,6 +9,7 @@ User = get_user_model()
 class Buyer(models.Model):
     title = models.CharField(max_length=123, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    mini_desc = models.TextField(blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.PROTECT, blank=True, null=True)
     image = models.ImageField(upload_to='images/avatars/buyer/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)

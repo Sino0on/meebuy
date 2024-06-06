@@ -399,6 +399,95 @@
                         <p class="tooltip">Для выбора города начните вводить название в поле ниже</п>
                         {{ form.register_ur }}
                     </div>
+                        <div class="form__item">
+                        <label class="label">Объем закупок</label>
+                        <div class="mt-6">
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base">
+                                Крупный опт
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="small_wholesale" class="w-[25px] h-[25px] text-base">
+                                Мелкий опт
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="retail" class="w-[25px] h-[25px] text-base">
+                                Поштучно
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="official_distributor" class="w-[25px] h-[25px] text-base">
+                                Официальный дистрибьютор
+                            </label>
+                        </div>
+                    </div>
+
+                    </div>
+                 <div class="form__item">
+                        <label class="label">Условия</label>
+                    <div class="mt-6">
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="installment" class="w-[25px] h-[25px] text-base">
+                                Возможна рассрочка
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="credit" class="w-[25px] h-[25px] text-base">
+                                Возможен кредит
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="deposit" class="w-[25px] h-[25px] text-base">
+                                Возможен депозит
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="consignment" class="w-[25px] h-[25px] text-base">
+                                Возможна передача под реализацию
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="dropshipping" class="w-[25px] h-[25px] text-base">
+                                Возможен дропшиппинг
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="showroom" class="w-[25px] h-[25px] text-base">
+                                Есть шоурум
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="marketplace_sale" class="w-[25px] h-[25px] text-base">
+                                Разрешена продажа на маркетплейсах
+                            </label>
+                        </div>
+                    </div>
+
+                    </div>
+                 <div class="form__item">
+                        <label class="label">Объем закупок</label>
+                        <div class="mt-6 space-y-4">
+                            <label for=""
+                                   class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base"/>
+                                Крупный опт
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="flex items-center gap-4">
                         <button id="submitBtn" type="submit" class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить</button>
                         <button class="btn-outlined flex-grow py-5 uppercase" type="reset">Отмена</button>

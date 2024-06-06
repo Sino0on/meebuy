@@ -15,19 +15,14 @@ class ProviderFilter(django_filters.FilterSet):
     order_by = django_filters.ChoiceFilter(label='Сортировка', choices=ORDER_CHOICES, method='filter_by_order')
 
     title = django_filters.CharFilter(field_name='title', lookup_expr='icontains', label='Имя')
-    country = django_filters.ModelChoiceFilter(
-        queryset=Country.objects.all(),
+    country = django_filters.CharFilter(
         label='Страна',
         method='filter_by_country'
     )
-    region = django_filters.ModelChoiceFilter(
-        queryset=Region.objects.all(),
-        label='Регион',
-        method='filter_by_region'
-    )
-    city = django_filters.ModelChoiceFilter(
-        queryset=City.objects.all(),
-        label='Город'
+
+    city = django_filters.CharFilter(
+        label='Город',
+        method='filter_by_city'
     )
 
     large_wholesale = django_filters.BooleanFilter(widget=forms.CheckboxInput, label='Крупный опт',
@@ -79,7 +74,6 @@ class ProviderFilter(django_filters.FilterSet):
         fields = [
             'title',
             'country',
-            'region',
             'city',
             'large_wholesale',
             'small_wholesale',
@@ -106,15 +100,21 @@ class ProviderFilter(django_filters.FilterSet):
         ]
 
     def filter_by_country(self, queryset, name, value):
-        print(name)
-        print(value)
         if value:
-            return queryset.filter(city__region__country=value)
+            try:
+                country = Country.objects.get(title=value)  # Используем обычный get
+                return queryset.filter(user__provider__city__region__country=country.id)
+            except Country.DoesNotExist:
+                return queryset.none()  # Возвращаем пустой QuerySet, если страна не найдена
         return queryset
 
-    def filter_by_region(self, queryset, name, value):
+    def filter_by_city(self, queryset, name, value):
         if value:
-            return queryset.filter(city__region=value)
+            try:
+                city = City.objects.get(title=value)  # Используем обычный get вместо get_object_or_404
+                return queryset.filter(user__provider__city=city.id)
+            except City.DoesNotExist:
+                return queryset.none()  # Возвращаем пустой QuerySet, если город не найден
         return queryset
 
     def filter_boolean_field(self, queryset, name, value):

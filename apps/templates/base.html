@@ -366,7 +366,10 @@
                 </a>
               </li>
             </ul>
-            <p class="font-poppins">{{ contacts.phone }}</p>
+              {% if contacts.phone %}
+                          <p class="font-poppins">{{ contacts.phone }}</p>
+
+              {% endif %}
           </div>
           <ul class="font-mulish flex flex-col gap-6 text-[18px]">
             <li class="uppercase font-mulish font-extrabold">

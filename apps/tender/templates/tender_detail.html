@@ -87,7 +87,17 @@
                                     alt="Diamond">
                                 <a href="{% if user.is_authenticated %}{% url 'chat_create' tender.user.pk %}{% endif %}"><img class="cursor-pointer" src="{% static 'assets/images/icons/letter.svg' %}" alt="Letter"></a>
                                 <img class="cursor-pointer" src="{% static 'assets/images/icons/phone.svg' %}" alt="Phone">
-                                <svg class="cursor-pointer transition-colors" id="heart" width="24" height="24"
+                                <svg
+                                        {% if user.is_authenticated %}
+                                          onclick="sendTenderRequest({{ tender.pk }})"
+                                        {% if tender in user.cabinet.favorite_tenders.all %}
+                                          class="tenderHeart transition-colors text-logo-color"
+"
+                                        {% else %}
+                                          class="tenderHeart transition-colors "
+                                        {% endif %}
+                                        {% endif %}
+                                        id="heart" width="24" height="24"
                                     viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
                                     <path

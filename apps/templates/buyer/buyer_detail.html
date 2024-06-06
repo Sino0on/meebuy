@@ -21,7 +21,7 @@
                         </div>
                         <a href="/provider/list/" class="font-normal font-mulish text-[#A0A0A0]">Поставщики</a>
                         <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
-                        <p class="font-normal font-mulish text-[#A0A0A0]">{{ provider.title }}</p>
+                        <p class="font-normal font-mulish text-[#A0A0A0]">{{ object.provider.title }}</p>
                     </div>
                 </div>
             </div>
@@ -46,17 +46,17 @@
                             </svg>
                         </div>
                         <div class="flex gap-5 items-center lg-md:justify-center">
-                            <img class="w-1/2" src="{% if provider.image %}{{ provider.image.url }}{% endif %}" alt="">
+                            <img class="w-1/2" src="{% if object.provider.image %}{{ object.provider.image.url }}{% endif %}" alt="">
                         </div>
                         <div
                             class="items-center gap-5 text-[14px] uppercase lg-md:flex lg-md:flex-col lg-md:items-start lg-md:gap-5 xl:mt-10">
                             <div class="lg-md:flex items-center gap-7">
-                                <p class="font-black text-lg font-mulish lg-md:text-[26px] xl:text-3xl">{{ provider.title }}
+                                <p class="font-black text-lg font-mulish lg-md:text-[26px] xl:text-3xl">{{ object.provider.title }}
                                 </p>
                                 <div class="hidden lg-md:flex items-center gap-[10px]">
                                     <img class="w-6 h-6 cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}"
                                         alt="">
-                                    <a href="{% if provider in user.cabinet.favorite_providers.all %}/delete/fav/provider/{{provider.pk}}/{% else %}/add_provider_favorite/{{ provider.pk }}{% endif %}">
+                                    <a href="{% if provider in user.cabinet.favorite_providers.all %}/delete/fav/provider/{{object.provider.pk}}/{% else %}/add_provider_favorite/{{ object.provider.pk }}{% endif %}">
                                     <svg  class="transition-colors w-6 h-6 cursor-pointer {% if provider in user.cabinet.favorite_providers.all %}text-logo-color{% endif %}" id="heart2" width="40"
                                         height="40" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
@@ -70,11 +70,11 @@
                                         </a>
                                 </div>
                             </div>
-                            <p class="font-medium text-sm my-[20px] lg-md:my-0 xl:text-lg">{{ provider.mini_desc }}</p>
+                            <p class="font-medium text-sm my-[20px] lg-md:my-0 xl:text-lg">{{ object.provider.mini_desc }}</p>
                             <div class="flex gap-2 text-base text-[#4D4D4D] normal-case xl:text-lg">
                                 <img class="text-[#4D4D4D]" src="{% static 'assets/images/icons/location.svg' %}"
                                     alt="Location" />
-                                <p class="text-[#4D4D4D]">{{ provider.address }}</p>
+                                <p class="text-[#4D4D4D]">{{ object.provider.address }}</p>
                             </div>
                         </div>
                     </div>
@@ -134,11 +134,11 @@
                 <div class="grid grid-cols-1 gap-[30px] lg-md:grid-cols-2">
                     <div class="content__wrap px-5 py-[30px] text-dark-logo rounded-[10px]">
                         <h2 class="text-xl font-bold">О компании</h2>
-                        <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ provider.description }}</p>
+                        <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ object.provider.description }}</p>
                         <ul class="">
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Тип компании</p>
-                                <p class="mt-2.5">{{ provider.type }}</p>
+                                <p class="mt-2.5">{{ object.provider.type }}</p>
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Объем поставок</p>
@@ -154,13 +154,13 @@
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Варианты оплаты</p>
-                                {% for i in provider.type_pay.all %}
+                                {% for i in object.provider.type_pay.all %}
                                 <p class="mt-2.5">{{ i.title }}</p>
                                 {% endfor %}
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Способы доставки</p>
-                                {% for i in provider.deliveries.all %}
+                                {% for i in object.provider.deliveries.all %}
                                 <p class="mt-2.5">{{ i.title }}</p>
                                 {% endfor %}
                             </li>
