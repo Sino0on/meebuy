@@ -133,7 +133,7 @@ DATABASES = {
 }
 # STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
-#
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
