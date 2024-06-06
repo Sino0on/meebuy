@@ -64,7 +64,7 @@ class ProductImg(models.Model):
 class PriceColumn(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название колонки")
     formula = models.CharField(max_length=255, verbose_name="Формула расчета")
-    min_order_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Сумма от", default=0.0)
+    min_order_amount = models.PositiveIntegerField(verbose_name="Сумма от", default=0)
     provider = models.ForeignKey('provider.Provider', on_delete=models.PROTECT, related_name='prices')
 
     def apply_formula(self, base_price):

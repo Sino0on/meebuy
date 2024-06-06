@@ -8,7 +8,7 @@ from channels.auth import AuthMiddlewareStack
 import apps.chat.routing
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kurultay.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
 
 application = ProtocolTypeRouter({
