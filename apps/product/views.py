@@ -19,7 +19,7 @@ from apps.product.filters import ProductFilter
 from apps.product.models import Product, ProductImg, ProductCategory, PriceColumn
 from apps.product.forms import ProductForm, UploadExcelForm, ProductCategoryForm, PriceColumnForm
 from apps.provider.models import Category, Provider
-from apps.user_cabinet.models import Contacts
+from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 
 class ProductListView(ListView):
@@ -74,6 +74,15 @@ class ProductDetailView(DetailView):
         context['categories'] = ProductCategory.objects.all()
         context['similar_products'] = Product.objects.filter(category=product.category).exclude(id=product.id)[:5]
         context['prices'] = self.get_product_prices()
+
+        if self.request.GET.get('open'):
+            if self.request.user.is_authenticated:
+                print(self.get_object().provider.user)
+                if self.get_object().provider.user.cabinet.user_status:
+                    if self.get_object().user.cabinet.user_status.status.is_publish_phone:
+                        OpenNumberCount.objects.create(user=self.get_object().user.cabinet)
+                        context['open'] = 'open'
+
         return context
 
 

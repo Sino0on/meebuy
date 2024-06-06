@@ -33,7 +33,7 @@
       <div class="flex gap-5 items-center">
         <img
           class="w-[50px] h-[50px] rounded-full"
-          src="{% if product.provider.image %}{{ product.provider.image.url }}{% endif %}"
+          src="{% if product.provider.image %}{{ product.provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
           alt=""
         />
         <p class="font-black font-mulish">{{ product.provider.title }}</p>
