@@ -17716,3 +17716,11 @@ input{
 .h-1\/2{
   height: 50%;
 }
+
+.right-0 {
+    right: 0
+}
+
+.p-px{
+  padding: 1px;
+}

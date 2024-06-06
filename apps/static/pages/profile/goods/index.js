@@ -15,10 +15,17 @@ const toggleTab = (element) => {
     if (tabs[i] === element) {
       tabs[i].style.backgroundColor = "#FFFB98";
       blocks[i].style.display = "block";
-      return;
+      //return;
     } else {
+    if(tabs[i]){
       tabs[i].style.backgroundColor ? (tabs[i].style.backgroundColor = "") : "";
-      blocks[i].style.display = "none";
+    }
+
+    if(blocks[i]){
+     blocks[i].style.display = "none";
+    }
+
+
     }
   }
   // }
@@ -115,7 +122,7 @@ document.getElementById("file").addEventListener("change", function (event) {
 const testDiv = document.querySelector(".test");
 document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.getElementById("column-button");
-  const columnContainers = document.querySelectorAll(".column-container");
+  let columnContainers = document.querySelectorAll(".column-container");
 
   if (columnContainers.length === 0) {
    createNewColumn();
@@ -212,17 +219,25 @@ document.addEventListener("DOMContentLoaded", function () {
   addButton.addEventListener("click", (e) => {
    e.preventDefault();
    createNewColumn()
+   columnContainers = document.querySelectorAll(".column-container");
+   updateDeleteBtns(columnContainers)
   });
 
-  columnContainers.forEach((content) => {
+  function updateDeleteBtns (container){
+    container.forEach((content) => {
     content.addEventListener("click", function (event) {
       if (event.target.classList.contains("delete-button")) {
         const column = event.target.closest(".column");
 
-        if (columnContainers.length >= 1) {
+        if (container.length >= 1) {
           column.remove();
         }
       }
     });
   });
+  }
+
+  updateDeleteBtns(columnContainers)
+
+
 });
