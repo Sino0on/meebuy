@@ -561,7 +561,7 @@
   <script>
     function sendGetRequest(pk) {
       const xhr = new XMLHttpRequest();
-      const url = `/fav/provider/${pk}/`; // Замените на ваш URL
+      const url = `/fav/provider/${pk}/`;
       xhr.open("GET", url, true);
       xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
@@ -593,6 +593,24 @@
       };
       xhr.send();
     }
+    function sendTenderRequest(pk) {
+     console.log("das");
+      const xhr = new XMLHttpRequest();
+      const url = `/fav/tender/${pk}/`;
+      xhr.open("GET", url, true);
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          console.log("Response:", xhr.responseText);
+        } else {
+          console.log("Error:", xhr.statusText);
+        }
+      };
+      xhr.onerror = function () {
+        console.log("Request failed");
+      };
+      xhr.send();
+    }
+
     function sendBuyerProductRequest(pk) {
       console.log("das");
       const xhr = new XMLHttpRequest();

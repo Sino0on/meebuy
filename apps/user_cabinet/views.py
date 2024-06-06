@@ -39,6 +39,8 @@ from .models import Contacts
 import plotly.graph_objs as go
 from plotly.offline import plot
 
+from ..tender.models import Tender
+
 
 def generate_chart(user):
     # Пример данных
@@ -503,6 +505,21 @@ def add_product_fav_api(request, pk):
         request.user.cabinet.save()
     return JsonResponse({'Info': 'ok'}, status=200)
 
+
+@require_GET
+def add_tender_fav_api(request, pk):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+    tender = get_object_or_404(Tender, id=pk)
+    if tender in request.user.cabinet.favorite_tenders.all():
+        request.user.cabinet.favorite_tenders.remove(tender)
+        request.user.cabinet.save()
+    else:
+        request.user.cabinet.favorite_tenders.add(tender)
+        request.user.cabinet.save()
+    return JsonResponse({'Info': 'ok'}, status=200)
+
+
 @require_GET
 def add_buyer_fav_api(request, pk):
     if not request.user.is_authenticated:
@@ -515,6 +532,7 @@ def add_buyer_fav_api(request, pk):
         request.user.cabinet.favorite_products.add(product)
         request.user.cabinet.save()
     return JsonResponse({'Info': 'ok'}, status=200)
+
 
 def delete_provider_fav(request, pk):
     provider = get_object_or_404(Provider, id=pk)

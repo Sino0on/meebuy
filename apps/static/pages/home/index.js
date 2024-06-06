@@ -124,12 +124,10 @@ const newSlide = new Swiper('.new__slider', {
 
 // heart
 
-const toggleActive = (e) => {
-  e.target.classList.toggle('text-logo-color');
-};
-
 hearts.forEach((heart ) => {
-  heart.addEventListener('click', toggleActive);
+  heart.addEventListener('click', () => {
+    heart.classList.toggle('text-logo-color')
+  });
 })
 
 const observer = new IntersectionObserver(
