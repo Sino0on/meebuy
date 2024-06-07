@@ -83,6 +83,10 @@ def create_chat(request, pk):
 
     # Если чата нет, создаем новый
     chat = Chat.objects.create(user_first=request.user, user_second=user)
+
+    ChatUserStatus.objects.create(chat=chat, user=request.user)
+    ChatUserStatus.objects.create(chat=chat, user=user)
+
     return redirect(f'/chat/{chat.id}')
 
 
