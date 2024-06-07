@@ -47,7 +47,7 @@
                         <!--  Анкета  -->
                         <div class="card__item shadow-card-shadow">
                             <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
-                            <a href="{% if user.is_provider %}{% url 'anketa' %}{% else %}{% url 'anketa_buyer' %}{% endif %}">
+                            <a href="{% if provider.is_provider %}{% url 'anketa' %}{% else %}{% url 'anketa_buyer' %}{% endif %}">
                             <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5">Редактировать анкету</button>
                             </a>
                             <a href="{% url 'tariffs' %}"

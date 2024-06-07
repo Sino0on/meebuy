@@ -104,7 +104,7 @@ urlpatterns = [
     path('redirect_to_site/<int:pk>/', redirect_to_site),
 
     # apis
-    path('category/list/', CategoryListView.as_view()),
+    path('category/list/<int:pk>', CategoryListView.as_view()),
 
   
     path('create-category/', ProductCategoryCreateView.as_view(), name='create_category'),

@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from apps.provider.models import Provider, Tag
@@ -65,4 +66,17 @@ class ProviderDetailView(generic.DetailView):
 
 class CategoryListView(ListAPIView):
     serializer_class = CategoryListSerializer
-    queryset = Category.objects.filter(category=None)
+
+    def get_queryset(self):
+
+        user_id = self.kwargs.get('pk')
+        user = get_object_or_404(Provider, user_id=user_id)
+        return user.category.all()
+
+    def get_serializer_context(self):
+
+        context = super(CategoryListView, self).get_serializer_context()
+        context.update({
+            'request': self.request
+        })
+        return context

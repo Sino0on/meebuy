@@ -158,12 +158,12 @@
                         {{ form.register_ur }}
                     </div>
                         <div class="form__item">
-                        <label class="label">Объем закупок</label>
+                        <label class="label">Объем поставок</label>
                         <div class="mt-6">
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base"
-                                {% if form.large_wholesale %}checked{% endif %}
+                                {% if form.large_wholesale.value %}checked{% endif %}
                                 >
                                 Крупный опт
                             </label>
@@ -172,21 +172,21 @@
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input
                                         type="checkbox" name="small_wholesale" class="w-[25px] h-[25px] text-base"
-                                {% if form.small_wholesale %}checked{% endif %}>
+                                {% if form.small_wholesale.value %}checked{% endif %}>
                                 Мелкий опт
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="retail" class="w-[25px] h-[25px] text-base"
-                                {% if form.retail %}checked{% endif %}>
+                                {% if form.retail.value %}checked{% endif %}>
                                 Поштучно
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="official_distributor" class="w-[25px] h-[25px] text-base"
-                                {% if form.official_distributor %}checked{% endif %}>
+                                {% if form.official_distributor.value %}checked{% endif %}>
                                 Официальный дистрибьютор
                             </label>
                         </div>
@@ -199,49 +199,49 @@
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="installment" class="w-[25px] h-[25px] text-base"
-                                {% if form.installment %}checked{% endif %}>
+                                {% if form.installment.value %}checked{% endif %}>
                                 Возможна рассрочка
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="credit" class="w-[25px] h-[25px] text-base"
-                                {% if form.credit %}checked{% endif %}>
+                                {% if form.credit.value %}checked{% endif %}>
                                 Возможен кредит
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="deposit" class="w-[25px] h-[25px] text-base"
-                                {% if form.deposit %}checked{% endif %}>
+                                {% if form.deposit.value %}checked{% endif %}>
                                 Возможен депозит
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="consignment" class="w-[25px] h-[25px] text-base"
-                                {% if form.consignment %}checked{% endif %}>
+                                {% if form.consignment.value %}checked{% endif %}>
                                 Возможна передача под реализацию
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="dropshipping" class="w-[25px] h-[25px] text-base"
-                                {% if form.dropshipping %}checked{% endif %}>
+                                {% if form.dropshipping.value %}checked{% endif %}>
                                 Возможен дропшиппинг
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="showroom" class="w-[25px] h-[25px] text-base"
-                                {% if form.showroom %}checked{% endif %}>
+                                {% if form.showroom.value %}checked{% endif %}>
                                 Есть шоурум
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="marketplace_sale" class="w-[25px] h-[25px] text-base"
-                                {% if form.marketplace_sale %}checked{% endif %}>
+                                {% if form.marketplace_sale.value %}checked{% endif %}>
                                 Разрешена продажа на маркетплейсах
                             </label>
                         </div>
@@ -254,28 +254,28 @@
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="cash" class="w-[25px] h-[25px] text-base"
-                                {% if form.cash %}checked{% endif %}>
+                                {% if form.cash.value %}checked{% endif %}>
                                 Наличными
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="bank_transfer" class="w-[25px] h-[25px] text-base"
-                                {% if form.bank_transfer %}checked{% endif %}>
+                                {% if form.bank_transfer.value %}checked{% endif %}>
                                 Безналичная оплата
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="credit_card" class="w-[25px] h-[25px] text-base"
-                                {% if form.credit_card %}checked{% endif %}>
+                                {% if form.credit_card.value %}checked{% endif %}>
                                 Кредитные карты
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="electronic_money" class="w-[25px] h-[25px] text-base"
-                                {% if form.electronic_money %}checked{% endif %}>
+                                {% if form.electronic_money.value %}checked{% endif %}>
                                 Электронные деньги
                             </label>
                         </div>
