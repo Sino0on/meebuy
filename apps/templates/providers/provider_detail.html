@@ -33,8 +33,11 @@
                         class="cards flex flex-col relative gap-6 bg-[#ffffff] p-5 rounded-2xl mt-8 mb-7 shadow-card-shadow lg-md:w-3/5 lg-md:mt-0 lg-md:mb-0 xl:p-[46px]">
                         <!-- icons -->
                         <div class="absolute right-4 top-4 flex items-center gap-1.5 lg-md:hidden">
+
                             <img class="cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}" alt="">
-                            <svg class="cursor-pointer transition-colors" id="heart1" width="36" height="36"
+                            <svg
+                                    class="cursor-pointer transition-colors"
+                                    id="heart1" width="36" height="36"
                                 viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
                                 <path
@@ -56,7 +59,17 @@
                                 <div class="hidden lg-md:flex items-center gap-[10px]">
                                     <img class="w-6 h-6 cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}"
                                         alt="">
-                                    <svg  class="transition-colors w-6 h-6 cursor-pointer {% if provider in user.cabinet.favorite_providers.all %}text-logo-color{% endif %}" id="heart2" width="40"
+                                    <svg
+                                    {% if user.is_authenticated %}
+                                          onclick="sendGetRequest({{ provider.pk }})"
+                                        {% if provider in user.cabinet.favorite_providers.all %}
+                                            class="transition-colors w-6 h-6 cursor-pointer text-logo-color"
+                                        {% else %}
+                                            class="transition-colors w-6 h-6 cursor-pointer"
+                                        {% endif %}
+                                    {% else %}
+                                          class="transition-colors w-6 h-6 cursor-pointer"
+                                    {% endif %}                                          id="heart2" width="40"
                                         height="40" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
                                         <path
