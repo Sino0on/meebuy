@@ -116,6 +116,7 @@ class UserDetailView(LoginRequiredMixin, generic.TemplateView):
         context_keys = ['one', 'two', 'three', 'four', 'five', 'six']
 
         provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
 
         images = provider.images.all()
         context_values = (images[i] if i < len(images) else None for i in range(len(context_keys)))
@@ -134,6 +135,15 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
     form_class = ProviderForm
     context_object_name = 'form'
     success_url = '/profile/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
+        return context
+
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -165,6 +175,14 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
     form_class = ProviderForm
     context_object_name = 'form'
     success_url = '/profile/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
+        return context
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -243,6 +261,8 @@ class UserSettingsView(LoginRequiredMixin, generic.UpdateView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
         return context
 
     def get_initial(self):
@@ -282,12 +302,21 @@ class BalanceView(LoginRequiredMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
         return context
 
 
 class CreateTenderView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/create_tender.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
+        return context
 
 class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/tenders.html'
@@ -296,6 +325,8 @@ class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
         return context
 
 
@@ -307,6 +338,7 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Product.objects.filter(provider__user=self.request.user)
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
@@ -317,6 +349,8 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         context['category_tree'] = category_tree
         context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
         context['decimal'] = self.request.user.provider.decimal_places
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
         if self.get_queryset().exists():
             context['has_products'] = True
         else:
@@ -340,6 +374,8 @@ class FavoritesCabinetView(LoginRequiredMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
         return context
 
 
@@ -352,6 +388,8 @@ class AnalyticCabinetView(LoginRequiredMixin, generic.TemplateView):
         context['chart'] = generate_chart(self.request.user.cabinet)
         contacts = Contacts.load()
         context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
         return context
 
 
