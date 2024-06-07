@@ -30,7 +30,8 @@ class ProductListView(ListView):
     filter_class = ProductFilter
 
     def get_queryset(self):
-        query = self.queryset
+        providers = Provider.objects.filter(is_provider=True)
+        query = Product.objects.filter(provider__in=providers)
         filter = self.filter_class(self.request.GET, queryset=query)
         query = filter.qs
         return query
