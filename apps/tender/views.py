@@ -12,9 +12,9 @@ from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 class TenderListView(generic.ListView):
     model = Tender
-    template_name = 'tender_list.html'
+    template_name = "tender_list.html"
     paginate_by = 10
-    context_object_name = 'tenders'
+    context_object_name = "tenders"
 
     def __init__(self):
         super().__init__()
@@ -22,44 +22,52 @@ class TenderListView(generic.ListView):
 
     def get_queryset(self):
         queryset = Tender.objects.all()
+        order = self.request.GET.get("order")
+        if order:
+            queryset = queryset.order_by(order)
         self.filter = TenderFilter(self.request.GET, queryset=queryset)
 
         return self.filter.qs
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        context['contacts'] = Contacts.load()
-        context['filter'] = self.filter
+        context["categories"] = Category.objects.all()
+        context["contacts"] = Contacts.load()
+        context["filter"] = self.filter
         return context
 
+
 class TenderDetailView(generic.DetailView):
-    template_name = 'tender_detail.html'
+    template_name = "tender_detail.html"
     model = Tender
-    context_object_name = 'tender'
+    context_object_name = "tender"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.GET.get('open'):
+        if self.request.GET.get("open"):
             if self.request.user.is_authenticated:
                 print(self.get_object().user)
                 if self.get_object().user.cabinet.user_status:
-                    if self.get_object().user.cabinet.user_status.status.is_publish_phone:
-                        OpenNumberCount.objects.create(user=self.get_object().user.cabinet)
-                        context['open'] = 'open'
+                    if (
+                        self.get_object().user.cabinet.user_status.status.is_publish_phone
+                    ):
+                        OpenNumberCount.objects.create(
+                            user=self.get_object().user.cabinet
+                        )
+                        context["open"] = "open"
             # context['open'] = 'open'
 
-            print('das')
-        context['tenders'] = Tender.objects.exclude(id=self.object.id)
+            print("das")
+        context["tenders"] = Tender.objects.exclude(id=self.object.id)
         return context
 
 
 class TenderCreateView(generic.CreateView):
-    template_name = 'cabinet/tender_create.html'
+    template_name = "cabinet/tender_create.html"
     form_class = TenderForm
     model = Tender
     queryset = Tender.objects.all()
-    success_url = '/'
+    success_url = "/"
 
     def post(self, request, *args, **kwargs):
         print(request.POST)
@@ -67,31 +75,33 @@ class TenderCreateView(generic.CreateView):
         print(form.errors)
         if form.is_valid():
             tender = form.save(commit=False)
-            days = request.POST.get('period')
+            days = request.POST.get("period")
             tender.user = request.user
             tender.end_date = timezone.now() + timezone.timedelta(days=int(days))
             tender.save()
-            for i in request.FILES.getlist('file'):
+            for i in request.FILES.getlist("file"):
                 TenderImg.objects.create(tender=tender, image=i)
-            return redirect('/')
+            return redirect("/")
         print(form.errors)
         return super().post(request, *args, **kwargs)
 
 
 class TenderUpdateView(generic.UpdateView):
-    template_name = 'cabinet/tender_update.html'
+    template_name = "cabinet/tender_update.html"
     form_class = TenderForm
     model = Tender
     queryset = Tender.objects.all()
-    success_url = '/profile/tender/list/'
+    success_url = "/profile/tender/list/"
 
     def get_context_data(self, **kwargs):
         print(self.request.user.user_type)
         context = super().get_context_data(**kwargs)
-        context_keys = ['one', 'two', 'three', 'four', 'five', 'six']
+        context_keys = ["one", "two", "three", "four", "five", "six"]
         obj = self.get_object()
         images = obj.tender_images.all()
-        context_values = (images[i] if i < len(images) else None for i in range(len(context_keys)))
+        context_values = (
+            images[i] if i < len(images) else None for i in range(len(context_keys))
+        )
         context.update(dict(zip(context_keys, context_values)))
         return context
 
@@ -102,14 +112,16 @@ class TenderUpdateView(generic.UpdateView):
             form.save()
         else:
             print(form.errors)
-        if request.POST.get('period'):
-            days = request.POST.get('period')
+        if request.POST.get("period"):
+            days = request.POST.get("period")
             obj.end_date += timezone.timedelta(days=int(days))
             obj.save()
 
         print(request.FILES)
-        file_fields = ['file1', 'file2', 'file3', 'file4', 'file5', 'file6']
-        new_images = [request.FILES.get(file) for file in file_fields if request.FILES.get(file)]
+        file_fields = ["file1", "file2", "file3", "file4", "file5", "file6"]
+        new_images = [
+            request.FILES.get(file) for file in file_fields if request.FILES.get(file)
+        ]
         existing_images = obj.tender_images.all()
         for idx, file_field in enumerate(file_fields):
             if request.FILES.get(file_field):
@@ -127,4 +139,4 @@ def delete_tender(request, pk):
     tender = get_object_or_404(Tender, id=pk)
     if request.user == tender.user:
         tender.delete()
-        return redirect('/profile/tender/list/')
+        return redirect("/profile/tender/list/")

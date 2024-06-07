@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext as _
+from apps.provider.mixins import StatusMixin
 
 
 class UserManager(BaseUserManager):
@@ -33,23 +34,42 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser):
+class User(StatusMixin, AbstractUser):
     USER_TYPE_CHOICES = [
-        (_('provider'), _('Поставщик')),
-        (_('buyer'), _('Покупатель')),
+        (_("provider"), _("Поставщик")),
+        (_("buyer"), _("Покупатель")),
     ]
-    
-    phone = models.CharField(max_length=20, null=True, unique=True, verbose_name=_('Номер телефона'), blank=True)
+
+    phone = models.CharField(
+        max_length=20,
+        null=True,
+        unique=True,
+        verbose_name=_("Номер телефона"),
+        blank=True,
+    )
     email = models.EmailField(unique=True)
-    username = models.CharField(unique=False, max_length=250, blank=True, null=True, verbose_name=_('Имя пользователя'))
-    auth_provider = models.BooleanField(default=True, verbose_name=_('Провайдер'))
-    avatar = models.ImageField(blank=True, null=True, upload_to="avatars/%Y/%m",
-                               verbose_name=_('Аватар'))
-    job_title = models.CharField(max_length=123, verbose_name='Должность', blank=True, null=True)
-    is_confirm = models.BooleanField(default=False, blank=True, verbose_name=_('Подтверждение почты'))
-    position = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('Должность'))
-    user_type = models.CharField(max_length=20, verbose_name=_('Тип пользователя'))
-    
+    username = models.CharField(
+        unique=False,
+        max_length=250,
+        blank=True,
+        null=True,
+        verbose_name=_("Имя пользователя"),
+    )
+    auth_provider = models.BooleanField(default=True, verbose_name=_("Провайдер"))
+    avatar = models.ImageField(
+        blank=True, null=True, upload_to="avatars/%Y/%m", verbose_name=_("Аватар")
+    )
+    job_title = models.CharField(
+        max_length=123, verbose_name="Должность", blank=True, null=True
+    )
+    is_confirm = models.BooleanField(
+        default=False, blank=True, verbose_name=_("Подтверждение почты")
+    )
+    position = models.CharField(
+        max_length=100, null=True, blank=True, verbose_name=_("Должность")
+    )
+    user_type = models.CharField(max_length=20, verbose_name=_("Тип пользователя"))
+
     objects = UserManager()
 
     USERNAME_FIELD = "email"
@@ -59,5 +79,5 @@ class User(AbstractUser):
         return str(self.email)
 
     class Meta:
-        verbose_name = _('Пользователь')
-        verbose_name_plural = _('Пользователи')
+        verbose_name = _("Пользователь")
+        verbose_name_plural = _("Пользователи")
