@@ -95,6 +95,8 @@ class ProductCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = ProductCategory.objects.all()
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['provider'] = provider
         return context
 
     def form_valid(self, form):
