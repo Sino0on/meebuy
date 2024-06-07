@@ -37,7 +37,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Времея обновления')
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT, verbose_name='Категория', blank=True, null=True)
-    image = models.ImageField(upload_to='images/products/%Y/%m/', verbose_name='Картинка')
+    image = models.ImageField(upload_to='images/products/%Y/%m/', verbose_name='Картинка', blank=True, null=True)
     provider = models.ForeignKey('provider.Provider', on_delete=models.PROTECT, related_name='products')
     phone = models.CharField(max_length=123, blank=True, null=True, verbose_name='Телефон')
     terms_of_sale = models.CharField(max_length=200, blank=True, null=True, verbose_name='Условия продажи')

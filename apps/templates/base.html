@@ -384,11 +384,11 @@
               <h6 class="text-[#FFFFFC]">поставщикам</h6>
             </li>
             <li class="">
-              <a href="{% url 'view_profile' %}">Добавить компанию</a>
+              <a href="{% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'login' %}{% endif %}">Добавить компанию</a>
             </li>
             <li><a href="{% url 'tender_list' %}">Поиск закупок</a></li>
             <li><a href="{% url 'buyer_list' %}">Поиск покупателей</a></li>
-            <li><a href="{% url 'tender_list' %}">Тарифы</a></li>
+            <li><a href="{% url 'tariffs' %}">Тарифы</a></li>
           </ul>
           <ul class="font-mulish flex flex-col gap-6 text-[18px]">
             <li class="uppercase font-extrabold">
@@ -405,7 +405,7 @@
             </li>
             <li><a href="{% url 'tariffs' %}">Тарифы</a></li>
             <li><a href="{% url 'tariffs' %}">Баннерная реклама</a></li>
-            <li><a href="{% url 'tariffs' %}">Правила</a></li>
+            <li><a href="#">Правила</a></li>
             <li><a href="{% url 'send_message' %}">Техподдержка</a></li>
           </ul>
         </div>
