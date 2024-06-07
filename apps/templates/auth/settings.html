@@ -10,7 +10,7 @@
 
 {% block content %}
 <nav class="breadcrumbs bg-[#FFFFFC]">
-    <div class="container">
+    <div class="container user-select-none">
         <div class="">
             <div class="flex gap-4 py-4">
                 <div class="flex items-center gap-4">
@@ -25,7 +25,7 @@
 <main class="profile-settings">
     <section class="heading">
         <div class="container">
-            <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+            <h1 class="font-black mb-12 text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
                 личный кабинет</h1>
         </div>
     </section>
@@ -35,7 +35,7 @@
                             {% include "cabinet/cabinet_includes/menu.html" with active_page='settings' %}
 
             <!-- these sections are for main content  -->
-            <section class="main-content block mt-10 mb-28 lg-md:mt-[50px] lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
+            <section class="main-content block mt-10 mb-28 lg-md:mt-0 lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
                 <div class="container">
                     <div class="card__item shadow-card-shadow  rounded-[10px]">
                         <form method="post" class="form space-y-[26px] lg-md:space-y-[30px]">
@@ -56,6 +56,16 @@
                                 Ваша должность
                                 {{ form.job_title }}
                             </label>
+                            <div class="flex flex-row justify-start gap-4 user-select-none">
+                                <div class="p-1 ">
+                                    <input type="radio" name="is_provider" id="provider" {% if provider.is_provider %}checked{% endif %} />
+                                    <label class="cursor-pointer" for="provider"> Поставщик </label>
+                                </div>
+                                <div class="p-1">
+                                    <input type="radio" name="is_provider" id="buyer" {% if not provider.is_provider %}checked{% endif %} />
+                                    <label class="cursor-pointer" for="buyer"> Покупатель </label>
+                                </div>
+                            </div>
                             <a class="inline-block text-[#2254B6] underline underline-offset-2"  href="">Политика конфиденциальности</a>
                             <button class="btn-filled-yellow w-full py-5 uppercase" type="submit">Сохранить</button>
                             <div class="flex gap-[clamp(16px,1.5vw,30px)]">

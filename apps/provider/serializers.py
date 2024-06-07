@@ -3,14 +3,20 @@ from apps.provider.models import Category
 
 
 class CategoryListSerializer(serializers.ModelSerializer):
-    children = serializers.SerializerMethodField(method_name='children_func')
-    name = serializers.CharField(source='title')
+    is_selected = serializers.SerializerMethodField()
+    children = serializers.SerializerMethodField()
 
-    def children_func(self, obj):
-        if obj.categor.all().exists():
-            print(CategoryListSerializer(obj.categor.all(), many=True).data)
-            return CategoryListSerializer(obj.categor.all(), many=True).data
+    def get_is_selected(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj in request.user.categories.all()
+        return False
+
+    def get_children(self, obj):
+        if obj.children.all().exists():
+            return CategoryListSerializer(obj.children.all(), many=True, context=self.context).data
+        return []
 
     class Meta:
         model = Category
-        fields = ['id', 'icon', 'name', 'category', 'children']
+        fields = ['id', 'icon', 'name', 'children', 'is_selected']

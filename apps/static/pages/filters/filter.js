@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault();
       const text = item.textContent;
       changeButtonText(text);
-      openSort();
     });
   });
 });
