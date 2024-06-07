@@ -9,7 +9,7 @@
 
 
 {% block content %}
-<main class="edit__profile">
+<main id="main" class="edit__profile" data-profile-id="{{ provider.id }}">
   <nav class="breadcrumbs bg-[#FFFFFC]">
     <div class="container">
       <div class="">
@@ -116,7 +116,7 @@
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base"
-                                {% if form.large_wholesale %}checked{% endif %}
+                                {% if form.large_wholesale.value %}checked{% endif %}
                                 >
                                 Крупный опт
                             </label>
@@ -125,14 +125,14 @@
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input
                                         type="checkbox" name="small_wholesale" class="w-[25px] h-[25px] text-base"
-                                {% if form.small_wholesale %}checked{% endif %}>
+                                {% if form.small_wholesale.value %}checked{% endif %}>
                                 Мелкий опт
                             </label>
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
                                 <input type="checkbox" name="retail" class="w-[25px] h-[25px] text-base"
-                                {% if form.retail %}checked{% endif %}>
+                                {% if form.retail.value %}checked{% endif %}>
                                 Поштучно
                             </label>
                         </div>

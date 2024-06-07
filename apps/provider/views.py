@@ -70,7 +70,7 @@ class CategoryListView(ListAPIView):
     def get_queryset(self):
 
         user_id = self.kwargs.get('pk')
-        user = get_object_or_404(Provider, user_id=user_id)
+        user = get_object_or_404(Provider, id=user_id)
         return user.category.all()
 
     def get_serializer_context(self):

@@ -1,6 +1,7 @@
 const url = `${window.location.origin}/category/list/`; // Используем origin вместо host для включения протокола
     const selectedItems = [];
-
+const userId = document.getElementById("main").getAttribute('data-profile-id')
+console.log(userId)
 // Отправляем запрос на сервер
 fetch(url)
   .then(response => {
