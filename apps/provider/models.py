@@ -224,14 +224,28 @@ class ProvideImg(models.Model):
 
 
 class ProvideFiles(models.Model):
-    image = models.ImageField(upload_to="images/providers/%Y/%m/")
+    image = models.FileField(upload_to="images/providers/%Y/%m/")
     providers = models.ForeignKey(
         Provider, on_delete=models.CASCADE, related_name="files"
     )
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.image.url}"
 
     class Meta:
         verbose_name = _("Файл Поставщика")
         verbose_name_plural = _("Файлы Поставщика")
+
+
+class PriceFiles(models.Model):
+    image = models.FileField(upload_to="images/price/%Y/%m/")
+    providers = models.ForeignKey(
+        Provider, on_delete=models.CASCADE, related_name="files_price"
+    )
+
+    def __str__(self):
+        return f"{self.image}"
+
+    class Meta:
+        verbose_name = _("Файл цены")
+        verbose_name_plural = _("Файлы цен")

@@ -7,6 +7,8 @@ from apps.user_cabinet.models import ViewsCountProfile
 from rest_framework.generics import ListAPIView
 from apps.provider.serializers import CategoryListSerializer
 from apps.user_cabinet.models import Contacts
+from .forms import PriceFilesForm
+
 
 
 class ProviderListView(generic.ListView):
@@ -66,3 +68,16 @@ class ProviderDetailView(generic.DetailView):
 class CategoryListView(ListAPIView):
     serializer_class = CategoryListSerializer
     queryset = Category.objects.filter(category=None)
+
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = PriceFilesForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.providers = request.user.provider
+            instance.save()
+            return redirect('view_profile')
+    else:
+        form = PriceFilesForm()
+    return render(request, 'cabinet/provider_profile.html', {'form': form})
