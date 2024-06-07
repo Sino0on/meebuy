@@ -56,7 +56,6 @@
                                 <div class="hidden lg-md:flex items-center gap-[10px]">
                                     <img class="w-6 h-6 cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}"
                                         alt="">
-                                    <a href="{% if provider in user.cabinet.favorite_providers.all %}/delete/fav/provider/{{provider.pk}}/{% else %}/add_provider_favorite/{{ provider.pk }}{% endif %}">
                                     <svg  class="transition-colors w-6 h-6 cursor-pointer {% if provider in user.cabinet.favorite_providers.all %}text-logo-color{% endif %}" id="heart2" width="40"
                                         height="40" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
@@ -67,7 +66,6 @@
                                             d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
                                             fill="#E4DB00"></path>
                                     </svg>
-                                        </a>
                                 </div>
                             </div>
                             <p class="font-medium text-sm my-[20px] lg-md:my-0 xl:text-lg">{{ provider.mini_desc }}</p>
