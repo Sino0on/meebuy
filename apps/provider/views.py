@@ -70,19 +70,21 @@ class CategoryListView(ListAPIView):
     serializer_class = CategoryListSerializer
 
     def get_queryset(self):
-
-        user_id = self.kwargs.get('pk')
-        user = get_object_or_404(Provider, id=user_id)
-        return user.category.all()
+        return Category.objects.all()
 
     def get_serializer_context(self):
+        context = super().get_serializer_context()
+        user_id = self.kwargs.get('pk')
 
-        context = super(CategoryListView, self).get_serializer_context()
+        user = get_object_or_404(Provider, id=user_id)
         context.update({
-            'request': self.request
+            'request': self.request,
+            'categories': user.category.all()
         })
+        print(context)
         return context
-      
+
+
 def upload_file(request):
     if request.method == 'POST':
         form = PriceFilesForm(request.POST, request.FILES)
