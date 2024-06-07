@@ -44,58 +44,11 @@
 
     <div class="flex gap-[30px] lg-md:flex-row flex-col">
       <div class="flex gap-[30px] lg-md:flex-row flex-col">
-        <section class="profile__navigate bg-[#fff]">
-          <div class="">
-            <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
-              <!-- upload avatar-->
-              <div class="upload__avatar text-center flex justify-center">
-                <div class="relative">
-                  <img
-                    class="absolute right-0 bottom-0"
-                    src="{% static 'assets/images/icons/camera-outline.svg' %}"
-                    alt=""
-                  />
-                  <form
-                    class="rounded-full overflow-hidden w-20 h-20"
-                    action=""
-                  >
-                    <label
-                      for="upload"
-                      class="h-full flex-col items-center gap-2 cursor-pointer"
-                    >
-                      {% if user.provider.image %}
 
-                      <img
-                        class="object-cover h-full"
-                        id="avatar"
-                        src="{{ user.provider.image.url }}"
-                        alt=""
-                      />
-                      {% else %}
-                      <img
-                        class="object-cover h-full"
-                        id="avatar"
-                        src="{% static 'assets/images/icons/Avatar.svg' %}"
-                        alt=""
-                      />
-                      {% endif %}
-                    </label>
-                    {% csrf_token %}
-                    <input id="upload" type="file" class="hidden" />
-                  </form>
-                </div>
-              </div>
-
-              <h2 class="text-center text-lg font-semibold mt-2.5">
-                {{ user.first_name }} {{ user.last_name }}
-              </h2>
               <!-- dropdown menu-->
                 {% include "cabinet/cabinet_includes/menu.html" with active_page='user_products' %}
 
-              <!-- desktop menu end-->
-            </div>
-          </div>
-        </section>
+
 
         <!-- these sections are for main content  -->
         <div
