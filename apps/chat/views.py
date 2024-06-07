@@ -26,7 +26,7 @@ def chats(request):
     chat_details = []
 
     for chat in chat_rooms:
-        status = chat.user_statuses.get(user=user)
+        status, created = ChatUserStatus.objects.get_or_create(chat=chat, user=user)
         messages = Message.objects.filter(chat=chat).order_by('-created_at')
         unread_count = messages.filter(is_read=False).exclude(sender=user).count()
 
