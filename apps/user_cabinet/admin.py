@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from apps.user_cabinet.models import (Cabinet, Transaction, ActiveUserStatus,
                                       PackageStatus, Status, Upping, ActiveUpping,
-                                      SupportMessage, Contacts)
+                                      SupportMessage, Contacts, FAQ)
 from django.db.models.functions import TruncWeek, TruncMonth, TruncYear
 from django.db.models import Count, Sum
 from django.utils.translation import gettext as _
@@ -97,3 +97,9 @@ class SupportMessageAdmin(admin.ModelAdmin):
 @admin.register(Contacts)
 class ContactsAdmin(admin.ModelAdmin):
     list_display = ('instagram', 'whatsapp', 'telegram', 'vk', 'phone')
+
+
+@admin.register(FAQ)
+class FAQAdmin(admin.ModelAdmin):
+    list_display = ('question', 'answer')
+    search_fields = ('question', 'answer')

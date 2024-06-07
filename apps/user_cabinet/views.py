@@ -34,7 +34,7 @@ from django.core.mail import EmailMessage
 
 from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
 
-from .models import Contacts
+from .models import Contacts, FAQ
 
 import plotly.graph_objs as go
 from plotly.offline import plot
@@ -365,6 +365,7 @@ class TariffsCabinetView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context['contacts'] = contacts
+        context['faqs'] = FAQ.objects.all()
         return context
 
 
@@ -610,3 +611,8 @@ def redirect_to_site(request, pk):
     provider = get_object_or_404(Cabinet, id=pk)
     SiteOpenCount.objects.create(user=provider)
     return redirect(provider.user.provider.web_site)
+
+
+def faq_view(request):
+    faqs = FAQ.objects.all()
+    return render(request, 'tariffs.html', {'faqs': faqs})

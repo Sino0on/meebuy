@@ -305,3 +305,10 @@ class SupportMessage(models.Model):
 class FAQ(models.Model):
     question = models.CharField(max_length=255, verbose_name=_('Вопрос'))
     answer = models.TextField(verbose_name=_('Ответ'))
+
+    def __str__(self):
+        return self.question
+
+    class Meta:
+        verbose_name = _('Часто задаваемый вопрос')
+        verbose_name_plural = _('Часто задаваемые вопросы')
