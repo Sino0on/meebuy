@@ -393,7 +393,7 @@ class AnalyticCabinetView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-class TariffsCabinetView(LoginRequiredMixin, generic.ListView):
+class TariffsCabinetView(generic.ListView):
     template_name = 'cabinet/tariffs.html'
     model = Status
     queryset = Status.objects.all()
