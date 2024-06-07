@@ -7,7 +7,14 @@ from django.conf import settings
 from django.http import HttpResponse, FileResponse
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, FormView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+    DetailView,
+    FormView,
+)
 from urllib.parse import quote
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
@@ -17,36 +24,43 @@ from six import BytesIO
 
 from apps.product.filters import ProductFilter
 from apps.product.models import Product, ProductImg, ProductCategory, PriceColumn
-from apps.product.forms import ProductForm, UploadExcelForm, ProductCategoryForm, PriceColumnForm
+from apps.product.forms import (
+    ProductForm,
+    UploadExcelForm,
+    ProductCategoryForm,
+    PriceColumnForm,
+)
 from apps.provider.models import Category, Provider
 from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 
 class ProductListView(ListView):
     model = Product
-    context_object_name = 'products'
+    context_object_name = "products"
     paginate_by = 10
-    template_name = 'products/product_list.html'
+    template_name = "products/product_list.html"
     filter_class = ProductFilter
 
     def get_queryset(self):
-        query = self.queryset
-        filter = self.filter_class(self.request.GET, queryset=query)
-        query = filter.qs
-        return query
+        queryset = super().get_queryset()
+        order = self.request.GET.get("order")
+        if order:
+            queryset = queryset.order_by(order)
+        filter = self.filter_class(self.request.GET, queryset=queryset)
+        return filter.qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
+        context["categories"] = Category.objects.all()
         contacts = Contacts.load()
-        context['contacts'] = contacts
+        context["contacts"] = contacts
         return context
 
 
 class ProductDetailView(DetailView):
     model = Product
-    context_object_name = 'product'
-    template_name = 'products/product_detail.html'
+    context_object_name = "product"
+    template_name = "products/product_detail.html"
 
     def get_product_prices(self):
         product = self.get_object()
@@ -55,33 +69,37 @@ class ProductDetailView(DetailView):
         decimal = product.provider.decimal_places
         if formulas:
             for formula in formulas:
-                prices.append({
-                    'name': formula.name,
-                    'price': formula.apply_formula(product.price),
-                    'decimal': decimal
-                })
+                prices.append(
+                    {
+                        "name": formula.name,
+                        "price": formula.apply_formula(product.price),
+                        "decimal": decimal,
+                    }
+                )
         else:
-            prices.append({
-                'name': 'Цена',
-                'price': product.price,
-                'decimal': decimal
-            })
+            prices.append({"name": "Цена", "price": product.price, "decimal": decimal})
         return prices
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product = self.get_object()
-        context['categories'] = ProductCategory.objects.all()
-        context['similar_products'] = Product.objects.filter(category=product.category).exclude(id=product.id)[:5]
-        context['prices'] = self.get_product_prices()
+        context["categories"] = ProductCategory.objects.all()
+        context["similar_products"] = Product.objects.filter(
+            category=product.category
+        ).exclude(id=product.id)[:5]
+        context["prices"] = self.get_product_prices()
 
-        if self.request.GET.get('open'):
+        if self.request.GET.get("open"):
             if self.request.user.is_authenticated:
                 print(self.get_object().provider.user)
                 if self.get_object().provider.user.cabinet.user_status:
-                    if self.get_object().user.cabinet.user_status.status.is_publish_phone:
-                        OpenNumberCount.objects.create(user=self.get_object().user.cabinet)
-                        context['open'] = 'open'
+                    if (
+                        self.get_object().user.cabinet.user_status.status.is_publish_phone
+                    ):
+                        OpenNumberCount.objects.create(
+                            user=self.get_object().user.cabinet
+                        )
+                        context["open"] = "open"
 
         return context
 
@@ -89,25 +107,29 @@ class ProductDetailView(DetailView):
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
-    template_name = 'cabinet/products.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "cabinet/products.html"
+    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = ProductCategory.objects.all()
+        context["categories"] = ProductCategory.objects.all()
         return context
 
     def form_valid(self, form):
         provider = Provider.objects.get(user=self.request.user)
         form.instance.provider = provider
         response = super().form_valid(form)
-        images = self.request.FILES.getlist('images')
+        images = self.request.FILES.getlist("images")
 
         # Save the first image as the main image
         if images:
             main_image = images[0]
-            product_img = ProductImg.objects.create(product=self.object, image=main_image)
-            self.object.image = main_image  # Assuming 'image' field exists in the Product model
+            product_img = ProductImg.objects.create(
+                product=self.object, image=main_image
+            )
+            self.object.image = (
+                main_image  # Assuming 'image' field exists in the Product model
+            )
             self.object.save()
 
         # Save the rest of the images as additional images
@@ -124,17 +146,17 @@ class ProductCreateView(CreateView):
 class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
-    template_name = 'cabinet/product_update.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "cabinet/product_update.html"
+    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = ProductCategory.objects.all()
+        context["categories"] = ProductCategory.objects.all()
         return context
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        images = self.request.FILES.getlist('images')
+        images = self.request.FILES.getlist("images")
         if images:
             ProductImg.objects.filter(product=self.object).delete()
             main_image = images[0]
@@ -150,29 +172,35 @@ class ProductUpdateView(UpdateView):
 
 class ProductDeleteView(DeleteView):
     model = Product
-    template_name = 'products/product_confirm_delete.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "products/product_confirm_delete.html"
+    success_url = reverse_lazy("user_products")
 
 
 class ExcelTemplateDownloadView(View):
     def get(self, request, *args, **kwargs):
-        filepath = os.path.join(settings.BASE_DIR, 'apps', 'static', 'excel', 'template.xlsx')
+        filepath = os.path.join(
+            settings.BASE_DIR, "apps", "static", "excel", "template.xlsx"
+        )
         filename = "Шаблон_добавления_продуктов.xlsx"
-        with open(filepath, 'rb') as excel_file:
-            response = HttpResponse(excel_file.read(),
-                                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            response['Content-Disposition'] = f'attachment; filename*=UTF-8\'\'{quote(filename)}'
+        with open(filepath, "rb") as excel_file:
+            response = HttpResponse(
+                excel_file.read(),
+                content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            )
+            response["Content-Disposition"] = (
+                f"attachment; filename*=UTF-8''{quote(filename)}"
+            )
             return response
 
 
 class ExcelUploadView(FormView):
-    template_name = 'products/upload_file.html'
+    template_name = "products/upload_file.html"
     form_class = UploadExcelForm
-    success_url = reverse_lazy('user_products')
+    success_url = reverse_lazy("user_products")
 
     def form_valid(self, form):
         form = self.form_class(self.request.POST, self.request.FILES)
-        file = self.request.FILES.get('file')
+        file = self.request.FILES.get("file")
 
         workbook = openpyxl.load_workbook(file)
         sheet = workbook.active
@@ -180,7 +208,9 @@ class ExcelUploadView(FormView):
 
         for row in sheet.iter_rows(min_row=3, values_only=True):
             try:
-                category_instance, _ = ProductCategory.objects.get_or_create(name=row[1], provider=provider)
+                category_instance, _ = ProductCategory.objects.get_or_create(
+                    name=row[1], provider=provider
+                )
 
                 image_url = row[12]
                 if image_url and isinstance(image_url, str):
@@ -188,8 +218,8 @@ class ExcelUploadView(FormView):
                     response = requests.get(image_url)
                     image = Image.open(BytesIO(response.content))
                     image_io = BytesIO()
-                    image.save(image_io, format='WEBP')
-                    image_content = ContentFile(image_io.getvalue(), name='image.webp')
+                    image.save(image_io, format="WEBP")
+                    image_content = ContentFile(image_io.getvalue(), name="image.webp")
                 else:
                     image_content = None
                 product = Product.objects.create(
@@ -216,16 +246,17 @@ class ExcelUploadView(FormView):
         return super().form_valid(form)
 
 
-
 class ProductCategoryCreateView(CreateView):
     model = ProductCategory
     form_class = ProductCategoryForm
-    template_name = 'cabinet/products.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "cabinet/products.html"
+    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = ProductCategory.objects.filter(provider__user=self.request.user)
+        context["categories"] = ProductCategory.objects.filter(
+            provider__user=self.request.user
+        )
         return context
 
     def form_invalid(self, form):
@@ -241,12 +272,14 @@ class ProductCategoryCreateView(CreateView):
 class ProductCategoryUpdateView(UpdateView):
     model = ProductCategory
     form_class = ProductCategoryForm
-    template_name = 'cabinet/product_includes/edit_category.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "cabinet/product_includes/edit_category.html"
+    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = ProductCategory.objects.filter(provider__user=self.request.user)
+        context["categories"] = ProductCategory.objects.filter(
+            provider__user=self.request.user
+        )
         return context
 
     def form_valid(self, form):
@@ -260,28 +293,28 @@ class ProductCategoryUpdateView(UpdateView):
 
 class ProductCategoryDeleteView(DeleteView):
     model = ProductCategory
-    template_name = 'cabinet/product_includes/delete_category.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "cabinet/product_includes/delete_category.html"
+    success_url = reverse_lazy("user_products")
 
 
 class PriceColumnCreateView(CreateView):
     model = PriceColumn
     form_class = PriceColumnForm
-    template_name = 'cabinet/products.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "cabinet/products.html"
+    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
-        context['contacts'] = contacts
+        context["contacts"] = contacts
         categories = ProductCategory.objects.filter(provider__user=self.request.user)
-        context['categories'] = categories
-        context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
-        context['decimal'] = self.request.user.provider.decimal_places
+        context["categories"] = categories
+        context["prices"] = PriceColumn.objects.filter(provider__user=self.request.user)
+        context["decimal"] = self.request.user.provider.decimal_places
         if self.get_queryset().exists():
-            context['has_products'] = True
+            context["has_products"] = True
         else:
-            context['has_products'] = False
+            context["has_products"] = False
 
         return context
 
@@ -290,70 +323,72 @@ class PriceColumnCreateView(CreateView):
 
         # Получаем данные из формы
         post_data = self.request.POST
-        names = post_data.getlist('name')
-        formulas = post_data.getlist('formula')
-        min_order_amounts = post_data.getlist('min_order_amount')
-        decimal = post_data.get('decimal')
+        names = post_data.getlist("name")
+        formulas = post_data.getlist("formula")
+        min_order_amounts = post_data.getlist("min_order_amount")
+        decimal = post_data.get("decimal")
         form.instance.provider.decimal_places = decimal
         form.instance.provider.save()
         print(form.instance.provider.decimal_places)
         PriceColumn.objects.filter(provider__user=self.request.user).delete()
         # Обработка данных
-        for index, (name, formula, min_order_amount) in enumerate(zip(names, formulas, min_order_amounts)):
+        for index, (name, formula, min_order_amount) in enumerate(
+            zip(names, formulas, min_order_amounts)
+        ):
             # Если текущий индекс не равен последнему индексу в списке, создаем объект PriceColumn
             if index != len(names) - 1:
                 PriceColumn.objects.create(
                     provider=form.instance.provider,
                     name=name,
                     formula=formula,
-                    min_order_amount=min_order_amount
+                    min_order_amount=min_order_amount,
                 )
 
         return super().form_valid(form)
 
     def form_invalid(self, form):
         PriceColumn.objects.filter(provider__user=self.request.user).delete()
-        return HttpResponseRedirect(reverse('user_products'))
+        return HttpResponseRedirect(reverse("user_products"))
 
 
 class PriceColumnUpdateView(UpdateView):
     model = PriceColumn
     form_class = PriceColumnForm
-    template_name = 'cabinet/products.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "cabinet/products.html"
+    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
-        context['contacts'] = contacts
+        context["contacts"] = contacts
         categories = ProductCategory.objects.filter(provider__user=self.request.user)
-        context['categories'] = categories
-        context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
-        context['decimal'] = self.request.user.provider.decimal_places
+        context["categories"] = categories
+        context["prices"] = PriceColumn.objects.filter(provider__user=self.request.user)
+        context["decimal"] = self.request.user.provider.decimal_places
         if self.get_queryset().exists():
-            context['has_products'] = True
+            context["has_products"] = True
         else:
-            context['has_products'] = False
+            context["has_products"] = False
 
         return context
 
 
 class PriceColumnDeleteView(DeleteView):
     model = PriceColumn
-    template_name = 'cabinet/products.html'
-    success_url = reverse_lazy('user_products')
+    template_name = "cabinet/products.html"
+    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
-        context['contacts'] = contacts
+        context["contacts"] = contacts
         categories = ProductCategory.objects.filter(provider__user=self.request.user)
-        context['categories'] = categories
-        context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
-        context['decimal'] = self.request.user.provider.decimal_places
+        context["categories"] = categories
+        context["prices"] = PriceColumn.objects.filter(provider__user=self.request.user)
+        context["decimal"] = self.request.user.provider.decimal_places
         if self.get_queryset().exists():
-            context['has_products'] = True
+            context["has_products"] = True
         else:
-            context['has_products'] = False
+            context["has_products"] = False
 
         return context
