@@ -95,43 +95,8 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- dropdown menu end-->
-                        <!-- desktop menu-->
-                        <div class="hidden lg-md:block">
-                            <ul class="flex flex-col">
-                                <li class="dropdown__item active">
-                                    <a href="{% url 'view_profile' %}">Моя компания</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="{% url 'user_tenders' %}">Закупки</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="{% url 'user_products' %}">Товары</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="{% url 'chat_list' %}">Сообщения</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="{% url 'analytic' %}">Статистика</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="{% url 'tariffs' %}">Premium тарифы</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="{% url 'settings' %}">Настройки аккаунта</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="{% url 'balance' %}">Баланс</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="{% url 'favorites' %}">Избранные</a>
-                                </li>
-                                <li class="dropdown__item">
-                                    <a href="">Служба поддержки</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- desktop menu end-->
+                {% include "cabinet/cabinet_includes/menu.html" with active_page='user_tenders' %}
+
                     </div>
                 </div>
             </section>
