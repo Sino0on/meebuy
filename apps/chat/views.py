@@ -9,53 +9,53 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
 from apps.user_cabinet.models import Contacts
+from apps.chat.models import ChatUserStatus
 
 User = get_user_model()
 
+
 @login_required(login_url='login')
 def chats(request):
+    user = request.user
     chat_rooms = Chat.objects.filter(
-        models.Q(user_first=request.user) | models.Q(user_second=request.user)
-    )
-    favorite_chats = chat_rooms.filter(is_favorite=True)
-    deleted_chats = chat_rooms.filter(is_deleted=True)
+        Q(user_first=user) | Q(user_second=user)
+    ).select_related('user_first', 'user_second').prefetch_related('user_statuses')
+
+    favorite_chats = []
+    deleted_chats = []
     chat_details = []
-    chat_deleted = []
-    chat_favorite = []
 
     for chat in chat_rooms:
+        status = chat.user_statuses.get(user=user)
         messages = Message.objects.filter(chat=chat).order_by('-created_at')
-        unread_count = messages.filter(is_read=False).exclude(sender=request.user).count()
-        if not chat.is_deleted:
+        unread_count = messages.filter(is_read=False).exclude(sender=user).count()
+
+        if status.is_deleted:
+            deleted_chats.append({
+                'chat': chat,
+                'last_message': messages.first(),
+                'unread_count': unread_count
+            })
+        elif status.is_favorite:
+            favorite_chats.append({
+                'chat': chat,
+                'last_message': messages.first(),
+                'unread_count': unread_count
+            })
+        else:
             chat_details.append({
                 'chat': chat,
                 'last_message': messages.first(),
                 'unread_count': unread_count
             })
-    for chat in deleted_chats:
-        messages = Message.objects.filter(chat=chat).order_by('-created_at')
-        unread_count = messages.filter(is_read=False).exclude(sender=request.user).count()
-        chat_deleted.append({
-            'chat': chat,
-            'last_message': messages.first(),
-            'unread_count': unread_count
-        })
-    for chat in favorite_chats:
-        messages = Message.objects.filter(chat=chat).order_by('-created_at')
-        unread_count = messages.filter(is_read=False).exclude(sender=request.user).count()
-        if not chat.is_deleted:
-            chat_favorite.append({
-                'chat': chat,
-                'last_message': messages.first(),
-                'unread_count': unread_count
-            })
+
     contacts = Contacts.load()
 
     return render(request, 'chat_list.html', {
         'chat_details': chat_details,
         'contacts': contacts,
-        'favorite_chats': chat_favorite,
-        'deleted_chats': chat_deleted
+        'favorite_chats': favorite_chats,
+        'deleted_chats': deleted_chats
     })
 
 
@@ -86,33 +86,34 @@ def create_chat(request, pk):
     return redirect(f'/chat/{chat.id}')
 
 
+@login_required
 def add_to_favorites(request, chat_id):
-    chat = Chat.objects.get(id=chat_id)
-    # Здесь вы можете изменить атрибут модели для добавления в избранное
-    chat.is_favorite = True
-    chat.save()
+    chat = get_object_or_404(Chat, id=chat_id)
+    status, created = ChatUserStatus.objects.get_or_create(chat=chat, user=request.user)
+    status.is_favorite = True
+    status.save()
     return redirect('chat_list')
 
+@login_required
 def remove_from_favorites(request, chat_id):
-    chat = Chat.objects.get(id=chat_id)
-    # Здесь вы можете изменить атрибут модели для добавления в избранное
-    chat.is_favorite = False
-    chat.save()
+    chat = get_object_or_404(Chat, id=chat_id)
+    status, created = ChatUserStatus.objects.get_or_create(chat=chat, user=request.user)
+    status.is_favorite = False
+    status.save()
     return redirect('chat_list')
 
-
+@login_required
 def delete_chat(request, chat_id):
-    chat = Chat.objects.get(id=chat_id)
-    # Здесь вы можете изменить атрибут модели для удаления сообщения
-    chat.is_deleted = True
-    chat.save()
+    chat = get_object_or_404(Chat, id=chat_id)
+    status, created = ChatUserStatus.objects.get_or_create(chat=chat, user=request.user)
+    status.is_deleted = True
+    status.save()
     return redirect('chat_list')
 
-
+@login_required
 def remove_from_deleted(request, chat_id):
-    chat = Chat.objects.get(id=chat_id)
-    # Здесь вы можете изменить атрибут модели для удаления сообщения
-    chat.is_deleted = False
-    chat.save()
-    print('asdasdad')
+    chat = get_object_or_404(Chat, id=chat_id)
+    status, created = ChatUserStatus.objects.get_or_create(chat=chat, user=request.user)
+    status.is_deleted = False
+    status.save()
     return redirect('chat_list')
