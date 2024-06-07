@@ -21,7 +21,7 @@
               </div>
             </h2>
             <div class="flex" id="heroSearchWrapper">
-              <form action="/product/list/" class="relative flex flex-col lg-md:flex-row gap-2 mt-[30px] w-full">
+              <form id="search-form" action="/provider/list/" class="relative flex flex-col lg-md:flex-row gap-2 mt-[30px] w-full">
                   <button type="button" id="heroFormBtn" class="btn-filled absolute w-max top-0 uppercase font-medium text-sm text-dark-logo transition-opacity duration-[1000ms] ease-in-out z-[1]">
                       Я ищу
                   </button>
@@ -39,8 +39,8 @@
                       </div>
                       <img class="w-5 h-5 absolute right-1 top-1/2 -translate-y-1/2" src="{% static 'assets/images/icons/ios-arrow.svg' %}" alt="">
                       <div class="select-items hidden absolute bg-white border border-gray-300 top-[60px] mt-1 w-fit z-[2]">
-                          <div class="py-2 px-4 cursor-pointer hover:bg-gray-100" data-value="suppliers">Поставщики</div>
-                          <div class="py-2 px-4 cursor-pointer hover:bg-gray-100" data-value="purchases">Закупки</div>
+                          <div class="py-2 px-4 cursor-pointer hover:bg-gray-100" data-value="provider">Поставщики</div>
+                          <div class="py-2 px-4 cursor-pointer hover:bg-gray-100" data-value="tender">Закупки</div>
                           <div class="py-2 px-4 cursor-pointer hover:bg-gray-100" data-value="product">Товар</div>
                       </div>
                   </div>

@@ -20,6 +20,10 @@ const heroTitle = document.querySelector('#heroTitle');
 // heart
 const hearts = document.querySelectorAll('.heart');
 
+const search_form = document.getElementById('search-form')
+
+
+
 const toggleMenu = () => {
   if (burgerMenu.classList.contains('translate-x-0')) {
     burgerMenu.classList.remove('translate-x-0');
@@ -90,6 +94,8 @@ selectSelected.addEventListener('click', () => {
 
 document.querySelectorAll('.select-items div').forEach(item => {
   item.addEventListener('click', () => {
+    const searchValue = item.getAttribute('data-value')
+    search_form.setAttribute('action',`/${searchValue}/list`)
       selectSelected.textContent = item.textContent;
       selectSelected.setAttribute('data-value', item.getAttribute('data-value'));
   });
