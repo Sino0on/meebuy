@@ -17793,3 +17793,15 @@ input{
 .p-px{
   padding: 1px;
 }
+
+.unread-count {
+  display: none;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
