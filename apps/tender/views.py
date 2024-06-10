@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
+from apps.buyer.models import Banner
 from apps.tender.forms import TenderForm
 from apps.tender.models import Tender, TenderImg
 from apps.provider.models import Category
@@ -34,6 +35,7 @@ class TenderListView(generic.ListView):
         context["categories"] = Category.objects.all()
         context["contacts"] = Contacts.load()
         context["filter"] = self.filter
+        context["banners"] = Banner.objects.filter(page_for="tender")
         return context
 
 
