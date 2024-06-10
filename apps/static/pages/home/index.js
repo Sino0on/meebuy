@@ -9,10 +9,20 @@ const searchIcon = document.querySelector('#searchIconImg');
 const heroSearchWrapper = document.querySelector('#heroSearchWrapper');
 const heroSearchIconImg = document.querySelector('#heroSearchIconImg');
 const heroFormBtn = document.querySelector('#heroFormBtn');
+const heroSearch = document.querySelector('#heroSearch')
+const heroSelect = document.querySelector('#heroSelect')
+const heroSearchBtn = document.querySelector('#heroSearchBtn')
+// hero select
+const selectSelected = document.querySelector('.select-selected');
+const selectItems = document.querySelector('.select-items');
 // hero title
 const heroTitle = document.querySelector('#heroTitle');
 // heart
 const hearts = document.querySelectorAll('.heart');
+
+const search_form = document.getElementById('search-form')
+
+
 
 const toggleMenu = () => {
   if (burgerMenu.classList.contains('translate-x-0')) {
@@ -53,12 +63,20 @@ const itemsToSearch = [
 
 const heroFormToggle = () => {
   const currentWidth = window.innerWidth;
-  heroFormBtn.classList.toggle('opacity-0');
+  heroSearchWrapper.classList.toggle('w-full');
+  heroSearch.classList.toggle('w-full')
+  heroSearchBtn.classList.toggle('w-full')
+  heroSelect.classList.toggle('overflow-visible')
   if (currentWidth >= 992) {
-    heroSearchWrapper.classList.toggle('w-1/2');
+    heroFormBtn.classList.toggle('opacity-0');
+    heroSelect.classList.toggle('w-[40%]')
   } else {
-    heroSearchWrapper.classList.toggle('w-full');
-  }
+    heroSelect.classList.toggle('w-full');
+    heroSearchBtn.classList.toggle('!max-w-full')
+    heroSearchBtn.classList.toggle('!p-4')
+    selectItems.classList.toggle('w-full')
+    selectItems.classList.toggle('top-[45px]')
+}
   setTimeout(() => {
     heroFormBtn.classList.toggle('hidden');
   }, 1500);
@@ -66,6 +84,28 @@ const heroFormToggle = () => {
 
 // Обработчик клика на кнопке "Я ищу"
 heroFormBtn?.addEventListener('click', heroFormToggle);
+
+// hero select
+
+// Логика кастомного селекта
+selectSelected.addEventListener('click', () => {
+  selectItems.style.display = selectItems.style.display === 'block' ? 'none' : 'block';
+});
+
+document.querySelectorAll('.select-items div').forEach(item => {
+  item.addEventListener('click', () => {
+    const searchValue = item.getAttribute('data-value')
+    search_form.setAttribute('action',`/${searchValue}/list`)
+      selectSelected.textContent = item.textContent;
+      selectSelected.setAttribute('data-value', item.getAttribute('data-value'));
+  });
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.matches('.select-selected')) {
+      selectItems.style.display = 'none';
+  }
+});
 
 // hero title
 

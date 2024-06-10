@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from apps.provider.models import Provider, Tag
@@ -7,6 +8,8 @@ from apps.user_cabinet.models import ViewsCountProfile
 from rest_framework.generics import ListAPIView
 from apps.provider.serializers import CategoryListSerializer
 from apps.user_cabinet.models import Contacts
+from .forms import PriceFilesForm
+
 
 
 class ProviderListView(generic.ListView):
@@ -65,4 +68,31 @@ class ProviderDetailView(generic.DetailView):
 
 class CategoryListView(ListAPIView):
     serializer_class = CategoryListSerializer
-    queryset = Category.objects.filter(category=None)
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        user_id = self.kwargs.get('pk')
+
+        user = get_object_or_404(Provider, id=user_id)
+        context.update({
+            'request': self.request,
+            'categories': user.category.all()
+        })
+        print(context)
+        return context
+
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = PriceFilesForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.providers = request.user.provider
+            instance.save()
+            return redirect('view_profile')
+    else:
+        form = PriceFilesForm()
+    return render(request, 'cabinet/provider_profile.html', {'form': form})

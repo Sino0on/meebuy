@@ -1,6 +1,8 @@
-const url = `${window.location.origin}/category/list/`; // Используем origin вместо host для включения протокола
     const selectedItems = [];
+const userId = document.getElementById("main").getAttribute('data-profile-id')
+    const url = `${window.location.origin}/category/list/${userId}`; // Используем origin вместо host для включения протокола
 
+console.log(userId)
 // Отправляем запрос на сервер
 fetch(url)
   .then(response => {
@@ -42,7 +44,7 @@ function createTree(treeArray, depth = 0) {
 
     span.addEventListener("click", () => {
       if (!item.children || item.children.length === 0) {
-        const index = selectedItems.indexOf(item.name);
+        const index = selectedItems.indexOf(item.id);
         if (index === -1) {
           selectedItems.push(item.id);
           span.classList.add("active");
@@ -116,7 +118,7 @@ function updateSelectedItemsDisplay() {
 const addNumberBtn = document.getElementById("addNumberBtn");
 const numbersWrapper = document.querySelector(".numberInputs");
 
-addNumberBtn.addEventListener("click", () => {
+addNumberBtn?.addEventListener("click", () => {
   numbersWrapper.insertAdjacentHTML("beforeend", `
     <div class="flex justify-between items-center pr-7 relative">
       <input class="numbers" type="tel" name="phoneNumber" placeholder="+996 ХХХ ХХХ ХХХ">
@@ -125,7 +127,7 @@ addNumberBtn.addEventListener("click", () => {
   `);
 });
 
-numbersWrapper.addEventListener("click", (event) => {
+numbersWrapper?.addEventListener("click", (event) => {
   if (event.target.classList.contains("deletePhoneInput")) {
     event.target.parentElement.remove();
   }

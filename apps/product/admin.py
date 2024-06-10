@@ -15,7 +15,7 @@ class ProductImgInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-        'title', 'price', 'min_quantity', 'category', 'created_at', 'updated_at')
+        'title', 'price', 'min_quantity', 'category', 'created_at', 'updated_at', 'is_new', 'is_recommended')
     list_filter = ('category', 'created_at', 'updated_at', 'country_of_manufacture')
     search_fields = (
         'title', 'description', 'mini_desc', 'manufacturer', 'phone', 'terms_of_sale', 'country_of_manufacture',

@@ -17,7 +17,7 @@
 
 
           </div>
-    <a href="{% url 'chat_create' product.provider.user.id %}">
+    <a href="{% if user.is_authenticated %}{% url 'chat_create' product.provider.user.id %}{% else %}{% url 'login' %}{% endif %}">
           <button
             class="uppercase py-3 px-4 rounded-lg border border-[#2B292C]"
           >

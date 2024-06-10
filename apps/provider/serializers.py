@@ -1,16 +1,24 @@
 from rest_framework import serializers
 from apps.provider.models import Category
 
-
 class CategoryListSerializer(serializers.ModelSerializer):
-    children = serializers.SerializerMethodField(method_name='children_func')
-    name = serializers.CharField(source='title')
+    is_selected = serializers.SerializerMethodField()
+    children = serializers.SerializerMethodField()
 
-    def children_func(self, obj):
+    def get_is_selected(self, obj):
+        # Из контекста получаем категории, выбранные пользователем
+        user_categories = self.context.get('categories', [])
+        # Проверяем, содержится ли текущий объект категории в списке выбранных категорий
+        return obj in user_categories
+
+    def get_children(self, obj):
+        # Получаем дочерние категории используя related_name 'categor'
         if obj.categor.all().exists():
-            print(CategoryListSerializer(obj.categor.all(), many=True).data)
-            return CategoryListSerializer(obj.categor.all(), many=True).data
+            # Рекурсивно сериализуем дочерние категории, если они существуют
+            return CategoryListSerializer(obj.categor.all(), many=True, context=self.context).data
+        return []
 
     class Meta:
         model = Category
-        fields = ['id', 'icon', 'name', 'category', 'children']
+        # Используем 'title' вместо 'name', если в модели это поле называется 'title'
+        fields = ['id', 'title', 'icon', 'children', 'is_selected']

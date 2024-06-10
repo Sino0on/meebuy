@@ -38,6 +38,12 @@
     gap: 1rem;
 }
 
+@media (min-width: 992px)  {
+    .tabs__wrapper {
+        margin-top: 0 !important;
+    }
+}
+
 .tabs__item {
     background: none;
 }
