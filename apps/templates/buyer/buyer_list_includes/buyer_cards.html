@@ -8,7 +8,7 @@
               class="flex md:flex-row flex-col gap-7 md:items-center items-start"
             >
               <img
-                {% if user.imsage %}{{ user.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}
+                {% if object.imsage %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}
                 alt=""
               />
               <div class="flex flex-col gap-9">
@@ -24,11 +24,14 @@
                     Подробнее
                   </button>
                         </a>
-                  <button
+                    {% if user_is_authenticated %}
+                         <a href="{% url 'chat_create' object.id %}"
                     class="border border-solid border-[#2B292C] px-6 py-2 rounded-[7px]"
                   >
                     Написать
-                  </button>
+                  </a>
+                    {% endif %}
+
                 </div>
               </div>
             </div>

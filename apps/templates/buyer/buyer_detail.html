@@ -19,7 +19,7 @@
                             <a href="/"><img src="{% static 'assets/images/icons/home.svg' %}" alt="" /></a>
                             <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
                         </div>
-                        <a href="/provider/list/" class="font-normal font-mulish text-[#A0A0A0]">Поставщики</a>
+                        <a href="/buyer/list/" class="font-normal font-mulish text-[#A0A0A0]">Покупатели</a>
                         <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
                         <p class="font-normal font-mulish text-[#A0A0A0]">{{ object.provider.title }}</p>
                     </div>
@@ -94,36 +94,19 @@
                         <!-- active = bg-yellow-second -->
                         <div
                             class="filterBy border uppercase bg-yellow-second border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
-                            Товары
+                            Закупки
                         </div>
-                        <div
-                            class="filterBy border uppercase border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
-                            Прайс
-                        </div>
+
                     </div>
                     <div class="mt-5">
                         <ul class="flex flex-col gap-4 text-[#9A9A9A]">
-                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
-                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
-                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
-                            </li>
-                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
-                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
-                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
-                            </li>
-                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
-                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
-                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
-                            </li>
-                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
-                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
-                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
-                            </li>
-                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
-                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
-                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
-                            </li>
-                            
+                            {% for tender in user.tenders.all %}
+                                <a href="{% url 'tender_detail' tender.id %}"></a>
+                              <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">{{ tender.title }}</span>
+                                <p class="text-[#9A9A9A] text-sm font-light">{{ tender.description }}</p>
+                              </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
@@ -159,10 +142,7 @@
                         <h2 class="text-xl font-bold">О компании</h2>
                         <p class="description text-dark-text mt-5 lg:mt-[30px] break-words">{{ object.provider.description }}</p>
                         <ul class="">
-                            <li class="mt-[30px]">
-                                <p class="text-lg font-semibold">Тип компании</p>
-                                <p class="mt-2.5">{{ object.provider.type }}</p>
-                            </li>
+
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Объем поставок</p>
                                 {% if object.provider.large_wholesale %}
@@ -174,78 +154,6 @@
                                 {% if object.provider.retail %}
                                     <p class="mt-2.5">Поштучно</p>
                                 {% endif %}
-                                {% if object.provider.official_distributor %}
-                                    <p class="mt-2.5">Официальный дистрибьютор</p>
-                                {% endif %}
-                            </li>
-                            <li class="mt-[30px]">
-                                <p class="text-lg font-semibold">Минимальный заказ</p>
-                                {% if object.provider.minimum_order %}
-                                    <p class="mt-2.5">{{ object.provider.minimum_order }}</p>
-                                {% else %}
-                                    <p class="mt-2.5">Без ограничений</p>
-                                {% endif %}
-                            </li>
-                            <li class="mt-[30px]">
-                                <p class="text-lg font-semibold">Услуги</p>
-                                {% if object.provider.installment %}
-                                    <p class="mt-2.5">Возможна рассрочка</p>
-                                {% endif %}
-                                {% if object.provider.credit %}
-                                    <p class="mt-2.5">Возможен кредит</p>
-                                {% endif %}
-                                {% if object.provider.deposit %}
-                                    <p class="mt-2.5">Возможен депозит</p>
-                                {% endif %}
-                                {% if object.provider.consignment %}
-                                    <p class="mt-2.5">Возможна передача под реализацию</p>
-                                {% endif %}
-                                {% if object.provider.dropshipping %}
-                                    <p class="mt-2.5">Возможен дропшиппинг</p>
-                                {% endif %}
-                                {% if object.provider.showroom %}
-                                    <p class="mt-2.5">Есть шоурум</p>
-                                {% endif %}
-                                {% if object.provider.marketplace_sale %}
-                                    <p class="mt-2.5">Разрешена продажа на маркетплейсах</p>
-                                {% endif %}
-                            </li>
-                            <li class="mt-[30px]">
-                                <p class="text-lg font-semibold">Варианты оплаты</p>
-                          {% if object.provider.cash %}
-                                <p class="mt-2.5">Наличными</p>
-                            {% endif %}
-                            {% if object.provider.bank_transfer %}
-                                <p class="mt-2.5">Безналичная оплата</p>
-                            {% endif %}
-                            {% if object.provider.credit_card %}
-                                <p class="mt-2.5">Кредитные карты</p>
-                            {% endif %}
-                            {% if object.provider.electronic_money %}
-                                <p class="mt-2.5">Электронные деньги</p>
-                            {% endif %}
-                            </li>
-                            <li class="mt-[30px]">
-                                <p class="text-lg font-semibold">Способы доставки</p>
-                                 {% if object.provider.pickup %}
-                                <p class="mt-2.5">Самовывоз</p>
-                            {% endif %}
-                            {% if object.provider.transport_company %}
-                                <p class="mt-2.5">Транспортной компанией</p>
-                            {% endif %}
-                            {% if object.provider.by_car %}
-                                <p class="mt-2.5">Автомобилем</p>
-                            {% endif %}
-                            {% if object.provider.air_transport %}
-                                <p class="mt-2.5">Авиатранспортом</p>
-                            {% endif %}
-                            {% if object.provider.rail_transport %}
-                                <p class="mt-2.5">Железной дорогой</p>
-                            {% endif %}
-                            {% if object.provider.courier %}
-                                <p class="mt-2.5">Курьером</p>
-                            {% endif %}
-
                             </li>
                         </ul>
                     </div>

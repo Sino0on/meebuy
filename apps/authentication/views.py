@@ -50,10 +50,8 @@ class LoginView(FormView):
             register_form = UserRegistrationForm(request.POST)
             if register_form.is_valid():
                 user = register_form.save(commit=False)
-                user.is_active = False
                 user.save()
                 Cabinet.objects.get_or_create(user=user)
-
                 current_site = get_current_site(request)
                 print(current_site)
                 protocol = 'https' if request.is_secure() else 'http'
@@ -192,8 +190,8 @@ def activate(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
+        user.provider.is_active = True
+        user.provider.save()
         messages.success(request, 'Ваш аккаунт успешно активирован!')
         return redirect('view_profile')
     else:
