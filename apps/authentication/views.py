@@ -12,6 +12,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.encoding import force_bytes, force_str
+from django.contrib import messages
 
 
 from apps.authentication.forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
@@ -54,9 +55,12 @@ class LoginView(FormView):
                 Cabinet.objects.get_or_create(user=user)
 
                 current_site = get_current_site(request)
-                mail_subject = 'Activation link has been sent to your email id'
+                print(current_site)
+                protocol = 'https' if request.is_secure() else 'http'
+                mail_subject = 'Ссылка для активации была отправлена на ваш адрес электронной почты'
                 message = render_to_string('auth/acc_active_email.html', {
                     'user': user,
+                    'protocol': protocol,
                     'domain': current_site.domain,
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'token': account_activation_token.make_token(user),
@@ -69,6 +73,11 @@ class LoginView(FormView):
                 if authenticated_user is not None:
                     auth_login(self.request, authenticated_user)
                     return redirect(reverse_lazy('choice'))
+                else:
+                    messages.error(request, 'Ошибка аутентификации пользователя.')
+                    return redirect(reverse_lazy('home'))
+
+
             else:
                 print(register_form.errors)
                 return self.render_to_response(self.get_context_data(register_form=register_form))
@@ -184,6 +193,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, "registration/thank_you_for_activation.html")
+        messages.success(request, 'Ваш аккаунт успешно активирован!')
+        return redirect('view_profile')
     else:
         return HttpResponse('Activation link is invalid!')

@@ -13,7 +13,7 @@ User = get_user_model()
 
 
 class Cabinet(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('Пользователь'))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name=_('Пользователь'))
     balance = models.PositiveIntegerField(blank=True, default=0, verbose_name=_('Баланс'))
     is_upping = models.ForeignKey('ActiveUpping', blank=True, null=True, on_delete=models.SET_NULL)
     user_status = models.ForeignKey(
