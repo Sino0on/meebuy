@@ -49,7 +49,6 @@ class LoginView(FormView):
             register_form = UserRegistrationForm(request.POST)
             if register_form.is_valid():
                 user = register_form.save(commit=False)
-                user.auth_provider = False
                 user.is_active = False
                 user.save()
                 Cabinet.objects.get_or_create(user=user)
@@ -103,7 +102,8 @@ class LoginView(FormView):
         form.add_error(None, "Неверный email или пароль")
         return self.render_to_response(self.get_context_data(form=form))
 
-class SelectUserTypeView(FormView):
+
+class SelectUserTypeView(LoginRequiredMixin, FormView):
     form_class = UserTypeSelectionForm
     template_name = 'auth/auth_choice.html'
     success_url = reverse_lazy('view_profile')  
