@@ -78,7 +78,6 @@
     </div>
 </main>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
   const chatIcon = document.getElementById("chat-icon");
   const chatTabM = document.getElementById("chat-tab-m");
   const chatTabD = document.getElementById("chat-tab-d");
@@ -97,6 +96,8 @@
     } else {
       unreadCountElement.style.display = 'none';
     }
+
+    console.log("Unread count:", unreadCount);
   }
 
   var ws = new WebSocket(`wss://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
@@ -126,10 +127,12 @@
           <div class="text-right text-[#747474] text-sm">${currentTime}</div>
         </div>`;
       
-      if (document.hidden || !chatTab.classList.contains('active')) {
-        unreadCount++;
-        updateUnreadCount();
-      }
+    //   if (document.hidden || !chatTab.classList.contains('active')) {
+    //     unreadCount++;
+    //     updateUnreadCount();
+    //   }
+      unreadCount++;
+      updateUnreadCount();
     }
 
     messageContainer.appendChild(messageElement);
@@ -173,7 +176,6 @@
       updateUnreadCount();
     }
   });
-});
 
 </script>
 {% endblock %}
