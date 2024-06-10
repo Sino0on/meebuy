@@ -275,7 +275,7 @@
                             <div class="uploaded_files flex flex-col gap-2.5 mt-8">
                                 {% for file in user.provider.files.all %}
                                     <div class="uploaded_file_item">
-                                        <a href="{{ file.image.url }}">{{ file.image.name }}</a>
+                                        <a href="{{ file.image.url }}">{{ file.image.url }}</a>
                                     </div>
                                 {% endfor %}
                             </div>
