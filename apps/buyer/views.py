@@ -14,7 +14,7 @@ class BuyerListView(generic.ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        queryset = User.objects.filter(is_active=True)
+        queryset = User.objects.filter(is_active=True, provider__title__isnull=False)
         order = self.request.GET.get("order")
         if order:
             queryset = queryset.order_by(order)

@@ -222,10 +222,9 @@
             {{ object.mini_desc }}
           </p>
           <div class="mt-auto lg-md:flex justify-between items-end">
-            <button class="btn-filled w-full py-3 lg-md:max-w-[139px]">
-              <a href="{% url 'product_detail' object.id %}"> Подробнее</a>
-            </button>
-
+          <a class="btn-filled w-full text-center py-3 lg-md:max-w-[139px]" href="{% url 'product_detail' object.id %}">
+               Подробнее
+          </a>
             <svg
                 {% if user.is_authenticated %}
                   onclick="sendLikeProductRequest({{ object.pk }})"
