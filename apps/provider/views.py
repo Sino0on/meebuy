@@ -70,7 +70,7 @@ class CategoryListView(ListAPIView):
     serializer_class = CategoryListSerializer
 
     def get_queryset(self):
-        return Category.objects.all()
+        return Category.objects.filter(category=None)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -81,7 +81,7 @@ class CategoryListView(ListAPIView):
             'request': self.request,
             'categories': user.category.all()
         })
-        print(context)
+
         return context
 
 

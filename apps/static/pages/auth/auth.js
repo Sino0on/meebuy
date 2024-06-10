@@ -136,3 +136,12 @@ if (activeTab === "register") {
 
 registerTab.addEventListener("click", toggleTabRegister);
 loginTab.addEventListener("click", toggleTabLogin);
+
+document.addEventListener("DOMContentLoaded", function () {
+    if(loginForm.querySelector('.has-error')){
+      console.log(loginForm.querySelector('.has-error'));
+      loginTab.click();
+    } else{
+      registerTab.click();
+    }
+});
