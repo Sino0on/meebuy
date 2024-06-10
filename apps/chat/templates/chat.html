@@ -96,6 +96,8 @@
     } else {
       unreadCountElement.style.display = 'none';
     }
+
+    console.log("Unread count:", unreadCount);
   }
 
   var ws = new WebSocket(`wss://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
