@@ -125,7 +125,7 @@
                   ></path></svg></a>
               {% endif %}
 
-                <a href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}">
+                <a id="chat-icon" href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}">
               <img
                 class="lg-md:block mt-2"
                 src="{% static 'assets/images/icons/headerLetter.svg' %}"

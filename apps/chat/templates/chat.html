@@ -78,7 +78,14 @@
     </div>
 </main>
 <script>
-  var ws = new WebSocket(`wss://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
+  document.addEventListener('DOMContentLoaded', function() {
+
+    const chatIcon = document.getElementById("chat-icon");
+    const chatTab = document.getElementById("chat-tab");
+    const profile = document.getElementById('profile-menu');
+    console.log(chatIcon,chatTab,profile);
+
+    var ws = new WebSocket(`wss://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
 
 
   ws.onopen = function() {
@@ -133,7 +140,8 @@
     }
 }
 
-  document.getElementById("messageInput").addEventListener("keypress", function(e) {
+document.getElementById("messageInput").addEventListener("keypress", function(e) {
+    
     if (e.key === "Enter") {
       sendMessage();
 
@@ -148,6 +156,7 @@ ws.onerror = function(error) {
     console.log("WebSocket error:", error);
     // Обработка ошибки, например, показ уведомления
 };
+  } );
 </script>
 {% endblock %}
 {% block js %}
