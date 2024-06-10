@@ -133,7 +133,7 @@ CHANNEL_LAYERS = {
 #         'PORT': config('DB_PORT', cast=int),
 #     }
 # }
-# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
 
 DATABASES = {
@@ -142,7 +142,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
 
