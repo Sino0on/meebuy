@@ -35,7 +35,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 
 from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
-from .freedompay import initiate_payment
+# from .freedompay import initiate_payment
 
 from .models import Contacts, FAQ
 
@@ -660,25 +660,27 @@ def faq_view(request):
 
 
 def create_payment_view(request):
-    if request.method == "POST":
-        amount = request.POST.get("amount")
-        currency = request.POST.get("currency")
-        description = request.POST.get("description")
-        callback_url = request.build_absolute_uri('/payment/callback/')
-        public_key = 'ваш_публичный_ключ'
-        payment_response = initiate_payment(amount, currency, description, callback_url, public_key)
-        if payment_response.get("status") == "success":
-            return redirect(payment_response["payment_url"])
-        else:
-            return render(request, 'payment_error.html', {"error": payment_response.get("message", "Unknown error")})
-    return render(request, 'create_payment.html')
+    pass
+#     if request.method == "POST":
+#         amount = request.POST.get("amount")
+#         currency = request.POST.get("currency")
+#         description = request.POST.get("description")
+#         callback_url = request.build_absolute_uri('/payment/callback/')
+#         public_key = 'ваш_публичный_ключ'
+#         payment_response = initiate_payment(amount, currency, description, callback_url, public_key)
+#         if payment_response.get("status") == "success":
+#             return redirect(payment_response["payment_url"])
+#         else:
+#             return render(request, 'payment_error.html', {"error": payment_response.get("message", "Unknown error")})
+#     return render(request, 'create_payment.html')
 
 @csrf_exempt
 def payment_callback(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
-        order_id = data.get("order_id")
-        payment_status = data.get("status")
-        # Логика для обновления статуса заказа в базе данных
-        return JsonResponse({"status": "ok"})
-    return JsonResponse({"status": "invalid request"}, status=400)
+    pass
+#     if request.method == "POST":
+#         data = json.loads(request.body)
+#         order_id = data.get("order_id")
+#         payment_status = data.get("status")
+#         # Логика для обновления статуса заказа в базе данных
+#         return JsonResponse({"status": "ok"})
+#     return JsonResponse({"status": "invalid request"}, status=400)
