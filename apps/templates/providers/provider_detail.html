@@ -106,36 +106,65 @@
                     <div class="flex gap-4">
                         <!-- active = bg-yellow-second -->
                         <div
-                            class="filterBy border uppercase bg-yellow-second border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                        onclick="openTab(event, 'Tab1')"
+                            class="filterBy border tabs__item uppercase bg-yellow-second border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
                             Товары
                         </div>
                         <div
-                            class="filterBy border uppercase border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                        onclick="openTab(event, 'Tab2')"
+                            class="filterBy border tabs__item uppercase border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
                             Прайс
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
-                        {% for product in products %}
-                        <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5">
-                            {% if product.new %}
-                            <div
-                                class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
-                                NEW
+                    <div id="Tab1" class="tab-content">
+                        <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
+                            {% for product in products %}
+                            <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5">
+                                {% if product.new %}
+                                <div
+                                    class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
+                                    NEW
+                                </div>
+                                {% endif %}
+                                <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
+                                    src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="Изображение товара">
+                                <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}
+                                </h2>
+                                <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">{{ product.description|truncatechars:100 }}</p>
+                                <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
+                                    Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
+                                </div>
+                                <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
+                                    <a href="/product/detail/{{ product.id }}/">Подробнее</a>
+                                </button>
                             </div>
-                            {% endif %}
-                            <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
-                                src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="Изображение товара">
-                            <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}
-                            </h2>
-                            <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">{{ product.description|truncatechars:100 }}</p>
-                            <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
-                            </div>
-                            <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
-                                <a href="/product/detail/{{ product.id }}/">Подробнее</a>
-                            </button>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
+                    </div>
+                    <div id="Tab2" class="tab-content hidden">
+                        <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
+                            {% for product in products %}
+                            <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5">
+                                {% if product.new %}
+                                <div
+                                    class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
+                                    NEW
+                                </div>
+                                {% endif %}
+                                <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
+                                    src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="Изображение товара">
+                                <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}
+                                </h2>
+                                <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">{{ product.description|truncatechars:100 }}</p>
+                                <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
+                                    Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
+                                </div>
+                                <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
+                                    <a href="/product/detail/{{ product.id }}/">Подробнее</a>
+                                </button>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                     <p class="text-end text-base text-dark-text mt-5 lg:text-lg lg:mt-[30px]"><a href="">Смотреть все
                             товары</a></p>
