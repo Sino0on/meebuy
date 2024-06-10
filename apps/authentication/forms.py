@@ -1,14 +1,12 @@
 from django import forms
 from django.contrib.auth.password_validation import validate_password
-from django.core import validators
-from django.contrib.admin.widgets import AutocompleteSelect
+
 from django.contrib.auth.forms import UserChangeForm
-from apps.product.models import ProductCategory
+
 from .models import User
 from apps.provider.models import Provider
 from django.utils.translation import gettext_lazy as _
-from django.contrib import admin
-from django.contrib.postgres.forms import SimpleArrayField
+
 
 
 class UserRegistrationForm(forms.ModelForm):

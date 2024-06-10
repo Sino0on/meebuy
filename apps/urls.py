@@ -5,10 +5,13 @@ from apps.product.views import ProductListView, ProductUpdateView, ProductCreate
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView, upload_file
 from apps.user_cabinet.views import *
 from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
+from apps.pages.views import privacy_policy_view, rules_view
 
 from apps.chat.views import chat_detail, chats, create_chat, add_to_favorites, delete_chat, remove_from_favorites, remove_from_deleted
 
-from apps.authentication.views import HomeView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect
+from apps.authentication.views import (HomeView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect,
+                                       )
+
 
 from apps.authentication.views import HomeView, SelectUserTypeView, LogoutView, LoginView
 from apps.tender.views import TenderListView, TenderDetailView, delete_tender, TenderCreateView, TenderUpdateView
@@ -117,6 +120,8 @@ urlpatterns = [
     path('price-columns/delete/<int:pk>/', PriceColumnDeleteView.as_view(), name='price_column_delete'),
 
     path('connect_tariff', tariff_buy),
+    path('privacy-policy/', privacy_policy_view, name='privacy_policy'),
+    path('rules/', rules_view, name='rules'),
 
     path('process_payment/', process_payment, name='process_payment'),
     path('process_payout/', process_payout, name='process_payout'),

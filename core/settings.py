@@ -47,12 +47,14 @@ DJANGO_APPS = [
     'apps.tender',
     'apps.product',
     'apps.buyer',
+    'apps.pages'
 ]
 
 THIRD_PARTY_APPS = [
     "django_filters",
     "corsheaders",
     'allauth',
+    'ckeditor',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
@@ -131,7 +133,7 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int),
     }
 }
-STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
 
 # DATABASES = {
@@ -140,7 +142,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
 # Static files (CSS, JavaScript, Images)
