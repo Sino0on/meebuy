@@ -155,7 +155,7 @@ STATIC_URL = "/static/"
 # Extra places for collectstatic to find static files.
 
 
-PAYBOX_URL = 'https://api.freedompay.kg'
+PAYBOX_URL = 'https://api.freedompay.kz'
 PAYBOX_MERCHANT_ID = '554071'
 PAYBOX_MERCHANT_SECRET = 'XVUF0iaS3Ow1wVqI'
 PAYBOX_MERCHANT_SECRET_PAYOUT = 'RA7HcGmqRGRy1ROD'
