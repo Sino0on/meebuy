@@ -118,7 +118,7 @@ urlpatterns = [
 
     path('connect_tariff', tariff_buy),
 
-    path('create-payment/', create_payment_view, name='create_payment'),
-    path('payment/callback/', payment_callback, name='payment_callback'),
+    path('process_payment/', process_payment, name='process_payment'),
+    path('process_payout/', process_payout, name='process_payout'),
 
 ]
