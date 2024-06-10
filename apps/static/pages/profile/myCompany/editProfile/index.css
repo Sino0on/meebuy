@@ -23,7 +23,10 @@
 }
 
 .edit__profile input[type="text"],
-.edit__profile input[type="tel"] {
+.edit__profile input[type="tel"],
+.edit__profile select,
+.edit__profile textarea
+{
     margin-top: 24px;
 }
 

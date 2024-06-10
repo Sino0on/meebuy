@@ -35,12 +35,15 @@ function createTree(treeArray, depth = 0) {
       iconDiv.className = "flex justify-center items-center p-2.5 rounded-full bg-logo-color w-[37px] h-[37px] lg-md:w-12 lg-md:h-12";
       const img = document.createElement("img");
       img.src = item.icon;
-      img.alt = `${item.name}`;
+      img.alt = `${item.title}`;
       iconDiv.appendChild(img);
     }
 
     const span = document.createElement("span");
-    span.textContent = item.name;
+    span.textContent = item.title;
+    if(item.is_selected){
+      span.classList.add("active");
+    }
 
     span.addEventListener("click", () => {
       if (!item.children || item.children.length === 0) {

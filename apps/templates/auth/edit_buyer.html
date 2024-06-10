@@ -63,7 +63,7 @@
                 <form id="form" method="post" enctype="multipart/form-data" class="space-y-[30px]" action="">
                     {% csrf_token %}
                     <div class="form__item">
-                        <label class="label" for="title">Ваше имя на сайте *</label>
+                        <label class="label" for="title">Общеизвестное название компании / бренда *</label>
                         <p class="tooltip">Без кавычек. Например: Headphones</p>
                         {{ form.title }}
                     </div>
@@ -75,6 +75,7 @@
                     <div class="form__item">
                         <label class="label">Описание</label>
                         <p class="tooltip">Расскажите о себе, опишите сферу вашей деятельности, какие товары ищете на сайте.</p>
+                      
                         {{ form.description }}
                     </div>
 
@@ -87,27 +88,27 @@
                     </div>
                     <div class="form__item">
                         <label class="label">Город</label>
-                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        <p class="tooltip">Выберите город</p>
                         {{ form.city }}
                     </div>
                     <div class="form__item">
                         <label class="label">Почтовый индекс</label>
-                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        <p class="tooltip">Введите почтовый индекс</p>
                         {{ form.post_index }}
                     </div>
                     <div class="form__item">
                         <label class="label">Телефон</label>
-                        <p class="tooltip">Публичные номера ваших телефонов. По одному на поле</p>
+                        <p class="tooltip">Введите номер телефона</p>
                         {{ form.phones }}
                     </div>
                     <div class="form__item">
                         <label class="label">E-mail (публичный адрес электронной почты)</label>
-                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        <p class="tooltip">Введите адрес электронной почты</p>
                         {{ form.email }}
                     </div>
                     <div class="form__item">
                         <label class="label">Реквизиты</label>
-                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
+                        <p class="tooltip">Введите реквизиты</p>
                         {{ form.requisites }}
                     </div>
                         <div class="form__item">
