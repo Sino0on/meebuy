@@ -124,10 +124,20 @@
           class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]"
         >
           <li
-            id="first"
-            class="flex items-center gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] hover:bg-[#FFFB98] text-center rounded-[15px]"
+            class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
+            onclick="openTab(event, 'Tab1')"
           >
-            <a href="/provider/list/">все</a>
+            <button>Все</button>
+            <img
+              class="lg-md:hidden block"
+              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+            />
+          </li>
+          <li
+            class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
+            onclick="openTab(event, 'Tab2')"
+          >
+            <button>Поставшики</button>
             <img
               class="lg-md:hidden block"
               src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
@@ -135,18 +145,71 @@
           </li>
             {% for i in types %}
                 <li
-                        id="{{ i.pk }}"
-                        class="font-semibold text-sm capitalize py-3 px-6 font-mulish text-center rounded-[15px] hover:bg-[#FFFB98]"
+                  class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
+                  onclick="openTab(event, 'Tab2')"
                 >
-                    <a href="?type={{i.pk}}" data-type="{{ i.pk }}">{{ i.title }}</a>
+                  <button>{{ i.title }}</button>
+                  <img
+                    class="lg-md:hidden block"
+                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+                  />
                 </li>
             {% endfor %}
         </ul>
 
         <!-- filters -->
         {% include 'providers/provider_list_includes/filters.html' %}
-      <div class="flex flex-col gap-7">
+      <div id="Tab1" class="flex tab-content flex-col gap-7">
 
+        {% for provider in providers %}
+        <div
+          class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+        >
+          <div
+            class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+          >
+            <img class="w-[100px] h-[100px]" src="{% if provider.image %}{{ provider.image.url }}{% endif %}" />
+            <div class="flex flex-col gap-6">
+              <div>
+                <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                  {{ provider.title }}
+                </h6>
+                <p>{{ provider.mini_descr }}</p>
+              </div>
+              <div class="flex gap-4">
+                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                  <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
+                </button>
+                <a
+                  href="{% url 'chat_create' provider.user.pk %}"
+                  class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                >
+                  Написать
+                </a>
+              </div>
+            </div>
+          </div>
+          <ul class="flex gap-2 sm: absolute right-4">
+            <li>
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+              />
+            </li>
+            <li>
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+              />
+            </li>
+            <li>
+              <img
+                src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+              />
+            </li>
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+      <div id="Tab2" class="flex tab-content hidden flex-col gap-7">
         {% for provider in providers %}
         <div
           class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
@@ -241,5 +304,6 @@
   });
 </script>
 <script src="{% static 'pages/home/index.js' %}"></script>
+<script src="{% static 'pages/suppliers/suppliers.js' %}"></script>
 <script src="{% static 'pages/filters/filter.js' %}"></script>
 {% endblock %}
