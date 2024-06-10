@@ -46,7 +46,7 @@ class Provider(StatusMixin, models.Model):
     type = models.ForeignKey(
         "Tag", on_delete=models.SET_NULL, null=True, verbose_name=_("Тип"), blank=True
     )
-    description = models.TextField(verbose_name="Описание")
+    description = models.TextField(verbose_name="Описание", blank=True, null=True)
     category = models.ManyToManyField(
         Category, related_name="providers", verbose_name=_("Категории"), blank=True
     )

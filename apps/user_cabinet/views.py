@@ -287,8 +287,13 @@ class UserSettingsView(LoginRequiredMixin, generic.UpdateView):
         self.object = self.get_object()
         form = self.form_class(request.POST, instance=self.object)
         if form.is_valid():
-            das = form.save()
-            print(das.phone)
+            user = form.save(commit=False)
+
+            provider = user.provider
+            provider.is_provider = request.POST.get('is_provider', provider.is_provider)
+            provider.save()
+
+            user.save()
             return redirect(self.success_url)
         else:
             print(form.errors)

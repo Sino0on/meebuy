@@ -113,7 +113,7 @@ class SelectUserTypeView(LoginRequiredMixin, FormView):
             user_profile.user_type = form.cleaned_data['user_type']
             print(form.cleaned_data['user_type'])
             user_profile.save()
-            if user_profile.user_type == 'provider':
+            if form.cleaned_data['user_type'] == 'provider':
                 Provider.objects.get_or_create(user=user_profile, is_provider=True)
             elif user_profile.user_type == 'buyer':
                 Provider.objects.get_or_create(user=user_profile, is_provider=False)
