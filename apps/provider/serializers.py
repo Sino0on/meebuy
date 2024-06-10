@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from apps.provider.models import Category
 
-
 class CategoryListSerializer(serializers.ModelSerializer):
     is_selected = serializers.SerializerMethodField()
     children = serializers.SerializerMethodField()
@@ -11,9 +10,12 @@ class CategoryListSerializer(serializers.ModelSerializer):
         return obj in user_categories
 
     def get_children(self, obj):
-        children = obj.categor.filter(parent=None)
+        # Получаем дочерние категории используя related_name 'categor'
+        children = obj.categor.all()
         if children.exists():
-            return CategoryListSerializer(children, many=True, context=self.context).data
+            # Рекурсивно сериализуем дочерние категории, если они существуют
+            serializer = CategoryListSerializer(children, many=True, context=self.context)
+            return serializer.data
         return []
 
     class Meta:
