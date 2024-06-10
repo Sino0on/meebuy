@@ -1,19 +1,27 @@
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import TemplateView, FormView, UpdateView, RedirectView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-from django.contrib.auth import authenticate, logout, login as auth_login
+from django.contrib.auth import authenticate, logout, login as auth_login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.encoding import force_bytes, force_str
 
 
 from apps.authentication.forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
+from apps.authentication.token import account_activation_token
 from apps.buyer.models import Buyer
 from apps.product.models import Product
 from apps.tender.models import Tender
 from apps.provider.models import Provider, Category
 from apps.user_cabinet.models import Cabinet, Contacts
+
 
 class HomeView(TemplateView):
     template_name = 'auth/home.html'
@@ -41,8 +49,22 @@ class LoginView(FormView):
             if register_form.is_valid():
                 user = register_form.save(commit=False)
                 user.auth_provider = False
+                user.is_active = False
                 user.save()
                 Cabinet.objects.get_or_create(user=user)
+
+                current_site = get_current_site(request)
+                mail_subject = 'Activation link has been sent to your email id'
+                message = render_to_string('auth/acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                })
+                to_email = register_form.cleaned_data.get('email')
+                email = EmailMessage(mail_subject, message, to=[to_email])
+                email.send()
+
                 authenticated_user = authenticate(email=user.email, password=register_form.clean_password2())
                 if authenticated_user is not None:
                     auth_login(self.request, authenticated_user)
@@ -56,14 +78,13 @@ class LoginView(FormView):
     def get_context_data(self, **kwargs):
         context = {'register_form': UserRegistrationForm()}
         context.update(super().get_context_data(**kwargs))
-
         return context
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         user = authenticate(self.request, email=email, password=password)
-        if user is not None:
+        if user is not None and user.is_active:  # Проверка, что пользователь активирован
             auth_login(self.request, user)
         else:
             return self.form_invalid(form)
@@ -72,7 +93,6 @@ class LoginView(FormView):
     def form_invalid(self, form):
         form.add_error(None, "Неверный email или пароль")
         return self.render_to_response(self.get_context_data(form=form))
-
 
 class SelectUserTypeView(FormView):
     form_class = UserTypeSelectionForm
@@ -152,3 +172,18 @@ def cabinet_create(request):
     except ObjectDoesNotExist:
         cabinet = Cabinet.objects.create(user=request.user)
     return redirect(reverse_lazy('choice'))
+
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return render(request, "registration/thank_you_for_activation.html")
+    else:
+        return HttpResponse('Activation link is invalid!')

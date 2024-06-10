@@ -5,4 +5,4 @@ from .models import PriceFiles
 class PriceFilesForm(forms.ModelForm):
     class Meta:
         model = PriceFiles
-        fields = ['image']
+        fields = ['file']

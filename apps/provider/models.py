@@ -238,13 +238,13 @@ class ProvideFiles(models.Model):
 
 
 class PriceFiles(models.Model):
-    files = models.FileField(upload_to="files/price/%Y/%m/")
+    file = models.FileField(upload_to="files/price/%Y/%m/")
     providers = models.ForeignKey(
         Provider, on_delete=models.CASCADE, related_name="files_price"
     )
 
     def __str__(self):
-        return f"{self.files.url}"
+        return f"{self.file}"
 
     class Meta:
         verbose_name = _("Файл цены")
