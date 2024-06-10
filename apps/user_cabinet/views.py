@@ -197,13 +197,14 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()  # Получаем объект, который будет обновляться
-        form = self.form_class(request.POST, instance=self.object)  # Передаем instance для обновления
+        form = self.form_class(request.POST, request.FILES, instance=self.object)
 
         if form.is_valid():
             self.object = form.save(commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
             self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите пару минут'
 
             self.object.save()  # Сохраняем изменения в объект
+            form.save_m2m()  # Сохраняем ManyToMany поля
             return redirect(self.get_success_url())  # Переадресация на страницу успеха
         else:
             print(form.errors)  # Вывод ошибок на консоль для отладки
