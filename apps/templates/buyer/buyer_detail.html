@@ -101,6 +101,31 @@
                             Прайс
                         </div>
                     </div>
+                    <div class="mt-5">
+                        <ul class="flex flex-col gap-4 text-[#9A9A9A]">
+                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
+                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
+                            </li>
+                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
+                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
+                            </li>
+                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
+                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
+                            </li>
+                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
+                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
+                            </li>
+                            <li class="filterBy border border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                <span class="mr-2 text-sm lg:text-base lg-md:text-lg font-bold">title</span>
+                                <p class="text-[#9A9A9A] text-sm font-light">description</p>
+                            </li>
+                            
+                        </ul>
+                    </div>
                     <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
                         {% for product in products %}
                         <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5">
@@ -132,7 +157,7 @@
                 <div class="grid grid-cols-1 gap-[30px] lg-md:grid-cols-2">
                     <div class="content__wrap px-5 py-[30px] text-dark-logo rounded-[10px]">
                         <h2 class="text-xl font-bold">О компании</h2>
-                        <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ object.provider.description }}</p>
+                        <p class="description text-dark-text mt-5 lg:mt-[30px] break-words">{{ object.provider.description }}</p>
                         <ul class="">
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Тип компании</p>
