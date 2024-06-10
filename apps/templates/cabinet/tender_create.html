@@ -18,8 +18,9 @@
       <div class="">
         <div class="flex gap-4 py-4">
           <div class="flex items-center gap-4">
-            <img src="{% static 'assets/images/icons/home.svg' %}" alt="" />
-            <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+                              <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" /></a>
+                  <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" /></a>
+
           </div>
           <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
         </div>
