@@ -125,10 +125,12 @@
           <div class="text-right text-[#747474] text-sm">${currentTime}</div>
         </div>`;
       
-      if (document.hidden || !chatTab.classList.contains('active')) {
-        unreadCount++;
-        updateUnreadCount();
-      }
+    //   if (document.hidden || !chatTab.classList.contains('active')) {
+    //     unreadCount++;
+    //     updateUnreadCount();
+    //   }
+      unreadCount++;
+      updateUnreadCount();
     }
 
     messageContainer.appendChild(messageElement);
