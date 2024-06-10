@@ -1,5 +1,5 @@
 {% load static %}
-        <section class="profile__navigate bg-[#fff] mb-10 lg-md:w-[285px]" >
+        <section id="profile-menu" class="profile__navigate bg-[#fff] mb-10 lg-md:w-[285px]" >
           <div class="">
             <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
               <!-- upload avatar-->
@@ -73,7 +73,7 @@
         <li class="dropdown__item {% if active_html == 'user_products' %}active{% endif %}">
             <a href="{% url 'user_products' %}">Товары</a>
         </li>
-        <li class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
+        <li id="chat-tab-m" class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
             <a href="{% url 'chat_list' %}">Сообщения</a>
         </li>
         <li class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
@@ -112,7 +112,7 @@
         </li>
         {% endif %}
 
-        <li class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
+        <li id="chat-tab-d" class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
             <a href="{% url 'chat_list' %}">Сообщения</a>
         </li>
         <li class="dropdown__item {% if active_page == 'analytic' %}active{% endif %}">

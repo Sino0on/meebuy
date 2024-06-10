@@ -125,8 +125,10 @@
                   ></path></svg></a>
               {% endif %}
 
-                <a href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}">
-              <img
+                <a id="chat-icon" class="relative" href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}">
+              
+                  <span id="unread-count" class="unread-count"></span>
+                  <img
                 class="lg-md:block mt-2"
                 src="{% static 'assets/images/icons/headerLetter.svg' %}"
                 alt=""/>
@@ -248,7 +250,7 @@
         <div
           class="container flex justify-between lg-md:items-center lg-md:gap-[27px]"
         >
-          <a href="/pages/home/home.html"
+          <a href="{% url 'home' %}"
             ><img
               src="{% static 'assets/images/icons/logo.svg' %}"
               alt="Meebuy"
@@ -406,8 +408,8 @@
             </li>
             <li><a href="{% url 'tariffs' %}">Тарифы</a></li>
             <li><a href="{% url 'tariffs' %}">Баннерная реклама</a></li>
-            <li><a href="#">Правила</a></li>
-            <li><a href="{% url 'send_message' %}">Техподдержка</a></li>
+            <li><a href="{% url 'rules' %}">Правила</a></li>
+            <li><a href="{% url 'send_message_logout' %}">Техподдержка</a></li>
           </ul>
         </div>
       </div>

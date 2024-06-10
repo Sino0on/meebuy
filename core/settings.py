@@ -47,12 +47,14 @@ DJANGO_APPS = [
     'apps.tender',
     'apps.product',
     'apps.buyer',
+    'apps.pages'
 ]
 
 THIRD_PARTY_APPS = [
     "django_filters",
     "corsheaders",
     'allauth',
+    'ckeditor',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
@@ -143,6 +145,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -152,9 +155,10 @@ STATIC_URL = "/static/"
 # Extra places for collectstatic to find static files.
 
 
-FREEDOMPAY_API_KEY = ''
-FREEDOMPAY_SECRET_KEY = ''
-FREEDOMPAY_ENDPOINT = 'https://api.freedompay.money'
+PAYBOX_URL = 'https://api.freedompay.kz'
+PAYBOX_MERCHANT_ID = '554071'
+PAYBOX_MERCHANT_SECRET = 'XVUF0iaS3Ow1wVqI'
+PAYBOX_MERCHANT_SECRET_PAYOUT = 'RA7HcGmqRGRy1ROD'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
@@ -324,7 +328,7 @@ SIMPLEUI_CONFIG = {
                 {
                     'name': 'Поставщики',
                     'icon': 'fa fa-industry',
-                    'url': '/dev-admin8/provider/provider/'
+                    'url': '/admin/provider/provider/'
                 },
                 {
                     'name': 'Configurations',
@@ -332,17 +336,17 @@ SIMPLEUI_CONFIG = {
                         {
                             'name': 'Доставка',
                             'icon': 'fa fa-truck',
-                            'url': '/dev-admin8/provider/delivery/'
+                            'url': '/admin/provider/delivery/'
                         },
                         {
                             'name': 'Категории Поставщиков',
                             'icon': 'fa fa-columns',
-                            'url': '/dev-admin8/provider/category/'
+                            'url': '/admin/provider/category/'
                         },
                         {
                             'name': 'Тэги',
                             'icon': 'fa fa-tag',
-                            'url': '/dev-admin8/provider/tag/'
+                            'url': '/admin/provider/tag/'
                         },
                         {
                             'name': 'Условия',
@@ -352,7 +356,7 @@ SIMPLEUI_CONFIG = {
                         {
                             'name': 'Варианты оплаты',
                             'icon': 'fa fa-money-bill',
-                            'url': '/dev-admin8/provider/typepay/'
+                            'url': '/admin/provider/typepay/'
                         },
                     ]
                 },
@@ -365,12 +369,12 @@ SIMPLEUI_CONFIG = {
                 {
                     'name': 'Товары',
                     'icon': 'fa fa-box',
-                    'url': '/dev-admin8/product/product/'
+                    'url': '/admin/product/product/'
                 },
                 {
                     'name': 'Картнки товаров',
                     'icon': 'fa fa-image',
-                    'url': '/dev-admin8/product/productimg/'
+                    'url': '/admin/product/productimg/'
                 },
 
             ]
@@ -382,34 +386,34 @@ SIMPLEUI_CONFIG = {
                 {
                     'name': 'Активныйе статусы пользователя',
                     'icon': 'fa fa-circle',
-                    'url': '/dev-admin8/user_cabinet/activeuserstatus/'
+                    'url': '/admin/user_cabinet/activeuserstatus/'
                 },
                 {
                     'name': 'Кабинеты',
                     'icon': 'fa fa-image',
-                    'url': '/dev-admin8/user_cabinet/cabinet/'
+                    'url': '/admin/user_cabinet/cabinet/'
                 },
                 {
                     'name': 'Статусы',
                     'icon': 'fa fa-info',
-                    'url': '/dev-admin8/user_cabinet/status/'
+                    'url': '/admin/user_cabinet/status/'
                 },
                 {
                     'name': 'Статусы пользователей',
                     'icon': 'fa fa-user-secret',
-                    'url': '/dev-admin8/user_cabinet/packagestatus/'
+                    'url': '/admin/user_cabinet/packagestatus/'
                 },
                 {
                     'name': 'Транзакции',
                     'icon': 'fa fa-play',
-                    'url': '/dev-admin8/user_cabinet/transaction/'
+                    'url': '/admin/user_cabinet/transaction/'
                 },
             ]
         },
         {
             'name': 'Тендеры',
             'icon': 'fa fa-star',
-            'url': '/dev-admin8/tender/tender/'
+            'url': '/admin/tender/tender/'
         },
 
         {
@@ -419,17 +423,17 @@ SIMPLEUI_CONFIG = {
                 {
                     'name': 'Города',
                     'icon': 'fa fa-map-marker',
-                    'url': '/dev-admin8/tender/city/'
+                    'url': '/admin/tender/city/'
                 },
                 {
                     'name': 'Регионы (Области)',
                     'icon': 'fa fa-map',
-                    'url': '/dev-admin8/tender/region/'
+                    'url': '/admin/tender/region/'
                 },
                 {
                     'name': 'Страны',
                     'icon': 'fa fa-flag',
-                    'url': '/dev-admin8/tender/country/'
+                    'url': '/admin/tender/country/'
                 },
 
             ]

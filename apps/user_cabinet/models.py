@@ -13,7 +13,7 @@ User = get_user_model()
 
 
 class Cabinet(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('Пользователь'))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name=_('Пользователь'))
     balance = models.PositiveIntegerField(blank=True, default=0, verbose_name=_('Баланс'))
     is_upping = models.ForeignKey('ActiveUpping', blank=True, null=True, on_delete=models.SET_NULL)
     user_status = models.ForeignKey(
@@ -63,7 +63,7 @@ class PackageStatus(models.Model):
     dayly_message = models.PositiveIntegerField(blank=True, default=30, verbose_name='Исходящих сообщений в день')
     is_publish_phone = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего телефона незарегистрированным посетителям')
     months = models.PositiveIntegerField(verbose_name=_('Количество месяцев'))
-    priorety = models.PositiveIntegerField(max_length=1, blank=True, default=1)
+    priorety = models.PositiveIntegerField(blank=True, default=1)
 
     def __str__(self):
         return _(f'{self.status.title} - {self.months} месяцев')

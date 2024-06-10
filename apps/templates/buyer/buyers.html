@@ -61,12 +61,15 @@
       >
         категории товаров
       </h6>
-      <ul class="grid gap-8 lg-md:grid-cols-3 sm: grid-cols-1">
+      <ul class="grid gap-8 lg-md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
         {% for i in categories %}
-        <li class="text-[18px]">
-          <a class="flex items-center gap-[10px] w-fit" href="">
+        <li class="">
+          <a
+            class="flex items-center gap-[10px] w-fit"
+            href="?category={{ i.pk }}"
+          >
             <div
-              class="shadow-lg w-12 h-12 text-white rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+              class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
             >
               <img src="{{ i.icon.url }}" alt="" />
             </div>

@@ -58,15 +58,15 @@
                             </label>
                             <div class="flex flex-row justify-start gap-4 user-select-none">
                                 <div class="p-1 ">
-                                    <input type="radio" name="is_provider" id="provider" {% if provider.is_provider %}checked{% endif %} />
+                                    <input type="radio" value="True" name="is_provider" id="provider" {% if provider.is_provider %}checked{% endif %} />
                                     <label class="cursor-pointer" for="provider"> Поставщик </label>
                                 </div>
                                 <div class="p-1">
-                                    <input type="radio" name="is_provider" id="buyer" {% if not provider.is_provider %}checked{% endif %} />
-                                    <label class="cursor-pointer" for="buyer"> Покупатель </label>
+                                    <input type="radio" name="is_provider" value="False" id="buyer" {% if not provider.is_provider %}checked{% endif %} />
+                                    <label class="cursor-pointer"  for="buyer"> Покупатель </label>
                                 </div>
                             </div>
-                            <a class="inline-block text-[#2254B6] underline underline-offset-2"  href="">Политика конфиденциальности</a>
+                            <a class="inline-block text-[#2254B6] underline underline-offset-2"  href="{% url 'privacy_policy' %}">Политика конфиденциальности</a>
                             <button class="btn-filled-yellow w-full py-5 uppercase" type="submit">Сохранить</button>
                             <div class="flex gap-[clamp(16px,1.5vw,30px)]">
                                 <a class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]" href="{% url 'change_password' %}">Сменить пароль</a>

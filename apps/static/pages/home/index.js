@@ -88,7 +88,7 @@ heroFormBtn?.addEventListener('click', heroFormToggle);
 // hero select
 
 // Логика кастомного селекта
-selectSelected.addEventListener('click', () => {
+selectSelected?.addEventListener('click', () => {
   selectItems.style.display = selectItems.style.display === 'block' ? 'none' : 'block';
 });
 
@@ -103,7 +103,7 @@ document.querySelectorAll('.select-items div').forEach(item => {
 
 document.addEventListener('click', (e) => {
   if (!e.target.matches('.select-selected')) {
-      selectItems.style.display = 'none';
+      selectItems ? selectItems.style.display = 'none' : '';
   }
 });
 
