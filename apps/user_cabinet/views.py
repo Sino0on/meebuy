@@ -197,13 +197,14 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()  # Получаем объект, который будет обновляться
-        form = self.form_class(request.POST, instance=self.object)  # Передаем instance для обновления
+        form = self.form_class(request.POST, request.FILES, instance=self.object)
 
         if form.is_valid():
             self.object = form.save(commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
             self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите пару минут'
 
             self.object.save()  # Сохраняем изменения в объект
+            form.save_m2m()  # Сохраняем ManyToMany поля
             return redirect(self.get_success_url())  # Переадресация на страницу успеха
         else:
             print(form.errors)  # Вывод ошибок на консоль для отладки
@@ -659,28 +660,44 @@ def faq_view(request):
     return render(request, 'tariffs.html', {'faqs': faqs})
 
 
-def create_payment_view(request):
-    pass
-#     if request.method == "POST":
-#         amount = request.POST.get("amount")
-#         currency = request.POST.get("currency")
-#         description = request.POST.get("description")
-#         callback_url = request.build_absolute_uri('/payment/callback/')
-#         public_key = 'ваш_публичный_ключ'
-#         payment_response = initiate_payment(amount, currency, description, callback_url, public_key)
-#         if payment_response.get("status") == "success":
-#             return redirect(payment_response["payment_url"])
-#         else:
-#             return render(request, 'payment_error.html', {"error": payment_response.get("message", "Unknown error")})
-#     return render(request, 'create_payment.html')
+
+from .utils import generate_signature
+from .freedompay import send_post_request
+from django.views.decorators.csrf import csrf_exempt
+
 
 @csrf_exempt
-def payment_callback(request):
-    pass
-#     if request.method == "POST":
-#         data = json.loads(request.body)
-#         order_id = data.get("order_id")
-#         payment_status = data.get("status")
-#         # Логика для обновления статуса заказа в базе данных
-#         return JsonResponse({"status": "ok"})
-#     return JsonResponse({"status": "invalid request"}, status=400)
+def process_payment(request):
+    if request.method == 'POST':
+        # Получаем данные из POST запроса
+        data = request.POST.dict()
+
+        # Формируем подпись
+        signature = generate_signature(data)
+
+        # Добавляем подпись к данным
+        data['pg_sig'] = signature
+
+        # Отправляем запрос к API FreedomPay
+        response = send_post_request('/process_payment/', data)
+
+        # Возвращаем ответ
+        return JsonResponse(response)
+
+@csrf_exempt
+def process_payout(request):
+    if request.method == 'POST':
+        # Получаем данные из POST запроса
+        data = request.POST.dict()
+
+        # Формируем подпись
+        signature = generate_signature(data)
+
+        # Добавляем подпись к данным
+        data['pg_sig'] = signature
+
+        # Отправляем запрос к API FreedomPay
+        response = send_post_request('/process_payout/', data)
+
+        # Возвращаем ответ
+        return JsonResponse(response)

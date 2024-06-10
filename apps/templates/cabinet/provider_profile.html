@@ -46,6 +46,13 @@
                     <div class="cards grid grid-cols-1 gap-[30px] xl:grid-cols-2">
                         <!--  Анкета  -->
                         <div class="card__item shadow-card-shadow">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="{{ message.tags }}">
+                                        <p class="text-[#00F700]">{{ message }}</p>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                             <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
                             <a href="{% if provider.is_provider %}{% url 'anketa' %}{% else %}{% url 'anketa_buyer' %}{% endif %}">
                             <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5">Редактировать анкету</button>
@@ -275,7 +282,7 @@
                             <div class="uploaded_files flex flex-col gap-2.5 mt-8">
                                 {% for file in user.provider.files.all %}
                                     <div class="uploaded_file_item">
-                                        <a href="{{ file.image.url }}">{{ file.image.name }}</a>
+                                        <a href="{{ file.image.url }}">{{ file.image.url }}</a>
                                     </div>
                                 {% endfor %}
                             </div>

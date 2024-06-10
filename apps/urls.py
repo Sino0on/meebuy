@@ -4,7 +4,7 @@ from apps.product.views import ProductListView, ProductUpdateView, ProductCreate
     ProductCategoryDeleteView, PriceColumnCreateView, PriceColumnUpdateView, PriceColumnDeleteView
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView, upload_file
 from apps.user_cabinet.views import *
-from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create
+from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create, activate
 
 from apps.chat.views import chat_detail, chats, create_chat, add_to_favorites, delete_chat, remove_from_favorites, remove_from_deleted
 
@@ -54,6 +54,8 @@ urlpatterns = [
     path('profile/analytic/', AnalyticCabinetView.as_view(), name='analytic'),
     path('profile/tariffs/', TariffsCabinetView.as_view(), name='tariffs'),
     path('login_redirect/', login_redirect, name='login_redirect'),
+    path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
+         activate, name='activate'),
 
     path('change-avatar/', change_avatar),
     path('change-image/', change_image),
@@ -118,7 +120,7 @@ urlpatterns = [
 
     path('connect_tariff', tariff_buy),
 
-    path('create-payment/', create_payment_view, name='create_payment'),
-    path('payment/callback/', payment_callback, name='payment_callback'),
+    path('process_payment/', process_payment, name='process_payment'),
+    path('process_payout/', process_payout, name='process_payout'),
 
 ]
