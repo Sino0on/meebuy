@@ -14,8 +14,8 @@ services:
     build: .
     volumes:
       - .:/core
-      - ./apps/static:/app/static
-      - ./apps/media:/app/media
+      - ./apps/static:/app/apps/static
+      - ./apps/media:/app/apps/media
     ports:
     - "8014:8014"
     command: bash -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && daphne core.asgi:application -b 0.0.0.0 -p 8014"
