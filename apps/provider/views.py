@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
+from apps.buyer.models import Banner
 from apps.provider.models import Provider, Tag
 from apps.tender.models import Category
 from apps.provider.filters import ProviderFilter
@@ -9,7 +10,6 @@ from rest_framework.generics import ListAPIView
 from apps.provider.serializers import CategoryListSerializer
 from apps.user_cabinet.models import Contacts
 from .forms import PriceFilesForm
-
 
 
 class ProviderListView(generic.ListView):
@@ -37,6 +37,7 @@ class ProviderListView(generic.ListView):
         context["filter"] = self.filter
         contacts = Contacts.load()
         context["contacts"] = contacts
+        context["banners"] = Banner.objects.filter(page_for="provider")
         return context
 
 
@@ -74,25 +75,22 @@ class CategoryListView(ListAPIView):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        user_id = self.kwargs.get('pk')
+        user_id = self.kwargs.get("pk")
 
         user = get_object_or_404(Provider, id=user_id)
-        context.update({
-            'request': self.request,
-            'categories': user.category.all()
-        })
+        context.update({"request": self.request, "categories": user.category.all()})
         print(context)
         return context
 
 
 def upload_file(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PriceFilesForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.providers = request.user.provider
             instance.save()
-            return redirect('view_profile')
+            return redirect("view_profile")
     else:
         form = PriceFilesForm()
-    return render(request, 'cabinet/provider_profile.html', {'form': form})
+    return render(request, "cabinet/provider_profile.html", {"form": form})

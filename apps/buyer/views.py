@@ -3,6 +3,7 @@ from django.views import generic
 
 from apps.authentication.models import User
 from apps.buyer.filters import BuyerFilter
+from apps.buyer.models import Banner
 from apps.provider.models import Provider
 from apps.user_cabinet.models import Contacts
 
@@ -25,6 +26,7 @@ class BuyerListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context["contacts"] = contacts
+        context["banners"] = Banner.objects.filter(page_for="buyer")
         return context
 
 
