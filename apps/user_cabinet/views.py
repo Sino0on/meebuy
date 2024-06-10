@@ -1,8 +1,10 @@
 import datetime
+import json
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_GET
 from rest_framework.generics import ListAPIView, GenericAPIView
 from apps.authentication.forms import ProviderForm, UserUpdateForm
@@ -33,6 +35,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 
 from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
+from .freedompay import initiate_payment
 
 from .models import Contacts, FAQ
 
@@ -654,3 +657,28 @@ def redirect_to_site(request, pk):
 def faq_view(request):
     faqs = FAQ.objects.all()
     return render(request, 'tariffs.html', {'faqs': faqs})
+
+
+def create_payment_view(request):
+    if request.method == "POST":
+        amount = request.POST.get("amount")
+        currency = request.POST.get("currency")
+        description = request.POST.get("description")
+        callback_url = request.build_absolute_uri('/payment/callback/')
+        public_key = 'ваш_публичный_ключ'
+        payment_response = initiate_payment(amount, currency, description, callback_url, public_key)
+        if payment_response.get("status") == "success":
+            return redirect(payment_response["payment_url"])
+        else:
+            return render(request, 'payment_error.html', {"error": payment_response.get("message", "Unknown error")})
+    return render(request, 'create_payment.html')
+
+@csrf_exempt
+def payment_callback(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        order_id = data.get("order_id")
+        payment_status = data.get("status")
+        # Логика для обновления статуса заказа в базе данных
+        return JsonResponse({"status": "ok"})
+    return JsonResponse({"status": "invalid request"}, status=400)
