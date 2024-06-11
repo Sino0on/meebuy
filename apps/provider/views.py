@@ -38,7 +38,6 @@ class ProviderListView(generic.ListView):
         contacts = Contacts.load()
         context["contacts"] = contacts
         context["banners"] = self.get_banners()
-
         context["banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
 
         return context

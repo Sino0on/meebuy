@@ -3,7 +3,7 @@ from django.views import generic
 
 from apps.authentication.models import User
 from apps.buyer.filters import BuyerFilter
-from apps.buyer.models import Banner
+from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
 from apps.provider.models import Provider, Category
 from apps.user_cabinet.models import Contacts
@@ -27,10 +27,26 @@ class BuyerListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context["contacts"] = contacts
-        context["banners"] = Banner.objects.filter(page_for="buyer")
         context['categories'] = Category.objects.all()
+        context["banners"] = self.get_banners()
+        context["banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
 
         return context
+
+    def get_banners(self):
+        banners = Banner.objects.filter(page_for="buyer").order_by('?')
+        banner_list = []
+        if banners:
+            for banner in banners:
+                banner_list.append(
+                    {
+                        'title': banner.title,
+                        'image_desktop': banner.image_desktop,
+                        'image_mobile': banner.image_mobile,
+                        'link': banner.link
+                    }
+                )
+        return banner_list
 
 
 class BuyerDetailView(generic.DetailView):
