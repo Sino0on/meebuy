@@ -1,7 +1,8 @@
 from django.urls import path
 from apps.product.views import ProductListView, ProductUpdateView, ProductCreateView, ProductDeleteView, \
     ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView, ProductCategoryCreateView, ProductCategoryUpdateView, \
-    ProductCategoryDeleteView, PriceColumnCreateView, PriceColumnUpdateView, PriceColumnDeleteView
+    ProductCategoryDeleteView, PriceColumnCreateView, PriceColumnUpdateView, PriceColumnDeleteView, \
+    DownloadPriceFileView
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView, upload_file
 from apps.user_cabinet.views import *
 
@@ -26,6 +27,8 @@ urlpatterns = [
     path('provider/list/', ProviderListView.as_view(), name='provider_list'),
     path('provider/detail/<int:pk>/', ProviderDetailView.as_view(), name='provider_detail'),
     path('upload/', upload_file, name='upload_file'),
+    path('download/', DownloadPriceFileView.as_view(), name='download_price_file'),
+
     path('chat/<str:pk>/', chat_detail, name='chat_detail'),
     path('chat/create/<str:pk>/', create_chat, name='chat_create'),
     path('chat_list/', chats, name='chat_list'),

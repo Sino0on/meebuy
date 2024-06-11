@@ -91,6 +91,13 @@ def upload_file(request):
             instance.providers = request.user.provider
             instance.save()
             return redirect("view_profile")
+        else:
+            print("Form is not valid", form.errors)
     else:
         form = PriceFilesForm()
-    return render(request, "cabinet/provider_profile.html", {"form": form})
+
+    context = {
+        "form": form,
+        "provider": Provider.objects.get(user=request.user),
+    }
+    return render(request, "cabinet/provider_profile.html", context)

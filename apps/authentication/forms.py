@@ -162,6 +162,7 @@ class ProviderForm(forms.ModelForm):
             'air_transport',
             'rail_transport',
             'courier'
+
         ]
         widgets = {
             'type': forms.RadioSelect(),

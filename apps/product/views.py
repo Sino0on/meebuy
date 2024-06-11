@@ -4,7 +4,7 @@ import openpyxl
 import requests
 from PIL import Image
 from django.conf import settings
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, Http404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (
@@ -15,7 +15,7 @@ from django.views.generic import (
     DetailView,
     FormView,
 )
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -194,6 +194,39 @@ class ExcelTemplateDownloadView(View):
                 f"attachment; filename*=UTF-8''{quote(filename)}"
             )
             return response
+
+
+
+class DownloadPriceFileView(View):
+    def get(self, request, *args, **kwargs):
+        # Получение и декодирование относительного пути к файлу из параметров запроса
+        relative_path = request.GET.get('filename')
+        if not relative_path:
+            print("Имя файла не указано")
+            raise Http404("Имя файла не указано")
+
+        # Декодирование пути
+        safe_path = unquote(relative_path)
+
+        # Построение полного пути к файлу
+        filepath = os.path.join(settings.MEDIA_ROOT, safe_path)
+        print(f"Attempting to access file at: {filepath}")
+
+        if not os.path.exists(filepath):
+            print(f"File not found: {filepath}")
+            raise Http404("Файл не найден")
+
+        try:
+            with open(filepath, "rb") as excel_file:
+                response = HttpResponse(
+                    excel_file.read(),
+                    content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
+                response["Content-Disposition"] = f"attachment; filename*=UTF-8''{quote(os.path.basename(filepath))}"
+                return response
+        except Exception as e:
+            print(f"Error reading file: {e}")
+            raise Http404("Ошибка при чтении файла")
 
 
 class ExcelUploadView(FormView):
