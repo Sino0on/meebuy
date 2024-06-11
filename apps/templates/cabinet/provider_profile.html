@@ -279,24 +279,22 @@
                             <div class="uploaded_files flex flex-col gap-2.5 mt-8">
                             <ul id="file-list" style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
 
-                               {% for file in user.provider.files_price.all %}
-                                   <li style="margin:15px 0;">
-
-                                    <div class="uploaded_file_item">
-                                        <div id="${file.name}" class="flex items-center justify-between gap-[15px]">
-                                            <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}" class="line-clamp-3" style="max-width: 300px">
-                                                {{ file.file.name }}
-                                            </a>
-                                            <svg class="delete__icon cursor-pointer" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M7.75511 9.19888L4.87011 6.31388L2.02754 9.15645L0.783035 7.91194L3.6256 5.06937L0.81132 2.25509L2.09825 0.968153L4.91254 3.78244L7.74097 0.95401L8.98547 2.19852L6.15705 5.02695L9.04204 7.91194L7.75511 9.19888Z"
-                                                    fill="#4D4D4D"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                                                      </li>
-
-                                {% endfor %}
+{% for file in user.provider.files_price.all %}
+        <li style="margin:15px 0;" id="file-{{ file.id }}">
+            <div class="uploaded_file_item">
+                <div class="flex items-center justify-between gap-[15px]">
+                    <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}" class="line-clamp-3" style="max-width: 300px">
+                        {{ file.file.name }}
+                    </a>
+                    <svg class="delete__icon cursor-pointer" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="removeFile({{ file.id }})">
+                        <path
+                            d="M7.75511 9.19888L4.87011 6.31388L2.02754 9.15645L0.783035 7.91194L3.6256 5.06937L0.81132 2.25509L2.09825 0.968153L4.91254 3.78244L7.74097 0.95401L8.98547 2.19852L6.15705 5.02695L9.04204 7.91194L7.75511 9.19888Z"
+                            fill="#4D4D4D"></path>
+                    </svg>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
                             </ul>
                             <div id="show-more" style="text-align: end;cursor: pointer">
                                 показать больше
@@ -355,6 +353,44 @@
 </main>
 {% endblock %}
 {% block js %}
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function removeFile(fileId) {
+        var element = document.getElementById('file-' + fileId);
+        if (element) {
+            // Удаление элемента из DOM
+            element.parentNode.removeChild(element);
+
+            // AJAX-запрос для удаления файла с сервера
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "{% url 'delete_file' %}", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log("File deleted successfully");
+                } else if (xhr.readyState === 4) {
+                    console.error("Failed to delete file");
+                }
+            };
+            xhr.send(JSON.stringify({file_id: fileId}));
+        }
+    }
+</script>
 <script>
  const list = document.getElementById("file-list")
  const toggleListBtn = document.getElementById("show-more")

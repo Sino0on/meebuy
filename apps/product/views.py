@@ -4,9 +4,11 @@ import openpyxl
 import requests
 from PIL import Image
 from django.conf import settings
-from django.http import HttpResponse, FileResponse, Http404
+from django.http import HttpResponse, FileResponse, Http404, JsonResponse
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import (
     ListView,
     CreateView,
@@ -30,7 +32,7 @@ from apps.product.forms import (
     ProductCategoryForm,
     PriceColumnForm,
 )
-from apps.provider.models import Category, Provider
+from apps.provider.models import Category, Provider, PriceFiles
 from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 
@@ -196,7 +198,6 @@ class ExcelTemplateDownloadView(View):
             return response
 
 
-
 class DownloadPriceFileView(View):
     def get(self, request, *args, **kwargs):
         # Получение и декодирование относительного пути к файлу из параметров запроса
@@ -227,6 +228,22 @@ class DownloadPriceFileView(View):
         except Exception as e:
             print(f"Error reading file: {e}")
             raise Http404("Ошибка при чтении файла")
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class DeleteFileView(View):
+    def post(self, request, *args, **kwargs):
+        import json
+        data = json.loads(request.body)
+        file_id = data.get('file_id')
+        if file_id:
+            try:
+                file_instance = PriceFiles.objects.get(id=file_id)
+                file_instance.delete()
+                return JsonResponse({'status': 'success'}, status=200)
+            except PriceFiles.DoesNotExist:
+                return JsonResponse({'status': 'error', 'message': 'File not found'}, status=404)
+        return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
 
 class ExcelUploadView(FormView):
