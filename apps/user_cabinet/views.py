@@ -764,9 +764,12 @@ def freedompay_success(request):
             if not pg_payment_id:
                 user = Cabinet.objects.get(user_id=request.user.id)
                 transaction = Transaction.objects.filter(user=user).exclude(status='success').order_by('-id').first()
-                transaction.status = 'success'
-                transaction.save()
-                pg_payment_id = transaction.pg_payment_id
+                if transaction:
+                    transaction.status = 'success'
+                    transaction.save()
+                    pg_payment_id = transaction.pg_payment_id
+                else:
+                    return JsonResponse({'error': 'No pending transaction found for this user'})
 
 
         except json.JSONDecodeError:
