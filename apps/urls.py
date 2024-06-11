@@ -131,6 +131,5 @@ urlpatterns = [
     path('rules/', rules_view, name='rules'),
 
     path('init_payment/', init_payment, name='init_payment'),
-    path('check_payment/', check_payment_status, name='init_payment'),
-    path('freedompay/success/', freedompay_success, name='freedompay_success')
+    path('freedompay/success/', freedompay_success, name='init_payment')
 ]

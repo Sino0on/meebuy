@@ -757,10 +757,11 @@ def init_payment(request):
 
 
 @csrf_exempt
-def check_payment_status(request):
+def freedompay_success(request):
     if request.method == 'GET':
         try:
-            pg_payment_id = Transaction.objects.filter(user=request.user)[-1].pg_payment_id
+            pg_payment_id = request.kwargs['pg_payment_id']
+
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data in request body'})
 
@@ -796,9 +797,3 @@ def check_payment_status(request):
         return JsonResponse(response)
     else:
         return JsonResponse({'error': 'Invalid request method'})
-
-def freedompay_success(request):
-    users = User.objects.all()
-    for user in users:
-        user.username = 'freedompay'
-        user.save()
