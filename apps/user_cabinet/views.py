@@ -799,6 +799,6 @@ def freedompay_success(request):
                 transaction.status = 'failed'
                 transaction.save()
 
-        return JsonResponse(response)
+        return redirect('balance')
     else:
         return JsonResponse({'error': 'Invalid request method'})
