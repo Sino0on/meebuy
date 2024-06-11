@@ -82,8 +82,8 @@ class TenderListView(generic.ListView):
                 banner_list.append(
                     {
                         'title': banner.title,
-                        'image_desktop': banner.image_desktop,
-                        'image_mobile': banner.image_mobile,
+                        'image_desktop': banner.image_desktop.url,
+                        'image_mobile': banner.image_mobile.url,
                         'link': banner.link
                     }
                 )
