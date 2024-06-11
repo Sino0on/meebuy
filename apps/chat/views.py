@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
+from apps.provider.models import Provider
 from apps.user_cabinet.models import Contacts
 from apps.chat.models import ChatUserStatus
 
@@ -52,6 +53,7 @@ def chats(request):
     contacts = Contacts.load()
 
     return render(request, 'chat_list.html', {
+        'provider': Provider.objects.get(user=user),
         'chat_details': chat_details,
         'contacts': contacts,
         'favorite_chats': favorite_chats,

@@ -70,9 +70,11 @@
         <li class="dropdown__item {% if active_page == 'user_tenders' %}active{% endif %}">
             <a href="{% url 'user_tenders' %}">Закупки</a>
         </li>
-        <li class="dropdown__item {% if active_html == 'user_products' %}active{% endif %}">
-            <a href="{% url 'user_products' %}">Товары</a>
-        </li>
+            {% if provider.is_provider %}
+                <li class="dropdown__item {% if active_html == 'user_products' %}active{% endif %}">
+                    <a href="{% url 'user_products' %}">Товары</a>
+                </li>
+            {% endif %}
         <li id="chat-tab-m" class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
             <a href="{% url 'chat_list' %}">Сообщения</a>
         </li>

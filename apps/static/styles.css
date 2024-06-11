@@ -5432,8 +5432,8 @@ input{
     width: 70%;
   }
 
-  .lg-md\:w-\[797px\]{
-    width: 797px;
+  .lg-md\:max-w-\[797px\]{
+    max-width: 797px;
   }
 
   .lg-md\:w-\[92px\]{
