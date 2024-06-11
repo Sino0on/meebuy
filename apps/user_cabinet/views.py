@@ -669,40 +669,48 @@ def faq_view(request):
 from .utils import generate_signature
 from .freedompay import send_post_request
 from django.views.decorators.csrf import csrf_exempt
-
-
-@csrf_exempt
-def process_payment(request):
-    if request.method == 'POST':
-        # Получаем данные из POST запроса
-        data = request.POST.dict()
-
-        # Формируем подпись
-        signature = generate_signature(data)
-
-        # Добавляем подпись к данным
-        data['pg_sig'] = signature
-
-        # Отправляем запрос к API FreedomPay
-        response = send_post_request('/process_payment/', data)
-
-        # Возвращаем ответ
-        return JsonResponse(response)
+from django.conf import settings
+import uuid
 
 @csrf_exempt
-def process_payout(request):
+def init_payment(request):
     if request.method == 'POST':
-        # Получаем данные из POST запроса
-        data = request.POST.dict()
+        # Генерируем уникальный pg_order_id
+        pg_order_id = str(uuid.uuid4())
 
-        # Формируем подпись
-        signature = generate_signature(data)
+        # Генерируем случайную строку для pg_salt
+        pg_salt = uuid.uuid4().hex
 
-        # Добавляем подпись к данным
-        data['pg_sig'] = signature
+        # Получаем pg_merchant_id из настроек
+        pg_merchant_id = settings.PAYBOX_MERCHANT_ID
 
-        # Отправляем запрос к API FreedomPay
-        response = send_post_request('/process_payout/', data)
+        # Получаем данные из тела запроса
+        try:
+            body_unicode = request.body.decode('utf-8')
+            body = json.loads(body_unicode)
+            pg_amount = body.get('pg_amount')
+            pg_description = body.get('pg_description')
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data in request body'})
 
-        # Возвращаем ответ
+        # Создаем словарь с данными для отправки в запросе
+        request_data = {
+            'pg_order_id': pg_order_id,
+            'pg_merchant_id': pg_merchant_id,
+            'pg_amount': pg_amount,
+            'pg_description': pg_description,
+            'pg_salt': pg_salt,
+        }
+
+        # Генерируем подпись для данных запроса
+        signature = generate_signature(request_data, 'init_payment.php')
+        request_data['pg_sig'] = signature
+
+        # Отправляем запрос к API для инициализации платежа
+        response = send_post_request('/init_payment.php', request_data)
+
+        # Возвращаем ответ пользователю
         return JsonResponse(response)
+    else:
+        # Если запрос не POST, возвращаем ошибку
+        return JsonResponse({'error': 'Invalid request method'})
