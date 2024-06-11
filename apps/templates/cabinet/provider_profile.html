@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
+
 {% block title %}
 Личный кабинет
 {% endblock %}
@@ -284,7 +286,7 @@
             <div class="uploaded_file_item">
                 <div class="flex items-center justify-between gap-[15px]">
                     <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}" class="line-clamp-3" style="max-width: 300px">
-                        {{ file.file.name }}
+{{ file.file.name|filename }}
                     </a>
                     <svg class="delete__icon cursor-pointer" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="removeFile({{ file.id }})">
                         <path
