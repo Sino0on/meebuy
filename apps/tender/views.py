@@ -5,7 +5,7 @@ from django.views import generic
 
 from apps.buyer.models import Banner, BannerSettings
 from apps.tender.forms import TenderForm
-from apps.tender.models import Tender, TenderImg
+from apps.tender.models import Tender, TenderImg, Country, Region, City
 from apps.provider.models import Category
 from apps.tender.filters import TenderFilter
 from apps.user_cabinet.models import Contacts, OpenNumberCount
@@ -38,7 +38,41 @@ class TenderListView(generic.ListView):
         context["banners"] = self.get_banners()
         context["banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
 
+        context['locations'] = self.get_locations()
         return context
+
+    def get_locations(self):
+        countries = Country.objects.all()
+        locations = []
+
+        for country in countries:
+            country_data = {
+                'id': country.id,
+                'title': country.title,
+                'regions': []
+            }
+
+            regions = Region.objects.filter(country=country)
+            for region in regions:
+                region_data = {
+                    'id': region.id,
+                    'title': region.title,
+                    'cities': []
+                }
+
+                cities = City.objects.filter(region=region)
+                for city in cities:
+                    city_data = {
+                        'id': city.id,
+                        'title': city.title
+                    }
+                    region_data['cities'].append(city_data)
+
+                country_data['regions'].append(region_data)
+
+            locations.append(country_data)
+
+        return locations
 
     def get_banners(self):
         banners = Banner.objects.filter(page_for="tender").order_by('?')

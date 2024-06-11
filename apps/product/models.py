@@ -31,8 +31,8 @@ class ProductCategory(StatusMixin, models.Model):
         return f"{self.name}"
 
     class Meta:
-        verbose_name = _("Категория")
-        verbose_name_plural = _("Категории")
+        verbose_name = _("Категория продуктов")
+        verbose_name_plural = _("Категории продуктов")
 
 
 class Product(StatusMixin, models.Model):
