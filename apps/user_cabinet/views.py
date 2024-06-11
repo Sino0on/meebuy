@@ -769,7 +769,7 @@ def freedompay_success(request):
                     transaction.save()
                     pg_payment_id = transaction.pg_payment_id
                 else:
-                    return JsonResponse({'error': 'No pending transaction found for this user'})
+                    return redirect('freedompay_success')
 
 
         except json.JSONDecodeError:
