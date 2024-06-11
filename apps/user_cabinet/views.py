@@ -769,7 +769,7 @@ def freedompay_success(request):
                     transaction.save()
                     pg_payment_id = transaction.pg_payment_id
                 else:
-                    return redirect('freedompay_success')
+                    return redirect('balance')
 
 
         except json.JSONDecodeError:
