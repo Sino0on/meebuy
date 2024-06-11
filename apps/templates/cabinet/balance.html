@@ -55,6 +55,7 @@
               <div
                 class="flex flex-col lg-md:flex-row-reverse justify-between items-center gap-5 mb-[30px] w-full"
               >
+                <div class="flex flex-col gap-2">
                 <div
                   id="balance-in-cash"
                   class="flex items-center justify-center gap-5 md:w-[40%] w-full text-[#2B292C] px-4 py-3 font-mulish font-medium text-[18px] bg-[#C3FFA7] rounded-2xl"
@@ -62,6 +63,14 @@
                   <p>Баланс кошелька</p>
                   <span class="text-[24px]">{{ user.cabinet.balance }} сом</span>
                 </div>
+                 <a href="{% url 'freedompay_success' %}"
+                          id="check-payment"
+                          style="background-color: #fffb98"
+                          class="text-[#2B292C] font-mulish font-medium sm:text-[18px] text-[16px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                      >
+                          Проверить оплату
+                      </a>
+                    </div>
                 <div class="flex items-center gap-5">
                   <button
                     id="replenishment"
@@ -76,13 +85,7 @@
                   >
                     История платежей
                   </button>
-                      <a href="{% url 'freedompay_success' %}"
-                          id="check-payment"
-                          style="background-color: #fffb98"
-                          class="text-[#2B292C] font-mulish font-medium sm:text-[18px] text-[16px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
-                      >
-                          Проверить оплату
-                      </a>
+
                 </div>
               </div>
 
