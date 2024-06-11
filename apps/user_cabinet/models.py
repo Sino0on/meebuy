@@ -104,6 +104,8 @@ class Transaction(models.Model):
     )
     total = models.IntegerField(blank=True, default=0, verbose_name=_('Итого'))
     description = models.TextField(verbose_name=_('Описание'))
+    pg_payment_id = models.CharField(max_length=255, unique=True, verbose_name=_('ID платежа'), blank=True, null=True)
+    status = models.CharField(max_length=50, default='pending', verbose_name=_('Статус'))
 
     def __str__(self):
         return f'{self.pk} {self.description}'

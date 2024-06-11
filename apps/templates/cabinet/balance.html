@@ -76,6 +76,13 @@
                   >
                     История платежей
                   </button>
+                      <button
+                          id="check-payment"
+                          style="background-color: #fffb98"
+                          class="text-[#2B292C] font-mulish font-medium sm:text-[18px] text-[16px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                      >
+                          Проверить оплату
+                      </button>
                 </div>
               </div>
 
@@ -91,10 +98,14 @@
                       Введите сумму
                     </p>
                     <input
+                      id="amount-input"
                       class="text-[#737373] text-[18px] font-light border border-[#E6E6E6] bg-[#F9F9F9] py-3 pl-5 rounded-2xl"
                       type="text"
                       placeholder="Введите сумму"
                     />
+                    <button id="initiate-payment" style="background-color: #fffb98" class="text-[#2B292C] font-mulish font-medium sm:text-[18px] text-[16px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl">
+                        Начать оплату
+                    </button>
                   </div>
                   <div class="flex flex-col gap-[10px] my-6">
                     <p class="text-[#2B292C] text-[18px] font-semibold">
@@ -325,4 +336,68 @@
 <!--    <script src="{% static 'pages/profile/addProductToBuy/index.js' %}"></script>-->
     <script src="{% static 'pages/profile/balance/index.js' %}"></script>
     <script src="{% static 'pages/profile/profile.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listener to the "Пополнение" button
+    document.getElementById("initiate-payment").addEventListener("click", function() {
+        // Get the amount from the input field
+        var amount = document.getElementById("amount-input").value;
+
+        // Send AJAX request to your Django view
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/init_payment/", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.pg_redirect_url) {
+                        // Redirect to the payment page
+                        window.location.href = response.pg_redirect_url;
+                    } else {
+                        alert("Error: Payment initiation failed.");
+                    }
+                } else {
+                    alert("Error: Unable to initiate payment.");
+                }
+            }
+        };
+
+        xhr.send(JSON.stringify({ pg_amount: amount }));
+    });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listener to the "Проверить оплату" button
+    document.getElementById("check-payment").addEventListener("click", function() {
+        // Send AJAX request to your Django view for checking payment status
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/check_payment_status/", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.pg_payment_status === "success") {
+                        alert("Payment successful. Balance updated.");
+                        // Reload the page to update the balance display
+                        window.location.reload();
+                    } else if (response.pg_payment_status === "error") {
+                        alert("Payment failed. Please try again later.");
+                    } else {
+                        alert("Payment status unknown.");
+                    }
+                } else {
+                    alert("Error: Unable to check payment status.");
+                }
+            }
+        };
+
+        xhr.send();
+    });
+});
+</script>
 {% endblock %}
