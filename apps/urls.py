@@ -130,6 +130,8 @@ urlpatterns = [
     path('privacy-policy/', privacy_policy_view, name='privacy_policy'),
     path('rules/', rules_view, name='rules'),
 
+    path('delete-transaction/<int:transaction_id>/', delete_transaction, name='delete_transaction'),
+
     path('init_payment/', init_payment, name='init_payment'),
     path('freedompay/success/', freedompay_success, name='freedompay_success')
 ]

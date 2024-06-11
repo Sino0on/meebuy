@@ -287,10 +287,15 @@
                         <td>{{ i.created_at }}</td>
                         <td>{{ i.total }} сом</td>
                         <td>
-                          <img
-                            src="{% static 'assets/images/icons/trash.svg' %}"
-                            alt=""
-                          />
+                          <form method="post" action="{% url 'delete_transaction' transaction_id=i.id %}">
+                            {% csrf_token %}
+                            <button>
+                              <img
+                                src="{% static 'assets/images/icons/trash.svg' %}"
+                                alt="Delete"
+                              />
+                            </button>
+                          </form>
                         </td>
                       </tr>
                     {% endfor %}

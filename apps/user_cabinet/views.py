@@ -698,6 +698,18 @@ def faq_view(request):
     return render(request, 'tariffs.html', {'faqs': faqs})
 
 
+def delete_transaction(request, transaction_id):
+    if request.method == 'POST':
+        # Получаем объект транзакции или возвращаем ошибку 404, если транзакция не найдена
+        transaction = get_object_or_404(Transaction, id=transaction_id)
+
+        # Удаляем транзакцию
+        transaction.delete()
+
+        # После удаления перенаправляем пользователя на страницу с историей платежей или другую нужную страницу
+        return redirect('balance')
+
+
 from .utils import generate_signature
 from .freedompay import send_post_request
 from django.views.decorators.csrf import csrf_exempt
