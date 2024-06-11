@@ -760,7 +760,7 @@ def init_payment(request):
 def freedompay_success(request):
     if request.method == 'GET':
         try:
-            pg_payment_id = request.kwargs['pg_payment_id']
+            pg_payment_id = request.GET.get('pg_payment_id')
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data in request body'})
