@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}
 Поставщик
@@ -143,31 +144,25 @@
                     </div>
                     <div id="Tab2" class="tab-content hidden">
                         <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
-                            {% for product in products %}
-                            <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5">
-                                {% if product.new %}
-                                <div
-                                    class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
-                                    NEW
-                                </div>
-                                {% endif %}
-                                <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
-                                    src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="Изображение товара">
-                                <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}
-                                </h2>
-                                <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">{{ product.description|truncatechars:100 }}</p>
-                                <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                    Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
-                                </div>
-                                <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
-                                    <a href="/product/detail/{{ product.id }}/">Подробнее</a>
-                                </button>
+                            <div class="uploaded_files flex flex-col gap-2.5 mt-8">
+                                <ul id="file-list" style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
+                                    {% for file in user.provider.files_price.all %}
+                                        <li style="margin:15px 0;" id="file-{{ file.id }}">
+                                            <div class="uploaded_file_item">
+                                                <div class="flex items-center justify-between gap-[15px]">
+                                                    <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}" class="line-clamp-3" style="max-width: 300px">
+{{ file.file.name|filename }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                             </div>
-                            {% endfor %}
                         </div>
                     </div>
-                    <p class="text-end text-base text-dark-text mt-5 lg:text-lg lg:mt-[30px]"><a href="">Смотреть все
-                            товары</a></p>
+{#                    <p class="text-end text-base text-dark-text mt-5 lg:text-lg lg:mt-[30px]"><a href="">Смотреть все#}
+{#                            товары</a></p>#}
                 </div>
             </div>
         </section>
