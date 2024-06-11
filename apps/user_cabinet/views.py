@@ -763,7 +763,9 @@ def freedompay_success(request):
             pg_payment_id = request.GET.get('pg_payment_id')
             if not pg_payment_id:
                 user = Cabinet.objects.get(user_id=request.user.id)
-                transaction = Transaction.objects.filter(user=user).order_by('-id').first()
+                transaction = Transaction.objects.filter(user=user).exclude(status='success').order_by('-id').first()
+                transaction.status = 'success'
+                transaction.save()
                 pg_payment_id = transaction.pg_payment_id
 
 
