@@ -763,7 +763,7 @@ def freedompay_success(request):
             pg_payment_id = request.GET.get('pg_payment_id')
             if not pg_payment_id:
                 user = Cabinet.objects.get(user_id=request.user.id)
-                pg_payment_id = Transaction.objects.filter(user=user)[-1].pg_payment_id
+                pg_payment_id = Transaction.objects.filter(user=user).order_by('-id').first()
 
 
         except json.JSONDecodeError:
