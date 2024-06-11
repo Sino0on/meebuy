@@ -133,7 +133,7 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int),
     }
 }
-STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
 
 # DATABASES = {
@@ -142,7 +142,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
 
@@ -155,10 +155,10 @@ STATIC_URL = "/static/"
 # Extra places for collectstatic to find static files.
 
 
-PAYBOX_URL = 'https://test-api.freedompay.kz'
-PAYBOX_MERCHANT_ID = '554071'
-PAYBOX_MERCHANT_SECRET = 'XVUF0iaS3Ow1wVqI'
-PAYBOX_MERCHANT_SECRET_PAYOUT = 'RA7HcGmqRGRy1ROD'
+PAYBOX_URL = config('PAYBOX_URL')
+PAYBOX_MERCHANT_ID = config('PAYBOX_MERCHANT_ID')
+PAYBOX_MERCHANT_SECRET = config('PAYBOX_MERCHANT_SECRET')
+PAYBOX_MERCHANT_SECRET_PAYOUT = config('PAYBOX_MERCHANT_SECRET_PAYOUT')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True

@@ -127,7 +127,6 @@ urlpatterns = [
     path('privacy-policy/', privacy_policy_view, name='privacy_policy'),
     path('rules/', rules_view, name='rules'),
 
-    path('process_payment/', process_payment, name='process_payment'),
-    path('process_payout/', process_payout, name='process_payout'),
+    path('init_payment/', init_payment, name='init_payment'),
 
 ]
