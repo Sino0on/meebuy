@@ -38,7 +38,7 @@
             />
             <form
               action="/product/list/"
-              class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow"
+              class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow z-[-1]"
             >
               <div class="relative">
                 <div class="absolute inset-y-0 end-0 flex items-center pe-2">
@@ -245,7 +245,7 @@
       </div>
     </header>
     {% block content %} {% endblock %}
-    <footer class="bg-[#222222]" >
+    <footer class="bg-[#222222] relative -z-[1]" >
       <div class="hidden bg-black py-4 lg-md:block">
         <div
           class="container flex justify-between lg-md:items-center lg-md:gap-[27px]"
@@ -263,11 +263,11 @@
           />
           <form
             action=""
-            class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow"
+            class="w-1/3 transition-transform duration-300 ease-in-out hidden lg-md:block flex-grow "
           >
-            <div class="relative z-[-1]">
+            <div class="relative">
               <div
-                class="absolute z-[-1] inset-y-0 end-0 flex items-center pe-2"
+                class="absolute inset-y-0 end-0 flex items-center pe-2"
               >
                 <img
                   src="{% static 'assets/images/icons/search.svg' %}"
