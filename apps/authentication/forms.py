@@ -121,7 +121,6 @@ class ProviderForm(forms.ModelForm):
             'small_wholesale',
             'retail',
             'official_distributor',
-            'city',
             'how_get',
             'post_index',
             'metro',

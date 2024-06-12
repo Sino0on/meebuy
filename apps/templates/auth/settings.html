@@ -36,6 +36,13 @@
 
             <!-- these sections are for main content  -->
             <section class="main-content block mt-10 mb-28 lg-md:mt-0 lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
+                        {% if form.errors %}
+                        <ul>
+                            {% for field in form %} {% for error in field.errors %}
+                            <li>{{ field.name }} - {{ error }}</li>
+                            {% endfor %} {% endfor %}
+                        </ul>
+                        {% endif %}
                 <div class="container">
                     <div class="card__item shadow-card-shadow  rounded-[10px]">
                         <form method="post" class="form space-y-[26px] lg-md:space-y-[30px]">
