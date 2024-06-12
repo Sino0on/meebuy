@@ -16,7 +16,7 @@ class ProvideFilesInline(admin.TabularInline):
 
 
 class ProviderAdmin(admin.ModelAdmin):
-    list_display = ('title', 'type', 'address', 'is_active', 'is_modered')
+    list_display = ('title', 'user', 'type', 'address', 'is_active', 'is_modered')
     list_filter = ('is_active', 'is_modered', 'type')
     search_fields = ('title', 'description', 'mini_descr', 'post_index', 'address')
     inlines = [ProvideImgInline, ProvideFilesInline]
