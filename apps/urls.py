@@ -12,8 +12,7 @@ from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet
 
 from apps.chat.views import chat_detail, chats, create_chat, add_to_favorites, delete_chat, remove_from_favorites, remove_from_deleted
 
-from apps.authentication.views import (HomeView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect,
-                                       )
+from apps.authentication.views import (HomeView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect,)
 
 
 from apps.authentication.views import HomeView, SelectUserTypeView, LogoutView, LoginView

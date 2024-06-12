@@ -7,7 +7,6 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -16,7 +15,6 @@ SECRET_KEY = config("SECRET_KEY", default="S#perS3crEt_1122")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
-
 
 ALLOWED_HOSTS = ['*']
 
@@ -63,8 +61,6 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.yandex',
     'allauth.socialaccount.providers.mailru',
 
-
-
     'rest_framework'
     # 'social.apps.django_app.default',
 ]
@@ -85,11 +81,9 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware'
 ]
 
-
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, "apps/templates")
-
 
 TEMPLATES = [
     {
@@ -112,13 +106,11 @@ ASGI_APPLICATION = 'core.asgi.application'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer'
     }
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -171,7 +163,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 SITE_ID = int(config("SITE_ID"))
 
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -208,35 +199,32 @@ SOCIALACCOUNT_PROVIDERS = {
                 'access_type': 'online',
             }
         },
-         'facebook': {
-                'METHOD': 'oauth2',
-                'SCOPE': ['email', 'public_profile'],
-                'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-                'FIELDS': [
-                    'id',
-                    'email',
-                    'name',
-                    'first_name',
-                    'last_name',
-                    'verified',
-                    'locale',
-                    'timezone',
-                    'link',
-                    'gender',
-                    'updated_time'
-                ],
-                'EXCHANGE_TOKEN': True,
-                'LOCALE_FUNC': lambda request: 'en_US',
-                'VERIFIED_EMAIL': False,
-                'VERSION': 'v7.0',
-            }
+        'facebook': {
+            'METHOD': 'oauth2',
+            'SCOPE': ['email', 'public_profile'],
+            'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+            'FIELDS': [
+                'id',
+                'email',
+                'name',
+                'first_name',
+                'last_name',
+                'verified',
+                'locale',
+                'timezone',
+                'link',
+                'gender',
+                'updated_time'
+            ],
+            'EXCHANGE_TOKEN': True,
+            'LOCALE_FUNC': lambda request: 'en_US',
+            'VERIFIED_EMAIL': False,
+            'VERSION': 'v7.0',
+        }
     },
 }
 
-
 SOCIALACCOUNT_QUERY_EMAIL = True
-
-
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -248,11 +236,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 
-
 AUTH_USER_MODEL = "authentication.User"
-
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -272,7 +256,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -291,7 +274,6 @@ MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 
 MODELTRANSLATION_LANGUAGES = ('ru', 'ky')
 
-
 MEDIA_ROOT = os.path.join(BASE_DIR, "apps/media")
 MEDIA_URL = "/media/"
 
@@ -305,7 +287,6 @@ SOCIALACCOUNT_ADAPTER = 'apps.authentication.adapters.CustomSocialAccountAdapter
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 SIMPLEUI_HOME_INFO = False
 SIMPLEUI_HOME_ACTION = True
 SIMPLEUI_HOME_QUICK = True
@@ -314,48 +295,32 @@ SIMPLEUI_DEFAULT_THEME = 'e-black-pro.css'
 SIMPLEUI_HOME_TITLE = 'Meebuy'
 SIMPLEUI_LOGO = '/static/logo/logo.svg'
 
-
-
-
 SIMPLEUI_CONFIG = {
-    'system_keep': True,
+    'system_keep': False,
     'menus': [
+
         {
-            'name': 'Поставщики',
+            'name': 'Пользователи',
             'icon': 'fa fa-book',
             'models': [
                 {
-                    'name': 'Поставщики',
+                    'name': 'Пользователи',
                     'icon': 'fa fa-industry',
                     'url': '/admin/provider/provider/'
                 },
                 {
                     'name': 'Configurations',
                     'models': [
-                        {
-                            'name': 'Доставка',
-                            'icon': 'fa fa-truck',
-                            'url': '/admin/provider/delivery/'
-                        },
-                        {
-                            'name': 'Категории Поставщиков',
-                            'icon': 'fa fa-columns',
-                            'url': '/admin/provider/category/'
-                        },
+
                         {
                             'name': 'Тэги',
                             'icon': 'fa fa-tag',
                             'url': '/admin/provider/tag/'
                         },
                         {
-                            'name': 'Условия',
-                            'icon': 'fa fa-table',
-                            'url': '/admin/catalog/sizechart/'
-                        },
-                        {
-                            'name': 'Варианты оплаты',
-                            'icon': 'fa fa-money-bill',
-                            'url': '/admin/provider/typepay/'
+                            'name': 'Категории Поставщиков',
+                            'icon': 'fa fa-columns',
+                            'url': '/admin/product/productcategory/'
                         },
                     ]
                 },
@@ -376,37 +341,6 @@ SIMPLEUI_CONFIG = {
                     'url': '/admin/product/productimg/'
                 },
 
-            ]
-        },
-        {
-            'name': 'Пользователи',
-            'icon': 'fa fa-user',
-            'models': [
-                {
-                    'name': 'Активныйе статусы пользователя',
-                    'icon': 'fa fa-circle',
-                    'url': '/admin/user_cabinet/activeuserstatus/'
-                },
-                {
-                    'name': 'Кабинеты',
-                    'icon': 'fa fa-image',
-                    'url': '/admin/user_cabinet/cabinet/'
-                },
-                {
-                    'name': 'Статусы',
-                    'icon': 'fa fa-info',
-                    'url': '/admin/user_cabinet/status/'
-                },
-                {
-                    'name': 'Статусы пользователей',
-                    'icon': 'fa fa-user-secret',
-                    'url': '/admin/user_cabinet/packagestatus/'
-                },
-                {
-                    'name': 'Транзакции',
-                    'icon': 'fa fa-play',
-                    'url': '/admin/user_cabinet/transaction/'
-                },
             ]
         },
         {
@@ -437,5 +371,121 @@ SIMPLEUI_CONFIG = {
 
             ]
         },
+        {
+            'name': 'Банерная реклама',
+            'icon': 'fa fa-globe',
+            'models': [
+                {
+                    'name': 'Настройки',
+                    'icon': 'fa fa-map-marker',
+                    'url': '/admin/buyer/bannersettings/'
+                },
+                {
+                    'name': 'Банера',
+                    'icon': 'fa fa-map',
+                    'url': '/admin/buyer/banner/'
+                },
+            ]
+        },
+        {
+            'name': 'Настройки',
+            'icon': 'fa fa-boxes',
+            'models': [
+                {
+                    'name': 'Контакты',
+                    'icon': 'fa fa-columns',
+                    'url': '/admin/user_cabinet/contacts/'
+                },
+                {
+                    'name': 'Категории',
+                    'icon': 'fa fa-columns',
+                    'url': '/admin/provider/category/'
+                },
+                {
+                    'name': 'Статические страницы',
+                    'icon': 'fa fa-columns',
+                    'url': '/admin/pages/staticpage/'
+                },
+                {
+                    'name': 'Часто задаваемые вопросы',
+                    'icon': 'fa fa-columns',
+                    'url': '/admin/user_cabinet/faq/'
+                },
+                {
+                    'name': 'Premium тарифы',
+                    'models': [
+
+                        {
+                            'name': 'Статусы',
+                            'icon': 'fa fa-info',
+                            'url': '/admin/user_cabinet/status/'
+                        },
+                        {
+                            'name': 'Пакеты статусов',
+                            'icon': 'fa fa-tag',
+                            'url': '/admin/user_cabinet/packagestatus/'
+                        },
+                        {
+                            'name': 'Активные статусы пользователей',
+                            'icon': 'fa fa-user-secret',
+                            'url': '/admin/user_cabinet/activeuserstatus/'
+                        },
+                        {
+                            'name': 'Поднятия в топ',
+                            'icon': 'fa fa-money-bill',
+                            'url': '/admin/user_cabinet/upping/'
+                        },
+                        {
+                            'name': 'Активные поднятия',
+                            'icon': 'fa fa-money-bill',
+                            'url': '/admin/user_cabinet/activeupping/'
+                        },
+                        {
+                            'name': 'Сообщения в поддержку',
+                            'icon': 'fa fa-columns',
+                            'url': '/admin/user_cabinet/supportmessage/'
+                        },
+                        {
+                            'name': 'Транзакции',
+                            'icon': 'fa fa-money-bill',
+                            'url': '/admin/user_cabinet/transaction/'
+                        },
+
+                    ]
+                },
+                {
+                    'name': 'Внутренние настройки сайта',
+                    'models': [
+                        {
+                            'name': 'Sites',
+                            'icon': 'fa fa-truck',
+                            'url': '/admin/sites/site/'
+                        },
+                        {
+                            'name': 'Social accounts',
+                            'icon': 'fa fa-tag',
+                            'models': [
+                                {
+                                    'name': ' Social accounts',
+                                    'icon': 'fa fa-truck',
+                                    'url': '/admin/socialaccount/socialaccount/'
+                                },
+                                {
+                                    'name': 'Social application tokens',
+                                    'icon': 'fa fa-truck',
+                                    'url': '/admin/socialaccount/socialtoken/'
+                                },
+                                {
+                                    'name': 'Social applications',
+                                    'icon': 'fa fa-tag',
+                                    'url': 'Social applications'
+                                }]
+                        }
+
+                    ]
+                }
+            ]
+        },
+
     ]
 }
