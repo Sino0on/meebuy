@@ -125,19 +125,16 @@ class ProductCreateView(CreateView):
         form.instance.provider = provider
         response = super().form_valid(form)
         images = self.request.FILES.getlist("images")
-
-        # Save the first image as the main image
         if images:
             main_image = images[0]
             product_img = ProductImg.objects.create(
                 product=self.object, image=main_image
             )
             self.object.image = (
-                main_image  # Assuming 'image' field exists in the Product model
+                main_image
             )
             self.object.save()
 
-        # Save the rest of the images as additional images
         for image in images[1:]:
             ProductImg.objects.create(product=self.object, image=image)
 
@@ -168,8 +165,7 @@ class ProductUpdateView(UpdateView):
             self.object.image = main_image
             self.object.save()
 
-        # Save the rest of the images as additional images
-        for image in images[1:6]:  # Only process up to 5 additional images
+        for image in images[1:6]:
             if image:
                 ProductImg.objects.create(product=self.object, image=image)
         return response
