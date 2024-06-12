@@ -25,7 +25,6 @@ PROJECT_APPS = [
     'daphne',
     'channels',
     'simpleui',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,7 +124,7 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int),
     }
 }
-STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
 # DATABASES = {
 #     'default': {
@@ -133,7 +132,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
 
@@ -296,7 +295,7 @@ SIMPLEUI_HOME_TITLE = 'Meebuy'
 # SIMPLEUI_LOGO = '/static/logo/logo.svg'
 
 SIMPLEUI_CONFIG = {
-    'system_keep': False,
+    'system_keep': True,
     'menus': [
 
         {
@@ -490,6 +489,11 @@ SIMPLEUI_CONFIG = {
                     ]
                 }
             ]
+        },
+        {
+            'name': 'Сообщения в поддержку',
+            'icon': 'fa fa-industry',
+            'url': '/admin/user_cabinet/supportmessage/'
         },
 
     ]
