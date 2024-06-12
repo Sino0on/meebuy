@@ -169,12 +169,12 @@
         </div>
       </div>
       <!-- items -->
-      <div
+      <div id="product-list" data-banners="{{ banners }}" data-banner-order="{{ banner_settings }}"
         class="card__wrapper w-fit mx-auto gap-4 mt-[30px] lg:mt-10 lg-md:gap-[30px]"
       >
         {% for object in object_list %}
         <div
-          class="card shadow-card-shadow p-2.5 lg-md:p-5 relative rounded-[10px] flex flex-col"
+          class="card product-item shadow-card-shadow p-2.5 lg-md:p-5 relative rounded-[10px] flex flex-col"
         >
           <!-- if favorite add class "active" -->
           <svg
@@ -258,6 +258,7 @@
         {% endfor %}
       </div>
 
+
       <!-- pagination -->
       {% include 'includes/pagination.html' %}
     </div>
@@ -267,5 +268,76 @@
 {% block js %}
 <script src="{% static 'pages/products/index.js' %}"></script>
 <script src="{% static 'pages/filters/filter.js' %}"></script>
+<script>
+  const container = document.getElementById("product-list");
+
+  const bannersList = container.getAttribute("data-banners");
+  const bannerOrder = container.getAttribute("data-banner-order");
+
+  const itemsInContainer = container.querySelectorAll(".product-item");
+
+  const host = window.location.host;
+
+  console.log(host, itemsInContainer);
+
+  const formattedStringData = bannersList.replace(/'/g, '"');
+
+  const banners = JSON.parse(formattedStringData);
+  let bannerIndex = 0; // Index to track which banner to use next
+
+itemsInContainer.forEach((item, index) => {
+  // Check if the current index + 1 is a multiple of bannerOrder
+  if ((index + 1) % bannerOrder === 0) {
+    // Ensure we have a banner to use
+    if (bannerIndex < banners.length) {
+      const banner = banners[bannerIndex];
+      const div = getBannerElement(banner.image_desktop, banner.link);
+      item.after(div); // Insert the banner after the current item
+
+      // Move to the next banner for the next match
+      bannerIndex++;
+    }
+  }
+});
+
+  function getBannerElement(url,anchorLink) {
+    const div = document.createElement("div");
+      div.classList.add(
+        "cards",
+        "md:flex-row",
+        "flex-col",
+        "justify-center",
+        "items-center",
+        "bg-[#F6F6F6]",
+        "my-7",
+        "rounded-[15px]",
+        "relative"
+      );
+      const image = document.createElement("img");
+      const link = document.createElement("a");
+      link.href = anchorLink;
+      link.style.position = "absolute";
+      link.style.top = "0";
+      link.style.left = "0";
+      link.style.width = "100%";
+      link.style.height = "100%";
+      link.style.zIndex = "1";
+      link.setAttribute("target", "_blank");
+
+      image.src = url;
+      image.style.width = '100%';
+      image.style.maxHeight = '366px';
+      image.style.height = 'auto'
+      image.style.minHeight = '100%';
+      image.style.objectFit = 'cover'
+      image.style.borderRadius = '10px'
+      div.appendChild(link);
+      div.appendChild(image);
+
+      return div
+  }
+
+  console.log(bannersList, bannerOrder);
+</script>
 
 {% endblock %}

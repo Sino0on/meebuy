@@ -94,9 +94,66 @@
                       <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>
                     </div>
                     <div class="form__item">
-                        <label class="label">Город</label>
-                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                        {{ form.city }}
+                        <div id="locationContainer" data-countries="{{ locations }}" class="flex flex-col md:flex-row gap-5">
+                            <div class="w-full md: w-1/3">
+                              <p 
+                              class="text-[#737373] w-full text-[16px] font-light"
+                              >
+                              Страна
+                              </p>
+           
+                              <!-- Начально будет выбрано второе значение -->
+           <select name="country" id="country-options"
+           class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+           >
+             <!--Supplement an id here instead of using 'name'-->
+                              {% for country in locations %}
+                              <option value="{{ country.title }}">{{ country.title }}</option>
+                              {% endfor %}
+           </select>
+           
+                              
+           
+                            </div>
+                            <div class="flex md: w-2/3 w-full flex-col sm:flex-row gap-4">
+                             <div class="w-full md:w-[50%]">
+                               <p 
+                               class="text-[#737373] w-full text-[16px] font-light"
+                               >
+                               Область
+                               </p>
+             
+                               <!-- Начально будет выбрано второе значение -->
+             <select name="region" id="region-options"
+             class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+             >
+             </select>
+             
+                               
+             
+                             </div>
+                          
+                             <div class="w-full md:w-[50%]">
+                               <p 
+                               class="text-[#737373] w-full text-[16px] font-light"
+                               >
+                               Город
+                               </p>
+             
+                               <!-- Начально будет выбрано второе значение -->
+             <select name="city" id="city-options"
+             class=" text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+             >
+              <!--Supplement an id here instead of using 'name'-->
+             </select>
+             
+                               
+             
+                             </div>
+                            </div>
+                          
+                         
+                            </div>
                     </div>
                     <div class="form__item">
                         <label class="label">Почтовый индекс</label>
@@ -346,4 +403,61 @@
 {% block js %}
 <script src="{% static 'pages/profile/myCompany/editProfile/index.js' %}"></script>
 <script src="{% static 'pages/profile/profile.js' %}"></script>
+<script>
+    const locationContainer = document.getElementById("locationContainer");
+    const countrySelect = document.getElementById("country-options");
+      const regionSelect = document.getElementById("region-options");
+      const citySelect = document.getElementById("city-options");
+    
+      function transformData(data) {
+      const transformed = {};
+    
+      data.forEach(country => {
+        const countryObj = {};
+    
+        country.regions.forEach(region => {
+          const regionObj = {};
+    
+          region.cities.forEach(city => {
+            regionObj[city.title] = city.title;
+          });
+    
+          countryObj[region.title] = regionObj;
+        });
+    
+        transformed[country.title] = countryObj;
+      });
+    
+      return transformed;
+    }
+    
+      const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
+      const countries = JSON.parse(formattedString);
+      const transformedData = transformData(countries);
+      addOptions(regionSelect,transformedData[countrySelect.value])
+      addOptions(citySelect,transformedData[countrySelect.value][regionSelect.value])
+    
+    
+      countrySelect.addEventListener('change',(e)=>{
+        const selectedCountry = e.target.value;
+        addOptions(regionSelect,transformedData[selectedCountry])
+        addOptions(citySelect,transformedData[selectedCountry][regionSelect.value])
+      })
+    
+      regionSelect.addEventListener('change',(e)=>
+      {
+        const selectedRegion = e.target.value;
+        addOptions(citySelect,transformedData[countrySelect.value][selectedRegion])
+      })
+    
+      function addOptions(element,options){
+        element.innerHTML = ""
+        for(const option in options){
+        const optionEl = document.createElement("option");
+          optionEl.textContent = option;
+          optionEl.value = option;
+          element.appendChild(optionEl);
+        }
+      }
+    </script>
 {% endblock %}
