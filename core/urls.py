@@ -9,4 +9,5 @@ urlpatterns = [
     path('dev-admin8/', admin.site.urls),
     path('', include('apps.urls')),
     path('accounts/', include('allauth.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

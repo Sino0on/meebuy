@@ -1,0 +1,466 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Личный кабинет
+{% endblock %}
+
+{% block css %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="{% static 'pages/profile/tenders/index.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/profile/analytic/index.css' %}" />
+
+{% endblock %}
+
+{% block content %}
+    <div class="bg-[#FFFFFC]">
+      <nav class="breadcrumbs">
+        <div class="container">
+          <div class="">
+            <div class="flex gap-4 py-4">
+              <div class="flex items-center gap-4">
+                <img src="{% static 'assets/images/icons/home.svg' %}" />
+                <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" />
+              </div>
+              <p class="font-normal font-mulish text-[#A0A0A0]">
+                Личный кабинет
+              </p>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="container mt-14 pb-28">
+        <h1
+          class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl"
+        >
+          личный кабинет
+        </h1>
+        <!--  this section is for avatar  -->
+
+        <div class="flex gap-[30px] lg-md:flex-row flex-col">
+          <section class="profile__navigate lg-md:w-[25%] bg-[#fff]">
+            <div class="">
+              <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
+                <!-- upload avatar-->
+                <div class="upload__avatar text-center flex justify-center">
+                  <div class="relative">
+                    <img
+                      class="absolute right-0 bottom-0"
+                      src="{% static 'assets/images/icons/camera-outline.svg' %}"
+                      alt=""
+                    />
+                    <form class="rounded-full overflow-hidden  w-20 h-20" action="">
+                                    <label for="upload" class="h-full flex-col items-center gap-2 cursor-pointer">
+                                        {% if user.provider.image %}
+
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{{ user.provider.image.url }}" alt="">
+                                        {% else %}
+                                        <img class="object-cover h-full" id="avatar"
+                                             src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                        {% endif %}
+                                    </label>
+                                    {% csrf_token %}
+                                    <input id="upload" type="file" class="hidden"/>
+                                </form>
+                  </div>
+                </div>
+
+                <h2 class="text-center text-lg font-semibold mt-2.5">
+                  {{ user.first_name }} {{  user.last_name }}
+                </h2>
+                <!-- dropdown menu-->
+                <div
+                  class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden"
+                >
+                  <button
+                    class="dropdown__btn px-2.5 w-full flex items-center justify-between text-dark-text"
+                  >
+                    <p class="text-lg font-bold">Статистика</p>
+                    <img
+                      class="w-5 h-5"
+                      src="{% static 'assets/images/icons/ios-arrow.svg' %}"
+                      alt=""
+                    />
+                  </button>
+                  <ul
+                    class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg"
+                  >
+                    <li class="dropdown__item">
+                      <a href="{% url 'view_profile' %}"
+                        >Моя компания</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'user_tenders' %}"
+                        >Закупки</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'user_products' %}"
+                        >Товары</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'chat_list' %}"
+                        >Сообщения</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'tariffs' %}"
+                        >Premium тарифы</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'settings' %}"
+                        >Настройки аккаунта</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'balance' %}"
+                        Баланс</a>
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'favorites' %}"
+                        >Избранные</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'send_message' %}"
+                        >Служба поддержки</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!-- dropdown menu end-->
+                <!-- desktop menu-->
+                <div class="hidden lg-md:block">
+                  <ul class="flex flex-col">
+                    <li class="dropdown__item">
+                      <a href="{% url 'view_profile' %}"
+                        >Моя компания</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'user_tenders' %}"
+                        >Закупки</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'user_products' %}"
+                        >Товары</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'chat_list' %}"
+                        >Сообщения</a
+                      >
+                    </li>
+                    <li class="dropdown__item active">
+                      <a href="{% url 'analytic' %}"
+                        >Статистика</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'tariffs' %}"
+                        >Premium тарифы</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'settings' %}"
+                        >Настройки аккаунта</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'balance' %}">
+                        Баланс</a>
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'favorites' %}"
+                        >Избранные</a
+                      >
+                    </li>
+                    <li class="dropdown__item">
+                      <a href="{% url 'send_message' %}"
+                        >Служба поддержки</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!-- desktop menu end-->
+              </div>
+            </div>
+          </section>
+
+          <!-- these sections are for main content  -->
+          <div
+            id="main-section"
+            style="display: block"
+            class="bg-[#fff] relative"
+          >
+            <section class="flex flex-col lg-md:mt-0 mt-10 lg-md:w-[797px]">
+              <div>
+                <div class="scroll-container">
+                  <div
+                    class="flex items-center justify-start gap-5 mb-[30px] lg:w-[797px] lg-md: overflow-x-scroll"
+                  >
+                    <a href="/finance/budgets/"
+
+                      style="background-color: #fffb98"
+                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                    >
+                      Бюджеты
+                    </a>
+                    <a href="/finance/budgets/"
+
+                      class="text-[#2B292C] font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
+                    >
+                      Сотрудники
+                    </a>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="cards shadow-card-shadow rounded-2xl sm:p-9 p-5">
+                <!-- Статистика -->
+                <h1 class="text-3xl font-bold mb-4 text-center">{{ budget.name }}</h1>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg mb-4">
+                  <h2 class="text-xl font-semibold">Всего</h2>
+                  <p class="text-gray-700">{{ budget.total_amount }}</p>
+                  <h2 class="text-xl font-semibold mt-4">Описание</h2>
+                  <p class="text-gray-700">{{ budget.description }}</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg mb-4">
+                  <h2 class="text-2xl font-bold mb-2">Доходы</h2>
+                  <ul>
+                    {% for income in incomes %}
+                      <li class="border-b last:border-none">
+                        <div class="p-4">
+                          <strong>{{ income.source }}</strong>: {{ income.amount }} on {{ income.date_received }}
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                  <h2 class="text-2xl font-bold mb-2">Expenses</h2>
+                  <ul>
+                    {% for expense in expenses %}
+                      <li class="border-b last:border-none">
+                        <div class="p-4">
+                          <strong>{{ expense.description }}</strong>: {{ expense.amount }} on {{ expense.date_incurred }}
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <!-- Поднятие -->
+                <div id="lifting-block" style="display: none">
+                  <div class="flex flex-col gap-7">
+                    <p
+                      class="text-[#4D4D4D] font-mulish font-normal text-[16px]"
+                    >
+                      Поднятие позволяет закрепить вашу компанию вверху списка
+                      (даже выше других компаний с PREMIUM тарифом) на
+                      определенный срок, что позволяет привлечь больше клиентов.
+                      Рекомендуем периодически поднимать компанию или включить
+                      автоподнятие.
+                    </p>
+                    <h1 class="text-3xl font-bold mb-4 text-center">Сотрудники</h1>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                      <ul>
+                        {% for employee in employees %}
+                          <li class="border-b last:border-none">
+                            <a href="{% url 'employee_detail' employee.pk %}" class="block p-4 hover:bg-gray-200">
+                              {{ employee.name }}
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- Баннеры -->
+                <div id="bannery-block" style="display: none">
+                  <div class="flex flex-col gap-6 w-full">
+                    <p
+                      class="text-[#4D4D4D] font-mulish font-normal text-start text-[18px]"
+                    >
+                      Баннеры — это наиболее традиционный вид интернет рекламы,
+                      рассчитанный на повышение узнаваемости бренда.
+                      Мы предлагаем баннеры на главной странице (с оплатой
+                      по времени) и внутренних страницах сайта (с оплатой
+                      по показам).
+                    </p>
+                    <div class="">
+                      <button
+                        class="sm:uppercase text-[#2B292C] text-lg font-medium py-3 sm:px-7 px-4 bg-[#E4DB00] rounded-lg"
+                      >
+                        Подробнее о баннерах и ценах
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Верификация -->
+                <div id="verification-block" style="display: none">
+                  <div class="flex flex-col items-start gap-10 font-mulish">
+                    <p class="text-[#4D4D4D] text-[18px] font-normal">
+                      Для прохождения верификации пришлите сканы/фото документов
+                      о регистрации компании, указанной в реквизитах вашей
+                      анкеты, на адрес ver@optlist.ru
+                    </p>
+                    <p class="text-[#4D4D4D] text-[18px] font-normal">
+                      Письмо должно быть с темой «Верификация», отправлено с
+                      вашего адреса example@gmail.com.
+                    </p>
+                  </div>
+                </div>
+                <!-- Тарифы -->
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+
+
+    {% endblock %}
+{% block js %}
+
+<script>
+  function connectTariff(id) {
+    fetch('/upping/buy/' + encodeURIComponent(id)) // Предположим, что это ваш URL для подключения тарифа
+        .then(response => {
+            if (response.status === 200) {
+                // Показать модальное окно об успешном подключении
+<!--                document.getElementById('modalSuccess').classList.remove('hidden');-->
+                console.log(response.status);
+                showToast('success', 'Успешно', 'Вы успешно подключили тариф');
+            } else if (response.status === 400) {
+                // Показать модальное окно о недостатке средств
+<!--                document.getElementById('modalFailure').classList.remove('hidden');-->
+<!--                console.log(response.status);-->
+                showToast('error', 'Ошибка', 'У вас недостаточно  средств');
+            } else {
+                // Обработка других HTTP статусов или ошибка сети
+                console.log(response.status);
+                alert('Произошла ошибка. Пожалуйста, попробуйте позже.');
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при подключении тарифа:', error);
+            showToast('error', 'Ошибка', 'Произошла ошибка при подключении тарифа');
+        });
+}
+
+
+function showToast(type, title, message) {
+  const colors = {
+    info: {
+      bg: 'bg-white',
+      border: 'border-[#2DC071]',
+      text: 'text-[#2DC071]',
+      icon: 'text-[#2DC071]',
+    },
+    error: {
+      bg: 'bg-white',
+      border: 'border-red-500',
+      text: 'text-red-700',
+      icon: 'text-red-500',
+    },
+    success: {
+      bg: 'bg-white',
+      border: 'border-[#2DC071]',
+      text: 'text-[#2DC071]',
+      icon: 'text-[#2DC071]',
+    },
+  };
+
+  // Create toast container
+  const toast = document.createElement('div');
+  toast.className = `fixed bottom-4 right-4 ${colors[type].bg} border-l-4 ${colors[type].border} ${colors[type].text} px-6 py-4 shadow-lg`; // Increased padding
+  toast.setAttribute('role', 'alert');
+
+  // Create inner flex container
+  const flex = document.createElement('div');
+  flex.className = 'flex items-start';
+
+  // Create icon container
+  const iconContainer = document.createElement('div');
+  iconContainer.className = 'py-1';
+
+  // Create SVG icon
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.className = `fill-current h-8 w-8 ${colors[type].icon} mr-4`; // Increased icon size
+  svg.setAttribute('viewBox', '0 0 20 20');
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute(
+    'd',
+    'M10 2a8 8 0 100 16 8 8 0 000-16zm1 12H9v-2h2v2zm0-4H9V6h2v4z'
+  );
+  svg.appendChild(path);
+
+  // Append icon to icon container
+  iconContainer.appendChild(svg);
+
+  // Create text container
+  const textContainer = document.createElement('div');
+
+  // Create bold text
+  const boldText = document.createElement('p');
+  boldText.className = 'font-bold text-lg'; // Increased font size for title
+  boldText.textContent = title;
+
+  // Create small text
+  const smallText = document.createElement('p');
+  smallText.className = 'text-base'; // Increased font size for message
+  smallText.textContent = message;
+
+  // Append texts to text container
+  textContainer.appendChild(boldText);
+  textContainer.appendChild(smallText);
+
+  // Append icon and text container to flex container
+  flex.appendChild(iconContainer);
+  flex.appendChild(textContainer);
+
+  // Append flex container to toast container
+  toast.appendChild(flex);
+
+  // Append toast container to body
+  document.body.appendChild(toast);
+
+  // Remove toast after 3 seconds
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+</script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+      integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js' %}"></script>
+    <script src="{% static 'pages/profile/analytic/index.js' %}"></script>
+    <script src="{% static 'pages/profile/tenders/index.js' %}"></script>
+    <script src="{% static 'pages/profile/profile.js' %}"></script>
+
+
+{% endblock %}

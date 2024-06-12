@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Employees{% endblock %}
+
+{% block content %}
+  <h1 class="text-3xl font-bold mb-4">Employees</h1>
+  <div class="bg-white p-4 rounded-lg shadow">
+    <ul>
+      {% for employee in employees %}
+        <li class="border-b last:border-none">
+          <a href="{% url 'employee_detail' employee.pk %}" class="block p-4 hover:bg-gray-100">
+            {{ employee.name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from apps.product.views import ProductListView, ProductUpdateView, ProductCreateView, ProductDeleteView, \
     ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView, ProductCategoryCreateView, ProductCategoryUpdateView, \
     ProductCategoryDeleteView, PriceColumnCreateView, PriceColumnUpdateView, PriceColumnDeleteView
@@ -108,6 +108,8 @@ urlpatterns = [
     path('price-columns/delete/<int:pk>/', PriceColumnDeleteView.as_view(), name='price_column_delete'),
 
     path('connect_tariff', tariff_buy),
+
+    path('finance/', include('apps.finance.urls')),
 
 
 

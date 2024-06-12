@@ -46,6 +46,8 @@ DJANGO_APPS = [
     'apps.tender',
     'apps.product',
     'apps.buyer',
+    'apps.finance',
+
 ]
 
 THIRD_PARTY_APPS = [
