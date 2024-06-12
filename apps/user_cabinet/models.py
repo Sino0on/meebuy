@@ -147,11 +147,8 @@ class SingletonModel(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
-        # Если модель уже существует, обновите ее
         if self.__class__.objects.exists() and not self.id:
-            # Получите существующую запись
             existing = self.__class__.objects.first()
-            # Обновите поля существующей записи
             for field in self._meta.fields:
                 if field.name != 'id':
                     setattr(existing, field.name, getattr(self, field.name))
@@ -161,7 +158,6 @@ class SingletonModel(models.Model):
 
     @classmethod
     def load(cls):
-        # Если модель еще не существует, создайте ее
         if not cls.objects.exists():
             cls.objects.create()
         return cls.objects.get()
