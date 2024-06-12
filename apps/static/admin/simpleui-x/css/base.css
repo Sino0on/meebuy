@@ -88,9 +88,23 @@ tbody tr:hover th {
 }
 .form-row {
   border-bottom: none !important;
+  width: 45%;
+    border-bottom: 1px solid #E6E6E6 !important;
+
+}
+.form-row:nth-child(2n) {
+  /* Стили для каждой второй строки */
+  border-left: 1px solid #E6E6E6;
 }
 .submit-row input[type='submit'] {
   height: auto;
+}
+
+fieldset.module{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .submit-row input[type='submit'] {
   padding: 12px 20px !important;
