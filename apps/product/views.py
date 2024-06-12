@@ -97,10 +97,10 @@ class ProductDetailView(DetailView):
                 print(self.get_object().provider.user)
                 if self.get_object().provider.user.cabinet.user_status:
                     if (
-                        self.get_object().user.cabinet.user_status.status.is_publish_phone
+                        self.get_object().provider.user.cabinet.user_status.status.is_publish_phone
                     ):
                         OpenNumberCount.objects.create(
-                            user=self.get_object().user.cabinet
+                            user=self.get_object().provider.user.cabinet
                         )
                         context["open"] = "open"
 

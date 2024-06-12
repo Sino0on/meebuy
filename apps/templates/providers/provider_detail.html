@@ -151,7 +151,7 @@
                                             <div class="uploaded_file_item">
                                                 <div class="flex items-center justify-between gap-[15px]">
                                                     <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}" class="line-clamp-3" style="max-width: 300px">
-{{ file.file.name|filename }}
+                                                        {{ file.file.name|filename }}
                                                     </a>
                                                 </div>
                                             </div>
@@ -173,10 +173,12 @@
                         <h2 class="text-xl font-bold">О компании</h2>
                         <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ provider.description }}</p>
                         <ul class="">
-                            <li class="mt-[30px]">
-                                <p class="text-lg font-semibold">Тип компании</p>
-                                <p class="mt-2.5">{{ provider.type }}</p>
-                            </li>
+                            {% if provider.type %}
+                                <li class="mt-[30px]">
+                                    <p class="text-lg font-semibold">Тип компании</p>
+                                    <p class="mt-2.5">{{ provider.type }}</p>
+                                </li>
+                            {% endif %}
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Объем поставок</p>
                                 {% if provider.large_wholesale %}
@@ -277,7 +279,7 @@
                                         fill="currentColor"></path>
                                 </svg>
 
-                                <p>Наш адрес <a href="" class="underline">{{ prove }}</a></p>
+                                <p>Наш адрес <a href="" class="underline">хххххххххххх</a></p>
                             </li>
                             <li class="flex items-center gap-[10px] mt-5">
                                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
@@ -287,7 +289,7 @@
                                         fill="#2B292C"></path>
                                 </svg>
 
-                                <span>E-mail</span> <a href="" class="underline">example@gmail.com</a>
+                                <span>E-mail</span> <a href="" class="underline">хххххххххххх</a>
                             </li>
                             <li class="flex items-center gap-[10px] mt-5">
                                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
@@ -297,7 +299,7 @@
                                         fill="#2B292C"></path>
                                 </svg>
 
-                                <span>Телефон</span> <a href="" class="underline">+7 (929) 566 -02 - 27</a>
+                                <span>Телефон</span> <a href="" class="underline">+ххххххххххх</a>
                             </li>
                             <li class="flex items-center gap-[10px] mt-5">
                                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
@@ -307,7 +309,7 @@
                                         fill="#2B292C"></path>
                                 </svg>
 
-                                <span>Сайт</span> <a href="" class="underline">Headphones.kg</a>
+                                <span>Сайт</span> <a href="" class="underline">ххххххххххх</a>
                             </li>
                         </ul>
                     </div>
