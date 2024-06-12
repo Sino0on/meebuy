@@ -137,6 +137,7 @@ class ActiveUpping(models.Model):
         return f'Активное поднятие на  - {self.upping.days} дней'
 
 
+
 class SingletonModel(models.Model):
     """
     Модель, которая всегда имеет только один экземпляр.
@@ -146,9 +147,17 @@ class SingletonModel(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
-        # Если модель уже существует, удалите ее
-        self.__class__.objects.exclude(id=self.id).delete()
-        super(SingletonModel, self).save(*args, **kwargs)
+        # Если модель уже существует, обновите ее
+        if self.__class__.objects.exists() and not self.id:
+            # Получите существующую запись
+            existing = self.__class__.objects.first()
+            # Обновите поля существующей записи
+            for field in self._meta.fields:
+                if field.name != 'id':
+                    setattr(existing, field.name, getattr(self, field.name))
+            existing.save()
+        else:
+            super(SingletonModel, self).save(*args, **kwargs)
 
     @classmethod
     def load(cls):
