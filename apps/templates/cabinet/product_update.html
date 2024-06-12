@@ -212,7 +212,7 @@
                   <label>
                       <input
                         class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text" name="price" value="{{ form.price.value|default_if_none:'' }}"
+                        type="number" name="price" value="{{ form.price.value|default_if_none:'' }}"
                       />
                       {% if form.price.errors %}
                             <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
