@@ -9,7 +9,7 @@
                 {{ price.name }}
               </p>
               <span class="text-[#2B292C] text-[18px] font-extrabold"
-                >{{ price.price|floatformat:price.decimal }} {{ product.currency }}</span
+                >{{ price.price|floatformat:price.decimal }} {% if product.currency %}{{ product.currency }} {% endif %}</span
               >
             </div>
 
