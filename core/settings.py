@@ -296,7 +296,7 @@ SIMPLEUI_HOME_TITLE = 'Meebuy'
 # SIMPLEUI_LOGO = '/static/logo/logo.svg'
 
 SIMPLEUI_CONFIG = {
-    'system_keep': True,
+    'system_keep': False,
     'menus': [
 
         {

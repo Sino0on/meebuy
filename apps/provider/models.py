@@ -109,7 +109,7 @@ class Provider(StatusMixin, models.Model):
         max_length=123, verbose_name=_("Факс"), blank=True, null=True
     )
     user = models.OneToOneField(
-        User, on_delete=models.PROTECT, verbose_name="Пользователь"
+        User, on_delete=models.CASCADE, verbose_name="Пользователь"
     )
     image = models.ImageField(
         blank=True,
