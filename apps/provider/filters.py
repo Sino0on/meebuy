@@ -19,7 +19,10 @@ class ProviderFilter(django_filters.FilterSet):
         label='Страна',
         method='filter_by_country'
     )
-
+    region = django_filters.CharFilter(
+        label='Регион',
+        method='filter_by_region'
+    )
     city = django_filters.CharFilter(
         label='Город',
         method='filter_by_city'
@@ -74,6 +77,7 @@ class ProviderFilter(django_filters.FilterSet):
         fields = [
             'title',
             'country',
+            'region',
             'city',
             'large_wholesale',
             'small_wholesale',
@@ -102,19 +106,28 @@ class ProviderFilter(django_filters.FilterSet):
     def filter_by_country(self, queryset, name, value):
         if value:
             try:
-                country = Country.objects.get(title=value)  # Используем обычный get
+                country = Country.objects.get(title=value)
                 return queryset.filter(user__provider__city__region__country=country.id)
             except Country.DoesNotExist:
-                return queryset.none()  # Возвращаем пустой QuerySet, если страна не найдена
+                return queryset.none()
+        return queryset
+
+    def filter_by_region(self, queryset, name, value):
+        if value:
+            try:
+                country = Region.objects.get(title=value)
+                return queryset.filter(user__provider__city__region=country.id)
+            except Country.DoesNotExist:
+                return queryset.none()
         return queryset
 
     def filter_by_city(self, queryset, name, value):
         if value:
             try:
-                city = City.objects.get(title=value)  # Используем обычный get вместо get_object_or_404
+                city = City.objects.get(title=value)
                 return queryset.filter(user__provider__city=city.id)
             except City.DoesNotExist:
-                return queryset.none()  # Возвращаем пустой QuerySet, если город не найден
+                return queryset.none()
         return queryset
 
     def filter_boolean_field(self, queryset, name, value):
