@@ -293,7 +293,7 @@ SIMPLEUI_HOME_QUICK = True
 SIMPLEUI_INDEX = '#'
 SIMPLEUI_DEFAULT_THEME = 'e-black-pro.css'
 SIMPLEUI_HOME_TITLE = 'Meebuy'
-SIMPLEUI_LOGO = '/static/logo/logo.svg'
+# SIMPLEUI_LOGO = '/static/logo/logo.svg'
 
 SIMPLEUI_CONFIG = {
     'system_keep': False,
