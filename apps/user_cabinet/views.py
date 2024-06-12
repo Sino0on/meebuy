@@ -217,8 +217,41 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
         contacts = Contacts.load()
         context['contacts'] = contacts
         provider, _ = Provider.objects.get_or_create(user=self.request.user)
-        context['provider'] = provider
+        context['locations'] = self.get_locations()
         return context
+
+    def get_locations(self):
+        countries = Country.objects.all()
+        locations = []
+
+        for country in countries:
+            country_data = {
+                'id': country.id,
+                'title': country.title,
+                'regions': []
+            }
+
+            regions = Region.objects.filter(country=country)
+            for region in regions:
+                region_data = {
+                    'id': region.id,
+                    'title': region.title,
+                    'cities': []
+                }
+
+                cities = City.objects.filter(region=region)
+                for city in cities:
+                    city_data = {
+                        'id': city.id,
+                        'title': city.title
+                    }
+                    region_data['cities'].append(city_data)
+
+                country_data['regions'].append(region_data)
+
+            locations.append(country_data)
+
+        return locations
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

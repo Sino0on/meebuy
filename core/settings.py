@@ -25,7 +25,6 @@ PROJECT_APPS = [
     'daphne',
     'channels',
     'simpleui',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -490,6 +489,11 @@ SIMPLEUI_CONFIG = {
                     ]
                 }
             ]
+        },
+        {
+            'name': 'Сообщения в поддержку',
+            'icon': 'fa fa-industry',
+            'url': '/admin/user_cabinet/supportmessage/'
         },
 
     ]

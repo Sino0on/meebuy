@@ -145,3 +145,58 @@ document.addEventListener('click', function (event) {
     }
   }
 });
+
+const countrySelect = document.getElementById("country-options");
+  const regionSelect = document.getElementById("region-options");
+  const citySelect = document.getElementById("city-options");
+
+  function transformData(data) {
+  const transformed = {};
+
+  data.forEach(country => {
+    const countryObj = {};
+
+    country.regions.forEach(region => {
+      const regionObj = {};
+
+      region.cities.forEach(city => {
+        regionObj[city.title] = city.title;
+      });
+
+      countryObj[region.title] = regionObj;
+    });
+
+    transformed[country.title] = countryObj;
+  });
+
+  return transformed;
+}
+
+  const formattedString = openFilter.getAttribute("data-countries").replace(/'/g, '"');
+  const countries = JSON.parse(formattedString);
+  const transformedData = transformData(countries);
+  addOptions(regionSelect,transformedData[countrySelect.value])
+  addOptions(citySelect,transformedData[countrySelect.value][regionSelect.value])
+
+
+  countrySelect.addEventListener('change',(e)=>{
+    const selectedCountry = e.target.value;
+    addOptions(regionSelect,transformedData[selectedCountry])
+    addOptions(citySelect,transformedData[selectedCountry][regionSelect.value])
+  })
+
+  regionSelect.addEventListener('change',(e)=>
+  {
+    const selectedRegion = e.target.value;
+    addOptions(citySelect,transformedData[countrySelect.value][selectedRegion])
+  })
+
+  function addOptions(element,options){
+    element.innerHTML = ""
+    for(const option in options){
+    const optionEl = document.createElement("option");
+      optionEl.textContent = option;
+      optionEl.value = option;
+      element.appendChild(optionEl);
+    }
+  }
