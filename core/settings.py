@@ -296,7 +296,7 @@ SIMPLEUI_HOME_TITLE = 'Meebuy'
 # SIMPLEUI_LOGO = '/static/logo/logo.svg'
 
 SIMPLEUI_CONFIG = {
-    'system_keep': False,
+    'system_keep': True,
     'menus': [
 
         {
@@ -305,6 +305,11 @@ SIMPLEUI_CONFIG = {
             'models': [
                 {
                     'name': 'Пользователи',
+                    'icon': 'fa fa-industry',
+                    'url': '/admin/authentication/user/'
+                },
+                {
+                    'name': 'Аккаунты',
                     'icon': 'fa fa-industry',
                     'url': '/admin/provider/provider/'
                 },
