@@ -161,10 +161,10 @@ class SelectAuthUserTypeView(FormView):
             user_profile.user_type = form.cleaned_data['user_type']
             print(form.cleaned_data['user_type'])
             user_profile.save()
-            if user_profile.user_type == 'provider':
-                Provider.objects.get_or_create(user=user_profile)
+            if form.cleaned_data['user_type'] == 'provider':
+                Provider.objects.get_or_create(user=user_profile, is_provider=True)
             elif user_profile.user_type == 'buyer':
-                Buyer.objects.create(user=user_profile)
+                Provider.objects.get_or_create(user=user_profile, is_provider=False)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

@@ -373,11 +373,11 @@ SIMPLEUI_CONFIG = {
         },
         {
             'name': 'Банерная реклама',
-            'icon': 'fa fa-globe',
+            'icon': 'fa fa-eye ',
             'models': [
                 {
                     'name': 'Настройки',
-                    'icon': 'fa fa-map-marker',
+                    'icon': 'fa fa-wrench',
                     'url': '/admin/buyer/bannersettings/'
                 },
                 {

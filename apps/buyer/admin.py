@@ -3,8 +3,15 @@ from apps.buyer.models import Banner, BannerSettings, Buyer
 
 
 admin.site.register(Buyer)
-admin.site.register(BannerSettings)
 
+class BannerInline(admin.StackedInline):
+    model = Banner
+    extra = 0
+
+@admin.register(BannerSettings)
+class BannerSettingsAdmin(admin.ModelAdmin):
+    list_display = ["number"]
+    inlines = [BannerInline]
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
@@ -24,4 +31,4 @@ class BannerAdmin(admin.ModelAdmin):
         "is_active",
         "created_at",
     )
-    readonly_fields = ("get_image_desktop", "get_image_mobile", "created_at")
+    readonly_fields = ("get_image_desktop", "get_image_mobile", "created_at", 'settings')
