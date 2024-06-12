@@ -87,6 +87,15 @@
                 категорию, т.к. товар автоматически будет показан во всех
                 родительских категориях
               </p>
+                {% if form.errors %}
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.name }} - {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
                 <label>
                     <select
                       class=" relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
