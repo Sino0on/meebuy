@@ -187,29 +187,26 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
         self.object = self.get_object()
         form = self.form_class(request.POST, instance=self.object)
 
-        if form.is_valid:
-            def form_valid(self, form):
-                country_name = self.request.POST.get('country')
-                region_name = self.request.POST.get('region')
-                city_name = self.request.POST.get('city')
-                category_ids = self.request.POST.getlist('category')
+        if form.is_valid():
 
-                country = Country.objects.get(title=country_name)
-                region = Region.objects.get(country=country, title=region_name)
-                city = City.objects.get(region=region, title=city_name)
+            country_name = self.request.POST.get('country')
+            country = Country.objects.get(title=country_name)
+            region_name = self.request.POST.get('region')
+            region = Region.objects.get(country=country, title=region_name)
+            city_name = self.request.POST.get('city')
+            city = City.objects.get(region=region, title=city_name)
+            self.object = form.save(commit=False)
+            self.object.city = city
+            category_ids = self.request.POST.getlist('category')
+            # Получение категорий и очистка текущих категорий
+            category_ids = [int(id) for id in category_ids if id.isdigit()]
+            categories = Category.objects.filter(id__in=category_ids)
+            self.object.save()  # Сохранение объекта до добавления категорий для создания PK
+            self.object.category.set(categories)  # Обновление категорий
 
-                self.object = form.save(commit=False)
-                self.object.city = city
-
-                category_ids = [int(id) for id in category_ids if id.isdigit()]
-                categories = Category.objects.filter(id__in=category_ids)
-                self.object.save()
-                self.object.category.set(categories)
-
-                self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите.'
-                self.object.save()
-
-                return redirect(self.get_success_url())
+            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подожтите.'
+            self.object.save()
+            return redirect(self.get_success_url())
         else:
             print(form.errors)
             return self.form_invalid(form)
