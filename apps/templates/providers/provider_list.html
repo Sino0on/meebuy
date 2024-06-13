@@ -173,7 +173,7 @@
             >
               <img
                 class="w-[100px] h-[100px]"
-                src="{% if provider.image %}{{ provider.image.url }}{% endif %}"
+                src="{% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                alt=""/>
               <div class="flex flex-col gap-6">
                 <div>
