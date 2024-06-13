@@ -1540,6 +1540,10 @@ input{
   height: 100px;
 }
 
+.w-\[100px\]{
+  width: 100px;
+}
+
 .h-\[113px\]{
   height: 113px;
 }

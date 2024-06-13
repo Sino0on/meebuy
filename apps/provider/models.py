@@ -37,18 +37,24 @@ class Category(models.Model):
 
 
 class Provider(StatusMixin, models.Model):
-    TYPE_CHOICES = [
-        (1, "Оптовая продажа товаров (вы поставщик)",),
-        (2, "Производство товаров (вы производитель)",),
-        (3, "Оказание услуг логистики / поиска товаров / таможенного оформления",)
-    ]
+    class BusinessType(models.TextChoices):
+        WHOLESALE = "wholesale", _("Оптовая продажа товаров (вы поставщик)")
+        MANUFACTURING = "manufacturing", _("Производство товаров (вы производитель)")
+        SERVICES = "services", _(
+            "Оказание услуг логистики / поиска товаров / таможенного оформления"
+        )
     title = models.CharField(
         max_length=123, verbose_name="Название", blank=True, null=True
     )
     mini_descr = models.CharField(
         max_length=250, verbose_name="Короткое описание", blank=True, null=True
     )
-    type = models.CharField(max_length=255, choices=TYPE_CHOICES, verbose_name=_("Тип"), blank=True, null=True)
+    type = models.CharField(
+        max_length=20,
+        choices=BusinessType.choices,
+        verbose_name=_("Основная деятельность вашей компании"),
+        default=BusinessType.WHOLESALE,
+    )
     description = models.TextField(verbose_name="Описание", blank=True, null=True)
     category = models.ManyToManyField(
         Category, related_name="providers", verbose_name=_("Категории"), blank=True
@@ -59,20 +65,6 @@ class Provider(StatusMixin, models.Model):
         verbose_name=_("Минимальный заказ"),
         blank=True,
         null=True,
-    )
-
-    class BusinessType(models.TextChoices):
-        WHOLESALE = "wholesale", _("Оптовая продажа товаров (вы поставщик)")
-        MANUFACTURING = "manufacturing", _("Производство товаров (вы производитель)")
-        SERVICES = "services", _(
-            "Оказание услуг логистики / поиска товаров / таможенного оформления"
-        )
-
-    company_core_business = models.CharField(
-        max_length=20,
-        choices=BusinessType.choices,
-        verbose_name=_("Основная деятельность вашей компании"),
-        default=BusinessType.WHOLESALE,
     )
 
     large_wholesale = models.BooleanField(default=False, verbose_name=_("Крупный опт"))
