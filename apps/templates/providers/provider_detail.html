@@ -15,13 +15,13 @@
         <nav class="bg-[#FFFFFC]">
             <div class="container">
                 <div class="">
-                    <div class="flex gap-4 py-4">
+                    <div class="flex gap-4 py-4 items-center">
                         <div class="lg-md:flex hidden items-center gap-4">
                             <a href="/"><img src="{% static 'assets/images/icons/home.svg' %}" alt="" /></a>
-                            <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+                            <a href="/"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" /></a>
                         </div>
                         <a href="/provider/list/" class="font-normal font-mulish text-[#A0A0A0]">Поставщики</a>
-                        <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+                        <a href="/provider/list/"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" /></a>
                         <p class="font-normal font-mulish text-[#A0A0A0]">{{ provider.title }}</p>
                     </div>
                 </div>
@@ -141,9 +141,11 @@
                                 <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
                                     Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
                                 </div>
-                                <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
-                                    <a href="/product/detail/{{ product.id }}/">Подробнее</a>
-                                </button>
+                                <a href="/product/detail/{{ product.id }}/">
+                                    <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
+                                        Подробнее
+                                    </button>
+                                </a>
                             </div>
                             {% endfor %}
                         </div>
