@@ -1,15 +1,12 @@
-
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
 Личный кабинет
 {% endblock %}
-
 {% block css %}
-    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
-    <link rel="stylesheet" href="{% static 'pages/profile/favorites/index.css' %}">
+<link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
+<link rel="stylesheet" href="{% static 'pages/profile/favorites/index.css' %}">
 {% endblock %}
-
 {% block content %}
 <nav class="breadcrumbs bg-[#FFFFFC]">
     <div class="container">
@@ -28,62 +25,57 @@
     <section class="heading">
         <div class="container">
             <h1 class="font-black mb-12 text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
-                личный кабинет</h1>
+                личный кабинет
+            </h1>
         </div>
     </section>
     <div class="container">
         <div class="lg-md:grid grid-cols-3  pb-[100px] lg-md:pb-[120px] lg-md:gap-5 xl:grid-cols-4">
             <!--  this section is for avatar  -->
-
-                    <!-- dropdown menu-->
-                {% include "cabinet/cabinet_includes/menu.html" with active_page='favorites' %}
-
-                    <!-- desktop menu end-->
-
+            <!-- dropdown menu-->
+            {% include "cabinet/cabinet_includes/menu.html" with active_page='favorites' %}
+            <!-- desktop menu end-->
             <div class="lg-md:col-span-2 xl:col-span-3">
                 <!-- these sections are for main content  -->
                 <section class="main-content mt-[30px] h-[calc(100%-50px)] lg-md:mt-0">
                     <!-- tabs  -->
                     <div class="tabs__wrapper">
                         <button onclick="openTab(event,'Tab1')"
-                                class="tabs__item transition-colors active btn-filled-yellow-light py-2 px-2.5 text-nowrap">
-                            Компании
+                            class="tabs__item transition-colors active btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                        Компании
                         </button>
                         <button onclick="openTab(event,'Tab2')"
-                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
-                            Товары
+                            class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                        Товары
                         </button>
                         <button onclick="openTab(event,'Tab3')"
-                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
-                            Закупки
+                            class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                        Закупки
                         </button>
                     </div>
-
                     <!-- tabs content  -->
                     <div id="Tab1"
-                         class="card__wrapper h-[calc(100%-70px)] tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
+                        class="card__wrapper h-[calc(100%-70px)] tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
                         {% if user.cabinet.favorite_providers.exists %}
                         <div class="space-y-5 lg-md:space-y-0 lg-md:p-5 xl:p-10">
                             {% for i in user.cabinet.favorite_providers.all %}
                             <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
                                 <div class="flex justify-between items-center">
                                     <a href="{% url 'provider_detail' i.pk %}">
-                                    <div class="flex items-center gap-5">
-
-                                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
-                                            {% if i.image %}
+                                        <div class="flex items-center gap-5">
+                                            <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
+                                                {% if i.image %}
                                                 <img class="object-cover h-full"
-                                                     src="{{ i.image.url }}"
-                                                     alt="image">
-                                            {% endif %}
+                                                    src="{{ i.image.url }}"
+                                                    alt="image">
+                                                {% endif %}
+                                            </div>
+                                            <p>{{ i.title }}</p>
                                         </div>
-                                        <p>{{ i.title }}</p>
-
-                                    </div>
                                     </a>
                                     <a href="/delete/fav/provider/{{ i.pk }}">
                                     <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
-                                        </a>
+                                    </a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -94,31 +86,33 @@
                                 <p class="text-center">Вы пока не добавляли компаний в Избранные</p>
                                 <p class="mt-10 lg-md:mt-[30px] flex flex-col items-center gap-5 justify-center lg-md:gap-1 lg-md:flex-row ">
                                     Чтобы добавить элемент в Избранные, нажмите <img class="w-6 h-6"
-                                                                                     src="{% static '/assets/images/icons/heart-filled-black.svg' %}"
-                                                                                     alt="heart"></p>
+                                        src="{% static '/assets/images/icons/heart-filled-black.svg' %}"
+                                        alt="heart">
+                                </p>
                             </div>
                         </div>
                         {% endif %}
                     </div>
-
                     <div id="Tab2"
-                         class="card__wrapper h-[calc(100%-70px)] hidden tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
+                        class="card__wrapper h-[calc(100%-70px)] hidden tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
                         {% if user.cabinet.favorite_products.exists %}
                         <div class="space-y-5 lg-md:space-y-0 lg-md:p-5 xl:p-10">
                             {% for i in user.cabinet.favorite_products.all %}
-                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
+                            <div class="card__item flex justify-between !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
                                 <a href="{% url 'product_detail' i.pk %}" class="flex justify-between items-center">
                                     <div class="flex items-center gap-5">
                                         <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
                                             {% if i.image %}
-                                                <img class="object-cover h-full"
-                                                     src="{{ i.image.url }}"
-                                                     alt="image">
+                                            <img class="object-cover h-full"
+                                                src="{{ i.image.url }}"
+                                                alt="image">
                                             {% endif %}
                                         </div>
                                         <p>{{ i.title }}</p>
                                     </div>
-                                    <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
+                                </a>
+                                <a href="/delete/fav/product/{{ i.pk }}">
+                                <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
                                 </a>
                             </div>
                             {% endfor %}
@@ -129,32 +123,32 @@
                                 <p class="text-center">Вы пока не добавляли товары в Избранные</p>
                                 <p class="mt-10 lg-md:mt-[30px] flex flex-col items-center gap-5 justify-center lg-md:gap-1 lg-md:flex-row ">
                                     Чтобы добавить элемент в Избранные, нажмите <img class="w-6 h-6"
-                                                                                     src="{% static '/assets/images/icons/heart-filled-black.svg' %}"
-                                                                                     alt="heart"></p>
+                                        src="{% static '/assets/images/icons/heart-filled-black.svg' %}"
+                                        alt="heart">
+                                </p>
                             </div>
                         </div>
                         {% endif %}
-
                     </div>
-
                     <div id="Tab3"
-                         class="card__wrapper h-[calc(100%-70px)] hidden tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
+                        class="card__wrapper h-[calc(100%-70px)] hidden tab-content rounded-[10px] mt-[30px] lg-md:shadow-card-shadow">
                         {% if user.cabinet.favorite_tenders.exists %}
                         <div class="space-y-5  lg-md:space-y-0 lg-md:p-5 xl:p-10">
-
                             {% for i in user.cabinet.favorite_tenders.all %}
-                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
+                            <div class="card__item flex justify-between !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
                                 <a href="{% url 'tender_detail' i.pk %}" class="flex justify-between items-center">
                                     <div class="flex items-center gap-5">
                                         {% if i.tender_images.all.exists %}
                                         <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
                                             <img class="object-cover h-full"
-                                                 src="{{ i.tender_images.all.first.image.url }}"
-                                                 alt="empty icon">
+                                                src="{{ i.tender_images.all.first.image.url }}"
+                                                alt="empty icon">
                                         </div>
                                         {% endif %}
                                         <p>{{i.title}}</p>
                                     </div>
+                                </a>
+                                <a href="/delete/fav/tender/{{ i.pk }}" class="block">
                                     <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
                                 </a>
                             </div>
@@ -166,22 +160,19 @@
                                 <p class="text-center">Вы пока не добавляли закупки в Избранные</p>
                                 <p class="mt-10 lg-md:mt-[30px] flex flex-col items-center gap-5 justify-center lg-md:gap-1 lg-md:flex-row ">
                                     Чтобы добавить элемент в Избранные, нажмите <img class="w-6 h-6"
-                                                                                     src="{% static '/assets/images/icons/heart-filled-black.svg' %}"
-                                                                                     alt="heart"></p>
+                                        src="{% static '/assets/images/icons/heart-filled-black.svg' %}"
+                                        alt="heart">
+                                </p>
                             </div>
                         </div>
                         {% endif %}
-
                     </div>
                 </section>
             </div>
         </div>
     </div>
 </main>
-
 {% endblock %}
 {% block js %}
-
 <script src="{% static 'pages/profile/profile.js' %}"></script>
-
 {% endblock %}

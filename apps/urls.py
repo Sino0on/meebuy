@@ -107,6 +107,10 @@ urlpatterns = [
     path('fav/buyer/<int:pk>/', add_buyer_fav_api),
 
     path('delete/fav/provider/<int:pk>/', delete_provider_fav),
+    path('delete/fav/product/<int:pk>/', delete_product_fav),
+    path('delete/fav/tender/<int:pk>/', delete_tender_fav),
+    path('delete/fav/buyer/<int:pk>/', delete_buyer_fav),
+
     path('add_provider_favorite/<int:pk>/', add_provider_fav),
 
     # user

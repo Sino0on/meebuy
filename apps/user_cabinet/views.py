@@ -269,7 +269,8 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
         form = self.form_class(request.POST, request.FILES, instance=self.object)
 
         if form.is_valid():
-            self.object = form.save(commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
+            self.object = form.save(
+                commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
             self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите пару минут'
 
             self.object.save()  # Сохраняем изменения в объект
@@ -278,6 +279,7 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
         else:
             print(form.errors)  # Вывод ошибок на консоль для отладки
             return self.form_invalid(form)
+
 
 @require_POST
 def change_avatar(request):
@@ -396,6 +398,7 @@ class CreateTenderView(LoginRequiredMixin, generic.TemplateView):
         context['provider'] = provider
         return context
 
+
 class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/tenders.html'
 
@@ -415,7 +418,6 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Product.objects.filter(provider__user=self.request.user)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -685,6 +687,24 @@ def delete_provider_fav(request, pk):
     return redirect('/profile/favorites/')
 
 
+def delete_product_fav(request, pk):
+    product = get_object_or_404(Product, id=pk)
+    request.user.cabinet.favorite_products.remove(product)
+    return redirect('/profile/favorites/')
+
+
+def delete_tender_fav(request, pk):
+    tender = get_object_or_404(Tender, id=pk)
+    request.user.cabinet.favorite_tenders.remove(tender)
+    return redirect('/profile/favorites/')
+
+
+def delete_buyer_fav(request, pk):
+    provider = get_object_or_404(Provider, id=pk)
+    request.user.cabinet.favorite_providers.remove(provider)
+    return redirect('/profile/favorites/')
+
+
 def add_provider_fav(request, pk):
     provider = get_object_or_404(Provider, id=pk)
     request.user.cabinet.favorite_providers.add(provider)
@@ -751,6 +771,7 @@ from .freedompay import send_post_request
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 import uuid
+
 
 @csrf_exempt
 def init_payment(request):
