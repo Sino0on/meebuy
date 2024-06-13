@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from apps.buyer.models import Banner, BannerSettings
-from apps.provider.models import Provider, Tag
+from apps.provider.models import Provider
 from apps.tender.models import Category, Country, Region, City
 from apps.provider.filters import ProviderFilter
 from apps.user_cabinet.models import ViewsCountProfile, OpenNumberCount
@@ -33,7 +33,7 @@ class ProviderListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()
-        context["types"] = Tag.objects.all()
+        # context["types"] = Tag.objects.all()
         context["filter"] = self.filter
         contacts = Contacts.load()
         context["contacts"] = contacts
