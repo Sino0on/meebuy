@@ -5,7 +5,7 @@ from apps.buyer.models import Banner, BannerSettings
 from apps.provider.models import Provider, Tag
 from apps.tender.models import Category, Country, Region, City
 from apps.provider.filters import ProviderFilter
-from apps.user_cabinet.models import ViewsCountProfile
+from apps.user_cabinet.models import ViewsCountProfile, OpenNumberCount
 from rest_framework.generics import ListAPIView
 from apps.provider.serializers import CategoryListSerializer
 from apps.user_cabinet.models import Contacts
@@ -115,6 +115,17 @@ class ProviderDetailView(generic.DetailView):
         context["companies"] = Provider.objects.exclude(id=self.object.id).filter(
             is_provider=True, is_modered=True, is_active=True
         )
+        if self.request.GET.get("open"):
+            if self.request.user.is_authenticated:
+                print(self.get_object().user)
+                if self.get_object().user.cabinet.user_status:
+                    if (
+                        self.get_object().user.cabinet.user_status.status.is_publish_phone
+                    ):
+                        OpenNumberCount.objects.create(
+                            user=self.get_object().user.cabinet
+                        )
+                        context["open"] = "open"
         return context
 
 

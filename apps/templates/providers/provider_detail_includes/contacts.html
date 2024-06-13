@@ -1,0 +1,103 @@
+{% load static %}
+<!-- under slider -->
+<div class="cards w-full flex flex-col gap-4 p-5 rounded-2xl">
+
+{% if open %}
+    <h1>123123132123</h1>
+      <div class="flex items-center gap-3">
+    <img src="{% static 'assets/images/icons/location.svg' %}"  alt="" />
+    <p class="text-[#A0A0A0] font-normal text-[16px]">
+      {% if provider.city and provider.address %}
+                        {{ provider.city }} {{ provider.address }}
+                    {% else %}
+                        Адрес не указан
+                    {% endif %}
+    </p>
+  </div>
+  <div class="flex items-center gap-3">
+    <img src="{% static 'assets/images/icons/email.svg' %}"  alt="" />
+    <p class="text-[#A0A0A0] font-normal text-[16px]">
+      {% if provider.email %}
+                        {{ provider.email }}
+                    {% else %}
+                        Email не указан
+                    {% endif %}
+    </p>
+  </div>
+  <div class="flex items-center gap-3">
+    <img src="{% static 'assets/images/icons/call.svg' %}"  alt="" />
+    <p class="text-[#A0A0A0] font-normal text-[16px]">
+      {% if provider.phone %}
+          {{ provider.phone }}
+  {% else %}
+      Телефон не указан
+  {% endif %}
+    </p>
+  </div>
+  <div class="flex items-center gap-3">
+    <img
+    src="{% static 'assets/images/icons/earth-location.svg' %}"
+      alt=""
+    />
+    {% if provider.website %}
+        <p class="text-[#A0A0A0] font-normal text-[16px]">{{ provider.website }}</p>
+    {% else %}
+        Веб сайт не указан
+    {% endif %}
+  </div>
+
+{% else %}
+  <div class="flex items-center gap-3">
+    <img src="{% static 'assets/images/icons/location.svg' %}"  alt="" />
+    <p class="text-[#A0A0A0] font-normal text-[16px]">
+      {% if provider.city and provider.address %}
+                        {{ provider.city }} xxxxxxxxx
+                    {% else %}
+                        Адрес не указан
+                    {% endif %}
+    </p>
+  </div>
+  <div class="flex items-center gap-3">
+    <img src="{% static 'assets/images/icons/email.svg' %}"  alt="" />
+    <p class="text-[#A0A0A0] font-normal text-[16px]">
+      {% if provider.email %}
+                        xxxxxx@gmail.com
+                    {% else %}
+                        Email не указан
+                    {% endif %}
+    </p>
+  </div>
+  <div class="flex items-center gap-3">
+    <img src="{% static 'assets/images/icons/call.svg' %}"  alt="" />
+    <p class="text-[#A0A0A0] font-normal text-[16px]">
+      {% if provider.phone %}
+      {{ provider.phone|slice:"0:-4" }}xxxx
+  {% else %}
+      Телефон не указан
+  {% endif %}
+    </p>
+  </div>
+  <div class="flex items-center gap-3">
+    <img
+    src="{% static 'assets/images/icons/earth-location.svg' %}"
+      alt=""
+    />
+    {% if provider.website %}
+    <p class="text-[#A0A0A0] font-normal text-[16px]">xxxxxxxxxx</p>
+    {% else %}
+                    Веб сайт не указан
+                {% endif %}
+  </div>
+
+{% endif %}
+
+
+
+    <form action="{% url 'provider_detail' object.id %}" method="get">
+        <input type="hidden" value="1" name="open">
+  <button type="submit"
+    class="uppercase text-[16px] font-medium font-mulish py-3 px-4 bg-[#E4DB00] rounded-md">
+    показать контакты
+  </button>
+        </form>
+</div>
