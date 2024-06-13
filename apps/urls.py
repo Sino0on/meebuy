@@ -6,7 +6,7 @@ from apps.product.views import ProductListView, ProductUpdateView, ProductCreate
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView, upload_file
 from apps.user_cabinet.views import *
 
-from apps.pages.views import privacy_policy_view, rules_view
+from apps.pages.views import privacy_policy_view, rules_view, banner_view
 
 from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create, activate
 
@@ -132,6 +132,7 @@ urlpatterns = [
     path('connect_tariff', tariff_buy),
     path('privacy-policy/', privacy_policy_view, name='privacy_policy'),
     path('rules/', rules_view, name='rules'),
+    path('bunner/', banner_view, name='bunner'),
 
     path('delete-transaction/<int:transaction_id>/', delete_transaction, name='delete_transaction'),
 

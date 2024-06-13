@@ -22,3 +22,14 @@ def rules_view(request):
         return render(request, 'staticpages/rules.html', {'rules': rules})
     else:
         return render(request, 'staticpages/rules.html', {'rules': rules})
+
+
+def banner_view(request):
+    banner, created = StaticPage.objects.get_or_create(slug='banners')
+    if created:
+        banner.title = 'Баннер'
+        banner.description = 'Здесь вы можете создать описание "Баннер" для вашего сайта meebuy.ru'
+        banner.save()
+        return render(request, 'staticpages/banner.html', {'banner': banner})
+    else:
+        return render(request, 'staticpages/banner.html', {'banner': banner})
