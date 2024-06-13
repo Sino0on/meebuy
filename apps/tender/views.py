@@ -160,11 +160,13 @@ class TenderUpdateView(generic.UpdateView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, instance=obj)  # Bind the form to the existing instance
         if form.is_valid():
             form.save()
         else:
             print(form.errors)
+            return self.form_invalid(form)
+
         if request.POST.get("period"):
             days = request.POST.get("period")
             obj.end_date += timezone.timedelta(days=int(days))
@@ -178,13 +180,12 @@ class TenderUpdateView(generic.UpdateView):
         existing_images = obj.tender_images.all()
         for idx, file_field in enumerate(file_fields):
             if request.FILES.get(file_field):
-                # Удаление старого изображения, если существует
+                # Remove old image if it exists
                 if idx < len(existing_images):
                     existing_images[idx].delete()
-                # Сохранение нового изображения
+                # Save new image
+                TenderImg.objects.create(tender=obj, image=request.FILES[file_field])
 
-        for i in new_images:
-            TenderImg.objects.create(tender=obj, image=i)
         return super().post(request, *args, **kwargs)
 
 
