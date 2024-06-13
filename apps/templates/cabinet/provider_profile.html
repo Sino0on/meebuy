@@ -1,16 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
-
 {% block title %}
 Личный кабинет
 {% endblock %}
-
 {% block css %}
-    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
-    <link rel="stylesheet" href="{% static 'pages/profile/myCompany/index.css' %}">
+<link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
+<link rel="stylesheet" href="{% static 'pages/profile/myCompany/index.css' %}">
 {% endblock %}
-
 {% block content %}
 <nav class="breadcrumbs bg-[#FFFFFC]">
     <div class="container">
@@ -29,19 +26,17 @@
     <section class="heading">
         <div class="container">
             <h1
-            class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
-                личный кабинет</h1>
+                class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                личный кабинет
+            </h1>
         </div>
     </section>
     <div class="container">
         <div class="lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
             <!--  this section is for avatar  -->
-
-                        <!-- dropdown menu-->
-                {% include "cabinet/cabinet_includes/menu.html" with active_page='view_profile' %}
-
-                        <!-- desktop menu end-->
-
+            <!-- dropdown menu-->
+            {% include "cabinet/cabinet_includes/menu.html" with active_page='view_profile' %}
+            <!-- desktop menu end-->
             <!-- these sections are for main content  -->
             <section class="main-content mt-10 mb-28 lg-md:mt-0 lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
                 <div class="container">
@@ -49,53 +44,54 @@
                         <!--  Анкета  -->
                         <div class="card__item shadow-card-shadow">
                             {% if messages %}
-                                {% for message in messages %}
-                                    <div class="{{ message.tags }}">
-                                        <p class="text-[#00F700]">{{ message }}</p>
-                                    </div>
-                                {% endfor %}
+                            {% for message in messages %}
+                            <div class="{{ message.tags }}">
+                                <p class="text-[#00F700]">{{ message }}</p>
+                            </div>
+                            {% endfor %}
                             {% endif %}
-                                    <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
+                            <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
                             <a href="{% if provider.is_provider %}{% url 'anketa' %}{% else %}{% url 'anketa_buyer' %}{% endif %}">
                             <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5">Редактировать анкету</button>
                             </a>
                             <a href="{% url 'tariffs' %}"
-                               class="mt-4 border border-[#E4DB00] bg-[#2B292C] text-bg-white rounded-[15px] flex items-center justify-center w-full gap-2.5 py-[13px] ">
-                                <img class="w-[23px] h-[23px]" src="{% static 'assets/images/icons/premium.svg' %}" alt="">
-                                <span>Подключить <span class="uppercase">Premium</span> тариф</span>
+                                class="mt-4 border border-[#E4DB00] bg-[#2B292C] text-bg-white rounded-[15px] flex items-center justify-center w-full gap-2.5 py-[13px] ">
+                            <img class="w-[23px] h-[23px]" src="{% static 'assets/images/icons/premium.svg' %}" alt="">
+                            <span>Подключить <span class="uppercase">Premium</span> тариф</span>
                             </a>
                         </div>
                         <!--  Фотографии  -->
                         <div class="card__item photos text-dark-text shadow-card-shadow">
                             <h2 class="content__title">Фотографии</h2>
                             <p class="mt-3.5">На главной странице своей компании Вы можете разместить до 6
-                                фотографий</p>
+                                фотографий
+                            </p>
                             <!-- upload 6 photos -->
                             <div class="photos__wrapper mt-6 grid grid-cols-[repeat(auto-fill,minmax(96px,96px))] gap-2.5 lg-md:grid-cols-[repeat(auto-fill,minmax(50px,50px))]">
                                 <form class="relative">
                                     <label for="file1"
-                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
                                         <div class="h-full w-full flex justify-center items-center">
                                             {% csrf_token %}
                                             <input type="file" name="file" id="file1" class="photos__input sr-only">
                                             <!-- Image placeholder that will be replaced or shown when file is chosen -->
                                             {% if one %}
                                             <img src="{{ one.image.url }}" alt=""
-                                                 class="object-cover h-full w-full" id="preview1">
+                                                class="object-cover h-full w-full" id="preview1">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" style="display: none" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"/>
+                                                    fill="#BEBEBE"/>
                                             </svg>
                                             {% else %}
                                             <img src="{% static '' %}" alt=""
-                                                 class="hidden object-cover h-full w-full" id="preview1">
+                                                class="hidden object-cover h-full w-full" id="preview1">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"/>
+                                                    fill="#BEBEBE"/>
                                             </svg>
                                             {% endif %}
                                         </div>
@@ -103,28 +99,28 @@
                                 </form>
                                 <form class="relative">
                                     <label for="file2"
-                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
                                         <div class="h-full w-full flex justify-center items-center">
                                             {% csrf_token %}
                                             <input type="file" name="file" id="file2" class="photos__input sr-only">
                                             <!-- Image placeholder that will be replaced or shown when file is chosen -->
                                             {% if two %}
                                             <img src="{{ two.image.url }}" alt=""
-                                                 class="object-cover h-full w-full" id="preview2">
+                                                class="object-cover h-full w-full" id="preview2">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" style="display: none" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"></path>
+                                                    fill="#BEBEBE"></path>
                                             </svg>
                                             {% else %}
                                             <img src="{% static '' %}" alt=""
-                                                 class="hidden object-cover h-full w-full" id="preview2">
+                                                class="hidden object-cover h-full w-full" id="preview2">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"></path>
+                                                    fill="#BEBEBE"></path>
                                             </svg>
                                             {% endif %}
                                         </div>
@@ -132,28 +128,28 @@
                                 </form>
                                 <form class="relative">
                                     <label for="file3"
-                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
                                         <div class="h-full w-full flex justify-center items-center">
                                             {% csrf_token %}
                                             <input type="file" name="file3" id="file3" class="photos__input sr-only">
                                             <!-- Image placeholder that will be replaced or shown when file is chosen -->
                                             {% if three %}
                                             <img src="{{ three.image.url }}" alt=""
-                                                 class="object-cover h-full w-full" id="preview3">
+                                                class="object-cover h-full w-full" id="preview3">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" style="display: none" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"></path>
+                                                    fill="#BEBEBE"></path>
                                             </svg>
                                             {% else %}
                                             <img src="{% static '' %}" alt=""
-                                                 class="hidden object-cover h-full w-full" id="preview3">
+                                                class="hidden object-cover h-full w-full" id="preview3">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"></path>
+                                                    fill="#BEBEBE"></path>
                                             </svg>
                                             {% endif %}
                                         </div>
@@ -161,28 +157,28 @@
                                 </form>
                                 <form class="relative">
                                     <label for="file4"
-                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
                                         <div class="h-full w-full flex justify-center items-center">
                                             {% csrf_token %}
                                             <input type="file" name="file" id="file4" class="photos__input sr-only">
                                             <!-- Image placeholder that will be replaced or shown when file is chosen -->
                                             {% if four %}
                                             <img src="{{ four.image.url }}" alt=""
-                                                 class="object-cover h-full w-full" id="preview4">
+                                                class="object-cover h-full w-full" id="preview4">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" style="display: none" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"></path>
+                                                    fill="#BEBEBE"></path>
                                             </svg>
                                             {% else %}
                                             <img src="{% static '' %}" alt=""
-                                                 class="hidden object-cover h-full w-full" id="preview4">
+                                                class="hidden object-cover h-full w-full" id="preview4">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"/>
+                                                    fill="#BEBEBE"/>
                                             </svg>
                                             {% endif %}
                                         </div>
@@ -190,28 +186,28 @@
                                 </form>
                                 <form class="relative">
                                     <label for="file5"
-                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
                                         <div class="h-full w-full flex justify-center items-center">
                                             {% csrf_token %}
                                             <input type="file" name="file" id="file5" class="photos__input sr-only">
                                             <!-- Image placeholder that will be replaced or shown when file is chosen -->
                                             {% if five %}
                                             <img src="{{ five.image.url }}" alt=""
-                                                 class="object-cover h-full w-full" id="preview5">
+                                                class="object-cover h-full w-full" id="preview5">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" style="display: none" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"/>
+                                                    fill="#BEBEBE"/>
                                             </svg>
                                             {% else %}
                                             <img src="{% static '' %}" alt=""
-                                                 class="hidden object-cover h-full w-full" id="preview5">
+                                                class="hidden object-cover h-full w-full" id="preview5">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"/>
+                                                    fill="#BEBEBE"/>
                                             </svg>
                                             {% endif %}
                                         </div>
@@ -219,28 +215,28 @@
                                 </form>
                                 <form class="relative">
                                     <label for="file6"
-                                           class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
+                                        class="border-2 overflow-hidden w-full h-24 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center lg-md:w-[50px] lg-md:h-[50px]">
                                         <div class="h-full w-full flex justify-center items-center">
                                             {% csrf_token %}
                                             <input type="file" name="file" id="file6" class="photos__input sr-only">
                                             <!-- Image placeholder that will be replaced or shown when file is chosen -->
                                             {% if six %}
                                             <img src="{{ six.image.url }}" alt=""
-                                                 class="object-cover h-full w-full" id="preview6">
+                                                class="object-cover h-full w-full" id="preview6">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" style="display: none" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"></path>
+                                                    fill="#BEBEBE"></path>
                                             </svg>
                                             {% else %}
                                             <img src="{% static '' %}" alt=""
-                                                 class="hidden object-cover h-full w-full" id="preview6">
+                                                class="hidden object-cover h-full w-full" id="preview6">
                                             <!-- Default icon to show before file selection -->
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" id="icon1">
+                                                xmlns="http://www.w3.org/2000/svg" id="icon1">
                                                 <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                      fill="#BEBEBE"></path>
+                                                    fill="#BEBEBE"></path>
                                             </svg>
                                             {% endif %}
                                         </div>
@@ -250,59 +246,55 @@
                             <!-- advice-->
                             <p class="relative mt-9 text-dark-logo leading-6">
                                 <img class="absolute -left-[3px] -top-2.5 -z-[1] rotate-[49.07deg]"
-                                     src="{% static 'assets/images/icons/bg-yellow-icon.svg' %}" alt="">
+                                    src="{% static 'assets/images/icons/bg-yellow-icon.svg' %}" alt="">
                                 Совет: выберите самые яркие, качественные фото, чтобы привлечь больше клиентов
                             </p>
                         </div>
                         <!--  цены  -->
-                    {% if provider.is_provider %}
+                        {% if provider.is_provider %}
                         <div class="card__item price text-dark-text shadow-card-shadow">
                             <h2 class="content__title">Прайс</h2>
                             <p class="mt-3.5">Вы можете разместить прайс-листы, файлы, документы на Вашей странице</p>
-
                             <!-- Форма загрузки файлов -->
-                      <form id="file_form" class="relative mt-6" method="post" action="{% url 'upload_file' %}">
-                            {% csrf_token %}
-                            <label for="price_file" class="border-2 overflow-hidden w-full px-4 h-12 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center">
-                                <div class="h-full w-full flex items-center">
-                                    <input type="file" name="file" id="price_file" class="sr-only">
-                                    <div class="flex items-center gap-2.5" id="price_icon">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z" fill="#BEBEBE"></path>
-                                        </svg>
-                                        Добавить документ
+                            <form id="file_form" class="relative mt-6" method="post" action="{% url 'upload_file' %}">
+                                {% csrf_token %}
+                                <label for="price_file" class="border-2 overflow-hidden w-full px-4 h-12 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center">
+                                    <div class="h-full w-full flex items-center">
+                                        <input type="file" name="file" id="price_file" class="sr-only">
+                                        <div class="flex items-center gap-2.5" id="price_icon">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z" fill="#BEBEBE"></path>
+                                            </svg>
+                                            Добавить документ
+                                        </div>
                                     </div>
-                                </div>
-                            </label>
-                            <button type="submit" class="mt-4 btn btn-primary" form="file_form"></button>
-                        </form>
-
+                                </label>
+                                <button type="submit" class="mt-4 btn btn-primary" form="file_form"></button>
+                            </form>
                             <!-- Список загруженных файлов -->
                             <div class="uploaded_files flex flex-col gap-2.5 mt-8">
-                            <ul id="file-list" style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
-
-{% for file in user.provider.files_price.all %}
-        <li style="margin:15px 0;" id="file-{{ file.id }}">
-            <div class="uploaded_file_item">
-                <div class="flex items-center justify-between gap-[15px]">
-                    <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}" class="line-clamp-3" style="max-width: 300px">
-{{ file.file.name|filename }}
-                    </a>
-                    <svg class="delete__icon cursor-pointer" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="removeFile({{ file.id }})">
-                        <path
-                            d="M7.75511 9.19888L4.87011 6.31388L2.02754 9.15645L0.783035 7.91194L3.6256 5.06937L0.81132 2.25509L2.09825 0.968153L4.91254 3.78244L7.74097 0.95401L8.98547 2.19852L6.15705 5.02695L9.04204 7.91194L7.75511 9.19888Z"
-                            fill="#4D4D4D"></path>
-                    </svg>
-                </div>
-            </div>
-        </li>
-    {% endfor %}
-                            </ul>
-                            <div id="show-more" style="text-align: end;cursor: pointer">
-                                показать больше
+                                <ul id="file-list" style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
+                                    {% for file in user.provider.files_price.all %}
+                                    <li style="margin:15px 0;" id="file-{{ file.id }}">
+                                        <div class="uploaded_file_item">
+                                            <div class="flex items-center justify-between gap-[15px]">
+                                                <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}" class="line-clamp-3" style="max-width: 300px">
+                                                {{ file.file.name|filename }}
+                                                </a>
+                                                <svg class="delete__icon cursor-pointer" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="removeFile({{ file.id }})">
+                                                    <path
+                                                        d="M7.75511 9.19888L4.87011 6.31388L2.02754 9.15645L0.783035 7.91194L3.6256 5.06937L0.81132 2.25509L2.09825 0.968153L4.91254 3.78244L7.74097 0.95401L8.98547 2.19852L6.15705 5.02695L9.04204 7.91194L7.75511 9.19888Z"
+                                                        fill="#4D4D4D"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <div id="show-more" style="text-align: end;cursor: pointer">
+                                    показать больше
+                                </div>
                             </div>
-                            </div>
-
                             <p class="relative mt-9 text-dark-logo leading-6">
                                 <img class="absolute -left-[3px] -top-2.5 -z-[1]" src="{% static 'assets/images/icons/bg-yellow-icon.svg' %}" alt="">
                                 Вы можете загрузить документы в формате: .pdf, .doc, .xls
@@ -312,41 +304,40 @@
                         <div class="card__item products text-dark-text shadow-card-shadow">
                             <h2 class="content__title">Продукты</h2>
                             {% if products %}
-                                {% for i in products %}
-                                     <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
-                                        <a href="{% url 'product_update' i.pk %}" class="flex justify-between items-center">
-                                            <div class="flex items-center gap-5">
-                                                <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
-                                                    <img class="object-cover h-full"
-                                                         src="{% if i.image %} {{ i.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png {% endif %}"
-                                                         alt="empty icon" style="margin: 0 auto">
-                                                </div>
-                                                <p>{{ i.title }}</p>
-                                            </div>
-                                            <form action="{% url 'product_delete' i.id %}" method="post">
-                                                <button type="submit">
-                                                    {% csrf_token %}
-                                            <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
-                                                    </button>
-                                            </form>
-                                        </a>
+                            {% for i in products %}
+                            <div class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0">
+                                <a href="{% url 'product_update' i.pk %}" class="flex justify-between items-center">
+                                    <div class="flex items-center gap-5">
+                                        <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
+                                            <img class="object-cover h-full"
+                                                src="{% if i.image %} {{ i.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png {% endif %}"
+                                                alt="empty icon" style="margin: 0 auto">
+                                        </div>
+                                        <p>{{ i.title }}</p>
                                     </div>
-                                {% endfor %}
+                                    <form action="{% url 'product_delete' i.id %}" method="post">
+                                        <button type="submit">
+                                        {% csrf_token %}
+                                        <img class="cursor-pointer w-6 h-6" src="{% static '/assets/images/icons/trash.svg' %}" alt="">
+                                        </button>
+                                    </form>
+                                </a>
+                            </div>
+                            {% endfor %}
                             {% else %}
-                                <p class="mt-3.5">У Вас пока нет товаров</p>
+                            <p class="mt-3.5">У Вас пока нет товаров</p>
                             {% endif %}
                             <a href="{% url 'user_products' %}"
-                               class="flex items-center gap-2.5 mt-6 border-2 overflow-hidden w-full py-2 border-dashed border-[#AEAEAE] pl-5 rounded-lg flex  items-center">
+                                class="flex items-center gap-2.5 mt-6 border-2 overflow-hidden w-full py-2 border-dashed border-[#AEAEAE] pl-5 rounded-lg flex  items-center">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                          fill="#BEBEBE"></path>
+                                        fill="#BEBEBE"></path>
                                 </svg>
                                 Добавить
                             </a>
                         </div>
                         {% endif %}
-
                     </div>
                 </div>
             </section>
@@ -394,36 +385,36 @@
     }
 </script>
 <script>
- const list = document.getElementById("file-list")
- const toggleListBtn = document.getElementById("show-more")
+    const list = document.getElementById("file-list")
+    const toggleListBtn = document.getElementById("show-more")
 
-    const listArray = list.querySelectorAll('li');
+       const listArray = list.querySelectorAll('li');
 
-     if(listArray.length < 5){
-         toggleListBtn.style.display = 'none'
-     }
+        if(listArray.length < 5){
+            toggleListBtn.style.display = 'none'
+        }
 
 
 
- let hidden = true;
+    let hidden = true;
 
- toggleListBtn.addEventListener("click",()=>{
-     hidden = !hidden;
+    toggleListBtn.addEventListener("click",()=>{
+        hidden = !hidden;
 
-     if(!hidden){
-         list.style.maxHeight = 'unset';
-         toggleListBtn.textContent = 'Скрыть'
-     } else {
-         toggleListBtn.textContent = "Показать больше"
-         list.style.maxHeight = "240px"
-     }
+        if(!hidden){
+            list.style.maxHeight = 'unset';
+            toggleListBtn.textContent = 'Скрыть'
+        } else {
+            toggleListBtn.textContent = "Показать больше"
+            list.style.maxHeight = "240px"
+        }
 
-     ButtonVisibility()
- })
+        ButtonVisibility()
+    })
 
- console.log(list,toggleListBtn)
+    console.log(list,toggleListBtn)
 </script>
 <script src="{% static 'pages/profile/myCompany/index.js' %}"></script>
 <script src="{% static 'pages/profile/profile.js' %}"></script>
-    <script src="{% static 'pages/home/index.js' %}"></script>
+<script src="{% static 'pages/home/index.js' %}"></script>
 {% endblock %}
