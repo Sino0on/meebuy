@@ -135,7 +135,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 

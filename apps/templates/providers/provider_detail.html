@@ -141,9 +141,9 @@
                                 <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
                                     Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
                                 </div>
-                                <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
+                                <a href="/product/detail/{{ product.id }}/" class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
                                     <a href="/product/detail/{{ product.id }}/">Подробнее</a>
-                                </button>
+                                </a>
                             </div>
                             {% endfor %}
                         </div>
