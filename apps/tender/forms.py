@@ -14,4 +14,4 @@ class TenderForm(forms.ModelForm):
         model = Tender
         fields = ['title', 'phone', 'description',
                   'email', 'period', 'requirements',
-                  'price', 'place_of_sale', 'quantity']
+                  'price', 'currency', 'place_of_sale', 'quantity']

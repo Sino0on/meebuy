@@ -49,6 +49,9 @@ class Tender(StatusMixin, models.Model):
     title = models.CharField(max_length=123)
     description = models.TextField(blank=True, null=True)
     price = models.PositiveIntegerField(blank=True, default=0, null=True)
+    currency = models.CharField(
+        max_length=100, verbose_name=_("Валюта"), blank=True, null=True
+    )
     quantity = models.PositiveIntegerField(blank=True, null=True)
     category = models.ForeignKey(
         Category, on_delete=models.PROTECT, blank=True, null=True
