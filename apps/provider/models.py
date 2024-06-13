@@ -37,15 +37,18 @@ class Category(models.Model):
 
 
 class Provider(StatusMixin, models.Model):
+    TYPE_CHOICES = [
+        (1, "Оптовая продажа товаров (вы поставщик)",),
+        (2, "Производство товаров (вы производитель)",),
+        (3, "Оказание услуг логистики / поиска товаров / таможенного оформления",)
+    ]
     title = models.CharField(
         max_length=123, verbose_name="Название", blank=True, null=True
     )
     mini_descr = models.CharField(
         max_length=250, verbose_name="Короткое описание", blank=True, null=True
     )
-    type = models.ForeignKey(
-        "Tag", on_delete=models.SET_NULL, null=True, verbose_name=_("Тип"), blank=True
-    )
+    type = models.CharField(max_length=255, choices=TYPE_CHOICES, verbose_name=_("Тип"), blank=True, null=True)
     description = models.TextField(verbose_name="Описание", blank=True, null=True)
     category = models.ManyToManyField(
         Category, related_name="providers", verbose_name=_("Категории"), blank=True
@@ -196,17 +199,6 @@ class Provider(StatusMixin, models.Model):
     class Meta:
         verbose_name = _("Поставщик")
         verbose_name_plural = _("Поставщики")
-
-
-class Tag(models.Model):
-    title = models.CharField(max_length=123, verbose_name="Тэг")
-
-    def __str__(self):
-        return f"{self.title}"
-
-    class Meta:
-        verbose_name = _("Тэг")
-        verbose_name_plural = _("Тэги")
 
 
 class ProvideImg(models.Model):

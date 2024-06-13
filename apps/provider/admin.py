@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Category, Provider, Tag, ProvideImg, ProvideFiles
+from .models import Category, Provider, ProvideImg, ProvideFiles
 
 
 class ProvideImgInline(admin.TabularInline):
@@ -40,10 +40,10 @@ class CategoryAdmin(admin.ModelAdmin):
     parent_category.short_description = 'Parent Category'
 
 
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
+# @admin.register(Tag)
+# class TagAdmin(admin.ModelAdmin):
+#     list_display = ('title',)
+#     search_fields = ('title',)
 
 
 # Register your models here
