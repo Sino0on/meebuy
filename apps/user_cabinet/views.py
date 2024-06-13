@@ -197,13 +197,11 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
             city = City.objects.get(region=region, title=city_name)
             self.object = form.save(commit=False)
             self.object.city = city
-            category_ids = self.request.POST.getlist('category')
-            # Получение категорий и очистка текущих категорий
-            category_ids = [int(id) for id in category_ids if id.isdigit()]
-            categories = Category.objects.filter(id__in=category_ids)
-            self.object.save()  # Сохранение объекта до добавления категорий для создания PK
-            self.object.category.set(categories)  # Обновление категорий
-
+            category_ids = self.request.POST.get('category')
+            categories =category_ids.split(', ')
+            numbers = list(map(int, categories))
+            categories = Category.objects.filter(id__in=numbers)
+            self.object.category.set(categories)
             self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подожтите.'
             self.object.save()
             return redirect(self.get_success_url())
