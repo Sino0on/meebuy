@@ -187,30 +187,30 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
         self.object = self.get_object()
         form = self.form_class(request.POST, instance=self.object)
 
-        if form.is_valid:
-            def form_valid(self, form):
-                country_name = self.request.POST.get('country')
-                region_name = self.request.POST.get('region')
-                city_name = self.request.POST.get('city')
-                category_ids = self.request.POST.getlist('category')
+        def form_valid(self, form):
+            country_name = self.request.POST.get('country')
+            region_name = self.request.POST.get('region')
+            city_name = self.request.POST.get('city')
+            category_ids = self.request.POST.getlist('category')
 
-                country = Country.objects.get(title=country_name)
-                region = Region.objects.get(country=country, title=region_name)
-                city = City.objects.get(region=region, title=city_name)
+            country = Country.objects.get(title=country_name)
+            region = Region.objects.get(country=country, title=region_name)
+            city = City.objects.get(region=region, title=city_name)
 
-                self.object = form.save(commit=False)
-                self.object.city = city
+            self.object = form.save(commit=False)
+            self.object.city = city
 
-                category_ids = [int(id) for id in category_ids if id.isdigit()]
-                categories = Category.objects.filter(id__in=category_ids)
-                self.object.save()
-                self.object.category.set(categories)
+            category_ids = [int(id) for id in category_ids if id.isdigit()]
+            categories = Category.objects.filter(id__in=category_ids)
+            self.object.save()
+            self.object.category.set(categories)
 
-                self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите.'
-                self.object.save()
+            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите.'
+            self.object.save()
 
-                return redirect(self.get_success_url())
-        else:
+            return redirect(self.get_success_url())
+
+        def form_invalid(self, form):
             print(form.errors)
             return self.form_invalid(form)
 
