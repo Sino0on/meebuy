@@ -11,6 +11,7 @@ from .models import Provider
 def provider_moderation_signal(sender, instance, created, **kwargs):
     if not created and instance.is_modered:
         user_email = instance.user.email
+        instance.comment = 'Вы успешно прошли модерацию, ваш аккаунт полностью активен.'
         subject = 'Поставщик прошел модерацию'
         message = render_to_string('providers/provider_moderation_email.html', {'provider': instance})
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user_email])

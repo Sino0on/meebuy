@@ -2,6 +2,8 @@
 const burgerMenu = document.querySelector("#burgerMenu");
 const burgerIcon = document.querySelector("#burgerIcon");
 const closeIcon = document.querySelector("#closeIcon");
+const body = document.querySelector('body')
+const policyCheck = document.getElementById("policy")
 // search
 
 const searchForm = document.querySelector("#searchForm");
@@ -11,7 +13,17 @@ const toggleMenu = () => {
   if (burgerMenu.classList.contains("translate-x-0")) {
     burgerMenu.classList.remove("translate-x-0");
     burgerMenu.classList.add("translate-x-full");
+    console.log('close')
+    body.style.overflow = 'auto'
+
   } else {
+        console.log('open')
+                burgerMenu.style.top=0;
+                burgerMenu.style.left=0;
+   burgerMenu.style.right=0;
+    burgerMenu.style.bottom=0;
+    body.style.overflow = 'hidden'
+
     burgerMenu.classList.add("translate-x-0");
     burgerMenu.classList.remove("translate-x-full");
   }
@@ -82,7 +94,7 @@ const passwordLog = document.getElementById("passwordLog");
 const confirmAuth = document.getElementById("confirm");
 
 const toggleTabRegister = () => {
-  registerForm.style.maxHeight = `${registerForm.scrollHeight}px`;
+  registerForm.style.maxHeight = `max-content`;
   loginForm.style.maxHeight = "0px";
   lastName.classList.add("input-change");
   number.classList.add("password-an");
@@ -145,3 +157,19 @@ document.addEventListener("DOMContentLoaded", function () {
       registerTab.click();
     }
 });
+
+policyCheck.addEventListener("change",()=>{
+
+if(policyCheck.checked){
+  register.disabled = false;
+   register.style.opacity = 1;
+} else {
+  register.disabled = true;
+   register.style.opacity = 0.4;
+}
+})
+
+register.disabled = true;
+if(register.disabled){
+  register.style.opacity = 0.4
+}
