@@ -151,14 +151,12 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
     def get_locations(self):
         countries = Country.objects.all()
         locations = []
-
         for country in countries:
             country_data = {
                 'id': country.id,
                 'title': country.title,
                 'regions': []
             }
-
             regions = Region.objects.filter(country=country)
             for region in regions:
                 region_data = {
@@ -166,7 +164,6 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
                     'title': region.title,
                     'cities': []
                 }
-
                 cities = City.objects.filter(region=region)
                 for city in cities:
                     city_data = {
@@ -174,11 +171,8 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
                         'title': city.title
                     }
                     region_data['cities'].append(city_data)
-
                 country_data['regions'].append(region_data)
-
             locations.append(country_data)
-
         return locations
 
     def get_form_kwargs(self):
@@ -190,17 +184,26 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
         return self.request.user.provider
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()  # Получаем объект, который будет обновляться
-        form = self.form_class(request.POST, instance=self.object)  # Передаем instance для обновления
+        self.object = self.get_object()
+        form = self.form_class(request.POST, instance=self.object)
 
         if form.is_valid():
-            self.object = form.save(commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
-            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите пару минут'
 
-            self.object.save()  # Сохраняем изменения в объект
-            return redirect(self.get_success_url())  # Переадресация на страницу успеха
+            country_name = self.request.POST.get('country')
+            country = Country.objects.get(title=country_name)
+            region_name = self.request.POST.get('region')
+            region = Region.objects.get(country=country, title=region_name)
+            city_name = self.request.POST.get('city')
+            city = City.objects.get(region=region, title=city_name)
+            self.object = form.save(commit=False)
+            self.object.city = city
+            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подожтите.'
+            print(form.cleaned_data['category'])
+
+            self.object.save()
+            return redirect(self.get_success_url())
         else:
-            print(form.errors)  # Вывод ошибок на консоль для отладки
+            print(form.errors)
             return self.form_invalid(form)
 
 

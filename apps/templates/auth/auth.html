@@ -94,9 +94,11 @@
         </div>
     </div>
     <div id="confirm" class="input flex items-center gap-2">
-        <input type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1" />
-        <p class="text-[16px] font-normal font-mulish text-[#777777]">
+        <input id="policy" name="policy" type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1" />
+        <label for="policy" class="text-[16px] font-normal font-mulish text-[#777777]">
             Я ознакомился и согласен с условиями
+            <a class="underline decoration-1 text-[#777777]" href="/">Политики</a>
+        </label>
             <a class="underline decoration-1 text-[#777777]" href="{% url 'privacy_policy' %}">Политики</a>
         </p>
     </div>
@@ -163,11 +165,11 @@
         <!-- login -->
 
           <div id="login-form" style="display: flex; flex-direction: column; gap: 30px" class=" login-form overflow-hidden w-full mb-6 pb-[2px]">
-            {% for field, errors in form.errors.items %}
-                {% for error in errors %}
-                    <p class="has-error" style="color: red">{{ error }}</p>
-                {% endfor %}
-            {% endfor %}
+{#            {% for field, errors in form.errors.items %}#}
+{#                {% for error in errors %}#}
+{#                    <p class="has-error" style="color: red">{{ error }}</p>#}
+{#                {% endfor %}#}
+{#            {% endfor %}#}
           <div class="flex flex-col gap-3  w-full">
             <form method="post">
             <label clas="text-[18px] font-mulish" for=""
@@ -200,7 +202,7 @@
             </form>
         <div class="flex flex-col items-center gap-5">
           <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
-            <ul class="flex items-center gap-5 w-[323px] justify-center">
+            <ul class="flex items-center gap-5 w-[323px]">
               <li class="cards rounded-[12px] p-2">
                 {% load socialaccount %}
                 <form action="/accounts/google/login/" method="post">

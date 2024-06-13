@@ -1,144 +1,138 @@
 {% load static %}
-        <section id="profile-menu" class="profile__navigate bg-[#fff] mb-10 lg-md:w-[285px]" >
-          <div class="">
-            <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
-              <!-- upload avatar-->
-              <div class="upload__avatar text-center flex justify-center">
+<section id="profile-menu" class="profile__navigate bg-[#fff] mb-10 lg-md:w-[285px]" >
+    <div class="">
+        <div class="shadow-card-shadow rounded-[10px] px-5 py-[15px]">
+            <!-- upload avatar-->
+            <div class="upload__avatar text-center flex justify-center">
                 <div class="relative">
-                  <img
-                    class="absolute right-0 bottom-0"
-                    src="{% static 'assets/images/icons/camera-outline.svg' %}"
-                    alt=""
-                  />
-                  <form
-                    class="rounded-full overflow-hidden w-20 h-20"
-                    action=""
-                  >
-                    <label
-                      for="upload"
-                      class="h-full flex-col items-center gap-2 cursor-pointer"
-                    >
-                      {% if user.provider.image %}
-
-                      <img
-                        class="object-cover h-full"
-                        id="avatar"
-                        src="{{ user.provider.image.url }}"
+                    <img
+                        class="absolute right-0 bottom-0"
+                        src="{% static 'assets/images/icons/camera-outline.svg' %}"
                         alt=""
-                      />
-                      {% else %}
-                      <img
-                        class="object-cover h-full"
-                        id="avatar"
-                        src="{% static 'assets/images/icons/Avatar.svg' %}"
-                        alt=""
-                      />
-                      {% endif %}
-                    </label>
-                    {% csrf_token %}
-                    <input id="upload" type="file" class="hidden" />
-                  </form>
+                        />
+                    <form
+                        class="rounded-full overflow-hidden w-20 h-20"
+                        action=""
+                        >
+                        <label
+                            for="upload"
+                            class="h-full flex-col items-center gap-2 cursor-pointer"
+                            >
+                        {% if user.provider.image %}
+                        <img
+                            class="object-cover h-full"
+                            id="avatar"
+                            src="{{ user.provider.image.url }}"
+                            alt=""
+                            style="margin: 0 auto"
+                            />
+                        {% else %}
+                        <img
+                            class="object-cover h-full"
+                            id="avatar"
+                            src="{% static 'assets/images/icons/Avatar.svg' %}"
+                            alt=""
+                            />
+                        {% endif %}
+                        </label>
+                        {% csrf_token %}
+                        <input id="upload" type="file" class="hidden" />
+                    </form>
                 </div>
-              </div>
-
-              <h2 class="text-center text-lg font-semibold mt-2.5">
-                  {% if provider.title %}
-                      {{ provider.title }}
-                  {% endif %}
-              </h2>
-<div class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden">
-    <button class="dropdown__btn px-2.5 w-full flex items-center justify-between text-dark-text">
-        <p class="text-lg font-bold">
-            {% if active_page == 'view_profile' %}Моя компания{% endif %}
-            {% if active_page == 'user_tenders' %}Закупки{% endif %}
-            {% if active_page == 'user_products' %}Товары{% endif %}
-            {% if active_page == 'chat_list' %}Сообщения{% endif %}
-            {% if active_page == 'analytic' %}Статистика{% endif %}
-            {% if active_page == 'tariffs' %}Premium тарифы{% endif %}
-            {% if active_page == 'settings' %}Настройки аккаунта{% endif %}
-            {% if active_page == 'balance' %}Баланс{% endif %}
-            {% if active_page == 'favorites' %}Избранные{% endif %}
-            {% if active_page == 'send_message' %}Служба поддержки{% endif %}
-
-        </p>
-        <img class="w-5 h-5" src="{% static 'assets/images/icons/ios-arrow.svg' %}" alt="">
-    </button>
-    <ul class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg">
-        <li class="dropdown__item {% if active_page == 'view_profile' %}active{% endif %}">
-            <a href="{% url 'view_profile' %}">Моя компания</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'user_tenders' %}active{% endif %}">
-            <a href="{% url 'user_tenders' %}">Закупки</a>
-        </li>
-            {% if provider.is_provider %}
-                <li class="dropdown__item {% if active_html == 'user_products' %}active{% endif %}">
-                    <a href="{% url 'user_products' %}">Товары</a>
-                </li>
-            {% endif %}
-        <li id="chat-tab-m" class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
-            <a href="{% url 'chat_list' %}">Сообщения</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
-            <a href="{% url 'analytic' %}">Статистика</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'tariffs' %}active{% endif %}">
-            <a href="{% url 'tariffs' %}">Premium тарифы</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'settings' %}active{% endif %}">
-            <a href="{% url 'settings' %}">Настройки аккаунта</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'balance' %}active{% endif %}">
-            <a href="{% url 'balance' %}"> Баланс</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'favorites' %}active{% endif %}">
-            <a href="{% url 'favorites' %}">Избранные</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'send_message' %}active{% endif %}">
-            <a href="{% url 'send_message' %}">Служба поддержки</a>
-        </li>
-    </ul>
-</div>
-
-
-<div class="hidden lg-md:block  menu-desktop">
-    <ul class="flex flex-col w-full">
-        <li class="dropdown__item {% if active_page == 'view_profile' %}active{% endif %}">
-            <a href="{% url 'view_profile' %}">Моя компания</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'user_tenders' %}active{% endif %}">
-            <a href="{% url 'user_tenders' %}">Закупки</a>
-        </li>
-        {% if provider.is_provider %}
-        <li class="dropdown__item {% if active_page == 'user_products' %}active{% endif %}">
-            <a href="{% url 'user_products' %}">Товары</a>
-        </li>
-        {% endif %}
-
-        <li id="chat-tab-d" class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
-            <a href="{% url 'chat_list' %}">Сообщения</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'analytic' %}active{% endif %}">
-            <a href="{% url 'analytic' %}">Статистика</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'tariffs' %}active{% endif %}">
-            <a href="{% url 'tariffs' %}">Premium тарифы</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'settings' %}active{% endif %}">
-            <a href="{% url 'settings' %}">Настройки аккаунта</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'balance' %}active{% endif %}">
-            <a href="{% url 'balance' %}"> Баланс</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'favorites' %}active{% endif %}">
-            <a href="{% url 'favorites' %}">Избранные</a>
-        </li>
-        <li class="dropdown__item {% if active_page == 'send_message' %}active{% endif %}">
-            <a href="{% url 'send_message' %}">Служба поддержки</a>
-        </li>
-    </ul>
-</div>
-
-              <!-- desktop menu end-->
             </div>
-          </div>
-        </section>
+            <h2 class="text-center text-lg font-semibold mt-2.5">
+                {% if provider.title %}
+                {{ provider.title }}
+                {% endif %}
+            </h2>
+            <div class="dropdown mt-[30px] px-2.5 py-[15px] btn-outlined border-[#A0A0A080] hover:bg-transparent lg-md:hidden">
+                <button class="dropdown__btn px-2.5 w-full flex items-center justify-between text-dark-text">
+                    <p class="text-lg font-bold">
+                        {% if active_page == 'view_profile' %}Моя компания{% endif %}
+                        {% if active_page == 'user_tenders' %}Закупки{% endif %}
+                        {% if active_page == 'user_products' %}Товары{% endif %}
+                        {% if active_page == 'chat_list' %}Сообщения{% endif %}
+                        {% if active_page == 'analytic' %}Статистика{% endif %}
+                        {% if active_page == 'tariffs' %}Premium тарифы{% endif %}
+                        {% if active_page == 'settings' %}Настройки аккаунта{% endif %}
+                        {% if active_page == 'balance' %}Баланс{% endif %}
+                        {% if active_page == 'favorites' %}Избранные{% endif %}
+                        {% if active_page == 'send_message' %}Служба поддержки{% endif %}
+                    </p>
+                    <img class="w-5 h-5" src="{% static 'assets/images/icons/ios-arrow.svg' %}" alt="">
+                </button>
+                <ul class="dropdown__menu h-0 text-dark-text overflow-hidden transition-all duration-300 ease-in text-lg">
+                    <li class="dropdown__item {% if active_page == 'view_profile' %}active{% endif %}">
+                        <a href="{% url 'view_profile' %}">Моя компания</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'user_tenders' %}active{% endif %}">
+                        <a href="{% url 'user_tenders' %}">Закупки</a>
+                    </li>
+                    {% if provider.is_provider %}
+                    <li class="dropdown__item {% if active_html == 'user_products' %}active{% endif %}">
+                        <a href="{% url 'user_products' %}">Товары</a>
+                    </li>
+                    {% endif %}
+                    <li id="chat-tab-m" class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
+                        <a href="{% url 'chat_list' %}">Сообщения</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
+                        <a href="{% url 'analytic' %}">Статистика</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'tariffs' %}active{% endif %}">
+                        <a href="{% url 'tariffs' %}">Premium тарифы</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'settings' %}active{% endif %}">
+                        <a href="{% url 'settings' %}">Настройки аккаунта</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'balance' %}active{% endif %}">
+                        <a href="{% url 'balance' %}"> Баланс</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'favorites' %}active{% endif %}">
+                        <a href="{% url 'favorites' %}">Избранные</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'send_message' %}active{% endif %}">
+                        <a href="{% url 'send_message' %}">Служба поддержки</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="hidden lg-md:block  menu-desktop">
+                <ul class="flex flex-col w-full">
+                    <li class="dropdown__item {% if active_page == 'view_profile' %}active{% endif %}">
+                        <a href="{% url 'view_profile' %}">Моя компания</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'user_tenders' %}active{% endif %}">
+                        <a href="{% url 'user_tenders' %}">Закупки</a>
+                    </li>
+                    {% if provider.is_provider %}
+                    <li class="dropdown__item {% if active_page == 'user_products' %}active{% endif %}">
+                        <a href="{% url 'user_products' %}">Товары</a>
+                    </li>
+                    {% endif %}
+                    <li id="chat-tab-d" class="dropdown__item {% if active_page == 'chat_list' %}active{% endif %}">
+                        <a href="{% url 'chat_list' %}">Сообщения</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'analytic' %}active{% endif %}">
+                        <a href="{% url 'analytic' %}">Статистика</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'tariffs' %}active{% endif %}">
+                        <a href="{% url 'tariffs' %}">Premium тарифы</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'settings' %}active{% endif %}">
+                        <a href="{% url 'settings' %}">Настройки аккаунта</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'balance' %}active{% endif %}">
+                        <a href="{% url 'balance' %}"> Баланс</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'favorites' %}active{% endif %}">
+                        <a href="{% url 'favorites' %}">Избранные</a>
+                    </li>
+                    <li class="dropdown__item {% if active_page == 'send_message' %}active{% endif %}">
+                        <a href="{% url 'send_message' %}">Служба поддержки</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- desktop menu end-->
+        </div>
+    </div>
+</section>

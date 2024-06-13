@@ -47,7 +47,7 @@
           <a href="/">
             <img
             src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"
-          />
+          alt=""/>
           </a>
           <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
         </div>
@@ -69,7 +69,7 @@
                     alt="Search icon"
                   />
                 </div>
-                <input
+                  <label for="default-search"></label><input
                   id="default-search"
                   name="title"
                   class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
@@ -82,9 +82,7 @@
       </div>
     </div>
   </div>
-
   <!-- product categories -->
-
   <div class="pb-10">
     <div class="container">
       <h6
@@ -132,7 +130,7 @@
             <img
               class="lg-md:hidden block"
               src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-            />
+             alt=""/>
           </li>
           <li
             class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
@@ -142,7 +140,7 @@
             <img
               class="lg-md:hidden block"
               src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-            />
+             alt=""/>
           </li>
           {% for i in types %}
           <li
@@ -153,7 +151,7 @@
             <img
               class="lg-md:hidden block"
               src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-            />
+             alt=""/>
           </li>
           {% endfor %}
         </ul>
@@ -176,7 +174,7 @@
               <img
                 class="w-[100px] h-[100px]"
                 src="{% if provider.image %}{{ provider.image.url }}{% endif %}"
-              />
+               alt=""/>
               <div class="flex flex-col gap-6">
                 <div>
                   <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
@@ -202,25 +200,26 @@
               <li>
                 <img
                   src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-                />
+                 alt=""/>
               </li>
               {% endif %}
               <li></li>
               <li>
                 <img
                   src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
-                />
+                 alt=""/>
               </li>
               <li>
                 <img
                   src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
-                />
+                 alt=""/>
               </li>
             </ul>
           </div>
           {% endfor %}
         </div>
         <div id="Tab2" class="flex tab-content hidden flex-col gap-7">
+        123
           {% for provider in providers %}
           <div
             class="cards sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
@@ -231,7 +230,7 @@
               <img
                 class="w-[100px] h-[100px]"
                 src="{% if provider.image %}{{ provider.image.url }}{% endif %}"
-              />
+               alt=""/>
               <div class="flex flex-col gap-6">
                 <div>
                   <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
@@ -256,17 +255,17 @@
               <li>
                 <img
                   src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-                />
+                alt=""/>
               </li>
               <li>
                 <img
                   src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
-                />
+                alt=""/>
               </li>
               <li>
                 <img
                   src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
-                />
+                alt=""/>
               </li>
             </ul>
           </div>

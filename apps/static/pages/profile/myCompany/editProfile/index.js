@@ -41,9 +41,7 @@ function createTree(treeArray, depth = 0) {
 
     const span = document.createElement("span");
     span.textContent = item.title;
-    if(item.is_selected){
-      span.classList.add("active");
-    }
+
 
     span.addEventListener("click", () => {
       if (!item.children || item.children.length === 0) {
@@ -58,6 +56,10 @@ function createTree(treeArray, depth = 0) {
         updateSelectedItemsDisplay();
       }
     });
+
+      if(item.is_selected){
+      span.click();
+    }
 
     const toggleIcon = document.createElement("img");
     toggleIcon.src = "/static/assets/images/icons/ios-arrow.svg";
