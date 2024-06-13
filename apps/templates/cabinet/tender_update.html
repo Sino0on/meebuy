@@ -104,6 +104,15 @@
                     </div>
 
                   <div class="form__item">
+                        <label class="label">Валюта</label>
+                        <p class="tooltip">Введите валюту</p>
+                        <input id="currency" value="{{ form.currency.value }}" type="text" name="currency" placeholder="Например: KGS">
+                        {% if form.currency.errors %}
+                            <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                  <div class="form__item">
                         <label class="label">Количество</label>
                         <p class="tooltip">Введите Количество</p>
                         <input id="quantity" value="{{ form.quantity.value }}" type="text" name="quantity" placeholder="Например: 1000">
