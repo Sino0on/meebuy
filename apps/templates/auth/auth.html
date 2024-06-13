@@ -97,7 +97,7 @@
         <input type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1" />
         <p class="text-[16px] font-normal font-mulish text-[#777777]">
             Я ознакомился и согласен с условиями
-            <a class="underline decoration-1 text-[#777777]" href="/">Политики</a>
+            <a class="underline decoration-1 text-[#777777]" href="{% url 'privacy_policy' %}">Политики</a>
         </p>
     </div>
     <button
@@ -109,7 +109,7 @@
 </form>
           <div class="flex flex-col items-center gap-5">
             <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
-              <ul class="flex items-center gap-5 w-[323px]">
+              <ul class="flex items-center gap-5 w-[323px] justify-center">
                 <li class="cards -mt-[5px] rounded-[12px] p-2">
                   {% load socialaccount %}
                   <form action="/accounts/google/login/" method="post">
@@ -200,7 +200,7 @@
             </form>
         <div class="flex flex-col items-center gap-5">
           <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
-            <ul class="flex items-center gap-5 w-[323px]">
+            <ul class="flex items-center gap-5 w-[323px] justify-center">
               <li class="cards rounded-[12px] p-2">
                 {% load socialaccount %}
                 <form action="/accounts/google/login/" method="post">
