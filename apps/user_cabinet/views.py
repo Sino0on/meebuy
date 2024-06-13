@@ -198,10 +198,9 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
             self.object = form.save(commit=False)
             self.object.city = city
             category_ids = self.request.POST.getlist('category')
-
+            category_ids = [int(id) for id in category_ids if id.isdigit()]
             categories = Category.objects.filter(id__in=category_ids)
             self.object.category.clear()
-
             for category in categories:
                 self.object.category.add(category)
             self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подожтите.'
