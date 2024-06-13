@@ -116,7 +116,7 @@ class ProviderForm(forms.ModelForm):
             'mini_descr',
             'type',
             'description',
-            'category',
+            # 'category',
             'large_wholesale',
             'small_wholesale',
             'retail',
@@ -171,7 +171,7 @@ class ProviderForm(forms.ModelForm):
             'youtube_video': forms.URLInput(attrs={'class': 'relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'}),
             'email': forms.TextInput(attrs={'class': 'relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'}),
             'city': forms.Select(attrs={'class': ' relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'}),
-            'category': forms.CheckboxSelectMultiple(),
+            # 'category': forms.CheckboxSelectMultiple(),
 
         }
         model = Provider
