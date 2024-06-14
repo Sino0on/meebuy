@@ -20,7 +20,7 @@ from apps.authentication.forms import UserRegistrationForm, UserLoginForm, UserP
 from apps.authentication.token import account_activation_token
 from apps.buyer.models import Buyer
 from apps.product.models import Product
-from apps.tender.models import Tender
+from apps.tender.models import Tender, Country
 from apps.provider.models import Provider, Category
 from apps.user_cabinet.models import Cabinet, Contacts
 
@@ -50,10 +50,12 @@ class LoginView(FormView):
             register_form = UserRegistrationForm(request.POST)
             if register_form.is_valid():
                 user = register_form.save(commit=False)
+                code = self.request.POST.get('country_code')
+                phone = self.request.POST.get('phone')
+                user.phone = str(code) + str(phone)
                 user.save()
                 Cabinet.objects.get_or_create(user=user)
                 current_site = get_current_site(request)
-                print(current_site)
                 protocol = 'https' if request.is_secure() else 'http'
                 mail_subject = 'Ссылка для активации была отправлена на ваш адрес электронной почты'
                 message = render_to_string('auth/acc_active_email.html', {
@@ -85,6 +87,7 @@ class LoginView(FormView):
     def get_context_data(self, **kwargs):
         context = {'register_form': UserRegistrationForm()}
         context.update(super().get_context_data(**kwargs))
+        context['countries'] = Country.objects.all()
         return context
 
     def form_valid(self, form):

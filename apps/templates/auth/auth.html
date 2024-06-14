@@ -56,19 +56,35 @@
     </div>
     <div id="number" class="input flex flex-col gap-3">
         <label for="">Ваш номер телефона*</label>
-        {{ register_form.phone }}
-        {% for error in register_nform.phone.errors %}
-            <p style="color: red">{{ error }}</p>
-        {% endfor %}
+            {% for error in register_form.phone.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
+                    <div class="form__item">
+                      <div class="flex items-center gap-4">
+                        <div>
+                          <select name="country_code" id="countryCode" class="relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
+                            {% for country in countries %}
+                              <option data-countryCode="GB" value="{{ country.code }}" selected>{{ country.code }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="flex-grow">
+                          <input placeholder="Номер" type="tel" name="phone" id="phoneNumber1"
+                          class='relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'>
+                        </div>
+                      </div>
+                    </div>
+
     </div>
     <div id="password" class="input flex lg-md:flex-row flex-col gap-2">
         <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
 
             <label for="">Придумайте пароль *</label>
-            {{ register_form.password1 }}
             {% for error in register_form.password1.errors %}
                 <p style="color: red">{{ error }}</p>
             {% endfor %}
+            {{ register_form.password1 }}
+
             <div class="absolute right-3 top-12">
                 <img
                   class="show-password w-[24px] h-[24px]"
