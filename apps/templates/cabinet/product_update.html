@@ -210,10 +210,15 @@
                   Например: 1000
                 </p>
                   <label>
-                      <input
-                        class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                        type="text" name="price" value="{{ form.price.value|default_if_none:'' }}"
-                      />
+                      <input id="priceInput"
+       class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+       type="number"
+       name="price"
+       value="{{ form.price.value|default_if_none:'' }}"
+                             step="0.01"
+/>
+
+
                       {% if form.price.errors %}
                             <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
                         {% endif %}
@@ -627,6 +632,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+</script>
+<script>
+    // Пример задания значения через JavaScript
+    document.getElementById('priceInput').value = {{ form.price.value|default_if_none:'0.00' }};
 </script>
 
 {% endblock %}
