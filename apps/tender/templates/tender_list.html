@@ -6,6 +6,56 @@
 <link rel="stylesheet" href="{% static 'pages/filters/index.css' %}" />
 {% endblock %}
 {% block content %}
+
+    <style>
+.tender-item:hover{
+        background:#fffb98;
+    transition:all .3s ease
+}
+#selectContainer:hover,#filterContainer:hover{
+    background:#fffb98;
+    transition:all .3s ease
+}
+
+#tab-list li:hover{
+        background:#fffb98;
+    transition:all .3s ease
+}
+
+#Tab1 .cards:hover{
+     background:#fffb98;
+    transition:all .3s ease
+}
+
+#selectModal{
+    display: none;
+    min-width: 178px;
+    min-height: 110px;
+    overflow:hidden;
+}
+
+#selectModal.active{
+    display: block;
+}
+
+#selectModal li{
+    padding:16px;
+        transition:all .3s ease
+
+}
+
+#selectModal li:hover{
+    background:#fffb98;
+}
+
+  #filter-window{
+    position: fixed;
+    z-index: 100;
+    left: 50%;
+    top: 50%;
+      transform:translate(-50%,-50%);
+  }
+    </style>
     <div class="relative">
       <!-- main section -->
     <div class="suppliers-animation-container">
@@ -99,8 +149,8 @@
           </div>
           <!-- filter modal-->
           <div id="openFilter" data-countries="{{ locations }}" style="display: none" class="filter-container">
-            <div
-              class="absolute z-50 left-0 top-[60px] flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8 sm:w-[408px] w-auto"
+            <div id="filter-window"
+              class=" z-50  flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8 sm:w-[408px] w-auto"
             >
                 <form method="get" type="submit" action="{% url 'tender_list' %}">
                 <div class="flex flex-col gap-4">
@@ -254,12 +304,12 @@
           <!-- select modal -->
             <ul
               id="selectModal"
-              class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
-              style="display: none"
+              class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] w-[178px] h-[100px]"
+
             >
               <li
                 id="recommended-list"
-                class="cursor-pointer selected border-b pb-2 mb-2 flex items-center justify-between"
+                class="cursor-pointer selected border-b flex items-center justify-between"
               >
                 Рекомендуем
                 <img
@@ -288,7 +338,7 @@
         <div id="tender-list" data-banners="{{banners}}" data-banner-order="{{banner_settings}}" class="flex flex-col gap-7">
           {% for tender in tenders %}
           <div
-            style="background-color: #ebebeb"
+
             class="cardCont tender-item cards relative flex flex-col items-start lg-md:px-16 px-4 lg-md:py-10 py-7 rounded-[15px]"
           >
             <ul

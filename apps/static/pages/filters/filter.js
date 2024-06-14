@@ -17,6 +17,16 @@ if (urlParam) {
   selecetedContainerText.innerHTML = getTextParam(urlParam);
 }
 
+document.addEventListener('click',(e)=>{
+ if(!e.target.closest('#selectContainer')){
+   closeSelectModal()
+   console.log(e.target)
+ }
+    console.log(e.target)
+
+})
+
+
 function getTextParam(key) {
   if (key === '-is_new') {
     return 'Новые';
@@ -27,19 +37,14 @@ function getTextParam(key) {
 }
 
 const toggleSelectModal = () => {
-  if (
-    selectModal.style.display === 'none' ||
-    selectModal.style.display === ''
-  ) {
-    selectModal.style.display = 'block';
-    openIcon.style.display = 'none';
-    closeIconn.style.display = 'block';
-  } else {
-    selectModal.style.display = 'none';
-    openIcon.style.display = 'block';
-    closeIconn.style.display = 'none';
-  }
+ selectModal.classList.toggle("active")
 };
+
+const closeSelectModal =()=>{
+  if(selectModal.classList.contains('active')){
+    selectModal.classList.remove('active')
+  }
+}
 const checkedSelect = element => {
   const select = [recommended, newSelect];
   for (let i = 0; i < select.length; i++) {

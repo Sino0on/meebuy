@@ -4,12 +4,50 @@
 <link rel="stylesheet" href="{% static 'pages/filters/index.css' %}" />
 
 <style>
+
+#selectContainer:hover,#filterContainer:hover{
+    background:#fffb98;
+    transition:all .3s ease
+}
+
+#tab-list li:hover{
+        background:#fffb98;
+    transition:all .3s ease
+}
+
+#Tab1 .cards:hover{
+     background:#fffb98;
+    transition:all .3s ease
+}
+
+#selectModal{
+    display: none;
+    min-width: 178px;
+    min-height: 110px;
+    overflow:hidden;
+}
+
+#selectModal.active{
+    display: block;
+}
+
+#selectModal li{
+    padding:16px;
+        transition:all .3s ease
+
+}
+
+#selectModal li:hover{
+    background:#fffb98;
+}
+
   .filter-width {
     width: 1000px;
-    position: absolute;
+    position: fixed;
     z-index: 100;
-    right: -100px;
-    top: -105px;
+    left: 50%;
+    top: 50%;
+      transform:translate(-50%,-50%);
   }
 
   @media (max-width: 1000px) {
@@ -17,14 +55,13 @@
       width: 500px;
       display: flex;
       justify-content: start;
-      right: 100px;
+
     }
   }
 
   @media (max-width: 600px) {
     .filter-width {
       width: 360px;
-      right: 30px;
     }
   }
   @media (max-width: 450px) {
@@ -35,7 +72,7 @@
   }
 </style>
 {% endblock %} {% block content %}
-<div class="relative z-0">
+<div class="relative z-1">
   <!-- main section -->
   <div class="suppliers-animation-container">
     <div>
@@ -119,7 +156,7 @@
       <div
         class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10"
       >
-        <ul
+        <ul id="tab-list"
           class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]"
         >
           <li
