@@ -226,7 +226,7 @@
                   <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
                     {{ provider.title }}
                   </h6>
-                  <p>{{ provider.mini_descr }}</p>
+                  <p>{% if provider.mini_descr %}{{ provider.mini_descr }}{% endif %}</p>
                 </div>
                 <div class="flex gap-4">
                   <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
