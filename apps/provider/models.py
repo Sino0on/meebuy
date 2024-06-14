@@ -122,9 +122,9 @@ class Provider(StatusMixin, models.Model):
     )
     requisites = models.TextField(blank=True, null=True, verbose_name="Реквизиты")
     is_active = models.BooleanField(default=True, verbose_name=_("Активность"))
-    emp_quantity = models.CharField(
-        blank=True, null=True, verbose_name=_("Кол-во работников")
-    )
+    emp_quantity = models.CharField(max_length=100,
+                                    blank=True, null=True, verbose_name=_("Кол-во работников")
+                                    )
     register_ur = models.DateField(
         blank=True, null=True, verbose_name=_("Дата регистрации юр лица")
     )
