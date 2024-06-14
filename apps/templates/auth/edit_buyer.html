@@ -142,9 +142,19 @@
                         {{ form.post_index }}
                     </div>
                     <div class="form__item">
-                        <label class="label">Телефон</label>
-                        <p class="tooltip">Введите номер телефона</p>
-                        {{ form.phones }}
+                      <label class="label">Телефон</label>
+                      <p class="tooltip">Введите номер телефона</p>
+                      <div class="flex items-center gap-4">
+                        <div>
+                          <select name="countryCode" id="countryCode" class="">
+                            <option data-countryCode="GB" value="44" selected>KG (+996)</option>
+                            <option data-countryCode="US" value="1">USA (+1)</option>
+                          </select>
+                        </div>
+                        <div class="flex-grow">
+                          <input placeholder="Номер" type="tel" name="phoneNumber" id="phoneNumber" class="w-full">
+                        </div>
+                      </div>
                     </div>
                     <div class="form__item">
                         <label class="label">E-mail (публичный адрес электронной почты)</label>
