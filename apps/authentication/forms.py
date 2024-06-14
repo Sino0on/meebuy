@@ -109,6 +109,8 @@ class ProviderForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if user and user.user_type == 'buyer':
             self.fields.pop('type')
+        else:
+            self.fields['type'].required = False
 
     class Meta:
         fields = [

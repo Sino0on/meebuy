@@ -43,6 +43,7 @@ class Provider(StatusMixin, models.Model):
         SERVICES = "services", _(
             "Оказание услуг логистики / поиска товаров / таможенного оформления"
         )
+
     title = models.CharField(
         max_length=123, verbose_name="Название", blank=True, null=True
     )
@@ -54,6 +55,7 @@ class Provider(StatusMixin, models.Model):
         choices=BusinessType.choices,
         verbose_name=_("Основная деятельность вашей компании"),
         default=BusinessType.WHOLESALE,
+        blank=True, null=True
     )
     description = models.TextField(verbose_name="Описание", blank=True, null=True)
     category = models.ManyToManyField(

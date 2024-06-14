@@ -99,7 +99,7 @@
                                             >
                                                 <!--Supplement an id here instead of using 'name'-->
                                                 {% for country in locations %}
-                                                <option value="{{ country.title }}">{{ country.title }}</option>
+                                                <option value="{{ country.title }}" >{{ country.title }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -365,8 +365,20 @@
     const selectedRegion = regionSelect.getAttribute("data-selected-region");
     const citySelect = document.getElementById("city-options");
     const selectedCity = citySelect.getAttribute("data-selected-city");
+    const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
+    const countries = JSON.parse(formattedString);
+    const transformedData = transformData(countries);
+    const countryOptions = countrySelect.querySelectorAll('option');
 
-    function transformData(data) {
+    countryOptions.forEach(option => {
+        option.selected = option.value === selectedCountry;
+    })
+
+
+    addOptions(regionSelect, transformedData[selectedCountry]);
+    addOptions(citySelect, transformedData[selectedCountry][selectedRegion]);
+
+        function transformData(data) {
         const transformed = {};
 
         data.forEach((country) => {
@@ -387,12 +399,6 @@
 
         return transformed;
     }
-
-    const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
-    const countries = JSON.parse(formattedString);
-    const transformedData = transformData(countries);
-    addOptions(regionSelect, transformedData[countrySelect.value]);
-    addOptions(citySelect, transformedData[countrySelect.value][regionSelect.value]);
 
     countrySelect.addEventListener("change", (e) => {
         const selectedCountry = e.target.value;
