@@ -392,26 +392,26 @@ SIMPLEUI_CONFIG = {
         },
         {
             'name': 'Настройки',
-            'icon': 'fa fa-boxes',
+            'icon': 'fa fa-cogs',
             'models': [
                 {
                     'name': 'Контакты',
-                    'icon': 'fa fa-columns',
+                    'icon': 'fa fa-phone',
                     'url': '/admin/user_cabinet/contacts/'
                 },
                 {
                     'name': 'Категории',
-                    'icon': 'fa fa-columns',
+                    'icon': 'fa fa-book',
                     'url': '/admin/provider/category/'
                 },
                 {
                     'name': 'Статические страницы',
-                    'icon': 'fa fa-columns',
+                    'icon': 'fa fa-file',
                     'url': '/admin/pages/staticpage/'
                 },
                 {
                     'name': 'Часто задаваемые вопросы',
-                    'icon': 'fa fa-columns',
+                    'icon': 'fa fa-question',
                     'url': '/admin/user_cabinet/faq/'
                 },
                 {
