@@ -112,7 +112,7 @@
                                 src="{% if i.image %}  {{ i.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="">
                             <div class="slide__content flex flex-col justify-between h-full">
                                 <div>
-                                    <span class="text-logo-color sm:text-lg">Оптом</span>
+                                    <span class="text-logo-color sm:text-lg">{{ i.terms_of_sale }}</span>
                                     <h2 class="uppercase text-base font-black sm:text-3xl">{{ i.title }}</h2>
                                 </div>
                                 <a href="/product/detail/{{ i.pk }}/" class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
