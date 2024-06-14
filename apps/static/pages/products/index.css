@@ -68,6 +68,8 @@
 
 @media (min-width: 992px) {
   .products .card img {
+    object-fit: cover;
+    object-position: top;
     aspect-ratio: 340 / 300;
   }
 }
