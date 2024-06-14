@@ -30,8 +30,8 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rec_products'] = Product.objects.all()[:6]
-        context['new_products'] = Product.objects.all()[:6]
+        context['rec_products'] = Product.objects.all().order_by('-id')[:6]
+        context['new_products'] = Product.objects.all().order_by('-id')[:6]
         context['new_providers'] = Provider.objects.filter(is_modered=True, is_provider=True)[:4]
         context['categories'] = Category.objects.filter(category=None)
         context['tenders'] = Tender.objects.all()[:8]
