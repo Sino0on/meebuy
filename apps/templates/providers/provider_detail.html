@@ -92,7 +92,7 @@
                             <div class="flex gap-2 text-base text-[#4D4D4D] normal-case xl:text-lg">
                                 <img class="text-[#4D4D4D]" src="{% static 'assets/images/icons/location.svg' %}"
                                     alt="Location" />
-                                <p class="text-[#4D4D4D]">{{ provider.address }}</p>
+                                <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>
                             </div>
                         </div>
                     </div>
