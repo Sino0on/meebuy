@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Sum
 from .models import Budget, Income, Expense, Employee, Salary
 
 def budget_list(request):
@@ -14,11 +15,15 @@ def budget_detail(request, pk):
         'budget': budget,
         'incomes': incomes,
         'expenses': expenses,
+        'total_income': budget.incomes.aggregate(total=Sum('amount'))['total'],
+        'total_expense': budget.expenses.aggregate(total=Sum('amount'))['total']
     })
+
 
 def employee_list(request):
     employees = Employee.objects.all()
     return render(request, 'finance/employee_list.html', {'employees': employees})
+
 
 def employee_detail(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
@@ -26,4 +31,5 @@ def employee_detail(request, pk):
     return render(request, 'finance/employee_detail.html', {
         'employee': employee,
         'salaries': salaries,
+        'total_salaries': salaries.aggregate(total=Sum('amount'))['total'],
     })

@@ -233,87 +233,44 @@
                   </div>
                 </div>
               </div>
-
               <div class="cards shadow-card-shadow rounded-2xl sm:p-9 p-5">
                 <!-- Статистика -->
                 <h1 class="text-3xl font-bold mb-4 text-center">{{ employee.name }}</h1>
-                <div class="bg-gray-100 p-6 rounded-lg shadow-lg mb-4">
-                  <h2 class="text-xl font-semibold">Позиция</h2>
-                  <p class="text-gray-700">{{ employee.position }}</p>
-                  <h2 class="text-xl font-semibold mt-4">Зарплата</h2>
-                  <p class="text-gray-700">{{ employee.salary }}</p>
+                <div class="bg-gray-100 p-6 mb-4">
+                    <h2 class="text-xl font-semibold">Позиция</h2>
+                    <p class="text-gray-700">{{ employee.position }}</p>
+                    <h2 class="text-xl font-semibold mt-4">Зарплата</h2>
+                    <p class="text-gray-700">{{ employee.salary }}</p>
                 </div>
-                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
-                  <h2 class="text-2xl font-bold mb-2">Зарплаты</h2>
-                  <ul>
-                    {% for salary in salaries %}
-                      <li class="border-b last:border-none">
-                        <div class="p-4">
-                          {{ salary.amount }} on {{ salary.date_paid }}
-                        </div>
-                      </li>
-                    {% endfor %}
-                  </ul>
+                <div class="bg-gray-100 p-6 mb-4">
+                    <h2 class="text-2xl font-bold mb-2">Зарплаты</h2>
+                    <table class="min-w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="py-2">Дата</th>
+                                <th class="py-2">Описание</th>
+                                <th class="py-2">Сумма</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for salary in salaries %}
+                            <tr>
+                                <td class="border px-4 py-2">{{ salary.date_paid }}</td>
+                                <td class="border px-4 py-2">Зарплата</td>
+                                <td class="border px-4 py-2">{{ salary.amount }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                <!-- Поднятие -->
-                <div id="lifting-block" style="display: none">
-                  <div class="flex flex-col gap-7">
-                    <p
-                      class="text-[#4D4D4D] font-mulish font-normal text-[16px]"
-                    >
-                      Здесь вы можете увидеть свои бюджеты и управлять ими. Следите за доходами и расходами, чтобы эффективно планировать свои финансы.
-                    </p>
-                    <h1 class="text-3xl font-bold mb-4 text-center">Сотрудники</h1>
-                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
-                      <ul>
-                        {% for employee in employees %}
-                          <li class="border-b last:border-none">
-                            <a href="{% url 'employee_detail' employee.pk %}" class="block p-4 hover:bg-gray-200">
-                              {{ employee.name }}
-                            </a>
-                          </li>
-                        {% endfor %}
-                      </ul>
+                <div class="bg-gray-100 p-6">
+                    <h2 class="text-2xl font-bold mb-2">Итог</h2>
+                    <div class="flex justify-between">
+                        <p class="text-xl font-semibold">Общая сумма выплат:</p>
+                        <p class="text-xl">{{ total_salaries }}</p>
                     </div>
-                  </div>
                 </div>
-                <!-- Баннеры -->
-                <div id="bannery-block" style="display: none">
-                  <div class="flex flex-col gap-6 w-full">
-                    <p
-                      class="text-[#4D4D4D] font-mulish font-normal text-start text-[18px]"
-                    >
-                      Баннеры — это наиболее традиционный вид интернет рекламы,
-                      рассчитанный на повышение узнаваемости бренда.
-                      Мы предлагаем баннеры на главной странице (с оплатой
-                      по времени) и внутренних страницах сайта (с оплатой
-                      по показам).
-                    </p>
-                    <div class="">
-                      <button
-                        class="sm:uppercase text-[#2B292C] text-lg font-medium py-3 sm:px-7 px-4 bg-[#E4DB00] rounded-lg"
-                      >
-                        Подробнее о баннерах и ценах
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <!-- Верификация -->
-                <div id="verification-block" style="display: none">
-                  <div class="flex flex-col items-start gap-10 font-mulish">
-                    <p class="text-[#4D4D4D] text-[18px] font-normal">
-                      Для прохождения верификации пришлите сканы/фото документов
-                      о регистрации компании, указанной в реквизитах вашей
-                      анкеты, на адрес ver@optlist.ru
-                    </p>
-                    <p class="text-[#4D4D4D] text-[18px] font-normal">
-                      Письмо должно быть с темой «Верификация», отправлено с
-                      вашего адреса example@gmail.com.
-                    </p>
-                  </div>
-                </div>
-                <!-- Тарифы -->
-              </div>
+            </div>
             </section>
           </div>
         </div>
