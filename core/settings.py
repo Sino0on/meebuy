@@ -78,7 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'authentication.middleware.RedirectFirstTimeFromSearchEngineMiddleware'
+    'apps.authentication.middleware.RedirectFirstTimeFromSearchEngineMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
