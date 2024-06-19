@@ -62,6 +62,8 @@ const itemsToSearch = [
 ];
 
 const heroFormToggle = () => {
+     heroFormBtn.classList.toggle('hidden');
+
   const currentWidth = window.innerWidth;
   heroSearchWrapper.classList.toggle('w-full');
   heroSearch.classList.toggle('w-full')
@@ -77,9 +79,6 @@ const heroFormToggle = () => {
     selectItems.classList.toggle('w-full')
     selectItems.classList.toggle('top-[45px]')
 }
-  setTimeout(() => {
-    heroFormBtn.classList.toggle('hidden');
-  }, 1500);
 };
 
 // Обработчик клика на кнопке "Я ищу"
