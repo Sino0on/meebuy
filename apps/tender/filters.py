@@ -1,6 +1,7 @@
 import django_filters
-from django.shortcuts import get_object_or_404
+from functools import reduce
 from django.utils import timezone
+from operator import and_
 from django.db.models import Q
 from apps.tender.models import Tender, City, Country, Region
 
@@ -17,6 +18,7 @@ class TenderFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(lookup_expr='icontains', method='filter_title')
     price_from = django_filters.NumberFilter(field_name='price', lookup_expr='gt')
     price_to = django_filters.NumberFilter(field_name='price', lookup_expr='lt')
+    include_words = django_filters.CharFilter(method='filter_include_words')
     exclude_words = django_filters.CharFilter(method='filter_exclude')
     has_phone = django_filters.BooleanFilter(
         field_name='user__provider__phone',
@@ -45,6 +47,14 @@ class TenderFilter(django_filters.FilterSet):
             Q(title__icontains=search_term) |
             Q(description__icontains=search_term)
         )
+
+    def filter_include_words(self, queryset, name, value):
+        words = value.split(' ')
+        print(words)
+        if words:
+            query = reduce(and_, (Q(title__icontains=word) | Q(description__icontains=word) for word in words))
+            return queryset.filter(query)
+        return queryset
 
     def filter_exclude(self, queryset, name, value):
         search_term = value
@@ -94,7 +104,6 @@ class TenderFilter(django_filters.FilterSet):
         if value in [True, 'True', 'on']:
             return queryset.filter(user__provider__phone__isnull=False).exclude(user__provider__phone='')
         return queryset
-
 
     class Meta:
         model = Tender

@@ -1,4 +1,6 @@
-from django.urls import reverse_lazy
+from urllib.parse import urlencode
+
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -207,7 +209,18 @@ class SearchRequestCreateView(generic.CreateView):
 
 
 class SearchDetailView(generic.View):
-    pass
+    def get(self, request, pk):
+        search_request = get_object_or_404(SearchRequest, pk=pk)
+        query_params = {}
+        if search_request.name:
+            query_params['include_words'] = search_request.name
+        if search_request.city:
+            query_params['city'] = search_request.city
+
+        search_url = reverse('tender_list')
+        redirect_url = f"{search_url}?{urlencode(query_params)}"
+
+        return redirect(redirect_url)
 
 
 class SearchDeleteView(generic.DeleteView):
