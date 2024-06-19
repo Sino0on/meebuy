@@ -72,12 +72,11 @@ class LoginView(FormView):
                 authenticated_user = authenticate(email=user.email, password=register_form.clean_password2())
                 if authenticated_user is not None:
                     auth_login(self.request, authenticated_user)
-                    # Set session flag for registration via external service (Google/Yandex)
-                    self.request.session['external_registration'] = True
                     return redirect(reverse_lazy('choice'))
                 else:
                     messages.error(request, 'Ошибка аутентификации пользователя.')
                     return redirect(reverse_lazy('home'))
+
 
             else:
                 print(register_form.errors)
@@ -95,11 +94,7 @@ class LoginView(FormView):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         user = authenticate(self.request, email=email, password=password)
-        if user is not None and user.is_active:
-            # Check if the external registration flag is set in session
-            if self.request.session.get('external_registration', False):
-                del self.request.session['external_registration']  # Clear the flag
-                return redirect(reverse_lazy('choice'))
+        if user is not None and user.is_active:  # Проверка, что пользователь активирован
             auth_login(self.request, user)
         else:
             return self.form_invalid(form)
