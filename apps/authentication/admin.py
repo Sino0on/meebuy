@@ -1,10 +1,12 @@
 from django.contrib import admin
-from apps.authentication.models import User
-from django.utils.translation import gettext as _, ngettext
-from django.urls import path
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.forms import AdminPasswordChangeForm
+from django.shortcuts import render, redirect
+from django.urls import path
+from django.utils.translation import gettext as _, ngettext
+
+from apps.authentication.models import User
+
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
@@ -63,4 +65,3 @@ class UserAdmin(BaseUserAdmin):
         }
 
         return render(request, 'admin/auth/user/change_password.html', context)
-

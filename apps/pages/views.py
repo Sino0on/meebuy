@@ -1,5 +1,6 @@
-from .models import StaticPage
 from django.shortcuts import render
+
+from .models import StaticPage
 
 
 def privacy_policy_view(request):

@@ -4,11 +4,12 @@
 
 {% block title %}Личный кабинет{% endblock %}
 
-    {% block css %}
-{#    <link rel="stylesheet" href="{% static 'styles.css' %}">#}
-    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
-    <link rel="stylesheet" href="{% static 'pages/profile/messages/chat/index.css' %}">
-    {% endblock %}
+{% block css %}
+{#
+<link rel="stylesheet" href="{% static 'styles.css' %}">#}
+<link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
+<link rel="stylesheet" href="{% static 'pages/profile/messages/chat/index.css' %}">
+{% endblock %}
 
 {% block content %}
 <nav class="breadcrumbs bg-[#FFFFFC]">
@@ -34,7 +35,7 @@
     <div class="container">
         <div class="lg-md:grid grid-cols-3  pb-[100px] lg-md:pb-[120px] lg-md:gap-5 xl:grid-cols-4">
             <!--  this section is for avatar  -->
-                {% include 'cabinet/cabinet_includes/menu.html' with active_page='chat_list'  %}
+            {% include 'cabinet/cabinet_includes/menu.html' with active_page='chat_list' %}
             <div class="lg-md:col-span-2 xl:col-span-3">
                 <!-- these sections are for main content  -->
                 <section class="main-content mt-[30px] h-full lg-md:mt-[50px]">
@@ -45,31 +46,37 @@
                                href="{% url 'chat_list' %}">
                                 <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="">
                                 {% if chat.user_second.provider.title %}
-                                    {{ chat.user_second.provider.title }}
+                                {{ chat.user_second.provider.title }}
                                 {% else %}
-                                    Назад
+                                Назад
                                 {% endif %}
                             </a>
                         </div>
-                        <div id="messageContainer" style="min-height: 440px;" class="flex flex-col h-full max-h-[440px] overflow-scroll px-[3px] py-[25px]">
+                        <div id="messageContainer" style="min-height: 440px;"
+                             class="flex flex-col h-full max-h-[440px] overflow-scroll px-[3px] py-[25px]">
 
                             {% for message in messages %}
                             {% if message.sender == user %}
                             <div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] bg-[#FBFBFB] rounded-br-none lg-md:max-w-[426px] ml-auto">
                                 <p>{{ message.content }}</p>
-                                <div class="text-right text-[#747474] text-sm">{{ message.created_at|naturaltime }}</div>
+                                <div class="text-right text-[#747474] text-sm">{{ message.created_at|naturaltime }}
+                                </div>
                             </div>
                             {% else %}
                             <div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] rounded-tl-none lg-md:max-w-[427px] lg-md:bg-[#FFFEDF]">
                                 <p>{{ message.content }}</p>
-                                <div class="text-right text-[#747474] text-sm">{{ message.created_at|naturaltime }}</div>
+                                <div class="text-right text-[#747474] text-sm">{{ message.created_at|naturaltime }}
+                                </div>
                             </div>
                             {% endif %}
                             {% endfor %}
                         </div>
                         <div class="flex items-center gap-4 mt-auto">
-                            <textarea id="messageInput" class="border border-[#515151] rounded-[10px] pt-3 flex-grow px-5" type="text" placeholder="Введите сообщение"></textarea>
-                            <button onclick="sendMessage()" ><img src="{% static 'assets/images/icons/circle-arrow-yellow.svg' %}" alt=""></button>
+                            <textarea id="messageInput"
+                                      class="border border-[#515151] rounded-[10px] pt-3 flex-grow px-5" type="text"
+                                      placeholder="Введите сообщение"></textarea>
+                            <button onclick="sendMessage()"><img
+                                    src="{% static 'assets/images/icons/circle-arrow-yellow.svg' %}" alt=""></button>
                         </div>
                     </div>
                 </section>
@@ -78,104 +85,104 @@
     </div>
 </main>
 <script>
-  const chatIcon = document.getElementById("chat-icon");
-  const chatTabM = document.getElementById("chat-tab-m");
-  const chatTabD = document.getElementById("chat-tab-d");
-  const profile = document.getElementById('profile-menu');
-  const messageContainer = document.getElementById("messageContainer");
-  const unreadCountElement = document.getElementById("unread-count");
+    const chatIcon = document.getElementById("chat-icon");
+    const chatTabM = document.getElementById("chat-tab-m");
+    const chatTabD = document.getElementById("chat-tab-d");
+    const profile = document.getElementById('profile-menu');
+    const messageContainer = document.getElementById("messageContainer");
+    const unreadCountElement = document.getElementById("unread-count");
 
-  let unreadCount = 0;
+    let unreadCount = 0;
 
-  // Function to update unread count display
-  function updateUnreadCount() {
-    if (unreadCount > 0) {
-      unreadCountElement.textContent = unreadCount;
-      unreadCountElement.style.display = 'block';
-      chatTabD.classList.add('bg-[#E0E0E0]');
-    } else {
-      unreadCountElement.style.display = 'none';
+    // Function to update unread count display
+    function updateUnreadCount() {
+      if (unreadCount > 0) {
+        unreadCountElement.textContent = unreadCount;
+        unreadCountElement.style.display = 'block';
+        chatTabD.classList.add('bg-[#E0E0E0]');
+      } else {
+        unreadCountElement.style.display = 'none';
+      }
+
+      console.log("Unread count:", unreadCount);
     }
 
-    console.log("Unread count:", unreadCount);
-  }
+    var ws = new WebSocket(`wss://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
 
-  var ws = new WebSocket(`wss://${window.location.host}/ws/socket-server/chat/{{ chat.id }}`);
-
-  ws.onopen = function() {
-    console.log("Connected to the chat server.");
-    messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
-  };
-
-  ws.onmessage = function(event) {
-    var data = JSON.parse(event.data);
-    console.log(data);
-    const userEmail = "{{ user.email }}";
-    var messageElement = document.createElement("div");
-    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-
-    if (data.message.user === userEmail) {
-      messageElement.innerHTML = `
-        <div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] bg-[#FBFBFB] rounded-br-none lg-md:max-w-[426px] ml-auto">
-          <p>${data.message.message}</p>
-          <div class="text-right text-[#747474] text-sm">${currentTime}</div>
-        </div>`;
-    } else {
-      messageElement.innerHTML = `
-        <div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] rounded-tl-none lg-md:max-w-[427px] lg-md:bg-[#FFFEDF]">
-          <p>${data.message.message}</p>
-          <div class="text-right text-[#747474] text-sm">${currentTime}</div>
-        </div>`;
-      
-    //   if (document.hidden || !chatTab.classList.contains('active')) {
-    //     unreadCount++;
-    //     updateUnreadCount();
-    //   }
-      unreadCount++;
-      updateUnreadCount();
-    }
-
-    messageContainer.appendChild(messageElement);
-    messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
-  };
-
-  ws.onerror = function(error) {
-    console.log("WebSocket error: " + error);
-  };
-
-  ws.onclose = function(event) {
-    console.log("Disconnected from the chat server.");
-  };
-
-  function sendMessage() {
-    var input = document.getElementById("messageInput");
-    if (ws.readyState === WebSocket.OPEN && input.value.trim() !== "") {
-      ws.send(JSON.stringify({
-        'message': input.value,
-        'user': "{{ user.id }}"
-      }));
-      input.value = ""; // Clear input after send
+    ws.onopen = function() {
+      console.log("Connected to the chat server.");
       messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
+    };
+
+    ws.onmessage = function(event) {
+      var data = JSON.parse(event.data);
+      console.log(data);
+      const userEmail = "{{ user.email }}";
+      var messageElement = document.createElement("div");
+      const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+
+      if (data.message.user === userEmail) {
+        messageElement.innerHTML = `
+          <div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] bg-[#FBFBFB] rounded-br-none lg-md:max-w-[426px] ml-auto">
+            <p>${data.message.message}</p>
+            <div class="text-right text-[#747474] text-sm">${currentTime}</div>
+          </div>`;
+      } else {
+        messageElement.innerHTML = `
+          <div class="shadow-card-shadow py-[14px] px-2.5 mt-[25px] rounded-[20px] rounded-tl-none lg-md:max-w-[427px] lg-md:bg-[#FFFEDF]">
+            <p>${data.message.message}</p>
+            <div class="text-right text-[#747474] text-sm">${currentTime}</div>
+          </div>`;
+
+      //   if (document.hidden || !chatTab.classList.contains('active')) {
+      //     unreadCount++;
+      //     updateUnreadCount();
+      //   }
+        unreadCount++;
+        updateUnreadCount();
+      }
+
+      messageContainer.appendChild(messageElement);
+      messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
+    };
+
+    ws.onerror = function(error) {
+      console.log("WebSocket error: " + error);
+    };
+
+    ws.onclose = function(event) {
+      console.log("Disconnected from the chat server.");
+    };
+
+    function sendMessage() {
+      var input = document.getElementById("messageInput");
+      if (ws.readyState === WebSocket.OPEN && input.value.trim() !== "") {
+        ws.send(JSON.stringify({
+          'message': input.value,
+          'user': "{{ user.id }}"
+        }));
+        input.value = ""; // Clear input after send
+        messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the bottom
+      }
     }
-  }
 
-  document.getElementById("messageInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-      sendMessage();
-    }
-  });
+    document.getElementById("messageInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
 
-  chatTab.addEventListener('focus', function() {
-    unreadCount = 0;
-    updateUnreadCount();
-  });
-
-  document.addEventListener('visibilitychange', function() {
-    if (!document.hidden && chatTab.classList.contains('active')) {
+    chatTab.addEventListener('focus', function() {
       unreadCount = 0;
       updateUnreadCount();
-    }
-  });
+    });
+
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden && chatTab.classList.contains('active')) {
+        unreadCount = 0;
+        updateUnreadCount();
+      }
+    });
 
 </script>
 {% endblock %}

@@ -1,5 +1,5 @@
-from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+
 from apps.user_cabinet.models import Cabinet
 
 

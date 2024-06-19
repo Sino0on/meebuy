@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Product, ProductImg, ProductCategory, PriceColumn
+
+from .models import (
+    Product,
+    ProductImg,
+    ProductCategory,
+    PriceColumn
+)
 
 
 @admin.register(ProductCategory)

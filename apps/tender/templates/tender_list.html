@@ -2,559 +2,559 @@
 {% load static %}
 {% block title %}Закупки{% endblock %}
 {% block css %}
-    <link href="{% static 'pages/procurement/procurement.css' %}" rel="stylesheet"/>
-    <link rel="stylesheet" href="{% static 'pages/filters/index.css' %}"/>
+<link href="{% static 'pages/procurement/procurement.css' %}" rel="stylesheet"/>
+<link rel="stylesheet" href="{% static 'pages/filters/index.css' %}"/>
 {% endblock %}
 {% block content %}
 
-    <style>
-        .tender-item:hover {
-            background: #fffb98;
-            transition: all .3s ease
+<style>
+    .tender-item:hover {
+        background: #fffb98;
+        transition: all .3s ease
+    }
+
+    #selectContainer:hover, #filterContainer:hover {
+        background: #fffb98;
+        transition: all .3s ease
+    }
+
+    #tab-list li:hover {
+        background: #fffb98;
+        transition: all .3s ease
+    }
+
+    #Tab1 .cards:hover {
+        background: #fffb98;
+        transition: all .3s ease
+    }
+
+    #selectModal {
+        display: none;
+        min-width: 178px;
+        min-height: 110px;
+        overflow: hidden;
+    }
+
+    #selectModal.active {
+        display: block;
+    }
+
+    #selectModal li {
+        padding: 16px;
+        transition: all .3s ease
+
+    }
+
+    #selectModal li:hover {
+        background: #fffb98;
+    }
+
+    #filter-window {
+        position: fixed;
+        z-index: 100;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+
+    @media (max-width: 1000px) {
+           #filter-window  {
+        transform: translate(-50%, -60%);
+
         }
-
-        #selectContainer:hover, #filterContainer:hover {
-            background: #fffb98;
-            transition: all .3s ease
-        }
-
-        #tab-list li:hover {
-            background: #fffb98;
-            transition: all .3s ease
-        }
-
-        #Tab1 .cards:hover {
-            background: #fffb98;
-            transition: all .3s ease
-        }
-
-        #selectModal {
-            display: none;
-            min-width: 178px;
-            min-height: 110px;
-            overflow: hidden;
-        }
-
-        #selectModal.active {
-            display: block;
-        }
-
-        #selectModal li {
-            padding: 16px;
-            transition: all .3s ease
-
-        }
-
-        #selectModal li:hover {
-            background: #fffb98;
-        }
-
-        #filter-window {
-            position: fixed;
-            z-index: 100;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-
-        @media (max-width: 1000px) {
-               #filter-window  {
-            transform: translate(-50%, -60%);
-
-            }
-        }
-    </style>
-    <div class="relative">
-        <!-- main section -->
-        <div class="suppliers-animation-container">
-            <div class="relative">
-                <!-- menu top -->
-                <div class="menu">
-                    <div class="container flex items-center gap-4 py-4">
-                        <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" alt=""/></a>
-                        <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/></a>
-                        <p class="font-normal font-mulish text-[#A0A0A0]">Закупки</p>
-                    </div>
+    }
+</style>
+<div class="relative">
+    <!-- main section -->
+    <div class="suppliers-animation-container">
+        <div class="relative">
+            <!-- menu top -->
+            <div class="menu">
+                <div class="container flex items-center gap-4 py-4">
+                    <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" alt=""/></a>
+                    <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/></a>
+                    <p class="font-normal font-mulish text-[#A0A0A0]">Закупки</p>
                 </div>
+            </div>
 
-                <!-- main animation block -->
-                <div class="suppliers-wrapper relative h-[350px]">
-                    <div class="container">
-                        <div
-                                class="relative z-50 flex flex-col items-center justify-center w-full"
-                        >
-                            <div>
-                                <h2
-                                        style="font-size: 36px"
-                                        class="text-white font-extrabold sm:pb-8 text-center uppercase"
-                                >
-                                    закупки
-                                </h2>
-                                <form class="mt-3">
-                                    <div
-                                            class="relative md:w-[600px] sm:w-[400px] s: w-[320px] m-auto"
-                                    >
-                                        <div
-                                                class="absolute inset-y-0 end-0 flex items-center pe-2"
-                                        >
-                                            <button type="submit">
-                                                <img
-                                                        src="{% static 'assets/images/icons/search.svg' %}"
-                                                        alt="Search icon"
-                                                />
-                                            </button>
-                                        </div>
-                                        <input
-                                                id="default-search" name="title"
-                                                class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
-                                                placeholder="Например: автозапчасти"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex justify-center items-center w-full">
+            <!-- main animation block -->
+            <div class="suppliers-wrapper relative h-[350px]">
+                <div class="container">
                     <div
-                            class="absolute z-50 bottom-[-28px] flex items-center justify-center bg-[#E4DB00] gap-3 rounded-lg md:py-4 py-2 md:px-7 px-3 text-[16px] font-mulish text-[#2B292C]"
+                            class="relative z-50 flex flex-col items-center justify-center w-full"
                     >
-                        <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 12 12"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                    d="M6 0C6.19891 0 6.38968 0.0790178 6.53033 0.21967C6.67098 0.360322 6.75 0.551088 6.75 0.75V5.25H11.25C11.4489 5.25 11.6397 5.32902 11.7803 5.46967C11.921 5.61032 12 5.80109 12 6C12 6.19891 11.921 6.38968 11.7803 6.53033C11.6397 6.67098 11.4489 6.75 11.25 6.75H6.75V11.25C6.75 11.4489 6.67098 11.6397 6.53033 11.7803C6.38968 11.921 6.19891 12 6 12C5.80109 12 5.61032 11.921 5.46967 11.7803C5.32902 11.6397 5.25 11.4489 5.25 11.25V6.75H0.75C0.551088 6.75 0.360322 6.67098 0.21967 6.53033C0.0790178 6.38968 0 6.19891 0 6C0 5.80109 0.0790178 5.61032 0.21967 5.46967C0.360322 5.32902 0.551088 5.25 0.75 5.25H5.25V0.75C5.25 0.551088 5.32902 0.360322 5.46967 0.21967C5.61032 0.0790178 5.80109 0 6 0Z"
-                                    fill="black"></path>
-                        </svg>
-                        <button><a href="
-                                {% if user.is_authenticated %}{% url 'tender_create' %}{% else %}{% url 'login' %}{% endif %}">Добавить
-                            закупку</a></button>
+                        <div>
+                            <h2
+                                    style="font-size: 36px"
+                                    class="text-white font-extrabold sm:pb-8 text-center uppercase"
+                            >
+                                закупки
+                            </h2>
+                            <form class="mt-3">
+                                <div
+                                        class="relative md:w-[600px] sm:w-[400px] s: w-[320px] m-auto"
+                                >
+                                    <div
+                                            class="absolute inset-y-0 end-0 flex items-center pe-2"
+                                    >
+                                        <button type="submit">
+                                            <img
+                                                    src="{% static 'assets/images/icons/search.svg' %}"
+                                                    alt="Search icon"
+                                            />
+                                        </button>
+                                    </div>
+                                    <input
+                                            id="default-search" name="title"
+                                            class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                                            placeholder="Например: автозапчасти"
+                                    />
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- procurement -->
-
-        <div class="bg-[#FFFFFC] pb-16">
-            <div class="container">
-                <!-- filters -->
+            <div class="flex justify-center items-center w-full">
                 <div
-                        class="flex gap-6 lg-md: items-center md:my-10 md: mb-5 lg-md: mt-10"
+                        class="absolute z-50 bottom-[-28px] flex items-center justify-center bg-[#E4DB00] gap-3 rounded-lg md:py-4 py-2 md:px-7 px-3 text-[16px] font-mulish text-[#2B292C]"
                 >
-                    <!-- filter -->
-                    <div
-                            id="filterContainer"
-                            data-city="{{ locations }}"
-                            class="relative cursor-pointer z-50 shadow-card-shadow rounded-[15px] py-3 px-6"
+                    <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                     >
-                        <div class="flex items-center gap-4">
-                            Фильтр
-                            <img
-                                    src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
-                                    alt=""
-                            />
-                        </div>
-                        <!-- filter modal-->
-                        <div id="openFilter" data-countries="{{ locations }}" style="display: none"
-                             class="filter-container">
-                            <div id="filter-window"
-                                 class=" z-50  flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8 sm:w-[408px] w-auto"
-                            >
-                                <form method="get" type="submit" action="{% url 'tender_list' %}">
-                                    <div class="flex flex-col gap-4">
-                                        <div class="w-full">
-                                            <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                                                Дата создания
-                                            </h2>
-                                            <select class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl outline-none"
-                                                    name="ordering_date" id="">
-                                                <option value="yesterday">Вчера</option>
-                                                <option value="last_3_days">Последние 3 дня</option>
-                                                <option value="last_week">Последняя неделя</option>
-                                                <option value="all">Все время</option>
+                        <path
+                                d="M6 0C6.19891 0 6.38968 0.0790178 6.53033 0.21967C6.67098 0.360322 6.75 0.551088 6.75 0.75V5.25H11.25C11.4489 5.25 11.6397 5.32902 11.7803 5.46967C11.921 5.61032 12 5.80109 12 6C12 6.19891 11.921 6.38968 11.7803 6.53033C11.6397 6.67098 11.4489 6.75 11.25 6.75H6.75V11.25C6.75 11.4489 6.67098 11.6397 6.53033 11.7803C6.38968 11.921 6.19891 12 6 12C5.80109 12 5.61032 11.921 5.46967 11.7803C5.32902 11.6397 5.25 11.4489 5.25 11.25V6.75H0.75C0.551088 6.75 0.360322 6.67098 0.21967 6.53033C0.0790178 6.38968 0 6.19891 0 6C0 5.80109 0.0790178 5.61032 0.21967 5.46967C0.360322 5.32902 0.551088 5.25 0.75 5.25H5.25V0.75C5.25 0.551088 5.32902 0.360322 5.46967 0.21967C5.61032 0.0790178 5.80109 0 6 0Z"
+                                fill="black"></path>
+                    </svg>
+                    <button><a href="
+                                {% if user.is_authenticated %}{% url 'tender_create' %}{% else %}{% url 'login' %}{% endif %}">Добавить
+                        закупку</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                                            </select>
-                                        </div>
-                                        <div class="w-full">
-                                            <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                                                Бюджет
-                                            </h2>
-                                            <div class="flex items-center gap-5">
-                                                <input
-                                                        class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                                                        type="text"
-                                                        placeholder="От"
-                                                        name="price_from"
-                                                />
-                                                <input
-                                                        class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
-                                                        type="text"
-                                                        placeholder="До"
-                                                        name="price_to"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="w-full">
-                                            <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                                                Исключить слова
-                                            </h2>
+    <!-- procurement -->
+
+    <div class="bg-[#FFFFFC] pb-16">
+        <div class="container">
+            <!-- filters -->
+            <div
+                    class="flex gap-6 lg-md: items-center md:my-10 md: mb-5 lg-md: mt-10"
+            >
+                <!-- filter -->
+                <div
+                        id="filterContainer"
+                        data-city="{{ locations }}"
+                        class="relative cursor-pointer z-50 shadow-card-shadow rounded-[15px] py-3 px-6"
+                >
+                    <div class="flex items-center gap-4">
+                        Фильтр
+                        <img
+                                src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
+                                alt=""
+                        />
+                    </div>
+                    <!-- filter modal-->
+                    <div id="openFilter" data-countries="{{ locations }}" style="display: none"
+                         class="filter-container">
+                        <div id="filter-window"
+                             class=" z-50  flex flex-col gap-8 items-center bg-[#fff] rounded-[15px] py-6 px-8 sm:w-[408px] w-auto"
+                        >
+                            <form method="get" type="submit" action="{% url 'tender_list' %}">
+                                <div class="flex flex-col gap-4">
+                                    <div class="w-full">
+                                        <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                                            Дата создания
+                                        </h2>
+                                        <select class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl outline-none"
+                                                name="ordering_date" id="">
+                                            <option value="yesterday">Вчера</option>
+                                            <option value="last_3_days">Последние 3 дня</option>
+                                            <option value="last_week">Последняя неделя</option>
+                                            <option value="all">Все время</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="w-full">
+                                        <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                                            Бюджет
+                                        </h2>
+                                        <div class="flex items-center gap-5">
                                             <input
-                                                    class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                                                    class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
                                                     type="text"
-                                                    placeholder="Исключить слова"
-                                                    name="exclude_words"
+                                                    placeholder="От"
+                                                    name="price_from"
+                                            />
+                                            <input
+                                                    class="text-[#737373] w-[50%] text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                                                    type="text"
+                                                    placeholder="До"
+                                                    name="price_to"
                                             />
                                         </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                                            Исключить слова
+                                        </h2>
+                                        <input
+                                                class="text-[#737373] w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] pl-5 py-3 rounded-2xl"
+                                                type="text"
+                                                placeholder="Исключить слова"
+                                                name="exclude_words"
+                                        />
+                                    </div>
 
-                                        <div class="w-full">
-                                            <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
-                                                Контакты
-                                            </h2>
-                                            <div class="flex items-center gap-[10px]">
-                                                <input class="h-[18px] w-[18px]" type="checkbox" name="has_phone"/>
-                                                <p class="text-[#777777] font-normal">
-                                                    Только с телефонами
-                                                </p>
-                                            </div>
+                                    <div class="w-full">
+                                        <h2 class="text-[#2B292C] text-[18px] font-bold mb-4">
+                                            Контакты
+                                        </h2>
+                                        <div class="flex items-center gap-[10px]">
+                                            <input class="h-[18px] w-[18px]" type="checkbox" name="has_phone"/>
+                                            <p class="text-[#777777] font-normal">
+                                                Только с телефонами
+                                            </p>
                                         </div>
+                                    </div>
 
-                                        <div class="flex flex-col gap-5">
-                                            <div>
+                                    <div class="flex flex-col gap-5">
+                                        <div>
+                                            <p
+                                                    class="text-[#737373] w-full text-[16px] font-light"
+                                            >
+                                                Страна
+                                            </p>
+
+                                            <!-- Начально будет выбрано второе значение -->
+                                            <select name="country" id="country-options"
+                                                    class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+                                            >
+                                                <!--Supplement an id here instead of using 'name'-->
+                                                {% for country in locations %}
+                                                <option value="{{ country.title }}">{{ country.title }}</option>
+                                                {% endfor %}
+                                            </select>
+
+
+                                        </div>
+                                        <div class="flex flex-col gap-4">
+                                            <div class="w-full">
                                                 <p
                                                         class="text-[#737373] w-full text-[16px] font-light"
                                                 >
-                                                    Страна
+                                                    Область
                                                 </p>
 
                                                 <!-- Начально будет выбрано второе значение -->
-                                                <select name="country" id="country-options"
+                                                <select name="region" id="region-options"
                                                         class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
                                                 >
-                                                    <!--Supplement an id here instead of using 'name'-->
-                                                    {% for country in locations %}
-                                                        <option value="{{ country.title }}">{{ country.title }}</option>
-                                                    {% endfor %}
                                                 </select>
 
 
                                             </div>
-                                            <div class="flex flex-col gap-4">
-                                                <div class="w-full">
-                                                    <p
-                                                            class="text-[#737373] w-full text-[16px] font-light"
-                                                    >
-                                                        Область
-                                                    </p>
 
-                                                    <!-- Начально будет выбрано второе значение -->
-                                                    <select name="region" id="region-options"
-                                                            class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-                                                    >
-                                                    </select>
+                                            <div class="w-full">
+                                                <p
+                                                        class="text-[#737373] w-full text-[16px] font-light"
+                                                >
+                                                    Город
+                                                </p>
 
-
-                                                </div>
-
-                                                <div class="w-full">
-                                                    <p
-                                                            class="text-[#737373] w-full text-[16px] font-light"
-                                                    >
-                                                        Город
-                                                    </p>
-
-                                                    <!-- Начально будет выбрано второе значение -->
-                                                    <select name="city" id="city-options"
-                                                            class=" text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-                                                    >
-                                                        <!--Supplement an id here instead of using 'name'-->
-                                                    </select>
+                                                <!-- Начально будет выбрано второе значение -->
+                                                <select name="city" id="city-options"
+                                                        class=" text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+                                                >
+                                                    <!--Supplement an id here instead of using 'name'-->
+                                                </select>
 
 
-                                                </div>
                                             </div>
-
-
                                         </div>
+
+
                                     </div>
-                                    <button
-                                            id="filterBtn"
-                                            type="submit"
-                                            class="bg-[#E4DB00] w-full rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
-                                    >
-                                        Применить
-                                    </button>
-                                </form>
-                            </div>
+                                </div>
+                                <button
+                                        id="filterBtn"
+                                        type="submit"
+                                        class="bg-[#E4DB00] w-full rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
+                                >
+                                    Применить
+                                </button>
+                            </form>
                         </div>
                     </div>
-                    <!-- select -->
-                    <div
-                            class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
-                            id="selectContainer"
-                    >
-                        <p>Рекомендуем</p>
-                        <a class="toggle-icon" id="toggleLink">
-                            <img
-                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-                                    alt="Open"
-                                    class="openIcon"
-                                    style="display: block"
-                            />
-                            <img
-                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
-                                    alt="Close"
-                                    class="closeIcon"
-                                    style="display: none"
-                            />
-                        </a>
-                        <!-- select modal -->
-                        <ul
-                                id="selectModal"
-                                class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] w-[178px] h-[100px]"
-
-                        >
-                            <li
-                                    id="recommended-list"
-                                    class="cursor-pointer selected border-b flex items-center justify-between"
-                            >
-                                Рекомендуем
-                                <img
-                                        id="recommended"
-                                        style="display: none"
-                                        src="{% static 'assets/images/icons/check.svg' %}"
-                                        alt="check"
-                                />
-                            </li>
-                            <li
-                                    id="new-list"
-                                    class="cursor-pointer selected flex items-center justify-between"
-                            >
-                                Новые
-                                <img
-                                        id="new"
-                                        style="display: none"
-                                        src="{% static 'assets/images/icons/check.svg' %}"
-                                        alt="check"
-                                />
-                            </li>
-                        </ul>
-                    </div>
                 </div>
-                <!-- card list -->
-                <div id="tender-list" data-banners="{{ banners }}" data-banner-order="{{ banner_settings }}"
-                     class="flex flex-col gap-7">
-                    {% for tender in tenders %}
-                        <div
+                <!-- select -->
+                <div
+                        class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
+                        id="selectContainer"
+                >
+                    <p>Рекомендуем</p>
+                    <a class="toggle-icon" id="toggleLink">
+                        <img
+                                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+                                alt="Open"
+                                class="openIcon"
+                                style="display: block"
+                        />
+                        <img
+                                src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
+                                alt="Close"
+                                class="closeIcon"
+                                style="display: none"
+                        />
+                    </a>
+                    <!-- select modal -->
+                    <ul
+                            id="selectModal"
+                            class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] w-[178px] h-[100px]"
 
-                                class="cardCont tender-item cards relative flex flex-col items-start lg-md:px-16 px-4 lg-md:py-10 py-7 rounded-[15px]"
+                    >
+                        <li
+                                id="recommended-list"
+                                class="cursor-pointer selected border-b flex items-center justify-between"
                         >
-                            <ul
-                                    class="flex items-center gap-2 lg-md:absolute lg-md:right-9 lg-md: mb-5"
-                            >
-                                {% if tender.is_new %}
-                                    <li class="icon-container">
+                            Рекомендуем
+                            <img
+                                    id="recommended"
+                                    style="display: none"
+                                    src="{% static 'assets/images/icons/check.svg' %}"
+                                    alt="check"
+                            />
+                        </li>
+                        <li
+                                id="new-list"
+                                class="cursor-pointer selected flex items-center justify-between"
+                        >
+                            Новые
+                            <img
+                                    id="new"
+                                    style="display: none"
+                                    src="{% static 'assets/images/icons/check.svg' %}"
+                                    alt="check"
+                            />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- card list -->
+            <div id="tender-list" data-banners="{{ banners }}" data-banner-order="{{ banner_settings }}"
+                 class="flex flex-col gap-7">
+                {% for tender in tenders %}
+                <div
+
+                        class="cardCont tender-item cards relative flex flex-col items-start lg-md:px-16 px-4 lg-md:py-10 py-7 rounded-[15px]"
+                >
+                    <ul
+                            class="flex items-center gap-2 lg-md:absolute lg-md:right-9 lg-md: mb-5"
+                    >
+                        {% if tender.is_new %}
+                        <li class="icon-container">
                 <span
                         class="text-[#E4DB00] text-[12px] font-normal font-mulish rounded-[51px] bg-[#2B292C] py-2 px-4"
                 >Новое</span
                 >
-                                    </li>
-                                {% endif %}
-                                {% if tender.user.email %}
+                        </li>
+                        {% endif %}
+                        {% if tender.user.email %}
 
-                                    <li class="icon-container">
-                                        <img
-                                                id="burgerIcon"
-                                                src="{% static 'assets/images/icons/email.svg' %}"
-                                                alt=""
-                                        />
-                                        <span class="icon-text">Указан E-mail</span>
-                                    </li>
-                                {% endif %}
-                                {% if tender.user.phone %}
-                                    <li class="icon-container">
-                                        <img
-                                                id="burgerIcon"
-                                                src="{% static 'assets/images/icons/call.svg' %}"
-                                                alt=""
-                                        />
-                                        <span class="icon-text">Указан номер телефона</span>
-                                    </li>
-                                {% endif %}
-                                <li class="icon-container">
-                                    <svg
-                                            {% if user.is_authenticated %}
-                                                onclick="sendTenderRequest({{ tender.pk }})"
-                                                {% if tender in user.cabinet.favorite_tenders.all %}
-                                                class="tenderHeart transition-colors heart-active-color"
-                                                {% else %}
-                                                class="tenderHeart transition-colors"
-                                                {% endif %}
-                                            {% endif %}
-                                                width="36"
-                                                height="36"
-                                                viewBox="10 0 30 36"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                                {% if tender in user.cabinet.favorite_tenders.all %}
-                                                    class="red"
-                                                {% endif %}
-                                                    id="inside-heart"
-                                                    d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                                                    fill=""></path>
-                                        <path
-                                                id="border-heart"
-                                                {% if tender in user.cabinet.favorite_tenders.all %}
-                                                class="border-heart"
-                                                {% endif %}
-                                                d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                                                fill="#2B292C"></path>
-                                    </svg>
-
-                                    <span class="icon-text">Избранные</span>
-                                </li>
-                            </ul>
-                            <div class="flex flex-col gap-5 items-start">
-                                <h6
-                                        class="text-[#2B292C] text-[18px] font-mulish font-extrabold line-clamp-2"
-                                >
-                                    {{ tender.title }}
-                                </h6>
-                                <div class="flex flex-col gap-2 font-light">
-                                    <div class="flex items-center gap-3">
-                                        <p class="text-[#686868] text-[16px] font-mulish font-normal">
-                                            Количество:
-                                        </p>
-                                        <span class="text-[#2B292C] text-[16px] font-normal"
-                                        >от 100 шт.</span
-                                        >
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <p class="text-[#686868] text-[16px] font-mulish font-normal">
-                                            Бюджет:
-                                        </p>
-                                        <span class="text-[#2B292C] text-[16px] font-normal"
-                                        >{{ tender.price }}</span
-                                        >
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <p class="text-[#686868] text-[16px] font-mulish font-normal">
-                                            Объем:
-                                        </p>
-                                        <span class="text-[#2B292C] text-[16px] font-normal"
-                                        >мелкий опт</span
-                                        >
-                                    </div>
-                                </div>
-                                <a href="/tender/detail/{{ tender.id }}/"
-                                   class="bg-[#E4DB00] text-[16px] font-normal rounded-lg py-3 px-6"
-                                >
-                                    Подробнее
-                                </a>
-                            </div>
-                            <p
-                                    class="text-[#686868] text-[16px] font-mulish font-normal absolute right-9  bottom-8"
+                        <li class="icon-container">
+                            <img
+                                    id="burgerIcon"
+                                    src="{% static 'assets/images/icons/email.svg' %}"
+                                    alt=""
+                            />
+                            <span class="icon-text">Указан E-mail</span>
+                        </li>
+                        {% endif %}
+                        {% if tender.user.phone %}
+                        <li class="icon-container">
+                            <img
+                                    id="burgerIcon"
+                                    src="{% static 'assets/images/icons/call.svg' %}"
+                                    alt=""
+                            />
+                            <span class="icon-text">Указан номер телефона</span>
+                        </li>
+                        {% endif %}
+                        <li class="icon-container">
+                            <svg
+                                    {% if user.is_authenticated %}
+                                    onclick="sendTenderRequest({{ tender.pk }})"
+                                    {% if tender in user.cabinet.favorite_tenders.all %}
+                                    class="tenderHeart transition-colors heart-active-color"
+                                    {% else %}
+                                    class="tenderHeart transition-colors"
+                                    {% endif %}
+                                    {% endif %}
+                                    width="36"
+                                    height="36"
+                                    viewBox="10 0 30 36"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
                             >
-                                {{ tender.created_at }}
-                            </p>
+                                <path
+                                        {% if tender in user.cabinet.favorite_tenders.all %}
+                                        class="red"
+                                        {% endif %}
+                                        id="inside-heart"
+                                        d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
+                                        fill=""></path>
+                                <path
+                                        id="border-heart"
+                                        {% if tender in user.cabinet.favorite_tenders.all %}
+                                        class="border-heart"
+                                        {% endif %}
+                                        d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
+                                        fill="#2B292C"></path>
+                            </svg>
+
+                            <span class="icon-text">Избранные</span>
+                        </li>
+                    </ul>
+                    <div class="flex flex-col gap-5 items-start">
+                        <h6
+                                class="text-[#2B292C] text-[18px] font-mulish font-extrabold line-clamp-2"
+                        >
+                            {{ tender.title }}
+                        </h6>
+                        <div class="flex flex-col gap-2 font-light">
+                            <div class="flex items-center gap-3">
+                                <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                    Количество:
+                                </p>
+                                <span class="text-[#2B292C] text-[16px] font-normal"
+                                >от 100 шт.</span
+                                >
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                    Бюджет:
+                                </p>
+                                <span class="text-[#2B292C] text-[16px] font-normal"
+                                >{{ tender.price }}</span
+                                >
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                    Объем:
+                                </p>
+                                <span class="text-[#2B292C] text-[16px] font-normal"
+                                >мелкий опт</span
+                                >
+                            </div>
                         </div>
-                    {% endfor %}
+                        <a href="/tender/detail/{{ tender.id }}/"
+                           class="bg-[#E4DB00] text-[16px] font-normal rounded-lg py-3 px-6"
+                        >
+                            Подробнее
+                        </a>
+                    </div>
+                    <p
+                            class="text-[#686868] text-[16px] font-mulish font-normal absolute right-9  bottom-8"
+                    >
+                        {{ tender.created_at }}
+                    </p>
                 </div>
-                <!--  -->
-
-
-                <!-- pagination -->
-
-
-                {% include 'includes/pagination.html' %}
-
+                {% endfor %}
             </div>
+            <!--  -->
+
+
+            <!-- pagination -->
+
+
+            {% include 'includes/pagination.html' %}
+
         </div>
     </div>
-    </div>
-    </div>
+</div>
+</div>
+</div>
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'pages/procurement/procurement.js' %}"></script>
-    <script src="{% static 'pages/filters/filter.js' %}"></script>
-    <script src="{% static 'pages/home/index.js' %}"></script>
-    <script>
-        const container = document.getElementById("tender-list");
+<script src="{% static 'pages/procurement/procurement.js' %}"></script>
+<script src="{% static 'pages/filters/filter.js' %}"></script>
+<script src="{% static 'pages/home/index.js' %}"></script>
+<script>
+    const container = document.getElementById("tender-list");
 
-        const bannersList = container.getAttribute("data-banners");
-        const bannerOrder = container.getAttribute("data-banner-order");
+    const bannersList = container.getAttribute("data-banners");
+    const bannerOrder = container.getAttribute("data-banner-order");
 
-        const itemsInContainer = container.querySelectorAll(".tender-item");
+    const itemsInContainer = container.querySelectorAll(".tender-item");
 
-        const host = window.location.host;
+    const host = window.location.host;
 
-        console.log(host, itemsInContainer);
+    console.log(host, itemsInContainer);
 
-        const formattedStringData = bannersList.replace(/'/g, '"');
+    const formattedStringData = bannersList.replace(/'/g, '"');
 
-        const banners = JSON.parse(formattedStringData);
-        let bannerIndex = 0; // Index to track which banner to use next
+    const banners = JSON.parse(formattedStringData);
+    let bannerIndex = 0; // Index to track which banner to use next
 
-        itemsInContainer.forEach((item, index) => {
-            // Check if the current index + 1 is a multiple of bannerOrder
-            if ((index + 1) % bannerOrder === 0) {
-                // Ensure we have a banner to use
-                if (bannerIndex < banners.length) {
-                    const banner = banners[bannerIndex];
-                    const div = getBannerElement(banner.image_desktop, banner.link);
-                    item.after(div); // Insert the banner after the current item
+    itemsInContainer.forEach((item, index) => {
+        // Check if the current index + 1 is a multiple of bannerOrder
+        if ((index + 1) % bannerOrder === 0) {
+            // Ensure we have a banner to use
+            if (bannerIndex < banners.length) {
+                const banner = banners[bannerIndex];
+                const div = getBannerElement(banner.image_desktop, banner.link);
+                item.after(div); // Insert the banner after the current item
 
-                    // Move to the next banner for the next match
-                    bannerIndex++;
-                }
+                // Move to the next banner for the next match
+                bannerIndex++;
             }
-        });
-
-        function getBannerElement(url, anchorLink) {
-            const div = document.createElement("div");
-            div.classList.add(
-                "cards",
-                "md:flex-row",
-                "flex-col",
-                "justify-center",
-                "items-center",
-                "bg-[#F6F6F6]",
-                "my-7",
-                "rounded-[15px]",
-                "relative"
-            );
-            const image = document.createElement("img");
-            const link = document.createElement("a");
-            link.href = anchorLink;
-            link.style.position = "absolute";
-            link.style.top = "0";
-            link.style.left = "0";
-            link.style.width = "100%";
-            link.style.height = "100%";
-            link.style.zIndex = "1";
-            link.setAttribute("target", "_blank");
-
-            image.src = url;
-            image.style.width = '100%';
-            image.style.maxHeight = '366px';
-            image.style.height = 'auto'
-            image.style.minHeight = '100%';
-            image.style.objectFit = 'cover'
-            image.style.borderRadius = '10px'
-            div.appendChild(link);
-            div.appendChild(image);
-
-            return div
         }
+    });
 
-        console.log(bannersList, bannerOrder);
-    </script>
+    function getBannerElement(url, anchorLink) {
+        const div = document.createElement("div");
+        div.classList.add(
+            "cards",
+            "md:flex-row",
+            "flex-col",
+            "justify-center",
+            "items-center",
+            "bg-[#F6F6F6]",
+            "my-7",
+            "rounded-[15px]",
+            "relative"
+        );
+        const image = document.createElement("img");
+        const link = document.createElement("a");
+        link.href = anchorLink;
+        link.style.position = "absolute";
+        link.style.top = "0";
+        link.style.left = "0";
+        link.style.width = "100%";
+        link.style.height = "100%";
+        link.style.zIndex = "1";
+        link.setAttribute("target", "_blank");
+
+        image.src = url;
+        image.style.width = '100%';
+        image.style.maxHeight = '366px';
+        image.style.height = 'auto'
+        image.style.minHeight = '100%';
+        image.style.objectFit = 'cover'
+        image.style.borderRadius = '10px'
+        div.appendChild(link);
+        div.appendChild(image);
+
+        return div
+    }
+
+    console.log(bannersList, bannerOrder);
+</script>
 {% endblock %}

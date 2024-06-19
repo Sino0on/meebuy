@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
-from django.utils.translation import gettext as _
+
 from .models import SupportMessage
 
 

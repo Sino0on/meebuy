@@ -1,14 +1,14 @@
-from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
-from apps.buyer.models import Banner, BannerSettings
-from apps.provider.models import Provider
-from apps.tender.models import Category, Country, Region, City
-from apps.provider.filters import ProviderFilter
-from apps.user_cabinet.models import ViewsCountProfile, OpenNumberCount
 from rest_framework.generics import ListAPIView
+
+from apps.buyer.models import Banner, BannerSettings
+from apps.provider.filters import ProviderFilter
+from apps.provider.models import Provider
 from apps.provider.serializers import CategoryListSerializer
+from apps.tender.models import Category, Country, Region, City
 from apps.user_cabinet.models import Contacts
+from apps.user_cabinet.models import ViewsCountProfile, OpenNumberCount
 from .forms import PriceFilesForm
 
 
@@ -42,7 +42,8 @@ class ProviderListView(generic.ListView):
         contacts = Contacts.load()
         context["contacts"] = contacts
         context["banners"] = self.get_banners()
-        context["banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
+        context[
+            "banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
 
         context['locations'] = self.get_locations()
         return context
@@ -87,10 +88,10 @@ class ProviderListView(generic.ListView):
             for banner in banners:
                 banner_list.append(
                     {
-                            'title': banner.title,
-                            'image_desktop': banner.image_desktop.url,
-                            'image_mobile': banner.image_mobile.url,
-                            'link': banner.link
+                        'title': banner.title,
+                        'image_desktop': banner.image_desktop.url,
+                        'image_mobile': banner.image_mobile.url,
+                        'link': banner.link
                     }
                 )
         return banner_list
@@ -100,6 +101,7 @@ class ProviderDetailView(generic.DetailView):
     template_name = "providers/provider_detail.html"
     model = Provider
     context_object_name = "provider"
+
     # lookup_field = 'id'
 
     def dispatch(self, request, *args, **kwargs):
@@ -124,7 +126,7 @@ class ProviderDetailView(generic.DetailView):
                 print(self.get_object().user)
                 if self.get_object().user.cabinet.user_status:
                     if (
-                        self.get_object().user.cabinet.user_status.status.is_publish_phone
+                            self.get_object().user.cabinet.user_status.status.is_publish_phone
                     ):
                         OpenNumberCount.objects.create(
                             user=self.get_object().user.cabinet
@@ -145,7 +147,7 @@ class CategoryListView(ListAPIView):
 
         user = get_object_or_404(Provider, id=user_id)
         context.update({"request": self.request, "categories": user.category.all()})
- 
+
         return context
 
 

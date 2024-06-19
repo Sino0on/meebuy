@@ -1,7 +1,8 @@
 import django_filters
-from apps.product.models import Product, ProductCategory
+
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
+
+from apps.product.models import Product
 
 
 class ProductFilter(django_filters.FilterSet):

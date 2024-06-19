@@ -1,14 +1,15 @@
-import datetime
 import json
 from pprint import pprint
-from channels.generic.websocket import WebsocketConsumer
+
 from asgiref.sync import async_to_sync
-from apps.chat.models import Message, Chat
+from channels.generic.websocket import WebsocketConsumer
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
+from apps.chat.models import Message, Chat
 
 User = get_user_model()
+
 
 class ChatConsumers(WebsocketConsumer):
     def connect(self):
@@ -32,11 +33,11 @@ class ChatConsumers(WebsocketConsumer):
         Message(sender=user, chat=chat, content=message).save()
         text_data_json['user'] = get_object_or_404(User, id=int(text_data_json['user'])).email
         async_to_sync(self.channel_layer.group_send)(
-                self.room_group_name,
-                {
-                    'type': 'chat_message',
-                    'text': text_data_json
-                })
+            self.room_group_name,
+            {
+                'type': 'chat_message',
+                'text': text_data_json
+            })
 
     def chat_message(self, event):
         pprint(self.scope['user'].id)

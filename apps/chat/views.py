@@ -1,16 +1,12 @@
-from apps.chat.models import Chat, Message
-from django.db import models
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import HttpResponse
-from django.shortcuts import redirect, get_object_or_404
-from django.contrib import messages
+from django.shortcuts import redirect, get_object_or_404, render
 
+from apps.chat.models import Chat, Message
+from apps.chat.models import ChatUserStatus
 from apps.provider.models import Provider
 from apps.user_cabinet.models import Contacts
-from apps.chat.models import ChatUserStatus
 
 User = get_user_model()
 
@@ -100,6 +96,7 @@ def add_to_favorites(request, chat_id):
     status.save()
     return redirect('chat_list')
 
+
 @login_required
 def remove_from_favorites(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id)
@@ -108,6 +105,7 @@ def remove_from_favorites(request, chat_id):
     status.save()
     return redirect('chat_list')
 
+
 @login_required
 def delete_chat(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id)
@@ -115,6 +113,7 @@ def delete_chat(request, chat_id):
     status.is_deleted = True
     status.save()
     return redirect('chat_list')
+
 
 @login_required
 def remove_from_deleted(request, chat_id):

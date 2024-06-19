@@ -1,10 +1,16 @@
 import os
-
 import openpyxl
 import requests
+
+from urllib.parse import quote, unquote
 from PIL import Image
+from six import BytesIO
+
 from django.conf import settings
-from django.http import HttpResponse, FileResponse, Http404, JsonResponse
+from django.core.files.base import ContentFile
+from django.http import HttpResponse, Http404, JsonResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -17,22 +23,25 @@ from django.views.generic import (
     DetailView,
     FormView,
 )
-from urllib.parse import quote, unquote
-from django.core.files.base import ContentFile
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-
-from six import BytesIO
 
 from apps.product.filters import ProductFilter
-from apps.product.models import Product, ProductImg, ProductCategory, PriceColumn
 from apps.product.forms import (
     ProductForm,
     UploadExcelForm,
     ProductCategoryForm,
     PriceColumnForm,
 )
-from apps.provider.models import Category, Provider, PriceFiles
+from apps.product.models import (
+    Product,
+    ProductImg,
+    ProductCategory,
+    PriceColumn
+)
+from apps.provider.models import (
+    Category,
+    Provider,
+    PriceFiles
+)
 from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 
@@ -50,7 +59,6 @@ class ProductListView(ListView):
             queryset = queryset.order_by(order)
         filter = self.filter_class(self.request.GET, queryset=queryset)
         return filter.qs
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -97,7 +105,7 @@ class ProductDetailView(DetailView):
                 print(self.get_object().provider.user)
                 if self.get_object().provider.user.cabinet.user_status:
                     if (
-                        self.get_object().provider.user.cabinet.user_status.status.is_publish_phone
+                            self.get_object().provider.user.cabinet.user_status.status.is_publish_phone
                     ):
                         OpenNumberCount.objects.create(
                             user=self.get_object().provider.user.cabinet
@@ -386,7 +394,7 @@ class PriceColumnCreateView(CreateView):
         PriceColumn.objects.filter(provider__user=self.request.user).delete()
         # Обработка данных
         for index, (name, formula, min_order_amount) in enumerate(
-            zip(names, formulas, min_order_amounts)
+                zip(names, formulas, min_order_amounts)
         ):
             # Если текущий индекс не равен последнему индексу в списке, создаем объект PriceColumn
             if index != len(names) - 1:

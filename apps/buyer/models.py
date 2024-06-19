@@ -1,11 +1,10 @@
-from django.utils.safestring import mark_safe
-from django.db import models
 from django.contrib.auth import get_user_model
-from apps.tender.models import City, Category
+from django.db import models
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
+from apps.tender.models import City
 from apps.user_cabinet.models import SingletonModel
-from core import settings
 
 User = get_user_model()
 
@@ -65,7 +64,6 @@ class BannerSettings(SingletonModel):
 
 
 class Banner(models.Model):
-
     TYPE_CHOICES = (
         ("provider", _("Поставщики")),
         ("tender", _("Закупки")),
