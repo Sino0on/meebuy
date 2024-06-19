@@ -1,5 +1,8 @@
 import datetime
 import json
+from datetime import timedelta
+from functools import reduce
+from operator import and_
 
 import plotly.graph_objs as go
 from django.contrib import messages
@@ -12,6 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect, render
@@ -20,10 +24,9 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
+from django.utils.timezone import now
 from django.views import generic
 from django.views.decorators.http import require_POST, require_GET
-from django.utils.timezone import now
-from datetime import timedelta
 from plotly.offline import plot
 from rest_framework.generics import ListAPIView
 
@@ -413,6 +416,8 @@ class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
         context['searches'] = self.get_user_search_list()
         return context
 
+
+
     def get_user_search_list(self):
         search_list = []
         searches = SearchRequest.objects.filter(user=self.request.user)
@@ -420,11 +425,29 @@ class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
             search_list.append({
                 'id': search.id,
                 'name': search.name,
-                'city': search.city,
+                'city': search.city if search.city else '',
                 'date': search.created_at.strftime("%B %d, %Y"),
-                'range': self.get_time_range_label(search.created_at)
+                'range': self.get_time_range_label(search.created_at),
+                'tenders_count': self.get_matching_tenders_count(search),
             })
         return search_list
+
+    def get_matching_tenders_count(self, search):
+        queryset = Tender.objects.all()
+
+        # Применяем фильтр include_words
+        if search.name:
+            words = search.name.split()
+            if words:
+                query = reduce(and_, (Q(title__icontains=word) | Q(description__icontains=word) for word in words))
+                queryset = queryset.filter(query)
+
+        # Применяем фильтр по городу
+        if search.city:
+            queryset = queryset.filter(user__provider__city__title__icontains=search.city)
+
+        return queryset.count()
+
 
     def get_time_range_label(self, date):
         today = now().date()
@@ -438,6 +461,7 @@ class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
             return "За год"
         else:
             return "За все время"
+
 
 
 class ProductListCabinetView(LoginRequiredMixin, generic.ListView):

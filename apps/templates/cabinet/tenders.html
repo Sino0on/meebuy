@@ -232,8 +232,12 @@
                                                     <div class="flex flex-row justify-between w-full">
                                                         <a href="/search/detail/{{ search.id }}">
                                                             <h3 class="font-semibold">{{ search.name }}</h3>
+                                                            {% if search.city %}
                                                             <p class="city">{{ search.city }}</p>
+                                                            {% endif %}
                                                             <p class="text-sm text-grey-dark">{{ search.date }}</p>
+                                                            <p>Соответствующих тендеров - {{ search.tenders_count }}</p>
+
                                                         </a>
                                                         <div data-id="{{ search.id }}" class="delete-option-btn"
                                                              style="cursor: pointer">

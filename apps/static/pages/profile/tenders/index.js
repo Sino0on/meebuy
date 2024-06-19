@@ -41,6 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const cityEl = document.createElement('p')
         const flexDiv = document.createElement('div')
         const coverDiv = document.createElement('a')
+        const count = document.createElement('p');
+
+        count.textContent = `Соответствующих тендеров - ${option.tenders_count}`;
 
         const deleteDiv = document.createElement('div');
         deleteDiv.setAttribute('data-id', option.id)
@@ -69,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         coverDiv.appendChild(h3);
         coverDiv.appendChild(cityEl)
         coverDiv.appendChild(p);
+        coverDiv.appendChild(count)
 
         flexDiv.appendChild(coverDiv)
         flexDiv.appendChild(deleteDiv)
