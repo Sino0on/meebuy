@@ -1,12 +1,13 @@
-from datetime import datetime, timedelta
-
-from django.contrib.auth import get_user_model
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
+from django.db.models import Count
+from datetime import datetime, timedelta
 
 from apps.product.models import Product
 from apps.provider.models import Provider
 from apps.tender.models import Tender
+
 
 User = get_user_model()
 
@@ -40,9 +41,19 @@ class Cabinet(models.Model):
 
 class Status(models.Model):
     title = models.CharField(max_length=123, verbose_name=_('Название'))
-    price_month = models.DecimalField(verbose_name='Цена за месяц', max_digits=100, decimal_places=1, )
+    price_month = models.DecimalField(verbose_name='Цена за месяц', max_digits=100, decimal_places=1)
     is_recomended = models.BooleanField(blank=True, default=False, verbose_name='РЕКОМЕНДУЕМ')
-    created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'))
+    quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
+    quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'))
+    image = models.FileField(upload_to='images/packages/', blank=True, default='1', verbose_name='Изображение')
+    is_advertise = models.BooleanField(default=False, blank=True, verbose_name='Просмотр сайта без рекламы')
+    is_contact_prov = models.BooleanField(default=False, blank=True, verbose_name='Просмотр контактов поставщиков')
+    is_email = models.BooleanField(default=False, blank=True,
+                                   verbose_name='Показ Вашего E-mail и ссылки на ваш сайт / соцсети')
+    dayly_message = models.PositiveIntegerField(blank=True, default=30, verbose_name='Исходящих сообщений в день')
+    is_publish_phone = models.BooleanField(default=False, blank=True,
+                                           verbose_name='Показ Вашего телефона незарегистрированным посетителям')
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'), blank=True, null=True)
 
     def __str__(self):
         return f'{self.title}'
@@ -56,16 +67,6 @@ class PackageStatus(models.Model):
     status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='packagestatuses',
                                verbose_name=_('Статус'))
     price = models.DecimalField(verbose_name=_('Цена'), max_digits=100, decimal_places=1)
-    quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
-    quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'))
-    image = models.FileField(upload_to='images/packages/', blank=True, default='1', verbose_name='Изображение')
-    is_advertise = models.BooleanField(default=False, blank=True, verbose_name='Просмотр сайта без рекламы')
-    is_contact_prov = models.BooleanField(default=False, blank=True, verbose_name='Просмотр контактов поставщиков')
-    is_email = models.BooleanField(default=False, blank=True,
-                                   verbose_name='Показ Вашего E-mail и ссылки на ваш сайт / соцсети')
-    dayly_message = models.PositiveIntegerField(blank=True, default=30, verbose_name='Исходящих сообщений в день')
-    is_publish_phone = models.BooleanField(default=False, blank=True,
-                                           verbose_name='Показ Вашего телефона незарегистрированным посетителям')
     months = models.PositiveIntegerField(verbose_name=_('Количество месяцев'))
     priorety = models.PositiveIntegerField(blank=True, default=1)
 
@@ -87,6 +88,7 @@ class ActiveUserStatus(models.Model):
     status = models.ForeignKey(PackageStatus, on_delete=models.PROTECT, related_name='active_statues',
                                verbose_name=_('Статус'))
     end_date = models.DateField(verbose_name=_('Дата окончание'))
+    start_date = models.DateField(verbose_name=_('Дата начала'), auto_now_add=True, blank=True, null=True)
     is_active = models.BooleanField(default=False, blank=True, verbose_name=_('Активный'))
 
     def __str__(self):
