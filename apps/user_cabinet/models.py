@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
-from django.db.models import Count
 from datetime import datetime, timedelta
 
 from apps.product.models import Product
