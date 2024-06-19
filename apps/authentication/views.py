@@ -12,7 +12,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.encoding import force_bytes, force_str
-from django.urls import reverse
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 
 
@@ -108,38 +108,30 @@ class LoginView(FormView):
 class SelectUserTypeView(LoginRequiredMixin, FormView):
     form_class = UserTypeSelectionForm
     template_name = 'auth/auth_choice.html'
+    success_url = reverse_lazy('view_profile')
 
-    def get_success_url(self):
-        # Проверяем, выполнен ли выбор типа пользователя
-        if hasattr(self.request.user, 'user_type'):
-            # Если выполнен, перенаправляем на профиль или другую страницу
-            return reverse('view_profile')
-        else:
-            # Иначе возвращаем URL для выбора типа пользователя
-            return reverse('choice')
+    def dispatch(self, request, *args, **kwargs):
+        user_profile = self.request.user
+        if user_profile.is_authenticated:
+            if user_profile.user_type and user_profile.provider:  # Проверяем, есть ли уже выбранный тип и профиль поставщика
+                return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated:
-            user_profile = self.request.user
-            user_profile.user_type = form.cleaned_data['user_type']
-            user_profile.save()
+        user_profile = self.request.user
+        user_profile.user_type = form.cleaned_data['user_type']
+        user_profile.save()
 
-            if form.cleaned_data['user_type'] == 'provider':
-                user, _ = Provider.objects.get_or_create(user=user_profile)
-                user.is_provider = True
-                user.save()
-            else:
-                user, _ = Provider.objects.get_or_create(user=user_profile)
-                user.is_provider = False
-                user.save()
-
-            # После успешного выбора перенаправляем на success_url
-            return super().form_valid(form)
-
+        if form.cleaned_data['user_type'] == 'provider':
+            provider, created = Provider.objects.get_or_create(user=user_profile)
+            provider.is_provider = True
+            provider.save()
         else:
-            # Для неаутентифицированных пользователей можете добавить нужную логику
-            # В данном случае это не требуется, так как предполагается, что форма доступна только аутентифицированным пользователям
-            return redirect('login')
+            provider, created = Provider.objects.get_or_create(user=user_profile)
+            provider.is_provider = False
+            provider.save()
+
+        return super().form_valid(form)
 
 
 class LogoutView(RedirectView):
