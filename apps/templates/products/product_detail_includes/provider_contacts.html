@@ -26,8 +26,8 @@
   <div class="flex items-center gap-3">
     <img src="{% static 'assets/images/icons/call.svg' %}"  alt="" />
     <p class="text-[#A0A0A0] font-normal text-[16px]">
-      {% if product.provider.phone %}
-          {{ product.provider.phone }}
+      {% if product.provider.phones %}
+          {{ product.provider.phones }}
   {% else %}
       Телефон не указан
   {% endif %}
@@ -38,8 +38,8 @@
     src="{% static 'assets/images/icons/earth-location.svg' %}"
       alt=""
     />
-    {% if product.provider.website %}
-        <p class="text-[#A0A0A0] font-normal text-[16px]">{{ product.provider.website }}</p>
+    {% if product.provider.web_site %}
+        <p class="text-[#A0A0A0] font-normal text-[16px]">{{ product.provider.web_site }}</p>
     {% else %}
         Веб сайт не указан
     {% endif %}
@@ -69,8 +69,8 @@
   <div class="flex items-center gap-3">
     <img src="{% static 'assets/images/icons/call.svg' %}"  alt="" />
     <p class="text-[#A0A0A0] font-normal text-[16px]">
-      {% if product.provider.phone %}
-      {{ product.provider.phone|slice:"0:-4" }}xxxx
+      {% if product.provider.phones %}
+      {{ product.provider.phones|slice:"0:-4" }}xxxx
   {% else %}
       Телефон не указан
   {% endif %}
@@ -81,7 +81,7 @@
     src="{% static 'assets/images/icons/earth-location.svg' %}"
       alt=""
     />
-    {% if product.provider.website %}
+    {% if product.provider.web_site %}
     <p class="text-[#A0A0A0] font-normal text-[16px]">xxxxxxxxxx</p>
     {% else %}
                     Веб сайт не указан

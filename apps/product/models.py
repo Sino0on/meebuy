@@ -85,6 +85,7 @@ class Product(StatusMixin, models.Model):
     product_link = models.CharField(
         max_length=255, blank=True, null=True, verbose_name="Ссылка на товар"
     )
+    is_active = models.BooleanField(default=False, verbose_name="Активный товар")
 
     def __str__(self):
         return f"{self.title}"
