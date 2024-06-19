@@ -1,26 +1,22 @@
 from django.urls import path
+
+from apps.authentication.views import HomeView, SelectUserTypeView, LogoutView, LoginView
+from apps.authentication.views import SelectAuthUserTypeView, cabinet_create, activate
+from apps.authentication.views import (login_redirect, )
+from apps.buyer.views import BuyerListView, BuyerDetailView
+from apps.chat.views import chat_detail, chats, create_chat, add_to_favorites, delete_chat, remove_from_favorites, \
+    remove_from_deleted
+from apps.pages.views import privacy_policy_view, rules_view, banner_view
 from apps.product.views import ProductListView, ProductUpdateView, ProductCreateView, ProductDeleteView, \
     ProductDetailView, ExcelTemplateDownloadView, ExcelUploadView, ProductCategoryCreateView, ProductCategoryUpdateView, \
     ProductCategoryDeleteView, PriceColumnCreateView, PriceColumnUpdateView, PriceColumnDeleteView, \
     DownloadPriceFileView, DeleteFileView
 from apps.provider.views import ProviderListView, ProviderDetailView, CategoryListView, upload_file
-from apps.user_cabinet.views import *
-
-from apps.pages.views import privacy_policy_view, rules_view, banner_view
-
-from apps.authentication.views import LoginView, SelectAuthUserTypeView, cabinet_create, activate
-
-from apps.chat.views import chat_detail, chats, create_chat, add_to_favorites, delete_chat, remove_from_favorites, remove_from_deleted
-
-from apps.authentication.views import (HomeView, SelectUserTypeView, ViewProfile, LogoutView, LoginView, login_redirect,)
-
-
-from apps.authentication.views import HomeView, SelectUserTypeView, LogoutView, LoginView
-from apps.tender.views import TenderListView, TenderDetailView, delete_tender, TenderCreateView, TenderUpdateView
-from apps.user_cabinet.views import UserStatusListView, UppingListView
-from apps.buyer.views import BuyerListView, BuyerDetailView
+from apps.tender.views import TenderListView, TenderDetailView, delete_tender, TenderCreateView, TenderUpdateView, \
+    SearchRequestCreateView, SearchDetailView, SearchDeleteView
 from apps.user_cabinet.api import BuyStatusView, BuyUppingView
-
+from apps.user_cabinet.views import *
+from apps.user_cabinet.views import UppingListView
 
 urlpatterns = [
     path('provider/list/', ProviderListView.as_view(), name='provider_list'),
@@ -94,6 +90,9 @@ urlpatterns = [
     path('tender/create/', TenderCreateView.as_view(), name='tender_create'),
     path('tender/update/<int:pk>', TenderUpdateView.as_view(), name='tender_update'),
     path('tender/delete/<int:pk>/', delete_tender, name='delete_tender'),
+    path('tender/create/search/request/', SearchRequestCreateView.as_view(), name='search_request_create'),
+    path('search/detail/<int:pk>', SearchDetailView.as_view(), name='search_detail'),
+    path('search/delete/<int:pk>', SearchDeleteView.as_view(), name='search_detail'),
 
     path('status/list/', StatusListView.as_view()),
     path('upping/list/', UppingListView.as_view()),
@@ -120,7 +119,7 @@ urlpatterns = [
     # apis
     path('category/list/<int:pk>', CategoryListView.as_view()),
 
-  
+
     path('create-category/', ProductCategoryCreateView.as_view(), name='create_category'),
     path('edit-category/<int:pk>/', ProductCategoryUpdateView.as_view(), name='edit_category'),
     path('delete-category/<int:pk>/', ProductCategoryDeleteView.as_view(), name='delete_category'),

@@ -117,10 +117,14 @@ class SelectUserTypeView(LoginRequiredMixin, FormView):
             print(form.cleaned_data['user_type'])
             user_profile.save()
             if form.cleaned_data['user_type'] == 'provider':
-                Provider.objects.get_or_create(user=user_profile, is_provider=True)
+                user, _ = Provider.objects.get_or_create(user=user_profile)
+                user.is_provider = True
+                user.save()
             elif user_profile.user_type == 'buyer':
-                Provider.objects.get_or_create(user=user_profile, is_provider=False)
-        return super().form_valid(form)
+                user, _ = Provider.objects.get_or_create(user=user_profile)
+                user.is_provider = False
+                user.save()
+            return super().form_valid(form)
 
 
 class LogoutView(RedirectView):

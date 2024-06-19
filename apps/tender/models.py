@@ -6,7 +6,6 @@ from apps.provider.models import Category
 from django.utils.translation import gettext_lazy as _
 from apps.provider.mixins import StatusMixin
 
-
 User = get_user_model()
 
 
@@ -102,3 +101,12 @@ class TenderImg(models.Model):
     class Meta:
         verbose_name = "Изображении закупки"
         verbose_name_plural = "Изображение закупки"
+
+
+class SearchRequest(models.Model):
+    user = models.ForeignKey(
+        User, related_name="search_requests", on_delete=models.CASCADE, null=True, blank=True,
+        verbose_name="Пользователь")
+    created_at = models.DateField(auto_now=True)
+    name = models.TextField(verbose_name='Запрос', null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)

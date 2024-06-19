@@ -1,63 +1,71 @@
 {% load static %}
-<div class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6" id="selectContainer">
+<div class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
+     id="selectContainer">
     <p id="selectedOption">Рекомендуем</p>
     <a class="toggle-icon" id="toggleLink">
-        <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}" alt="Open" class="openIcon" style="display: block" />
-        <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}" alt="Close" class="closeIcon" style="display: none" />
+        <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}" alt="Open" class="openIcon"
+             style="display: block"/>
+        <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}" alt="Close" class="closeIcon"
+             style="display: none"/>
     </a>
     <form id="sortForm" method="get">
         <input type="hidden" name="order_by" id="orderByInput">
-        <ul id="selectModal" class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] py-3 px-4 w-[178px] h-[100px]" style="display: none">
-            <li id="recommended-list" class="cursor-pointer selected border-b pb-2 mb-2 flex items-center justify-between" data-order="name">
+        <ul id="selectModal"
+            class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] py-3 px-4 w-[178px] h-[100px]"
+            style="display: none">
+            <li id="recommended-list"
+                class="cursor-pointer selected border-b pb-2 mb-2 flex items-center justify-between" data-order="name">
                 Рекомендуем
-                <img id="recommended" style="display: none" src="{% static 'assets/images/icons/check.svg' %}" alt="check" />
+                <img id="recommended" style="display: none" src="{% static 'assets/images/icons/check.svg' %}"
+                     alt="check"/>
             </li>
-            <li id="new-list" class="cursor-pointer selected flex items-center justify-between" data-order="-created_at">
+            <li id="new-list" class="cursor-pointer selected flex items-center justify-between"
+                data-order="-created_at">
                 Новые
-                <img id="new" style="display: none" src="{% static 'assets/images/icons/check.svg' %}" alt="check" />
+                <img id="new" style="display: none" src="{% static 'assets/images/icons/check.svg' %}" alt="check"/>
             </li>
         </ul>
     </form>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    var selectContainer = document.getElementById('selectContainer');
-    var toggleLink = document.getElementById('toggleLink');
-    var selectModal = document.getElementById('selectModal');
-    var selectedOption = document.getElementById('selectedOption');
-    var orderByInput = document.getElementById('orderByInput');
-    var sortForm = document.getElementById('sortForm');
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectContainer = document.getElementById('selectContainer');
+        var toggleLink = document.getElementById('toggleLink');
+        var selectModal = document.getElementById('selectModal');
+        var selectedOption = document.getElementById('selectedOption');
+        var orderByInput = document.getElementById('orderByInput');
+        var sortForm = document.getElementById('sortForm');
 
-    var sortItems = document.querySelectorAll('#selectModal li');
-    sortItems.forEach(function(item) {
-        item.addEventListener('click', function() {
-            // Получаем значение сортировки из data-атрибута
-            var orderValue = this.getAttribute('data-order');
-            // Устанавливаем значение в скрытое поле
-            orderByInput.value = orderValue;
-            // Обновляем отображаемый текст
-            selectedOption.textContent = this.textContent.trim();
-            // Отправляем форму
-            sortForm.submit();
+        var sortItems = document.querySelectorAll('#selectModal li');
+        sortItems.forEach(function (item) {
+            item.addEventListener('click', function () {
+                // Получаем значение сортировки из data-атрибута
+                var orderValue = this.getAttribute('data-order');
+                // Устанавливаем значение в скрытое поле
+                orderByInput.value = orderValue;
+                // Обновляем отображаемый текст
+                selectedOption.textContent = this.textContent.trim();
+                // Отправляем форму
+                sortForm.submit();
+            });
+        });
+
+        toggleLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            var isModalVisible = selectModal.style.display === 'block';
+            selectModal.style.display = isModalVisible ? 'none' : 'block';
+            document.querySelector('.openIcon').style.display = isModalVisible ? 'block' : 'none';
+            document.querySelector('.closeIcon').style.display = isModalVisible ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!selectContainer.contains(e.target)) {
+                selectModal.style.display = 'none';
+                document.querySelector('.openIcon').style.display = 'block';
+                document.querySelector('.closeIcon').style.display = 'none';
+            }
         });
     });
-
-    toggleLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        var isModalVisible = selectModal.style.display === 'block';
-        selectModal.style.display = isModalVisible ? 'none' : 'block';
-        document.querySelector('.openIcon').style.display = isModalVisible ? 'block' : 'none';
-        document.querySelector('.closeIcon').style.display = isModalVisible ? 'none' : 'block';
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!selectContainer.contains(e.target)) {
-            selectModal.style.display = 'none';
-            document.querySelector('.openIcon').style.display = 'block';
-            document.querySelector('.closeIcon').style.display = 'none';
-        }
-    });
-});
 
 </script>

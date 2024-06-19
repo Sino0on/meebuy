@@ -38,3 +38,6 @@ function openTab(_, tabId) {
         activeTab.classList.add('active');
     }
 }
+
+
+

@@ -1,11 +1,12 @@
+from django.urls import reverse_lazy
 from django.utils import timezone
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
 from apps.buyer.models import Banner, BannerSettings
-from apps.tender.forms import TenderForm
-from apps.tender.models import Tender, TenderImg, Country, Region, City
+from apps.tender.forms import TenderForm, SearchRequestForm
+from apps.tender.models import Tender, TenderImg, Country, Region, City, SearchRequest
 from apps.provider.models import Category
 from apps.tender.filters import TenderFilter
 from apps.user_cabinet.models import Contacts, OpenNumberCount
@@ -36,7 +37,8 @@ class TenderListView(generic.ListView):
         context["contacts"] = Contacts.load()
         context["filter"] = self.filter
         context["banners"] = self.get_banners()
-        context["banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
+        context[
+            "banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
 
         context['locations'] = self.get_locations()
         return context
@@ -102,7 +104,7 @@ class TenderDetailView(generic.DetailView):
                 print(self.get_object().user)
                 if self.get_object().user.cabinet.user_status:
                     if (
-                        self.get_object().user.cabinet.user_status.status.is_publish_phone
+                            self.get_object().user.cabinet.user_status.status.is_publish_phone
                     ):
                         OpenNumberCount.objects.create(
                             user=self.get_object().user.cabinet
@@ -123,9 +125,7 @@ class TenderCreateView(generic.CreateView):
     success_url = "/"
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         form = self.form_class(request.POST)
-        print(form.errors)
         if form.is_valid():
             tender = form.save(commit=False)
             days = request.POST.get("period")
@@ -134,8 +134,7 @@ class TenderCreateView(generic.CreateView):
             tender.save()
             for i in request.FILES.getlist("file"):
                 TenderImg.objects.create(tender=tender, image=i)
-            return redirect("/")
-        print(form.errors)
+            return redirect("/profile/tender/list/")
         return super().post(request, *args, **kwargs)
 
 
@@ -194,3 +193,23 @@ def delete_tender(request, pk):
     if request.user == tender.user:
         tender.delete()
         return redirect("/profile/tender/list/")
+
+
+class SearchRequestCreateView(generic.CreateView):
+    model = SearchRequest
+    form_class = SearchRequestForm
+    template_name = 'cabinet/tenders.html'
+    success_url = reverse_lazy('user_tenders')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class SearchDetailView(generic.View):
+    pass
+
+
+class SearchDeleteView(generic.DeleteView):
+    model = SearchRequest
+    success_url = '/profile/tender/list/'

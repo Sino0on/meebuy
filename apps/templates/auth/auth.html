@@ -2,151 +2,158 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'pages/auth/auth.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/auth/auth.css' %}">
 {% endblock %}
 
 {% block title %}
-Главная
+    Главная
 {% endblock %}
 {% block content %}
     <!-- menu -->
     <div class="suppliers-animation-container">
-      <div class="menu">
-        <div class="container flex gap-4 py-4">
-          <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" alt="home" /></a>
-          <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+        <div class="menu">
+            <div class="container flex gap-4 py-4">
+                <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" alt="home"/></a>
+                <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/>
 
-          <p class="font-normal font-mulish text-[#A0A0A0]">Регистрация</p>
+                <p class="font-normal font-mulish text-[#A0A0A0]">Регистрация</p>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- tabs -->
     <div class="container flex flex-col items-center pb-28">
-      <div id="tab-container" class="cards my-10 flex items-center rounded-[18px] cursor-pointer lg-md:w-[400px] w-[350px] text-center">
-        <div id="register-tab" class="tab-hover auth_tab py-3 w-[50%] text-[18px] font-semibold font-mulish text-[#2B292C] rounded-[18px]">
-          Регистрация
+        <div id="tab-container"
+             class="cards my-10 flex items-center rounded-[18px] cursor-pointer lg-md:w-[400px] w-[350px] text-center">
+            <div id="register-tab"
+                 class="tab-hover auth_tab py-3 w-[50%] text-[18px] font-semibold font-mulish text-[#2B292C] rounded-[18px]">
+                Регистрация
+            </div>
+            <div id="login-tab"
+                 class="auth_tab py-3 w-[50%] text-[18px] font-semibold font-mulish text-[#2B292C] rounded-[18px]">
+                Вход
+            </div>
         </div>
-        <div id="login-tab" class="auth_tab py-3 w-[50%] text-[18px] font-semibold font-mulish text-[#2B292C] rounded-[18px]">
-          Вход
-        </div>
-      </div>
 
-     <div class="cards flex lg-md:flex-row flex-col lg-md:justify-center  lg-md:w-[1000px]   rounded-2xl">
-      <div class="lg-md:w-[534px] w-[390px] p-8 mx-auto ">
-       <!-- register -->
+        <div class="cards flex lg-md:flex-row flex-col lg-md:justify-center  lg-md:w-[1000px]   rounded-2xl">
+            <div class="lg-md:w-[534px] w-[390px] p-8 mx-auto ">
+                <!-- register -->
 
-        <div id="register-form" style="display: flex; flex-direction: column; gap: 15px; z-index: 0; position: relative" class="overflow-hidden w-full mb-6 pb-[2px]">
+                <div id="register-form"
+                     style="display: flex; flex-direction: column; gap: 15px; z-index: 0; position: relative"
+                     class="overflow-hidden w-full mb-6 pb-[2px]">
 
-<form class="flex flex-col gap-5" method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <div class="flex flex-col gap-3 w-full">
-        <label class="text-[18px] font-mulish">Ваш адрес электронной почты Email *</label>
-        {{ register_form.email }}
-        {% for error in register_form.email.errors %}
-            <p style="color: red">{{ error }}</p>
-        {% endfor %}
-    </div>
-    <div id="name" class="input flex flex-col gap-3">
-        <label for="">Ваше ФИО*</label>
-        {{ register_form.first_name }}
-        {% for error in register_form.first_name.errors %}
-            <p style="color: red">{{ error }}</p>
-        {% endfor %}
-    </div>
-    <div id="number" class="input flex flex-col gap-3">
-        <label for="">Ваш номер телефона*</label>
-            {% for error in register_form.phone.errors %}
-                <p style="color: red">{{ error }}</p>
-            {% endfor %}
-                    <div class="form__item">
-                      <div class="flex items-center gap-4">
-                        <div>
-                          <select name="country_code" id="countryCode" class="relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
-                            {% for country in countries %}
-                              <option data-countryCode="GB" value="{{ country.code }}" selected>{{ country.code }}</option>
+                    <form class="flex flex-col gap-5" method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="flex flex-col gap-3 w-full">
+                            <label class="text-[18px] font-mulish">Ваш адрес электронной почты Email *</label>
+                            {{ register_form.email }}
+                            {% for error in register_form.email.errors %}
+                                <p style="color: red">{{ error }}</p>
                             {% endfor %}
-                          </select>
                         </div>
-                        <div class="flex-grow">
-                          <input placeholder="Номер" type="tel" name="phone" id="phoneNumber1"
-                          class='relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'>
+                        <div id="name" class="input flex flex-col gap-3">
+                            <label for="">Ваше ФИО*</label>
+                            {{ register_form.first_name }}
+                            {% for error in register_form.first_name.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
                         </div>
-                      </div>
-                    </div>
+                        <div id="number" class="input flex flex-col gap-3">
+                            <label for="">Ваш номер телефона*</label>
+                            {% for error in register_form.phone.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                            <div class="form__item">
+                                <div class="flex items-center gap-4">
+                                    <div>
+                                        <select name="country_code" id="countryCode"
+                                                class="relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
+                                            {% for country in countries %}
+                                                <option data-countryCode="GB" value="{{ country.code }}"
+                                                        selected>{{ country.code }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <input placeholder="Номер" type="tel" name="phone" id="phoneNumber1"
+                                               class='relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'>
+                                    </div>
+                                </div>
+                            </div>
 
-    </div>
-    <div id="password" class="input flex lg-md:flex-row flex-col gap-2">
-        <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
+                        </div>
+                        <div id="password" class="input flex lg-md:flex-row flex-col gap-2">
+                            <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
 
-            <label for="">Придумайте пароль *</label>
-            {% for error in register_form.password1.errors %}
-                <p style="color: red">{{ error }}</p>
-            {% endfor %}
-            {{ register_form.password1 }}
+                                <label for="">Придумайте пароль *</label>
+                                {% for error in register_form.password1.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+                                {{ register_form.password1 }}
 
-            <div class="absolute right-3 top-12">
-                <img
-                  class="show-password w-[24px] h-[24px]"
-                  src="{% static 'assets/images/icons/password-close.svg' %}"
-                  alt=""
-                />
-            </div>
-        </div>
-        <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
+                                <div class="absolute right-3 top-12">
+                                    <img
+                                            class="show-password w-[24px] h-[24px]"
+                                            src="{% static 'assets/images/icons/password-close.svg' %}"
+                                            alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
 
-            <label for="">Подтвердите пароль *</label>
-            {{ register_form.password2 }}
-            {% for error in register_form.password2.errors %}
-                <p style="color: red">{{ error }}</p>
-            {% endfor %}
-            <div class="absolute right-3 top-12">
-                <img
-                  class="show-password w-[24px] h-[24px]"
-                  src="{% static 'assets/images/icons/password-close.svg' %}"
-                  alt=""
-                />
-            </div>
-        </div>
-    </div>
-    <div id="confirm" class="input flex items-center gap-2">
-        <input id="policy" name="policy" type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1" />
-        <label for="policy" class="text-[16px] font-normal font-mulish text-[#777777]">
-            Я ознакомился и согласен с условиями
-            <a class="underline decoration-1 text-[#777777]" href="{% url 'privacy_policy' %}">Политики</a>
-        </label>
-    </div>
-    <button
-        id="register"
-        class="text-[16px] font-medium font-mulish py-3 border border-[#2B292C] rounded-lg uppercase"
-    >
-        Зарегистрироваться
-    </button>
-</form>
-          <div class="flex flex-col items-center gap-5">
-            <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
-              <ul class="flex items-center gap-5 w-[323px] justify-center">
-                <li class="cards -mt-[5px] rounded-[12px] p-2">
-                  {% load socialaccount %}
-                  <form action="/accounts/google/login/" method="post">
-                    {% csrf_token %}
-                    <button type="submit"
-                    ><img
-                      src="{% static 'assets/images/icons/google.svg' %}"
-                      alt="google"
-                    /></button>
-                  </form>
+                                <label for="">Подтвердите пароль *</label>
+                                {{ register_form.password2 }}
+                                {% for error in register_form.password2.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+                                <div class="absolute right-3 top-12">
+                                    <img
+                                            class="show-password w-[24px] h-[24px]"
+                                            src="{% static 'assets/images/icons/password-close.svg' %}"
+                                            alt=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="confirm" class="input flex items-center gap-2">
+                            <input id="policy" name="policy" type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1"/>
+                            <label for="policy" class="text-[16px] font-normal font-mulish text-[#777777]">
+                                Я ознакомился и согласен с условиями
+                                <a class="underline decoration-1 text-[#777777]" href="{% url 'privacy_policy' %}">Политики</a>
+                            </label>
+                        </div>
+                        <button
+                                id="register"
+                                class="text-[16px] font-medium font-mulish py-3 border border-[#2B292C] rounded-lg uppercase"
+                        >
+                            Зарегистрироваться
+                        </button>
+                    </form>
+                    <div class="flex flex-col items-center gap-5">
+                        <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
+                        <ul class="flex items-center gap-5 w-[323px] justify-center">
+                            <li class="cards -mt-[5px] rounded-[12px] p-2">
+                                {% load socialaccount %}
+                                <form action="/accounts/google/login/" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                    ><img
+                                            src="{% static 'assets/images/icons/google.svg' %}"
+                                            alt="google"
+                                    /></button>
+                                </form>
 
-                </li>
-                <li class="cards -mt-[5px] rounded-[12px] py-2 px-3">
-                  <form action="{% url 'yandex_login' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">
-                      <img src="{% static 'assets/images/icons/yandex.svg' %}" alt="yandex"/>
-                    </button>
-                  </form>
-                </li>
-                <!-- <li class="cards rounded-[12px] p-2">
+                            </li>
+                            <li class="cards -mt-[5px] rounded-[12px] py-2 px-3">
+                                <form action="{% url 'yandex_login' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">
+                                        <img src="{% static 'assets/images/icons/yandex.svg' %}" alt="yandex"/>
+                                    </button>
+                                </form>
+                            </li>
+                            <!-- <li class="cards rounded-[12px] p-2">
                   <form action="/accounts/mailru/login/" method="post">
                     {% csrf_token %}
                     <button type="submit"
@@ -172,71 +179,72 @@
                     </button>
                   </form>
                 </li> -->
-              </ul>
-          </div>
-        </div>
+                        </ul>
+                    </div>
+                </div>
 
-        <!-- login -->
+                <!-- login -->
 
-          <div id="login-form" style="display: flex; flex-direction: column; gap: 30px" class=" login-form overflow-hidden w-full mb-6 pb-[2px]">
-{#            {% for field, errors in form.errors.items %}#}
-{#                {% for error in errors %}#}
-{#                    <p class="has-error" style="color: red">{{ error }}</p>#}
-{#                {% endfor %}#}
-{#            {% endfor %}#}
-          <div class="flex flex-col gap-3  w-full">
-            <form method="post">
-            <label clas="text-[18px] font-mulish" for=""
-              >Ваш адрес электронной почты Email *</label
-            >
-            {{ form.email }}
-            {% csrf_token %}
-          </div>
-          <div id="passwordLog" class="flex flex-col gap-3 relative">
-            <label for="">Ваш пароль*</label>
-            {{ form.password }}
-          <div class="absolute right-3 top-12">
-            <img
-              class="show-password w-[24px] h-[24px]"
-              style="display: block"
-              src="{% static 'assets/images/icons/password-close.svg' %}"
-              alt=""
-            />
-          </div>
-          <p class="flex justify-end text-[#0035FF] text-[18px] font-mulish font-normal">
-            <a href="{% url 'reset_password' %}">Забыли пароль?</a>
-          </p>
-        </div>
-        <button
-         id="login"
-          class="text-[16px] font-medium font-mulish py-4 border border-[#2B292C] rounded-lg uppercase"
-        >
-        войти в личный кабинет
-        </button>
-            </form>
-        <div class="flex flex-col items-center gap-5">
-          <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
-            <ul class="flex items-center gap-5 w-[323px] justify-center">
-              <li class="cards rounded-[12px] p-2">
-                {% load socialaccount %}
-                <form action="/accounts/google/login/" method="post">
-                    {% csrf_token %}
-                    <button type="submit"
-                    ><img
-                      src="{% static 'assets/images/icons/google.svg' %}"
-                      alt="google"
-                    /></button>
-                  </form>
-              </li>
-              <li class="cards rounded-[12px] py-2 px-3">
-                  <form action="{% url 'yandex_login' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">
-                      <img src="{% static 'assets/images/icons/yandex.svg' %}" alt="yandex"/>
+                <div id="login-form" style="display: flex; flex-direction: column; gap: 30px"
+                     class=" login-form overflow-hidden w-full mb-6 pb-[2px]">
+                    {#            {% for field, errors in form.errors.items %}#}
+                    {#                {% for error in errors %}#}
+                    {#                    <p class="has-error" style="color: red">{{ error }}</p>#}
+                    {#                {% endfor %}#}
+                    {#            {% endfor %}#}
+                    <div class="flex flex-col gap-3  w-full">
+                        <form method="post">
+                            <label clas="text-[18px] font-mulish" for=""
+                            >Ваш адрес электронной почты Email *</label
+                            >
+                            {{ form.email }}
+                            {% csrf_token %}
+                    </div>
+                    <div id="passwordLog" class="flex flex-col gap-3 relative">
+                        <label for="">Ваш пароль*</label>
+                        {{ form.password }}
+                        <div class="absolute right-3 top-12">
+                            <img
+                                    class="show-password w-[24px] h-[24px]"
+                                    style="display: block"
+                                    src="{% static 'assets/images/icons/password-close.svg' %}"
+                                    alt=""
+                            />
+                        </div>
+                        <p class="flex justify-end text-[#0035FF] text-[18px] font-mulish font-normal">
+                            <a href="{% url 'reset_password' %}">Забыли пароль?</a>
+                        </p>
+                    </div>
+                    <button
+                            id="login"
+                            class="text-[16px] font-medium font-mulish py-4 border border-[#2B292C] rounded-lg uppercase"
+                    >
+                        войти в личный кабинет
                     </button>
-                  </form>
-              </li>
-              <!-- <li class="cards rounded-[12px] p-2">
+                    </form>
+                    <div class="flex flex-col items-center gap-5">
+                        <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
+                        <ul class="flex items-center gap-5 w-[323px] justify-center">
+                            <li class="cards rounded-[12px] p-2">
+                                {% load socialaccount %}
+                                <form action="/accounts/google/login/" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                    ><img
+                                            src="{% static 'assets/images/icons/google.svg' %}"
+                                            alt="google"
+                                    /></button>
+                                </form>
+                            </li>
+                            <li class="cards rounded-[12px] py-2 px-3">
+                                <form action="{% url 'yandex_login' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">
+                                        <img src="{% static 'assets/images/icons/yandex.svg' %}" alt="yandex"/>
+                                    </button>
+                                </form>
+                            </li>
+                            <!-- <li class="cards rounded-[12px] p-2">
                   <form action="/accounts/mailru/login/" method="post">
                     {% csrf_token %}
                     <button type="submit"
@@ -262,16 +270,18 @@
                   </button>
                 </form>
               </li> -->
-            </ul>
-        </div>
-        </div>
+                        </ul>
+                    </div>
+                </div>
 
-      </div>
+            </div>
 
-      <img id="login-img" style="display: block;" class="login-img transition-all duration-500 ease-linear object-cover lg-md:rounded-r-2xl w-[466px]" src="{% static 'assets/images/auth/auth-bg.jpeg' %}" />
-     </div>
+            <img id="login-img" style="display: block;"
+                 class="login-img transition-all duration-500 ease-linear object-cover lg-md:rounded-r-2xl w-[466px]"
+                 src="{% static 'assets/images/auth/auth-bg.jpeg' %}"/>
+        </div>
     </div>
 {% endblock %}
 {% block js %}
-<script src="{% static 'pages/auth/auth.js' %}"></script>
+    <script src="{% static 'pages/auth/auth.js' %}"></script>
 {% endblock %}

@@ -1,94 +1,96 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Личный кабинет
+    Личный кабинет
 {% endblock %}
 
 {% block css %}
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-/>
-<link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
-<link rel="stylesheet" href="{% static 'pages/tariffs/tariffs.css' %}" />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'pages/tariffs/tariffs.css' %}"/>
 {% endblock %}
 {% block content %}
-<nav class="breadcrumbs bg-[#FFFFFC]">
-    <div class="container">
-        <div class="">
-            <div class="flex gap-4 py-4">
-                <div class="flex items-center gap-4">
-                  <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" /></a>
-                  <a href="{% url 'view_profile' %}"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" /></a>
+    <nav class="breadcrumbs bg-[#FFFFFC]">
+        <div class="container">
+            <div class="">
+                <div class="flex gap-4 py-4">
+                    <div class="flex items-center gap-4">
+                        <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}"/></a>
+                        <a href="{% url 'view_profile' %}"><img
+                                src="{% static 'assets/images/icons/arrow-prev.svg' %}"/></a>
+                    </div>
+                    <p class="font-normal font-mulish text-[#A0A0A0]">Тарифы</p>
                 </div>
-                <p class="font-normal font-mulish text-[#A0A0A0]">Тарифы</p>
             </div>
         </div>
-    </div>
-</nav>
-<main class="tariffs">
-    <section class="">
-        <div class="container">
-            <h1 class="uppercase font-black text-lg text-center lg:text-3xl">Тарифы</h1>
-            <!-- tariffs -->
-            <div class="tariffs__wrapper mt-[30px] lg-md:mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-offers gap-[30px]">
+    </nav>
+    <main class="tariffs">
+        <section class="">
+            <div class="container">
+                <h1 class="uppercase font-black text-lg text-center lg:text-3xl">Тарифы</h1>
+                <!-- tariffs -->
+                <div class="tariffs__wrapper mt-[30px] lg-md:mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-offers gap-[30px]">
 
-            </div>
-            <div class="text-dark-text leading-6 text-center mt-10 lg-md:mt-14">
-                При истечении тарифа остаток открытий обнуляется, при продлении — суммируется с новым
-            </div>
-        </div>
-    </section>
-    <section class="companies bg-[#FAFAFA] py-12 mt-[92px] lg-md:mt-[100px]">
-        <div class="container">
-            <h2 class="uppercase font-bold text-dark-logo text-center lg-md:text-xl">
-                нам доверяют более 100 компаний кыргызстана, казахстана и россии
-            </h2>
-            <div class="grid grid-cols1 sm:grid-cols-2 gap-[50px] mt-6 lg-md:gap-[30px] lg-md:flex lg-md:justify-center lg-md:items-center">
-                <div class="flex justify-center lg-md:w-1/6">
-                    <img src="{% static 'assets/images/tariffs/company-hooli.svg' %}" alt="" />
                 </div>
-                <div class="flex justify-center lg-md:w-1/6">
-                    <img src="{% static 'assets/images/tariffs/company-lya.svg' %}" alt="" />
-                </div>
-                <div class="flex justify-center lg-md:w-1/6">
-                    <img src="{% static 'assets/images/tariffs/company-leaf.svg' %}" alt="" />
-                </div>
-                <div class="flex justify-center lg-md:w-1/6">
-                    <img src="{% static 'assets/images/tariffs/company-stripe.svg' %}" alt="" />
-                </div>
-                <div class="flex justify-center lg-md:w-1/6">
-                    <img src="{% static 'assets/images/tariffs/company-aws.svg' %}" alt="" />
-                </div>
-                <div class="flex justify-center lg-md:w-1/6">
-                    <img src="{% static 'assets/images/tariffs/company-reddit.svg' %}" alt="" />
+                <div class="text-dark-text leading-6 text-center mt-10 lg-md:mt-14">
+                    При истечении тарифа остаток открытий обнуляется, при продлении — суммируется с новым
                 </div>
             </div>
-        </div>
-    </section>
-    <section class="questions mt-[100px] lg-md:mt-20">
+        </section>
+        <section class="companies bg-[#FAFAFA] py-12 mt-[92px] lg-md:mt-[100px]">
+            <div class="container">
+                <h2 class="uppercase font-bold text-dark-logo text-center lg-md:text-xl">
+                    нам доверяют более 100 компаний кыргызстана, казахстана и россии
+                </h2>
+                <div class="grid grid-cols1 sm:grid-cols-2 gap-[50px] mt-6 lg-md:gap-[30px] lg-md:flex lg-md:justify-center lg-md:items-center">
+                    <div class="flex justify-center lg-md:w-1/6">
+                        <img src="{% static 'assets/images/tariffs/company-hooli.svg' %}" alt=""/>
+                    </div>
+                    <div class="flex justify-center lg-md:w-1/6">
+                        <img src="{% static 'assets/images/tariffs/company-lya.svg' %}" alt=""/>
+                    </div>
+                    <div class="flex justify-center lg-md:w-1/6">
+                        <img src="{% static 'assets/images/tariffs/company-leaf.svg' %}" alt=""/>
+                    </div>
+                    <div class="flex justify-center lg-md:w-1/6">
+                        <img src="{% static 'assets/images/tariffs/company-stripe.svg' %}" alt=""/>
+                    </div>
+                    <div class="flex justify-center lg-md:w-1/6">
+                        <img src="{% static 'assets/images/tariffs/company-aws.svg' %}" alt=""/>
+                    </div>
+                    <div class="flex justify-center lg-md:w-1/6">
+                        <img src="{% static 'assets/images/tariffs/company-reddit.svg' %}" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="questions mt-[100px] lg-md:mt-20">
             <div class="container px-5">
                 <h2 class="text-lg font-black text-dark-logo uppercase text-center lg-md:text-xl lg:text-3xl">
                     Часто задаваемые вопросы
                 </h2>
                 <div class="questions__accordions mt-7 lg-md:mt-12">
                     {% for faq in faqs %}
-                    <div class="accordion py-[26px] border-t border-t-[#A4A4A4]">
-                        <!-- title -->
-                        <div class="accordion__title cursor-pointer accordion-toggle flex items-center justify-between">
-                            <p class="text-lg font-semibold text-dark-logo">
-                                {{ faq.question }}
-                            </p>
-                            <img class="arrow -rotate-90 w-6 h-6 transition-all duration-500 ease skew-y-6" src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
+                        <div class="accordion py-[26px] border-t border-t-[#A4A4A4]">
+                            <!-- title -->
+                            <div class="accordion__title cursor-pointer accordion-toggle flex items-center justify-between">
+                                <p class="text-lg font-semibold text-dark-logo">
+                                    {{ faq.question }}
+                                </p>
+                                <img class="arrow -rotate-90 w-6 h-6 transition-all duration-500 ease skew-y-6"
+                                     src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/>
+                            </div>
+                            <!-- content -->
+                            <div class="accordion__content overflow-hidden transition-all duration-500 ease h-0 text-dark-text leading-7 pr-6 mt-2">
+                                {{ faq.answer }}
+                            </div>
                         </div>
-                        <!-- content -->
-                        <div class="accordion__content overflow-hidden transition-all duration-500 ease h-0 text-dark-text leading-7 pr-6 mt-2">
-                            {{ faq.answer }}
-                        </div>
-                    </div>
                     {% endfor %}
                 </div>
             </div>
@@ -100,45 +102,48 @@
                     <a href="tg://resolve?domain=telegram" class="underline underline-offset-2">Telegram</a>
                 </p>
             </div>
-        </div>
-    </section>
-    <section class="access-to-purchases mt-24 lg-md:mt-28 pb-24">
-        <div class="container px-5">
-            <div class="max-w-[750px] mx-auto">
-                <h2 class="text-lg font-bold text-dark-logo uppercase text-center lg-md:text-xl">
-                    доступ к закупкам
-                </h2>
-                <p class="text-[#000000] font-normal leading-6 mt-7 lg-md:mt-10">
-                    Компании с PREMIUM тарифом получают расширенный доступ к разделу закупки, где каждый день публикуются сотни новых объявлений об оптовых закупках. А вы можете связываться с клиентами напрямую и предлагать свою продукцию.
-                    Что важно, мы не собираем объявления из других источников. Клиенты исключительно самостоятельно размещают объявления, что гарантирует их эксклюзивность, качество и актуальность.
-                </p>
             </div>
-        </div>
-    </section>
-</main>
+        </section>
+        <section class="access-to-purchases mt-24 lg-md:mt-28 pb-24">
+            <div class="container px-5">
+                <div class="max-w-[750px] mx-auto">
+                    <h2 class="text-lg font-bold text-dark-logo uppercase text-center lg-md:text-xl">
+                        доступ к закупкам
+                    </h2>
+                    <p class="text-[#000000] font-normal leading-6 mt-7 lg-md:mt-10">
+                        Компании с PREMIUM тарифом получают расширенный доступ к разделу закупки, где каждый день
+                        публикуются сотни новых объявлений об оптовых закупках. А вы можете связываться с клиентами
+                        напрямую и предлагать свою продукцию.
+                        Что важно, мы не собираем объявления из других источников. Клиенты исключительно самостоятельно
+                        размещают объявления, что гарантирует их эксклюзивность, качество и актуальность.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}
 {% block js %}
-<script src="{% static 'pages/tariffs/tariffs.js' %}"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  let tariffsData = [];
+    <script src="{% static 'pages/tariffs/tariffs.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let tariffsData = [];
 
-  async function fetchTariffsData() {
-    try {
-      const response = await fetch('/status/list/');
-      if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
-      }
-      tariffsData = await response.json();
-      renderTariffs(tariffsData);
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-    }
-  }
+            async function fetchTariffsData() {
+                try {
+                    const response = await fetch('/status/list/');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    tariffsData = await response.json();
+                    renderTariffs(tariffsData);
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                }
+            }
 
-  function renderTariff(tariff, statusIndex) {
-    const status = tariff.statuses[statusIndex];
-    return `
+            function renderTariff(tariff, statusIndex) {
+                const status = tariff.statuses[statusIndex];
+                return `
       <div
         class="tariffs__info ${tariff.is_recomended ? "recommended" : ""} flex flex-col items-center pb-10"
       >
@@ -184,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <p class="">Срок подключения</p>
               <div class="flex gap-[30px] mt-5">
               ${tariff.statuses.map((status, index) => {
-                return `<div class="flex items-center flex-col justify-center">
+                    return `<div class="flex items-center flex-col justify-center">
                           <input
                             class="w-6 h-6"
                             type="radio"
@@ -195,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
                           />
                           <span class="whitespace-nowrap">${status.months} месяца</span>
                         </div>`;
-              }).join("")}
+                }).join("")}
               </div>
             </div>
           </div>
@@ -204,17 +209,17 @@ document.addEventListener("DOMContentLoaded", () => {
           <!-- highest position -->
           <div class="flex items-center flex-col">
             ${status.priorety === 1 ?
-             "<img src='{% static 'assets/images/tariffs/graph-free.png' %}' alt='Chart'/>"
-            : ''}
+                    "<img src='{% static 'assets/images/tariffs/graph-free.png' %}' alt='Chart'/>"
+                    : ''}
             ${status.priorety === 2 ?
-             "<img src='{% static 'assets/images/tariffs/graph-premium-lite.svg' %}' alt='Chart'/>"
-            : ''}
+                    "<img src='{% static 'assets/images/tariffs/graph-premium-lite.svg' %}' alt='Chart'/>"
+                    : ''}
             ${status.priorety === 3 ?
-             "<img src='{% static 'assets/images/tariffs/graph-premium-standard.svg' %}' alt='Chart'/>"
-            : ''}
+                    "<img src='{% static 'assets/images/tariffs/graph-premium-standard.svg' %}' alt='Chart'/>"
+                    : ''}
             ${status.priorety === 4 ?
-             "<img src='{% static 'assets/images/tariffs/graph-premium-max.svg' %}' alt='Chart'/>"
-            : ''}
+                    "<img src='{% static 'assets/images/tariffs/graph-premium-max.svg' %}' alt='Chart'/>"
+                    : ''}
             <p>Средняя позиция в каталоге, компанию находят чаще</p>
           </div>
           <div class="flex items-center flex-col">
@@ -234,22 +239,22 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="tariffs__info-bonuses">
 
             ${status.is_publish_phone ?
-                "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Показ Вашего телефона незарегистрированным посетителям</p>"
-                : ''}
+                    "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Показ Вашего телефона незарегистрированным посетителям</p>"
+                    : ''}
 
             ${status.is_email ?
-            "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Показ Вашего E-mail и ссылки на ваш сайт / соцсети</p>"
-                : ''}
+                    "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Показ Вашего E-mail и ссылки на ваш сайт / соцсети</p>"
+                    : ''}
 
             ${status.is_advertise ?
-            "<p class='flex gap-2.5'> <img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Просмотр сайта без рекламы</p>"
+                    "<p class='flex gap-2.5'> <img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Просмотр сайта без рекламы</p>"
 
-                : ''}
+                    : ''}
 
             ${status.is_contact_prov ?
-            "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Просмотр контактов поставщиков</p>"
+                    "<p class='flex gap-2.5'><img src='{% static 'assets/images/tariffs/check.svg' %}' alt='Check' /> Просмотр контактов поставщиков</p>"
 
-                : ''}
+                    : ''}
 
           </div>
           <button class="btn-filled py-5 px-[30px] uppercase mt-auto" onclick="connectTariff(${status.id})">
@@ -258,108 +263,108 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
     `;
-  }
+            }
 
-  function renderTariffs(tariffsData) {
-    const tariffsWrapper = document.querySelector(".tariffs__wrapper");
-    tariffsWrapper.innerHTML = ''; // Clear the existing content
-    tariffsData.forEach((tariff, index) => {
-      tariffsWrapper.innerHTML += renderTariff(tariff, 0);
-    });
-  }
+            function renderTariffs(tariffsData) {
+                const tariffsWrapper = document.querySelector(".tariffs__wrapper");
+                tariffsWrapper.innerHTML = ''; // Clear the existing content
+                tariffsData.forEach((tariff, index) => {
+                    tariffsWrapper.innerHTML += renderTariff(tariff, 0);
+                });
+            }
 
-  window.updateTariff = (tariffId, statusIndex) => {
-    const tariffIndex = tariffsData.findIndex(tariff => tariff.id === tariffId);
-    const tariffElement = document.querySelector(`.tariffs__wrapper > div:nth-child(${tariffIndex + 1})`);
-    tariffElement.outerHTML = renderTariff(tariffsData[tariffIndex], statusIndex);
-  };
+            window.updateTariff = (tariffId, statusIndex) => {
+                const tariffIndex = tariffsData.findIndex(tariff => tariff.id === tariffId);
+                const tariffElement = document.querySelector(`.tariffs__wrapper > div:nth-child(${tariffIndex + 1})`);
+                tariffElement.outerHTML = renderTariff(tariffsData[tariffIndex], statusIndex);
+            };
 
-  window.connectTariff = (statusId) => {
-    fetch(`/connect_tariff?id=${statusId}`, {
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.Info) {
-        showToast('success', 'Успешно', 'Вы успешно подключили тариф');
-      } else {
-        showToast('error', 'Ошибка', data.Error);
-      }
-    })
-    .catch(error => {
-      showToast('error', 'Ошибка', 'Произошла ошибка при подключении тарифа');
-      console.error('Error:', error);
-    });
-  };
+            window.connectTariff = (statusId) => {
+                fetch(`/connect_tariff?id=${statusId}`, {
+                    method: 'GET',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.Info) {
+                            showToast('success', 'Успешно', 'Вы успешно подключили тариф');
+                        } else {
+                            showToast('error', 'Ошибка', data.Error);
+                        }
+                    })
+                    .catch(error => {
+                        showToast('error', 'Ошибка', 'Произошла ошибка при подключении тарифа');
+                        console.error('Error:', error);
+                    });
+            };
 
-  fetchTariffsData();
-});
+            fetchTariffsData();
+        });
 
-function showToast(type, title, message) {
-  const colors = {
-    info: {
-      bg: 'bg-white',
-      border: 'border-[#2DC071]',
-      text: 'text-[#2DC071]',
-      icon: 'text-[#2DC071]',
-    },
-    error: {
-      bg: 'bg-white',
-      border: 'border-red-500',
-      text: 'text-red-700',
-      icon: 'text-red-500',
-    },
-    success: {
-      bg: 'bg-white',
-      border: 'border-[#2DC071]',
-      text: 'text-[#2DC071]',
-      icon: 'text-[#2DC071]',
-    },
-  };
+        function showToast(type, title, message) {
+            const colors = {
+                info: {
+                    bg: 'bg-white',
+                    border: 'border-[#2DC071]',
+                    text: 'text-[#2DC071]',
+                    icon: 'text-[#2DC071]',
+                },
+                error: {
+                    bg: 'bg-white',
+                    border: 'border-red-500',
+                    text: 'text-red-700',
+                    icon: 'text-red-500',
+                },
+                success: {
+                    bg: 'bg-white',
+                    border: 'border-[#2DC071]',
+                    text: 'text-[#2DC071]',
+                    icon: 'text-[#2DC071]',
+                },
+            };
 
-  const toast = document.createElement('div');
-  toast.className = `fixed bottom-4 right-4 ${colors[type].bg} border-l-4 ${colors[type].border} ${colors[type].text} px-6 py-4 shadow-lg`;
-  toast.setAttribute('role', 'alert');
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-4 right-4 ${colors[type].bg} border-l-4 ${colors[type].border} ${colors[type].text} px-6 py-4 shadow-lg`;
+            toast.setAttribute('role', 'alert');
 
-  const flex = document.createElement('div');
-  flex.className = 'flex items-start';
+            const flex = document.createElement('div');
+            flex.className = 'flex items-start';
 
-  const iconContainer = document.createElement('div');
-  iconContainer.className = 'py-1';
+            const iconContainer = document.createElement('div');
+            iconContainer.className = 'py-1';
 
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.className = `fill-current h-8 w-8 ${colors[type].icon} mr-4`;
-  svg.setAttribute('viewBox', '0 0 20 20');
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.className = `fill-current h-8 w-8 ${colors[type].icon} mr-4`;
+            svg.setAttribute('viewBox', '0 0 20 20');
 
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('d', 'M10 2a8 8 0 100 16 8 8 0 000-16zm1 12H9v-2h2v2zm0-4H9V6h2v4z');
-  svg.appendChild(path);
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', 'M10 2a8 8 0 100 16 8 8 0 000-16zm1 12H9v-2h2v2zm0-4H9V6h2v4z');
+            svg.appendChild(path);
 
-  iconContainer.appendChild(svg);
+            iconContainer.appendChild(svg);
 
-  const textContainer = document.createElement('div');
+            const textContainer = document.createElement('div');
 
-  const boldText = document.createElement('p');
-  boldText.className = 'font-bold text-lg';
-  boldText.textContent = title;
+            const boldText = document.createElement('p');
+            boldText.className = 'font-bold text-lg';
+            boldText.textContent = title;
 
-  const smallText = document.createElement('p');
-  smallText.className = 'text-base';
-  smallText.textContent = message;
+            const smallText = document.createElement('p');
+            smallText.className = 'text-base';
+            smallText.textContent = message;
 
-  textContainer.appendChild(boldText);
-  textContainer.appendChild(smallText);
+            textContainer.appendChild(boldText);
+            textContainer.appendChild(smallText);
 
-  flex.appendChild(iconContainer);
-  flex.appendChild(textContainer);
+            flex.appendChild(iconContainer);
+            flex.appendChild(textContainer);
 
-  toast.appendChild(flex);
+            toast.appendChild(flex);
 
-  document.body.appendChild(toast);
+            document.body.appendChild(toast);
 
-  setTimeout(() => {
-    toast.remove();
-  }, 3000);
-}
-</script>
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+    </script>
 {% endblock %}

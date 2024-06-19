@@ -2,91 +2,98 @@
 {% load static %}
 {% block title %}Личный кабинет{% endblock %}
 
-    {% block css %}
+{% block css %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
     <link rel="stylesheet" href="{% static 'pages/profile/settings/index.css' %}">
-    {% endblock %}
+{% endblock %}
 
 {% block content %}
-<nav class="breadcrumbs bg-[#FFFFFC]">
-    <div class="container user-select-none">
-        <div class="">
-            <div class="flex gap-4 py-4">
-                <div class="flex items-center gap-4">
-                  <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" /></a>
-                  <a href="{% url 'view_profile' %}"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" /></a>
+    <nav class="breadcrumbs bg-[#FFFFFC]">
+        <div class="container user-select-none">
+            <div class="">
+                <div class="flex gap-4 py-4">
+                    <div class="flex items-center gap-4">
+                        <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}"/></a>
+                        <a href="{% url 'view_profile' %}"><img
+                                src="{% static 'assets/images/icons/arrow-prev.svg' %}"/></a>
+                    </div>
+                    <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
                 </div>
-                <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
             </div>
         </div>
-    </div>
-</nav>
-<main class="profile-settings">
-    <section class="heading">
+    </nav>
+    <main class="profile-settings">
+        <section class="heading">
+            <div class="container">
+                <h1 class="font-black mb-12 text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                    личный кабинет</h1>
+            </div>
+        </section>
         <div class="container">
-            <h1 class="font-black mb-12 text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
-                личный кабинет</h1>
-        </div>
-    </section>
-    <div class="container">
-        <div class="lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
-            <!--  this section is for avatar  -->
-                            {% include "cabinet/cabinet_includes/menu.html" with active_page='settings' %}
+            <div class="lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
+                <!--  this section is for avatar  -->
+                {% include "cabinet/cabinet_includes/menu.html" with active_page='settings' %}
 
-            <!-- these sections are for main content  -->
-            <section class="main-content block mt-10 mb-28 lg-md:mt-0 lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
-                        {% if form.errors %}
+                <!-- these sections are for main content  -->
+                <section
+                        class="main-content block mt-10 mb-28 lg-md:mt-0 lg-md:mb-[120px] lg-md:col-span-2 xl:col-span-3">
+                    {% if form.errors %}
                         <ul>
                             {% for field in form %} {% for error in field.errors %}
-                            <li>{{ field.name }} - {{ error }}</li>
+                                <li>{{ field.name }} - {{ error }}</li>
                             {% endfor %} {% endfor %}
                         </ul>
-                        {% endif %}
-                <div class="container">
-                    <div class="card__item shadow-card-shadow  rounded-[10px]">
-                        <form method="post" class="form space-y-[26px] lg-md:space-y-[30px]">
-                            <label for="email" class="label text-lg block">
-                                Ваш адрес электронной почты Email *
-                                {{ form.email }}
-                            </label>
-                            <label for="name" class="label text-lg block">
-                                Ваше ФИО*
-                                {{ form.first_name }}
-                            </label>
-                            <label for="phoneNumber" class="label text-lg block">
-                                Ваш номер телефона
-                                {{ form.phone }}
-                                {% csrf_token %}
-                            </label>
-                            <label for="job_title" class="label text-lg block">
-                                Ваша должность
-                                {{ form.job_title }}
-                            </label>
-                            <div class="flex flex-row justify-start gap-4 user-select-none">
-                                <div class="p-1 ">
-                                    <input type="radio" value="True" name="is_provider" id="provider" {% if provider.is_provider %}checked{% endif %} />
-                                    <label class="cursor-pointer" for="provider"> Поставщик </label>
+                    {% endif %}
+                    <div class="container">
+                        <div class="card__item shadow-card-shadow  rounded-[10px]">
+                            <form method="post" class="form space-y-[26px] lg-md:space-y-[30px]">
+                                <label for="email" class="label text-lg block">
+                                    Ваш адрес электронной почты Email *
+                                    {{ form.email }}
+                                </label>
+                                <label for="name" class="label text-lg block">
+                                    Ваше ФИО*
+                                    {{ form.first_name }}
+                                </label>
+                                <label for="phoneNumber" class="label text-lg block">
+                                    Ваш номер телефона
+                                    {{ form.phone }}
+                                    {% csrf_token %}
+                                </label>
+                                <label for="job_title" class="label text-lg block">
+                                    Ваша должность
+                                    {{ form.job_title }}
+                                </label>
+                                <div class="flex flex-row justify-start gap-4 user-select-none">
+                                    <div class="p-1 ">
+                                        <input type="radio" value="True" name="is_provider" id="provider"
+                                               {% if provider.is_provider %}checked{% endif %}/>
+                                        <label class="cursor-pointer" for="provider"> Поставщик </label>
+                                    </div>
+                                    <div class="p-1">
+                                        <input type="radio" name="is_provider" value="False" id="buyer"
+                                               {% if not provider.is_provider %}checked{% endif %}/>
+                                        <label class="cursor-pointer" for="buyer"> Покупатель </label>
+                                    </div>
                                 </div>
-                                <div class="p-1">
-                                    <input type="radio" name="is_provider" value="False" id="buyer" {% if not provider.is_provider %}checked{% endif %} />
-                                    <label class="cursor-pointer"  for="buyer"> Покупатель </label>
+                                <a class="inline-block text-[#2254B6] underline underline-offset-2"
+                                   href="{% url 'privacy_policy' %}">Политика конфиденциальности</a>
+                                <button class="btn-filled-yellow w-full py-5 uppercase" type="submit">Сохранить</button>
+                                <div class="flex gap-[clamp(16px,1.5vw,30px)]">
+                                    <a class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]"
+                                       href="{% url 'change_password' %}">Сменить пароль</a>
+                                    <a href="{% url 'logout' %}"
+                                       class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]">
+                                        Выйти из профиля</a>
                                 </div>
-                            </div>
-                            <a class="inline-block text-[#2254B6] underline underline-offset-2"  href="{% url 'privacy_policy' %}">Политика конфиденциальности</a>
-                            <button class="btn-filled-yellow w-full py-5 uppercase" type="submit">Сохранить</button>
-                            <div class="flex gap-[clamp(16px,1.5vw,30px)]">
-                                <a class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]" href="{% url 'change_password' %}">Сменить пароль</a>
-                                <a href="{% url 'logout' %}" class="flex-grow text-sm py-4 text-center btn-outlined lg-md:text-base text-[#6E6E6E] border-[#6E6E6E]">
-                                    Выйти из профиля</a>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
-    </div>
-</main>
-<!--<script src="{% static 'pages/profile/settings/index.js' %}"></script>-->
-<script src="{% static 'pages/profile/profile.js' %}"></script>
+    </main>
+    <!--<script src="{% static 'pages/profile/settings/index.js' %}"></script>-->
+    <script src="{% static 'pages/profile/profile.js' %}"></script>
 {% endblock %}

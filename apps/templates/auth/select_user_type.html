@@ -5,11 +5,11 @@
     <title>Select User Type</title>
 </head>
 <body>
-    <h2>Выберите тип пользователя</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Выбрать</button>
-    </form>
+<h2>Выберите тип пользователя</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Выбрать</button>
+</form>
 </body>
 </html>

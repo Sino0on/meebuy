@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Личный кабинет
+    Личный кабинет
 {% endblock %}
 
 {% block css %}
@@ -14,268 +14,313 @@
 {% endblock %}
 
 {% block content %}
-<nav class="breadcrumbs bg-[#FFFFFC]">
-    <div class="container">
-        <div class="">
-            <div class="flex gap-4 py-4">
-                <div class="flex items-center gap-4">
-                    <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" alt=""/></a>
-                    <a href="{% url 'view_profile' %}"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/></a>
+    <nav class="breadcrumbs bg-[#FFFFFC]">
+        <div class="container">
+            <div class="">
+                <div class="flex gap-4 py-4">
+                    <div class="flex items-center gap-4">
+                        <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" alt=""/></a>
+                        <a href="{% url 'view_profile' %}"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}"
+                                                                alt=""/></a>
+                    </div>
+                    <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
                 </div>
-                <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
             </div>
         </div>
-    </div>
-</nav>
-<main class="profile-myCompany">
-    <section class="heading">
+    </nav>
+    <main class="profile-myCompany">
+        <section class="heading">
+            <div class="container">
+                <h1
+                        class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl"
+                >
+                    личный кабинет</h1>
+            </div>
+        </section>
         <div class="container">
-            <h1
-                    class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl"
-            >
-                личный кабинет</h1>
-        </div>
-    </section>
-    <div class="container">
-        <div class="lg-md:grid grid-cols-3  pb-[100px] lg-md:pb-[120px] lg-md:gap-5 xl:grid-cols-4">
-            <!--  this section is for avatar  -->
+            <div class="lg-md:grid grid-cols-3  pb-[100px] lg-md:pb-[120px] lg-md:gap-5 xl:grid-cols-4">
+                <!--  this section is for avatar  -->
 
-                    <!-- dropdown menu-->
-                 {% include "cabinet/cabinet_includes/menu.html" with active_page='user_tenders' %}
+                <!-- dropdown menu-->
+                {% include "cabinet/cabinet_includes/menu.html" with active_page='user_tenders' %}
 
-                    <!-- desktop menu end-->
+                <!-- desktop menu end-->
 
-            <div class="lg-md:col-span-2 xl:col-span-3">
-                <!-- these sections are for main content  -->
-                <section class="main-content mt-[30px] h-[calc(100%-50px)] lg-md:mt-0">
-                    <!-- tabs  -->
-                    <div class="tabs__wrapper lg-md:mt-0">
-                        <button onclick="openTab(event,'Tab1')"
-                                class="tabs__item transition-colors active btn-filled-yellow-light py-2 px-2.5 text-nowrap">
-                            Автопоиск
-                        </button>
-                        <button onclick="openTab(event,'Tab2')"
-                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
-                            Запросы поиска
-                        </button>
-                        <button onclick="openTab(event,'Tab3')"
-                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
-                            Открытые
-                        </button>
-                        <button onclick="openTab(event,'Tab4')"
-                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
-                            Ваши закупки
-                        </button>
-                    </div>
-                    <!-- tabs end  -->
-                    <!-- auto search  -->
-                    <div id="Tab1"
-                         class="card__wrapper h-[calc(100%-70px)] tab-content shadow-card-shadow rounded-[10px] mt-[30px]">
-                        <!-- if empty  -->
-                        <div class="card__item">
-                            <p class="text-dark-text leading-6">Закупки — это объявления о покупке от пользователей.
-                                <br>Добавьте запросы для авто-поиска подходящих вам закупок. По мере появления на сайте
-                                новых
-                                закупок, они будут автоматически добавляться в этот раздел.
-                                <br>Запросов может быть несколько.
-                            </p>
-                            <button onclick="openTab(event, 'Tab2')"
-                                    class="max-w-[364px] btn btn-filled-yellow text-sm py-2.5 w-full text-dark-logo uppercase mt-[30px]">
-                                Добавить новый запрос поиска
+                <div class="lg-md:col-span-2 xl:col-span-3">
+                    <!-- these sections are for main content  -->
+                    <section class="main-content mt-[30px] h-[calc(100%-50px)] lg-md:mt-0">
+                        <!-- tabs  -->
+                        <div class="tabs__wrapper lg-md:mt-0">
+                            <button id="tab1-btn" onclick="openTab(event,'Tab1')"
+                                    class="tabs__item transition-colors active btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                                Автопоиск
+                            </button>
+                            <button onclick="openTab(event,'Tab2')"
+                                    class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                                Запросы поиска
+                            </button>
+                            <button onclick="openTab(event,'Tab3')"
+                                    class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                                Открытые
+                            </button>
+                            <button onclick="openTab(event,'Tab4')"
+                                    class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                                Ваши закупки
                             </button>
                         </div>
-                    </div>
-                    <!--  search queries-->
-                    <div id="Tab2"
-                         class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
-                        <!-- if empty  -->
-                        <div class="searchQueryContent empty__content  card__item">
-                            <p class="text-dark-text leading-6">
-                                Добавьте запросы для авто-поиска подходящих вам закупок. По мере появления на сайте
-                                новых закупок, они будут автоматически добавляться в раздел «Автопоиск».
-                                <br>Запросов может быть несколько.
-                            </p>
-                            <button
-                                    class="addSearchQuery-btn max-w-[364px] btn btn-filled-yellow text-sm py-2.5 w-full text-dark-logo uppercase mt-[30px]">
-                                Добавить новый запрос поиска
-                            </button>
-                        </div>
-                        <!-- filled  -->
-                        <div class=" filled__content card__item hidden searchQueryContent">
-                            <button
-                                    class="addSearchQuery-btn max-w-[364px] btn btn-filled-yellow text-sm py-2.5 w-full text-dark-logo uppercase">
-                                Добавить новый запрос поиска
-                            </button>
-                            <ul class="mt-8 lg-md:mt-[52px] divide-y space-y-4 divide-grey-light lg-md:space-y-6">
-                                <li class="flex items-center justify-between gap-4 pt-4 lg-md:pt-6 first:pt-0">
-                                    <div>
-                                        <p class="text-lg font-extrabold text-dark-logo break-word line-clamp-2">
-                                            КерамическиеКерамическиеКерамическиеКерамическиеКерамическиеКерамическиеКерамическиеКерамические,
-                                            глиняные кружки
-                                        </p>
-                                        <p class="text-dark-text">Бишкек, Кыргызстан</p>
-                                    </div>
-                                    <img class="cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}" alt="Trash">
-                                </li>
-                                <li class="flex items-center justify-between gap-4 pt-4 lg-md:pt-6 first:pt-0">
-                                    <div>
-                                        <p class="text-lg font-extrabold text-dark-logo break-word line-clamp-2">
-                                            Керамические,
-                                            глиняные
-                                            кружки</p>
-                                        <p class="text-dark-text">Бишкек, Кыргызстан</p>
-                                    </div>
-                                    <img class="cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}" alt="Trash">
-                                </li>
-                                <li class="flex items-center justify-between gap-4 pt-4 lg-md:pt-6 first:pt-0">
-                                    <div>
-                                        <p class="text-lg font-extrabold text-dark-logo break-word line-clamp-2">
-                                            Кружки</p>
-                                        <p class="text-dark-text">Бишкек, Кыргызстан</p>
-                                    </div>
-                                    <img class="cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}" alt="Trash">
-                                </li>
-
-                            </ul>
-                        </div>
-                        <!-- form  -->
-                        <div class="card__item form hidden">
-                            <h2 class="text-dark-logo text-lg font-semibold">Запрос поиска</h2>
-                            <form action="">
-                                <p class="text-dark-text leading-6 mt-[10px] font-light">
-                                    Укажите одно или несколько слов <span class="uppercase">ВСЕ ИЗ КОТОРЫХ <br
-                                        class="hidden lg-md:block"> ДОЛЖНЫ</span> присутствовать
-                                    в закупке. Для поиска разных товаров нужно создать несколько отдельных запросов.
+                        <!-- tabs end  -->
+                        <!-- auto search  -->
+                        <div id="Tab1"
+                             class="card__wrapper h-[calc(100%-70px)] tab-content shadow-card-shadow rounded-[10px] mt-[30px]">
+                            <!-- if empty  -->
+                            <div class="card__item">
+                                <p class="text-dark-text leading-6">Закупки — это объявления о покупке от пользователей.
+                                    <br>Добавьте запросы для авто-поиска подходящих вам закупок. По мере появления на
+                                    сайте
+                                    новых
+                                    закупок, они будут автоматически добавляться в этот раздел.
+                                    <br>Запросов может быть несколько.
                                 </p>
-                                <input name="search" class="mt-6" type="text" placeholder="Одежда">
-
-                                <p class="text-dark-text leading-6 mt-[10px] font-light">
-                                    Вы можете указать регион поиска закупок, однако это значительно сократит их
-                                    колиество, т.к. не у всех закупок указан регион.
-                                </p>
-                                <input name="city" class="mt-6" type="text" placeholder="Например: Бишкек">
-
-                                <div class="mt-10 lg-md:mt-[50px] flex gap-4 lg-md:gap-5 items-center">
-                                    <button type="submit"
-                                            class="btn btn-filled-yellow text-sm h-[51px] flex items-center justify-center w-full text-dark-logo uppercase">
-                                        Сохранить
-                                    </button>
-                                    <button type="button" id="searchQueryBtnCancel"
-                                            class="btn btn-outlined text-sm h-[51px] flex items-center justify-center w-full text-dark-logo uppercase">
-                                        Отмена
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!--  opening hours  -->
-                    <div id="Tab3"
-                        class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
-                        <div class="card__item h-full">
-                            <div class="relative mt-2">
-                                <form id="selectForm" method="POST" action="/your-backend-endpoint/">
-                                    {% csrf_token %}
-                                    <!-- selected -->
-                                    <button type="button" id="selectButton"
-                                        class="flex items-center gap-2.5 max-w-[239px] cursor-pointer rounded-[15px] bg-white py-2.5 px-5 text-center text-dark-text ring-1 ring-inset ring-grey-light focus:outline-none sm:text-sm sm:leading-6">
-                                        <span id="selectedOption" class="ml-3 block truncate">За все время</span>
-                                        <img src="{% static '/assets/images/icons/ios-arrow.svg' %}" alt="Arrow">
-                                    </button>
-                                    <!-- hidden input to store the selected value -->
-                                    <input type="hidden" name="selectedOption" id="hiddenSelectedOption" value="За все время">
-                                    <!-- variants -->
-                                    <ul id="optionsList"
-                                        class="absolute hidden z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-grey-light ring-opacity-5 focus:outline-none sm:text-sm">
-                                        <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" data-value="За неделю">
-                                            <div class="flex items-center cursor-pointer">
-                                                <span class="font-normal ml-3 block truncate">За неделю</span>
-                                            </div>
-                                        </li>
-                                        <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" data-value="За месяц">
-                                            <div class="flex items-center cursor-pointer">
-                                                <span class="font-normal ml-3 block truncate">За месяц</span>
-                                            </div>
-                                        </li>
-                                        <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" data-value="За год">
-                                            <div class="flex items-center cursor-pointer">
-                                                <span class="font-normal ml-3 block truncate">За год</span>
-                                            </div>
-                                        </li>
-                                        <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9" data-value="За все время">
-                                            <div class="flex items-center cursor-pointer">
-                                                <span class="font-normal ml-3 block truncate">За все время</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </form>
-                            </div>
-                            <div class="relative flex justify-center items-center min-h-[388px] h-full">
-                                <img class="absolute -z-[1] w-2/5 -rotate-[210.12deg]"
-                                    src="{% static '/assets/images/icons/bg-yellow-icon.svg' %}" alt="">
-                                <span class="text-sm font-semibold text-dark-text lg-md:text-lg">Тут пока пусто</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  opening hours  -->
-                    <div id="Tab4"
-                         class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
-                        {% if user.tenders.all %}
-                        <div class="card__item">
-
-                          <button
-                            class="max-w-[364px] btn btn-outlined text-sm py-2.5 w-full text-dark-logo uppercase">
-                            <a href="{% url 'tender_create' %}">Доавить новую закупку</a>
-                          </button>
-
-                          <div class="divide-y divide-grey-light space-y-5 lg-md:space-y-[26px] mt-[60px] lg-md:mt-[50px]">
-                              {% for i in user.tenders.all %}
-                            <div class="flex flex-col first:pt-0 pt-5 lg-md:pt-[26px] lg-md:flex-row lg-md:justify-between lg-md:items-center">
-                              <div>
-                                  <a href="{% url 'tender_detail' i.pk %}">
-                                <h2 class="line-clamp-2 text-lg font-extrabold text-dark-logo">{{ i.title }}</h2>
-                                      </a>
-                                <p class=text-dark-text>Опубликовано до {{ i.end_date }} - <br class="lg-md:hidden"><a
-                                  class="underline underline-offset-2" href="{% url 'tender_update' i.pk %}">Продлить</a></p>
-                              </div>
-                              <div class="flex gap-2.5 mt-[30px] justify-end lg-md:mt-0">
-                                  <a href="{% url 'tender_update' i.pk %}">
-                                <img class="w-[17px] h-[17px] cursor-pointer" src="{% static '/assets/images/icons/pen-broken.svg' %}"
-                                     alt="Pencil">
-                                      </a>
-                                  <a href="{% url 'delete_tender' i.pk %}">
-                                <img class="w-[17px] h-[17px] cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}" alt="Trash">
-                                      </a>
-                              </div>
-                            </div>
-                              {% endfor %}
-
-                          </div>
-                        </div>
-                        {% else %}
-                        <div class="card__item text-center h-full">
-                            <p class=" text-dark-text leading-6 ">Если вы хотите купить товары оптом, добавьте свое
-                                объявление</p>
-                            <div class="flex justify-center mt-[30px] lg-md:mt-10">
-
-                                <button class="btn-filled-yellow max-w-[292px] h-[51px] flex items-center justify-center w-full text-dark-logo uppercase lg-md:max-w-[237px]">
-                                    <a href="{% url 'tender_create' %}">Добавить закупку</a>
+                                <button onclick="openTab(event, 'Tab2')"
+                                        class="max-w-[364px] btn btn-filled-yellow text-sm py-2.5 w-full text-dark-logo uppercase mt-[30px]">
+                                    Добавить новый запрос поиска
                                 </button>
                             </div>
                         </div>
-                        <!-- if empty  -->
+                        <!--  search queries-->
+                        <div id="Tab2"
+                             class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
+                            <!-- if empty  -->
+                            <div class="searchQueryContent empty__content  card__item">
+                                <p class="text-dark-text leading-6">
+                                    Добавьте запросы для авто-поиска подходящих вам закупок. По мере появления на сайте
+                                    новых закупок, они будут автоматически добавляться в раздел «Автопоиск».
+                                    <br>Запросов может быть несколько.
+                                </p>
+                                <button
+                                        class="addSearchQuery-btn max-w-[364px] btn btn-filled-yellow text-sm py-2.5 w-full text-dark-logo uppercase mt-[30px]">
+                                    Добавить новый запрос поиска
+                                </button>
+                            </div>
+                            <!-- filled  -->
+                            <div class=" filled__content card__item hidden searchQueryContent">
+                                <button
+                                        class="addSearchQuery-btn max-w-[364px] btn btn-filled-yellow text-sm py-2.5 w-full text-dark-logo uppercase">
+                                    Добавить новый запрос поиска
+                                </button>
+                                <ul class="mt-8 lg-md:mt-[52px] divide-y space-y-4 divide-grey-light lg-md:space-y-6">
+                                    <li class="flex items-center justify-between gap-4 pt-4 lg-md:pt-6 first:pt-0">
+                                        <div>
+                                            <p class="text-lg font-extrabold text-dark-logo break-word line-clamp-2">
+                                                КерамическиеКерамическиеКерамическиеКерамическиеКерамическиеКерамическиеКерамическиеКерамические,
+                                                глиняные кружки
+                                            </p>
+                                            <p class="text-dark-text">Бишкек, Кыргызстан</p>
+                                        </div>
+                                        <img class="cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}"
+                                             alt="Trash">
+                                    </li>
+                                    <li class="flex items-center justify-between gap-4 pt-4 lg-md:pt-6 first:pt-0">
+                                        <div>
+                                            <p class="text-lg font-extrabold text-dark-logo break-word line-clamp-2">
+                                                Керамические,
+                                                глиняные
+                                                кружки</p>
+                                            <p class="text-dark-text">Бишкек, Кыргызстан</p>
+                                        </div>
+                                        <img class="cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}"
+                                             alt="Trash">
+                                    </li>
+                                    <li class="flex items-center justify-between gap-4 pt-4 lg-md:pt-6 first:pt-0">
+                                        <div>
+                                            <p class="text-lg font-extrabold text-dark-logo break-word line-clamp-2">
+                                                Кружки</p>
+                                            <p class="text-dark-text">Бишкек, Кыргызстан</p>
+                                        </div>
+                                        <img class="cursor-pointer" src="{% static '/assets/images/icons/trash.svg' %}"
+                                             alt="Trash">
+                                    </li>
 
-                        {% endif %}
-                      </div>
+                                </ul>
+                            </div>
+                            <!-- form  -->
+                            <div class="card__item form hidden">
+                                <h2 class="text-dark-logo text-lg font-semibold">Запрос поиска</h2>
+                                <form action="{% url 'search_request_create' %}" method="post">
+                                    {% csrf_token %}
+                                    <p class="text-dark-text leading-6 mt-[10px] font-light">
+                                        Укажите одно или несколько слов <span class="uppercase">ВСЕ ИЗ КОТОРЫХ <br
+                                            class="hidden lg-md:block"> ДОЛЖНЫ</span> присутствовать
+                                        в закупке. Для поиска разных товаров нужно создать несколько отдельных запросов.
+                                    </p>
+                                    <label>
+                                        <input name="name" class="mt-6" type="text" placeholder="Одежда">
+                                    </label>
 
-                </section>
+                                    <p class="text-dark-text leading-6 mt-[10px] font-light">
+                                        Вы можете указать регион поиска закупок, однако это значительно сократит их
+                                        колиество, т.к. не у всех закупок указан регион.
+                                    </p>
+                                    <label>
+                                        <input name="city" class="mt-6" type="text" placeholder="Например: Бишкек">
+                                    </label>
+
+                                    <div class="mt-10 lg-md:mt-[50px] flex gap-4 lg-md:gap-5 items-center">
+                                        <button type="submit"
+                                                class="btn btn-filled-yellow text-sm h-[51px] flex items-center justify-center w-full text-dark-logo uppercase">
+                                            Сохранить
+                                        </button>
+                                        <button type="button" id="searchQueryBtnCancel"
+                                                class="btn btn-outlined text-sm h-[51px] flex items-center justify-center w-full text-dark-logo uppercase">
+                                            Отмена
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--  opening hours  -->
+                        <div id="Tab3"
+                             class="card__wrapper h-[calc(100%-70px)] tab-content  shadow-card-shadow rounded-[10px] mt-[30px]">
+                            <div class="card__item h-full">
+                                <div class="relative mt-2">
+                                    <form id="selectForm" method="GET" action="">
+                                        {% csrf_token %}
+                                        <button type="button" id="selectButton"
+                                                class="flex items-center gap-2.5 max-w-[239px] cursor-pointer rounded-[15px] bg-white py-2.5 px-5 text-center text-dark-text ring-1 ring-inset ring-grey-light focus:outline-none sm:text-sm sm:leading-6">
+                                            <span id="selectedOption" class="ml-3 block truncate">За все время</span>
+                                            <img src="{% static '/assets/images/icons/ios-arrow.svg' %}" alt="Arrow">
+                                        </button>
+                                        <input type="hidden" name="selectedOption" id="hiddenSelectedOption"
+                                               value="За все время">
+                                        <ul id="optionsList" data-options="{{ searches }}"
+                                            class="absolute hidden z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-grey-light ring-opacity-5 focus:outline-none sm:text-sm">
+                                            <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+                                                data-value="За неделю">
+                                                <div class="flex items-center cursor-pointer">
+                                                    <span class="font-normal ml-3 block truncate">За неделю</span>
+                                                </div>
+                                            </li>
+                                            <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+                                                data-value="За месяц">
+                                                <div class="flex items-center cursor-pointer">
+                                                    <span class="font-normal ml-3 block truncate">За месяц</span>
+                                                </div>
+                                            </li>
+                                            <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+                                                data-value="За год">
+                                                <div class="flex items-center cursor-pointer">
+                                                    <span class="font-normal ml-3 block truncate">За год</span>
+                                                </div>
+                                            </li>
+                                            <li class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+                                                data-value="За все время">
+                                                <div class="flex items-center cursor-pointer">
+                                                    <span class="font-normal ml-3 block truncate">За все время</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                                <div class="relative flex justify-center items-start min-h-[388px] h-full">
+                                    <img class="absolute -z-[1] w-2/5 -rotate-[210.12deg]"
+                                         src="{% static '/assets/images/icons/bg-yellow-icon.svg' %}" alt="">
+                                    {% if searches %}
+                                        <ul id="searchList" class="w-full p-4">
+                                            {% for search in searches %}
+                                                <li class="p-4 border-b border-grey-light"
+                                                    data-range="{{ search.range }}">
+                                                    <div class="flex flex-row justify-between w-full">
+                                                        <a href="/search/detail/{{ search.id }}">
+                                                            <h3 class="font-semibold">{{ search.name }}</h3>
+                                                            <p class="city">{{ search.city }}</p>
+                                                            <p class="text-sm text-grey-dark">{{ search.date }}</p>
+                                                        </a>
+                                                        <div data-id="{{ search.id }}" class="delete-option-btn"
+                                                             style="cursor: pointer">
+                                                            <img class="w-[17px] h-[17px] cursor-pointer"
+                                                                 src="/static/assets/images/icons/trash.svg"
+                                                                 alt="Trash">
+                                                        </div>
+                                                    </div>
+
+
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <span class="text-sm font-semibold text-dark-text lg-md:text-lg">Тут пока пусто</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--  opening hours  -->
+                        <div id="Tab4"
+                             class="card__wrapper h-[calc(100%-70px)] tab-content hidden shadow-card-shadow rounded-[10px] mt-[30px]">
+                            {% if user.tenders.all %}
+                                <div class="card__item">
+
+                                    <button
+                                            class="max-w-[364px] btn btn-outlined text-sm py-2.5 w-full text-dark-logo uppercase">
+                                        <a href="{% url 'tender_create' %}">Доавить новую закупку</a>
+                                    </button>
+
+                                    <div class="divide-y divide-grey-light space-y-5 lg-md:space-y-[26px] mt-[60px] lg-md:mt-[50px]">
+                                        {% for i in user.tenders.all %}
+                                            <div class="flex flex-col first:pt-0 pt-5 lg-md:pt-[26px] lg-md:flex-row lg-md:justify-between lg-md:items-center">
+                                                <div>
+                                                    <a href="{% url 'tender_detail' i.pk %}">
+                                                        <h2 class="line-clamp-2 text-lg font-extrabold text-dark-logo">{{ i.title }}</h2>
+                                                    </a>
+                                                    <p class=text-dark-text>Опубликовано до {{ i.end_date }} - <br
+                                                            class="lg-md:hidden"><a
+                                                            class="underline underline-offset-2"
+                                                            href="{% url 'tender_update' i.pk %}">Продлить</a></p>
+                                                </div>
+                                                <div class="flex gap-2.5 mt-[30px] justify-end lg-md:mt-0">
+                                                    <a href="{% url 'tender_update' i.pk %}">
+                                                        <img class="w-[17px] h-[17px] cursor-pointer"
+                                                             src="{% static '/assets/images/icons/pen-broken.svg' %}"
+                                                             alt="Pencil">
+                                                    </a>
+                                                    <a href="{% url 'delete_tender' i.pk %}">
+                                                        <img class="w-[17px] h-[17px] cursor-pointer"
+                                                             src="{% static '/assets/images/icons/trash.svg' %}"
+                                                             alt="Trash">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="card__item text-center h-full">
+                                    <p class=" text-dark-text leading-6 ">Если вы хотите купить товары оптом, добавьте
+                                        свое
+                                        объявление</p>
+                                    <div class="flex justify-center mt-[30px] lg-md:mt-10">
+
+                                        <button class="btn-filled-yellow max-w-[292px] h-[51px] flex items-center justify-center w-full text-dark-logo uppercase lg-md:max-w-[237px]">
+                                            <a href="{% url 'tender_create' %}">Добавить закупку</a>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- if empty  -->
+
+                            {% endif %}
+                        </div>
+
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 {% endblock %}
 {% block js %}
 
-<script src="{% static 'pages/profile/tenders/index.js' %}"></script>
-<script src="{% static 'pages/profile/profile.js' %}"></script>
+    <script src="{% static 'pages/profile/tenders/index.js' %}"></script>
+    <script src="{% static 'pages/profile/profile.js' %}"></script>
+
 {% endblock %}
