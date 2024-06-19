@@ -1,421 +1,477 @@
 {% extends 'base.html' %} {% load static %} {% block title %}Meebuy{% endblock %} {% block css %}
-<link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}" />
-<link rel="stylesheet" href="{% static 'pages/profile/myCompany/editProfile/index.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}"/>
+    <link rel="stylesheet" href="{% static 'pages/profile/myCompany/editProfile/index.css' %}"/>
 {% endblock %} {% block content %}
 
-<main id="main" class="edit__profile" data-profile-id="{{ provider.id }}">
-    <nav class="breadcrumbs bg-[#FFFFFC]">
-        <div class="container">
-            <div class="">
-                <div class="flex gap-4 py-4">
-                    <a href="{% url 'view_profile' %}" class="flex items-center gap-4">
-                        <img src="{% static 'assets/images/icons/home.svg' %}" alt="" />
-                        <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
-                    </a>
-                    <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <section class="heading">
-        <div class="container">
-            <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
-                редактирование анкеты
-            </h1>
-        </div>
-    </section>
-    <div class="container">
-        <div class="mt-[30px] lg-md:mt-0 lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
-            <!--  this section is for avatar  -->
-            {% include "cabinet/cabinet_includes/menu.html" with active_page='view_profile' %}
-            <!-- these sections are for main content  -->
-            <section class="main-content lg-md:mt-[50px] lg-md:col-span-2 xl:col-span-3 lg-md:mb-[120px]">
-                <div class="card__wrapper mb-28 h-full tab-content shadow-card-shadow rounded-[10px] lg-md:mb-0">
-                    <div class="px-5 py-[25px] lg-md:px-10 lg-md:py-[27px]">
-                        <a class="flex items-center gap-2.5 font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg" href="{% url 'view_profile' %}">
-                            <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="" />
-                            Назад в личный кабинет
+    <main id="main" class="edit__profile" data-profile-id="{{ provider.id }}">
+        <nav class="breadcrumbs bg-[#FFFFFC]">
+            <div class="container">
+                <div class="">
+                    <div class="flex gap-4 py-4">
+                        <a href="{% url 'view_profile' %}" class="flex items-center gap-4">
+                            <img src="{% static 'assets/images/icons/home.svg' %}" alt=""/>
+                            <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/>
                         </a>
-                        {% if form.errors %}
-                        <ul>
-                            {% for field in form %} {% for error in field.errors %}
-                            <li>{{ field.name }} - {{ error }}</li>
-                            {% endfor %} {% endfor %}
-                        </ul>
-                        {% endif %}
-
-                        <p class="mt-10 border-b border-b-grey-light pb-[30px]">
-                            Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.
-                            <br />
-                            Все анкеты после добавления проходят проверку модератором. Если анкета оформлена ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
-                        </p>
-                        <div class="form mt-[30px]">
-                            <form id="form" method="post" enctype="multipart/form-data" class="space-y-[30px]">
-                                {% csrf_token %}
-                                <div class="form__item">
-                                    <label class="label" for="title">Общеизвестное название компании / бренда *</label>
-                                    <p class="tooltip">Без кавычек. Например: Headphones</p>
-                                    {{ form.title }}
-                                </div>
-                                <div class="form__item">
-                                    <label for="mini_descr">Краткое описание *</label>
-                                    <p class="tooltip">Например: наушники оптом</p>
-                                    {{ form.mini_descr }}
-                                </div>
-                                {% if form.type %}
-                                <div class="form__item">
-                                    <label class="label">Основная деятельность вашей компании</label>
-                                    <div class="mt-6 space-y-4">
-                                        {{ form.type }}
-                                    </div>
-                                </div>
-                                {% endif %}
-                                <div class="form__item">
-                                    <label class="label">Описание</label>
-                                    <p class="tooltip">Опишите деятельность вашей компании, товары и услуги</p>
-                                    {{ form.description }}
-                                </div>
-
-                                <div class="form__item">
-                                    <label class="label">Категории</label>
-                                    <input type="text" placeholder="Поиск в категории" id="categorySearch" />
-                                    <!--  Отрисовка категорий и под категорий-->
-                                    <input type="hidden" id="selectedCategory" name="category" />
-                                    <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>
-                                </div>
-                                <div class="form__item">
-                                    <div id="locationContainer" data-countries="{{ locations }}" class="flex flex-col md:flex-row gap-5">
-                                        <div class="w-full md: w-1/3">
-                                            <p class="text-[#737373] w-full text-[16px] font-light">
-                                                Страна
-                                            </p>
-
-                                            <!-- Начально будет выбрано второе значение -->
-                                            <select
-                                                name="country"
-                                                id="country-options"
-                                                data-selected-country="{{ object.city.region.country }}"
-                                                class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-                                            >
-                                                <!--Supplement an id here instead of using 'name'-->
-                                                {% for country in locations %}
-                                                <option value="{{ country.title }}">{{ country.title }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="flex md: w-2/3 w-full flex-col sm:flex-row gap-4">
-                                            <div class="w-full md:w-[50%]">
-                                                <p class="text-[#737373] w-full text-[16px] font-light">
-                                                    Область
-                                                </p>
-
-                                                <!-- Начально будет выбрано второе значение -->
-                                                <label for="region-options"></label>
-                                                <select
-                                                    name="region"
-                                                    id="region-options"
-                                                    data-selected-region="{{ object.city.region }}"
-                                                    class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-                                                >
-                                                </select>
-                                            </div>
-                                            <div class="w-full md:w-[50%]">
-                                                <p class="text-[#737373] w-full text-[16px] font-light">
-                                                    Город
-                                                </p>
-                                                <!-- Начально будет выбрано второе значение -->
-                                                <select
-                                                    name="city"
-                                                    id="city-options"
-                                                    data-selected-city="{{ object.city }}"
-                                                    class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-                                                >
-                                                    <!--Supplement an id here instead of using 'name'-->
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Почтовый индекс</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.post_index }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Улица, дом</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.address }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Как добраться</label>
-                                    <p class="tooltip">Укажите дополнительные сведения если это необходимо</p>
-                                    {{ form.how_get }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Время работы</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.work_time }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Телефоны</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.phones }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Факс</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.fax }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Адрес сайта</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.web_site }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Видео о компании (ссылка на YouTube)</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.youtube_video }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">E-mail (публичный адрес электронной почты)</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.email }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Реквизиты</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.requisites }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Количество сотрудников</label>
-                                    <p class="tooltip"></p>
-                                    {{ form.emp_quantity }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Дата регистрации юридического лица</label>
-                                    <p class="tooltip">Введите дату в формате 2000-01-01</p>
-                                    {{ form.register_ur }}
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Объем поставок</label>
-                                    <div class="mt-6">
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base" {% if form.large_wholesale.value %}checked{% endif %} />
-                                                Крупный опт
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="small_wholesale" class="w-[25px] h-[25px] text-base" {% if form.small_wholesale.value %}checked{% endif %} />
-                                                Мелкий опт
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="retail" class="w-[25px] h-[25px] text-base" {% if form.retail.value %}checked{% endif %} />
-                                                Поштучно
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="official_distributor" class="w-[25px] h-[25px] text-base" {% if form.official_distributor.value %}checked{% endif %} />
-                                                Официальный дистрибьютор
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Условия</label>
-                                    <div class="mt-6">
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="installment" class="w-[25px] h-[25px] text-base" {% if form.installment.value %}checked{% endif %} />
-                                                Возможна рассрочка
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="credit" class="w-[25px] h-[25px] text-base" {% if form.credit.value %}checked{% endif %} />
-                                                Возможен кредит
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="deposit" class="w-[25px] h-[25px] text-base" {% if form.deposit.value %}checked{% endif %} />
-                                                Возможен депозит
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="consignment" class="w-[25px] h-[25px] text-base" {% if form.consignment.value %}checked{% endif %} />
-                                                Возможна передача под реализацию
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="dropshipping" class="w-[25px] h-[25px] text-base" {% if form.dropshipping.value %}checked{% endif %} />
-                                                Возможен дропшиппинг
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="showroom" class="w-[25px] h-[25px] text-base" {% if form.showroom.value %}checked{% endif %} />
-                                                Есть шоурум
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="marketplace_sale" class="w-[25px] h-[25px] text-base" {% if form.marketplace_sale.value %}checked{% endif %} />
-                                                Разрешена продажа на маркетплейсах
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Способы оплаты</label>
-                                    <div class="mt-6">
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="cash" class="w-[25px] h-[25px] text-base" {% if form.cash.value %}checked{% endif %} />
-                                                Наличными
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="bank_transfer" class="w-[25px] h-[25px] text-base" {% if form.bank_transfer.value %}checked{% endif %} />
-                                                Безналичная оплата
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="credit_card" class="w-[25px] h-[25px] text-base" {% if form.credit_card.value %}checked{% endif %} />
-                                                Кредитные карты
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="electronic_money" class="w-[25px] h-[25px] text-base" {% if form.electronic_money.value %}checked{% endif %} />
-                                                Электронные деньги
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form__item">
-                                    <label class="label">Способы доставки</label>
-                                    <div class="mt-6">
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="pickup" class="w-[25px] h-[25px] text-base" {% if form.pickup.value %}checked{% endif %} />
-                                                Самовывоз
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="transport_company" class="w-[25px] h-[25px] text-base" {% if form.transport_company.value %}checked{% endif %} />
-                                                Транспортной компанией
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="by_car" class="w-[25px] h-[25px] text-base" {% if form.by_car.value %}checked{% endif %} />
-                                                Автомобилем
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="air_transport" class="w-[25px] h-[25px] text-base" {% if form.air_transport.value %}checked{% endif %} />
-                                                Авиатранспортом
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="rail_transport" class="w-[25px] h-[25px] text-base" {% if form.rail_transport.value %}checked{% endif %} />
-                                                Железной дорогой
-                                            </label>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                <input type="checkbox" name="courier" class="w-[25px] h-[25px] text-base" {% if form.courier.value %}checked{% endif %} />
-                                                Курьером
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <button id="submitBtn" type="submit" class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить</button>
-                                    <a href="{% url 'view_profile' %}" class="btn-outlined flex-grow py-5 uppercase text-center">Отмена</a>
-                                </div>
-                            </form>
-                        </div>
+                        <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </nav>
+        <section class="heading">
+            <div class="container">
+                <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                    редактирование анкеты
+                </h1>
+            </div>
+        </section>
+        <div class="container">
+            <div class="mt-[30px] lg-md:mt-0 lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
+                <!--  this section is for avatar  -->
+                {% include "cabinet/cabinet_includes/menu.html" with active_page='view_profile' %}
+                <!-- these sections are for main content  -->
+                <section class="main-content lg-md:mt-[50px] lg-md:col-span-2 xl:col-span-3 lg-md:mb-[120px]">
+                    <div class="card__wrapper mb-28 h-full tab-content shadow-card-shadow rounded-[10px] lg-md:mb-0">
+                        <div class="px-5 py-[25px] lg-md:px-10 lg-md:py-[27px]">
+                            <a class="flex items-center gap-2.5 font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg"
+                               href="{% url 'view_profile' %}">
+                                <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt=""/>
+                                Назад в личный кабинет
+                            </a>
+                            {% if form.errors %}
+                                <ul>
+                                    {% for field in form %} {% for error in field.errors %}
+                                        <li>{{ field.name }} - {{ error }}</li>
+                                    {% endfor %} {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                            <p class="mt-10 border-b border-b-grey-light pb-[30px]">
+                                Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем
+                                качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.
+                                <br/>
+                                Все анкеты после добавления проходят проверку модератором. Если анкета оформлена
+                                ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
+                            </p>
+                            <div class="form mt-[30px]">
+                                <form id="form" method="post" enctype="multipart/form-data" class="space-y-[30px]">
+                                    {% csrf_token %}
+                                    <div class="form__item">
+                                        <label class="label" for="title">Общеизвестное название компании / бренда
+                                            *</label>
+                                        <p class="tooltip">Без кавычек. Например: Headphones</p>
+                                        {{ form.title }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label for="mini_descr">Краткое описание *</label>
+                                        <p class="tooltip">Например: наушники оптом</p>
+                                        {{ form.mini_descr }}
+                                    </div>
+                                    {% if form.type %}
+                                        <div class="form__item">
+                                            <label class="label">Основная деятельность вашей компании</label>
+                                            <div class="mt-6 space-y-4">
+                                                {{ form.type }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="form__item">
+                                        <label class="label">Описание</label>
+                                        <p class="tooltip">Опишите деятельность вашей компании, товары и услуги</p>
+                                        {{ form.description }}
+                                    </div>
+
+                                    <div class="form__item">
+                                        <label class="label">Категории</label>
+                                        <input type="text" placeholder="Поиск в категории" id="categorySearch"/>
+                                        <!--  Отрисовка категорий и под категорий-->
+                                        <input type="hidden" id="selectedCategory" name="category"/>
+                                        <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>
+                                    </div>
+                                    <div class="form__item">
+                                        <div id="locationContainer" data-countries="{{ locations }}"
+                                             class="flex flex-col md:flex-row gap-5">
+                                            <div class="w-full md: w-1/3">
+                                                <p class="text-[#737373] w-full text-[16px] font-light">
+                                                    Страна
+                                                </p>
+
+                                                <!-- Начально будет выбрано второе значение -->
+                                                <select
+                                                        name="country"
+                                                        id="country-options"
+                                                        data-selected-country="{{ object.city.region.country }}"
+                                                        class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+                                                >
+                                                    <!--Supplement an id here instead of using 'name'-->
+                                                    {% for country in locations %}
+                                                        <option value="{{ country.title }}">{{ country.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="flex md: w-2/3 w-full flex-col sm:flex-row gap-4">
+                                                <div class="w-full md:w-[50%]">
+                                                    <p class="text-[#737373] w-full text-[16px] font-light">
+                                                        Область
+                                                    </p>
+
+                                                    <!-- Начально будет выбрано второе значение -->
+                                                    <label for="region-options"></label>
+                                                    <select
+                                                            name="region"
+                                                            id="region-options"
+                                                            data-selected-region="{{ object.city.region }}"
+                                                            class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+                                                    >
+                                                    </select>
+                                                </div>
+                                                <div class="w-full md:w-[50%]">
+                                                    <p class="text-[#737373] w-full text-[16px] font-light">
+                                                        Город
+                                                    </p>
+                                                    <!-- Начально будет выбрано второе значение -->
+                                                    <select
+                                                            name="city"
+                                                            id="city-options"
+                                                            data-selected-city="{{ object.city }}"
+                                                            class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+                                                    >
+                                                        <!--Supplement an id here instead of using 'name'-->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Почтовый индекс</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.post_index }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Улица, дом</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.address }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Как добраться</label>
+                                        <p class="tooltip">Укажите дополнительные сведения если это необходимо</p>
+                                        {{ form.how_get }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Время работы</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.work_time }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Телефоны</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.phones }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Факс</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.fax }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Адрес сайта</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.web_site }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Видео о компании (ссылка на YouTube)</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.youtube_video }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">E-mail (публичный адрес электронной почты)</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.email }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Реквизиты</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.requisites }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Количество сотрудников</label>
+                                        <p class="tooltip"></p>
+                                        {{ form.emp_quantity }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Дата регистрации юридического лица</label>
+                                        <p class="tooltip">Введите дату в формате 2000-01-01</p>
+                                        {{ form.register_ur }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Объем поставок</label>
+                                        <div class="mt-6">
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="large_wholesale"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.large_wholesale.value %}checked{% endif %}/>
+                                                    Крупный опт
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="small_wholesale"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.small_wholesale.value %}checked{% endif %}/>
+                                                    Мелкий опт
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="retail"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.retail.value %}checked{% endif %}/>
+                                                    Поштучно
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="official_distributor"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.official_distributor.value %}checked{% endif %}/>
+                                                    Официальный дистрибьютор
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Условия</label>
+                                        <div class="mt-6">
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="installment"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.installment.value %}checked{% endif %}/>
+                                                    Возможна рассрочка
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="credit"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.credit.value %}checked{% endif %}/>
+                                                    Возможен кредит
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="deposit"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.deposit.value %}checked{% endif %}/>
+                                                    Возможен депозит
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="consignment"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.consignment.value %}checked{% endif %}/>
+                                                    Возможна передача под реализацию
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="dropshipping"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.dropshipping.value %}checked{% endif %}/>
+                                                    Возможен дропшиппинг
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="showroom"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.showroom.value %}checked{% endif %}/>
+                                                    Есть шоурум
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="marketplace_sale"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.marketplace_sale.value %}checked{% endif %}/>
+                                                    Разрешена продажа на маркетплейсах
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Способы оплаты</label>
+                                        <div class="mt-6">
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="cash"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.cash.value %}checked{% endif %}/>
+                                                    Наличными
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="bank_transfer"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.bank_transfer.value %}checked{% endif %}/>
+                                                    Безналичная оплата
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="credit_card"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.credit_card.value %}checked{% endif %}/>
+                                                    Кредитные карты
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="electronic_money"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.electronic_money.value %}checked{% endif %}/>
+                                                    Электронные деньги
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Способы доставки</label>
+                                        <div class="mt-6">
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="pickup"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.pickup.value %}checked{% endif %}/>
+                                                    Самовывоз
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="transport_company"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.transport_company.value %}checked{% endif %}/>
+                                                    Транспортной компанией
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="by_car"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.by_car.value %}checked{% endif %}/>
+                                                    Автомобилем
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="air_transport"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.air_transport.value %}checked{% endif %}/>
+                                                    Авиатранспортом
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="rail_transport"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.rail_transport.value %}checked{% endif %}/>
+                                                    Железной дорогой
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="courier"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.courier.value %}checked{% endif %}/>
+                                                    Курьером
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <button id="submitBtn" type="submit"
+                                                class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить
+                                        </button>
+                                        <a href="{% url 'view_profile' %}"
+                                           class="btn-outlined flex-grow py-5 uppercase text-center">Отмена</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 {% endblock %} {% block js %}
-<script src="{% static 'pages/profile/myCompany/editProfile/index.js' %}"></script>
-<script src="{% static 'pages/profile/profile.js' %}"></script>
-<script>
-    const locationContainer = document.getElementById("locationContainer");
-    const countrySelect = document.getElementById("country-options");
-    const selectedCountry = countrySelect.getAttribute("data-selected-country");
-    const regionSelect = document.getElementById("region-options");
-    const selectedRegion = regionSelect.getAttribute("data-selected-region");
-    const citySelect = document.getElementById("city-options");
-    const selectedCity = citySelect.getAttribute("data-selected-city");
+    <script src="{% static 'pages/profile/myCompany/editProfile/index.js' %}"></script>
+    <script src="{% static 'pages/profile/profile.js' %}"></script>
+    <script>
+        const locationContainer = document.getElementById("locationContainer");
+        const countrySelect = document.getElementById("country-options");
+        const selectedCountry = countrySelect.getAttribute("data-selected-country");
+        const regionSelect = document.getElementById("region-options");
+        const selectedRegion = regionSelect.getAttribute("data-selected-region");
+        const citySelect = document.getElementById("city-options");
+        const selectedCity = citySelect.getAttribute("data-selected-city");
+        const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
+        const countries = JSON.parse(formattedString);
+        const transformedData = transformData(countries);
+        const countryOptions = countrySelect.querySelectorAll('option');
 
-    function transformData(data) {
-        const transformed = {};
+        countryOptions.forEach(option => {
+            option.selected = option.value === selectedCountry;
+        })
 
-        data.forEach((country) => {
-            const countryObj = {};
 
-            country.regions.forEach((region) => {
-                const regionObj = {};
+        addOptions(regionSelect, transformedData[selectedCountry]);
+        addOptions(citySelect, transformedData[selectedCountry][selectedRegion]);
 
-                region.cities.forEach((city) => {
-                    regionObj[city.title] = city.title;
+        function transformData(data) {
+            const transformed = {};
+
+            data.forEach((country) => {
+                const countryObj = {};
+
+                country.regions.forEach((region) => {
+                    const regionObj = {};
+
+                    region.cities.forEach((city) => {
+                        regionObj[city.title] = city.title;
+                    });
+
+                    countryObj[region.title] = regionObj;
                 });
 
-                countryObj[region.title] = regionObj;
+                transformed[country.title] = countryObj;
             });
 
-            transformed[country.title] = countryObj;
+            return transformed;
+        }
+
+        countrySelect.addEventListener("change", (e) => {
+            const selectedCountry = e.target.value;
+            addOptions(regionSelect, transformedData[selectedCountry]);
+            addOptions(citySelect, transformedData[selectedCountry][regionSelect.value]);
         });
 
-        return transformed;
-    }
+        regionSelect.addEventListener("change", (e) => {
+            const selectedRegion = e.target.value;
+            addOptions(citySelect, transformedData[countrySelect.value][selectedRegion]);
+        });
 
-    const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
-    const countries = JSON.parse(formattedString);
-    const transformedData = transformData(countries);
-    addOptions(regionSelect, transformedData[countrySelect.value]);
-    addOptions(citySelect, transformedData[countrySelect.value][regionSelect.value]);
-
-    countrySelect.addEventListener("change", (e) => {
-        const selectedCountry = e.target.value;
-        addOptions(regionSelect, transformedData[selectedCountry]);
-        addOptions(citySelect, transformedData[selectedCountry][regionSelect.value]);
-    });
-
-    regionSelect.addEventListener("change", (e) => {
-        const selectedRegion = e.target.value;
-        addOptions(citySelect, transformedData[countrySelect.value][selectedRegion]);
-    });
-
-    function addOptions(element, options) {
-        element.innerHTML = "";
-        for (const option in options) {
-            const optionEl = document.createElement("option");
-            optionEl.textContent = option;
-            optionEl.value = option;
-            if (option === selectedCountry || option === selectedRegion || option === selectedCity) {
-                optionEl.selected = true;
+        function addOptions(element, options) {
+            element.innerHTML = "";
+            for (const option in options) {
+                const optionEl = document.createElement("option");
+                optionEl.textContent = option;
+                optionEl.value = option;
+                if (option === selectedCountry || option === selectedRegion || option === selectedCity) {
+                    optionEl.selected = true;
+                }
+                element.appendChild(optionEl);
             }
-            element.appendChild(optionEl);
         }
-    }
-</script>
+    </script>
 {% endblock %}

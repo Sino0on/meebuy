@@ -4,266 +4,283 @@
 {% block title %} Meebuy{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
-  <link rel="stylesheet" href="{% static 'pages/profile/myCompany/editProfile/index.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/profile/myCompany/editProfile/index.css' %}">
 {% endblock %}
 
 
 {% block content %}
-<main id="main" class="edit__profile" data-profile-id="{{ object.id }}">
-  <nav class="breadcrumbs bg-[#FFFFFC]">
-    <div class="container">
-      <div class="">
-        <div class="flex gap-4 py-4">
-          <a href="{% url 'view_profile' %}" class="flex items-center gap-4">
-            <img src="{% static 'assets/images/icons/home.svg' %}" alt="" />
-            <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" />
-          </a>
-          <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
-        </div>
-      </div>
-    </div>
-  </nav>
-  <section class="heading">
-    <div class="container">
-      <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
-        редактирование анкеты</h1>
-    </div>
-  </section>
-  <div class="container">
-    <div class="mt-[30px] lg-md:mt-0 lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
-      <!--  this section is for avatar  -->
-                        {% include "cabinet/cabinet_includes/menu.html" with active_page='view_profile' %}
-
-      <!-- these sections are for main content  -->
-      <section class="main-content lg-md:mt-[50px] lg-md:col-span-2 xl:col-span-3 lg-md:mb-[120px]">
-        <div class="card__wrapper mb-28 h-full tab-content shadow-card-shadow rounded-[10px] lg-md:mb-0">
-          <div class="px-5 py-[25px] lg-md:px-10 lg-md:py-[27px]">
-            <a class="flex items-center gap-2.5 font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg"
-               href="{% url 'view_profile' %}">
-              <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="">
-              Назад в личный кабинет
-            </a>
-          {% if form.errors %}
-    <ul>
-        {% for field in form %}
-            {% for error in field.errors %}
-                <li>{{ field.name }} - {{ error }}</li>
-            {% endfor %}
-        {% endfor %}
-    </ul>
-{% endif %}
-
-            <p class="mt-10 border-b border-b-grey-light pb-[30px]">
-              Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем
-              качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.
-              <br>Все анкеты после добавления проходят проверку модератором. Если анкета оформлена
-              ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
-            </p>
-            <div class="form mt-[30px]">
-                <form id="form" method="post" enctype="multipart/form-data" class="space-y-[30px]" action="">
-                    {% csrf_token %}
-                    <div class="form__item">
-                        <label class="label" for="title">Общеизвестное название компании / бренда *</label>
-                        <p class="tooltip">Без кавычек. Например: Headphones</p>
-                        {{ form.title }}
+    <main id="main" class="edit__profile" data-profile-id="{{ object.id }}">
+        <nav class="breadcrumbs bg-[#FFFFFC]">
+            <div class="container">
+                <div class="">
+                    <div class="flex gap-4 py-4">
+                        <a href="{% url 'view_profile' %}" class="flex items-center gap-4">
+                            <img src="{% static 'assets/images/icons/home.svg' %}" alt=""/>
+                            <img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/>
+                        </a>
+                        <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
                     </div>
-                    <div class="form__item">
-                        <label for="mini_descr">Краткое описание *</label>
-                        <p class="tooltip">Например: наушники оптом</p>
-                        {{ form.mini_descr }}
-                    </div>
-                    <div class="form__item">
-                        <label class="label">Описание</label>
-                        <p class="tooltip">Расскажите о себе, опишите сферу вашей деятельности, какие товары ищете на сайте.</p>
-
-                        {{ form.description }}
-                    </div>
-
-                    <div class="form__item">
-                      <label class="label">Категории</label>
-                      <input type="text" placeholder="Поиск в категории" id="categorySearch">
-                      <!--  Отрисовка категорий и под категорий-->
-                      <input type="hidden" id="selectedCategory" name="category">
-                      <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>
-                    </div>
-                    <div class="form__item">
-                      <div id="locationContainer" data-countries="{{ locations }}" class="flex flex-col md:flex-row gap-5">
-                        <div class="w-full md: w-1/3">
-                          <p
-                          class="text-[#737373] w-full text-[16px] font-light"
-                          >
-                          Страна
-                          </p>
-
-                          <!-- Начально будет выбрано второе значение -->
-       <select name="country" id="country-options" data-selected-country="{{ object.city.region.country }}"
-       class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-       >
-         <!--Supplement an id here instead of using 'name'-->
-                          {% for country in locations %}
-                          <option value="{{ country.title }}">{{ country.title }}</option>
-                          {% endfor %}
-       </select>
-                        </div>
-                        <div class="flex md: w-2/3 w-full flex-col sm:flex-row gap-4">
-                         <div class="w-full md:w-[50%]">
-                           <p
-                           class="text-[#737373] w-full text-[16px] font-light"
-                           >
-                           Область
-                           </p>
-                           <!-- Начально будет выбрано второе значение -->
-                                 <select name="region" id="region-options" data-selected-region="{{ object.city.region }}"
-         class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-         >
-         </select>
-                         </div>
-                         <div class="w-full md:w-[50%]">
-                           <p
-                           class="text-[#737373] w-full text-[16px] font-light"
-                           >
-                           Город
-                           </p>
-                           <!-- Начально будет выбрано второе значение -->
-             <select name="city" id="city-options" data-selected-city="{{ object.city }}"
-         class=" text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-         >
-          <!--Supplement an id here instead of using 'name'-->
-         </select>
-                         </div>
-                        </div>
-
-
-                        </div>
-                    </div>
-                    <div class="form__item">
-                        <label class="label">Почтовый индекс</label>
-                        <p class="tooltip">Введите почтовый индекс</p>
-                        {{ form.post_index }}
-                    </div>
-                    <div class="form__item">
-                        <label class="label">Телефон</label>
-                        <p class="tooltip">Введите номер телефона</p>
-                        {{ form.phones }}
-                    </div>
-                    <div class="form__item">
-                        <label class="label">E-mail (публичный адрес электронной почты)</label>
-                        <p class="tooltip">Введите адрес электронной почты</p>
-                        {{ form.email }}
-                    </div>
-                    <div class="form__item">
-                        <label class="label">Реквизиты</label>
-                        <p class="tooltip">Введите реквизиты</p>
-                        {{ form.requisites }}
-                    </div>
-                        <div class="form__item">
-                        <label class="label">Объем закупок</label>
-                        <div class="mt-6">
-                        <div class="mb-4">
-                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="large_wholesale" class="w-[25px] h-[25px] text-base"
-                                {% if form.large_wholesale.value %}checked{% endif %}
-                                >
-                                Крупный опт
-                            </label>
-                        </div>
-                        <div class="mb-4">
-                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input
-                                        type="checkbox" name="small_wholesale" class="w-[25px] h-[25px] text-base"
-                                {% if form.small_wholesale.value %}checked{% endif %}>
-                                Мелкий опт
-                            </label>
-                        </div>
-                        <div class="mb-4">
-                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                <input type="checkbox" name="retail" class="w-[25px] h-[25px] text-base"
-                                {% if form.retail.value %}checked{% endif %}>
-                                Поштучно
-                            </label>
-                        </div>
-
-                    </div>
-
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <button id="submitBtn" type="submit" class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить</button>
-                        <a href="{% url 'view_profile' %}" class="btn-outlined flex-grow py-5 uppercase text-center">Отмена</a>
-                    </div>
-                </form>
-
+                </div>
             </div>
-          </div>
+        </nav>
+        <section class="heading">
+            <div class="container">
+                <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                    редактирование анкеты</h1>
+            </div>
+        </section>
+        <div class="container">
+            <div class="mt-[30px] lg-md:mt-0 lg-md:grid grid-cols-3 lg-md:gap-5 xl:grid-cols-4">
+                <!--  this section is for avatar  -->
+                {% include "cabinet/cabinet_includes/menu.html" with active_page='view_profile' %}
+
+                <!-- these sections are for main content  -->
+                <section class="main-content lg-md:mt-[50px] lg-md:col-span-2 xl:col-span-3 lg-md:mb-[120px]">
+                    <div class="card__wrapper mb-28 h-full tab-content shadow-card-shadow rounded-[10px] lg-md:mb-0">
+                        <div class="px-5 py-[25px] lg-md:px-10 lg-md:py-[27px]">
+                            <a class="flex items-center gap-2.5 font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg"
+                               href="{% url 'view_profile' %}">
+                                <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="">
+                                Назад в личный кабинет
+                            </a>
+                            {% if form.errors %}
+                                <ul>
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <li>{{ field.name }} - {{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                            <p class="mt-10 border-b border-b-grey-light pb-[30px]">
+                                Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем
+                                качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.
+                                <br>Все анкеты после добавления проходят проверку модератором. Если анкета оформлена
+                                ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
+                            </p>
+                            <div class="form mt-[30px]">
+                                <form id="form" method="post" enctype="multipart/form-data" class="space-y-[30px]"
+                                      action="">
+                                    {% csrf_token %}
+                                    <div class="form__item">
+                                        <label class="label" for="title">Общеизвестное название компании / бренда
+                                            *</label>
+                                        <p class="tooltip">Без кавычек. Например: Headphones</p>
+                                        {{ form.title }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label for="mini_descr">Краткое описание *</label>
+                                        <p class="tooltip">Например: наушники оптом</p>
+                                        {{ form.mini_descr }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Описание</label>
+                                        <p class="tooltip">Расскажите о себе, опишите сферу вашей деятельности, какие
+                                            товары ищете на сайте.</p>
+
+                                        {{ form.description }}
+                                    </div>
+
+                                    <div class="form__item">
+                                        <label class="label">Категории</label>
+                                        <input type="text" placeholder="Поиск в категории" id="categorySearch">
+                                        <!--  Отрисовка категорий и под категорий-->
+                                        <input type="hidden" id="selectedCategory" name="category">
+                                        <div id="treeWrapper" class="divide-y divide-grey-light space-y-[15px]"></div>
+                                    </div>
+                                    <div class="form__item">
+                                        <div id="locationContainer" data-countries="{{ locations }}"
+                                             class="flex flex-col md:flex-row gap-5">
+                                            <div class="w-full md: w-1/3">
+                                                <p
+                                                        class="text-[#737373] w-full text-[16px] font-light"
+                                                >
+                                                    Страна
+                                                </p>
+
+                                                <!-- Начально будет выбрано второе значение -->
+                                                <select name="country" id="country-options"
+                                                        data-selected-country="{{ object.city.region.country }}"
+                                                        class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+                                                >
+                                                    <!--Supplement an id here instead of using 'name'-->
+                                                    {% for country in locations %}
+                                                        <option value="{{ country.title }}">{{ country.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="flex md: w-2/3 w-full flex-col sm:flex-row gap-4">
+                                                <div class="w-full md:w-[50%]">
+                                                    <p
+                                                            class="text-[#737373] w-full text-[16px] font-light"
+                                                    >
+                                                        Область
+                                                    </p>
+                                                    <!-- Начально будет выбрано второе значение -->
+                                                    <select name="region" id="region-options"
+                                                            data-selected-region="{{ object.city.region }}"
+                                                            class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+                                                    >
+                                                    </select>
+                                                </div>
+                                                <div class="w-full md:w-[50%]">
+                                                    <p
+                                                            class="text-[#737373] w-full text-[16px] font-light"
+                                                    >
+                                                        Город
+                                                    </p>
+                                                    <!-- Начально будет выбрано второе значение -->
+                                                    <select name="city" id="city-options"
+                                                            data-selected-city="{{ object.city }}"
+                                                            class=" text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
+                                                    >
+                                                        <!--Supplement an id here instead of using 'name'-->
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Почтовый индекс</label>
+                                        <p class="tooltip">Введите почтовый индекс</p>
+                                        {{ form.post_index }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Телефон</label>
+                                        <p class="tooltip">Введите номер телефона</p>
+                                        {{ form.phones }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">E-mail (публичный адрес электронной почты)</label>
+                                        <p class="tooltip">Введите адрес электронной почты</p>
+                                        {{ form.email }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Реквизиты</label>
+                                        <p class="tooltip">Введите реквизиты</p>
+                                        {{ form.requisites }}
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="label">Объем закупок</label>
+                                        <div class="mt-6">
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="large_wholesale"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.large_wholesale.value %}checked{% endif %}
+                                                    >
+                                                    Крупный опт
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input
+                                                            type="checkbox" name="small_wholesale"
+                                                            class="w-[25px] h-[25px] text-base"
+                                                            {% if form.small_wholesale.value %}checked{% endif %}>
+                                                    Мелкий опт
+                                                </label>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
+                                                    <input type="checkbox" name="retail"
+                                                           class="w-[25px] h-[25px] text-base"
+                                                           {% if form.retail.value %}checked{% endif %}>
+                                                    Поштучно
+                                                </label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <button id="submitBtn" type="submit"
+                                                class="btn-filled-yellow flex-grow py-5 uppercase">Сохранить
+                                        </button>
+                                        <a href="{% url 'view_profile' %}"
+                                           class="btn-outlined flex-grow py-5 uppercase text-center">Отмена</a>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-    </section>
-    </div>
-  </div>
-</main>
+    </main>
 {% endblock %}
 {% block js %}
-<script src="{% static 'pages/profile/myCompany/editProfile/index.js' %}"></script>
-<script src="{% static 'pages/profile/profile.js' %}"></script>
-<script>
-    const locationContainer = document.getElementById("locationContainer");
-    const countrySelect = document.getElementById("country-options");
-    const selectedCountry = countrySelect.getAttribute('data-selected-country')
-    const regionSelect = document.getElementById("region-options");
-    const selectedRegion = regionSelect.getAttribute('data-selected-region')
-    const citySelect = document.getElementById("city-options");
-    const selectedCity = citySelect.getAttribute('data-selected-city')
+    <script src="{% static 'pages/profile/myCompany/editProfile/index.js' %}"></script>
+    <script src="{% static 'pages/profile/profile.js' %}"></script>
+    <script>
+        const locationContainer = document.getElementById("locationContainer");
+        const countrySelect = document.getElementById("country-options");
+        const selectedCountry = countrySelect.getAttribute("data-selected-country");
+        const regionSelect = document.getElementById("region-options");
+        const selectedRegion = regionSelect.getAttribute("data-selected-region");
+        const citySelect = document.getElementById("city-options");
+        const selectedCity = citySelect.getAttribute("data-selected-city");
+        const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
+        const countries = JSON.parse(formattedString);
+        const transformedData = transformData(countries);
+        const countryOptions = countrySelect.querySelectorAll('option');
 
-    function transformData(data) {
-      const transformed = {};
+        countryOptions.forEach(option => {
+            option.selected = option.value === selectedCountry;
+        })
 
-      data.forEach(country => {
-        const countryObj = {};
 
-        country.regions.forEach(region => {
-          const regionObj = {};
+        addOptions(regionSelect, transformedData[selectedCountry]);
+        addOptions(citySelect, transformedData[selectedCountry][selectedRegion]);
 
-          region.cities.forEach(city => {
-            regionObj[city.title] = city.title;
-          });
+        function transformData(data) {
+            const transformed = {};
 
-          countryObj[region.title] = regionObj;
+            data.forEach((country) => {
+                const countryObj = {};
+
+                country.regions.forEach((region) => {
+                    const regionObj = {};
+
+                    region.cities.forEach((city) => {
+                        regionObj[city.title] = city.title;
+                    });
+
+                    countryObj[region.title] = regionObj;
+                });
+
+                transformed[country.title] = countryObj;
+            });
+
+            return transformed;
+        }
+
+        countrySelect.addEventListener("change", (e) => {
+            const selectedCountry = e.target.value;
+            addOptions(regionSelect, transformedData[selectedCountry]);
+            addOptions(citySelect, transformedData[selectedCountry][regionSelect.value]);
         });
 
-        transformed[country.title] = countryObj;
-      });
+        regionSelect.addEventListener("change", (e) => {
+            const selectedRegion = e.target.value;
+            addOptions(citySelect, transformedData[countrySelect.value][selectedRegion]);
+        });
 
-      return transformed;
-    }
-
-      const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
-      const countries = JSON.parse(formattedString);
-      const transformedData = transformData(countries);
-      addOptions(regionSelect,transformedData[countrySelect.value])
-      addOptions(citySelect,transformedData[countrySelect.value][regionSelect.value])
-
-
-      countrySelect.addEventListener('change',(e)=>{
-        const selectedCountry = e.target.value;
-        addOptions(regionSelect,transformedData[selectedCountry])
-        addOptions(citySelect,transformedData[selectedCountry][regionSelect.value])
-      })
-
-      regionSelect.addEventListener('change',(e)=>
-      {
-        const selectedRegion = e.target.value;
-        addOptions(citySelect,transformedData[countrySelect.value][selectedRegion])
-      })
-
-      function addOptions(element,options){
-        element.innerHTML = ""
-        for(const option in options){
-        const optionEl = document.createElement("option");
-          optionEl.textContent = option;
-          optionEl.value = option;
-          if(option === selectedCountry || option === selectedRegion || option === selectedCity){
-              optionEl.selected = true;
-          }
-          element.appendChild(optionEl);
+        function addOptions(element, options) {
+            element.innerHTML = "";
+            for (const option in options) {
+                const optionEl = document.createElement("option");
+                optionEl.textContent = option;
+                optionEl.value = option;
+                if (option === selectedCountry || option === selectedRegion || option === selectedCity) {
+                    optionEl.selected = true;
+                }
+                element.appendChild(optionEl);
+            }
         }
-      }
     </script>
 {% endblock %}

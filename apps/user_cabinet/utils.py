@@ -14,6 +14,7 @@ def make_flat_params_array(arr_params, parent_name=''):
             flat_params[name] = str(val)
     return flat_params
 
+
 def generate_signature(request, script_name):
     secret_key = settings.PAYBOX_MERCHANT_SECRET
     flat_request = make_flat_params_array(request)

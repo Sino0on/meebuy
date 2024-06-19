@@ -6,7 +6,8 @@
                 <a href="?page={{ page_obj.previous_page_number }}" id="prevPagee">
                     <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}" alt="Назад">
                 </a>
-                <p id="prevPage" class="cursor-pointer"><a href="?page={{ page_obj.previous_page_number }}">Назад</a></p>
+                <p id="prevPage" class="cursor-pointer"><a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                </p>
             {% else %}
                 <img src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}" alt="Назад" id="prevPagee">
                 <p id="prevPage" class="cursor-pointer">Назад</p>
@@ -38,7 +39,8 @@
         <form method="get">
             <input type="text" name="page" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4">
             <button type="submit">
-                <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Перейти">
+                <img class="bg-[#FFFCB7] p-2 rounded-[5px]"
+                     src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Перейти">
             </button>
         </form>
     </div>

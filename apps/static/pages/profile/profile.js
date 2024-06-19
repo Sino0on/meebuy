@@ -65,3 +65,6 @@ function openTab(_, tabId) {
         activeTab.classList.add('active');
     }
 }
+
+
+openTab(event,'Tab1')

@@ -1,546 +1,551 @@
 {% extends 'base.html' %} {% load static %} {% block title %} Поставщики
-{%endblock %} {% block css %}
-<link rel="stylesheet" href="{% static 'pages/suppliers/suppliers.css' %}" />
-<link rel="stylesheet" href="{% static 'pages/filters/index.css' %}" />
+{% endblock %} {% block css %}
+    <link rel="stylesheet" href="{% static 'pages/suppliers/suppliers.css' %}"/>
+    <link rel="stylesheet" href="{% static 'pages/filters/index.css' %}"/>
 
-<style>
+    <style>
 
-#selectContainer:hover,#filterContainer:hover{
-    background:#fffb98;
-    transition:all .3s ease
-}
+        #selectContainer:hover, #filterContainer:hover {
+            background: #fffb98;
+            transition: all .3s ease
+        }
 
-#tab-list li:hover{
-        background:#fffb98;
-    transition:all .3s ease
-}
+        #tab-list li:hover {
+            background: #fffb98;
+            transition: all .3s ease
+        }
 
-#Tab1 .cards:hover{
-     background:#fffb98;
-    transition:all .3s ease
-}
+        #Tab1 .cards:hover {
+            background: #fffb98;
+            transition: all .3s ease
+        }
 
-#selectModal{
-    display: none;
-    min-width: 178px;
-    min-height: 110px;
-    overflow:hidden;
-}
+        #selectModal {
+            display: none;
+            min-width: 178px;
+            min-height: 110px;
+            overflow: hidden;
+        }
 
-#selectModal.active{
-    display: block;
-}
+        #selectModal.active {
+            display: block;
+        }
 
-#selectModal li{
-    padding:16px;
-        transition:all .3s ease
+        #selectModal li {
+            padding: 16px;
+            transition: all .3s ease
 
-}
+        }
 
-#selectModal li:hover{
-    background:#fffb98;
-}
+        #selectModal li:hover {
+            background: #fffb98;
+        }
 
-  .filter-width {
-    width: 1000px;
-    position: fixed;
-    z-index: 100;
-    left: 50%;
-    top: 50%;
-      transform:translate(-50%,-50%);
-  }
+        .filter-width {
+            width: 1000px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-  @media (max-width: 1000px) {
-    .filter-width {
-      width: 500px;
-      display: flex;
-      justify-content: start;
+        @media (max-width: 1000px) {
+            .filter-width {
+                width: 500px;
+                display: flex;
+                justify-content: start;
 
-    }
-  }
+            }
+        }
 
-  @media (max-width: 600px) {
-    .filter-width {
-      width: 360px;
-    }
-  }
-  @media (max-width: 450px) {
-    .filter-width {
-      width: 360px;
-      right: 5px;
-    }
-  }
-</style>
+        @media (max-width: 600px) {
+            .filter-width {
+                width: 360px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .filter-width {
+                width: 360px;
+                right: 5px;
+            }
+        }
+    </style>
 {% endblock %} {% block content %}
-<div class="relative z-1">
-  <!-- main section -->
-  <div class="suppliers-animation-container">
-    <div>
-      <div class="menu">
-        <div class="container items-center flex gap-4 py-4">
-          <a href="/"
-            ><img src="{% static 'assets/images/icons/home.svg' %}" alt=""
-          /></a>
-          <a href="/">
-            <img
-            src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"
-          alt=""/>
-          </a>
-          <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
-        </div>
-      </div>
-      <div class="suppliers-wrapper">
-        <div class="container">
-          <div class="relative z-50 flex flex-col justify-center w-full">
-            <h2
-              style="font-size: 36px"
-              class="text-white font-extrabold sm:pb-8 text-center uppercase"
-            >
-              Поставщики
-            </h2>
-            <form class="mt-3">
-              <div class="relative md:w-[600px] sm:w-[400px] m-auto">
-                <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-                  <img
-                    src="{% static 'assets/images/icons/search.svg' %}"
-                    alt="Search icon"
-                  />
+    <div class="relative z-1">
+        <!-- main section -->
+        <div class="suppliers-animation-container">
+            <div>
+                <div class="menu">
+                    <div class="container items-center flex gap-4 py-4">
+                        <a href="/"
+                        ><img src="{% static 'assets/images/icons/home.svg' %}" alt=""
+                        /></a>
+                        <a href="/">
+                            <img
+                                    src="{% static 'assets/images/suppliers/suppliers/icons/prev.svg' %}"
+                                    alt=""/>
+                        </a>
+                        <p class="font-normal font-mulish text-[#A0A0A0]">Поставщики</p>
+                    </div>
                 </div>
-                  <label for="default-search"></label><input
-                  id="default-search"
-                  name="title"
-                  class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
-                  placeholder="Например: автозапчасти"
-                />
-              </div>
-            </form>
-          </div>
+                <div class="suppliers-wrapper">
+                    <div class="container">
+                        <div class="relative z-50 flex flex-col justify-center w-full">
+                            <h2
+                                    style="font-size: 36px"
+                                    class="text-white font-extrabold sm:pb-8 text-center uppercase"
+                            >
+                                Поставщики
+                            </h2>
+                            <form class="mt-3">
+                                <div class="relative md:w-[600px] sm:w-[400px] m-auto">
+                                    <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                                        <img
+                                                src="{% static 'assets/images/icons/search.svg' %}"
+                                                alt="Search icon"
+                                        />
+                                    </div>
+                                    <label for="default-search"></label><input
+                                        id="default-search"
+                                        name="title"
+                                        class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                                        placeholder="Например: автозапчасти"
+                                />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <!-- product categories -->
+        <div class="pb-10">
+            <div class="container">
+                <h6
+                        class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
+                >
+                    категории товаров
+                </h6>
+                <ul class="grid gap-8 lg-md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+                    {% for i in categories %}
+                        <li class="">
+                            <a
+                                    class="flex items-center gap-[10px] w-fit"
+                                    href="?category={{ i.pk }}"
+                            >
+                                <div
+                                        class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+                                >
+                                    <img src="{{ i.icon.url }}" alt=""/>
+                                </div>
+                                <span>{{ i.title }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Suppliers -->
+        <div class="bg-[#FFFFFC] py-16">
+            <div class="container">
+                <h6 class="text-start lg-md:text-xl font-semibold uppercase font-mulish">
+                    ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
+                </h6>
+                <div
+                        class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10"
+                >
+                    <ul id="tab-list"
+                        class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]"
+                    >
+                        <li
+                                class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
+                                onclick="openTab(event, 'Tab1')"
+                        >
+                            <button>Все</button>
+                            <img
+                                    class="lg-md:hidden block"
+                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+                                    alt=""/>
+                        </li>
+                        <li
+                                class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
+                                onclick="openTab(event, 'Tab2')"
+                        >
+                            <button>Поставшики</button>
+                            <img
+                                    class="lg-md:hidden block"
+                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+                                    alt=""/>
+                        </li>
+                        <li
+                                class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
+                                onclick="openTab(event, 'Tab3')"
+                        >
+                            <button>Производители</button>
+                            <img
+                                    class="lg-md:hidden block"
+                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+                                    alt=""/>
+                        </li>
+                        <li
+                                class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
+                                onclick="openTab(event, 'Tab4')"
+                        >
+                            <button>Услуги</button>
+                            <img
+                                    class="lg-md:hidden block"
+                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
+                                    alt=""/>
+                        </li>
+
+                    </ul>
+
+                    <!-- filters -->
+                    {% include 'providers/provider_list_includes/filters.html' %}
+                    <div
+                            id="Tab1"
+                            data-banners="{{ banners }}"
+                            data-banner-order="{{ banner_settings }}"
+                            class="flex tab-content flex-col gap-7"
+                    >
+                        {% for provider in providers %}
+                            <div
+                                    class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+                            >
+                                <div
+                                        class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+                                >
+                                    <img
+                                            class="w-[100px] h-[100px]"
+                                            src="
+                                                    {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                            alt=""/>
+                                    <div class="flex flex-col gap-6">
+                                        <div>
+                                            <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                                                {{ provider.title }}
+                                            </h6>
+                                            <p>{% if provider.mini_descr %}{{ provider.mini_descr }}{% endif %}</p>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                                                <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
+                                            </button>
+                                            <a
+                                                    href="{% url 'chat_create' provider.user.pk %}"
+                                                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                                            >
+                                                Написать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="flex gap-2 sm: absolute right-4">
+                                    {% if provider.is_recomended %}
+                                        <li>
+                                            <img
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                                    alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    <li></li>
+                                    <li>
+                                        <img
+                                                src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                alt=""/>
+                                    </li>
+                                    <li>
+                                        <img
+                                                src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                                alt=""/>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div id="Tab2" class="flex tab-content hidden flex-col gap-7">
+                        {% for provider in wholesale %}
+                            <div
+                                    class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+                            >
+                                <div
+                                        class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+                                >
+                                    <img
+                                            class="w-[100px] h-[100px]"
+                                            src="
+                                                    {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                            alt=""/>
+                                    <div class="flex flex-col gap-6">
+                                        <div>
+                                            <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                                                {{ provider.title }}
+                                            </h6>
+                                            <p>{{ provider.mini_descr }}</p>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                                                <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
+                                            </button>
+                                            <a
+                                                    href="{% url 'chat_create' provider.user.pk %}"
+                                                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                                            >
+                                                Написать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="flex gap-2 sm: absolute right-4">
+                                    {% if provider.is_recomended %}
+                                        <li>
+                                            <img
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                                    alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    <li></li>
+                                    <li>
+                                        <img
+                                                src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                alt=""/>
+                                    </li>
+                                    <li>
+                                        <img
+                                                src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                                alt=""/>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div id="Tab3" class="flex tab-content hidden flex-col gap-7">
+                        {% for provider in manufacturing %}
+                            <div
+                                    class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+                            >
+                                <div
+                                        class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+                                >
+                                    <img
+                                            class="w-[100px] h-[100px]"
+                                            src="
+                                                    {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                            alt=""/>
+                                    <div class="flex flex-col gap-6">
+                                        <div>
+                                            <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                                                {{ provider.title }}
+                                            </h6>
+                                            <p>{{ provider.mini_descr }}</p>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                                                <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
+                                            </button>
+                                            <a
+                                                    href="{% url 'chat_create' provider.user.pk %}"
+                                                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                                            >
+                                                Написать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="flex gap-2 sm: absolute right-4">
+                                    {% if provider.is_recomended %}
+                                        <li>
+                                            <img
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                                    alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    <li></li>
+                                    <li>
+                                        <img
+                                                src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                alt=""/>
+                                    </li>
+                                    <li>
+                                        <img
+                                                src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                                alt=""/>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div id="Tab4" class="flex tab-content hidden flex-col gap-7">
+                        {% for provider in services %}
+                            <div
+                                    class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+                            >
+                                <div
+                                        class="flex md:flex-row flex-col gap-7 md:items-center items-start"
+                                >
+                                    <img
+                                            class="w-[100px] h-[100px]"
+                                            src="
+                                                    {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                            alt=""/>
+                                    <div class="flex flex-col gap-6">
+                                        <div>
+                                            <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                                                {{ provider.title }}
+                                            </h6>
+                                            <p>{{ provider.mini_descr }}</p>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+                                                <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
+                                            </button>
+                                            <a
+                                                    href="{% url 'chat_create' provider.user.pk %}"
+                                                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
+                                            >
+                                                Написать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="flex gap-2 sm: absolute right-4">
+                                    {% if provider.is_recomended %}
+                                        <li>
+                                            <img
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                                    alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    <li></li>
+                                    <li>
+                                        <img
+                                                src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                alt=""/>
+                                    </li>
+                                    <li>
+                                        <img
+                                                src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                                alt=""/>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- pagination -->
+                    {% include 'includes/pagination.html' %}
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- product categories -->
-  <div class="pb-10">
-    <div class="container">
-      <h6
-        class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
-      >
-        категории товаров
-      </h6>
-      <ul class="grid gap-8 lg-md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-        {% for i in categories %}
-        <li class="">
-          <a
-            class="flex items-center gap-[10px] w-fit"
-            href="?category={{ i.pk }}"
-          >
-            <div
-              class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
-            >
-              <img src="{{ i.icon.url }}" alt="" />
-            </div>
-            <span>{{ i.title }}</span>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-
-  <!-- Suppliers -->
-  <div class="bg-[#FFFFFC] py-16">
-    <div class="container">
-      <h6 class="text-start lg-md:text-xl font-semibold uppercase font-mulish">
-        ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
-      </h6>
-      <div
-        class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10"
-      >
-        <ul id="tab-list"
-          class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]"
-        >
-          <li
-            class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
-            onclick="openTab(event, 'Tab1')"
-          >
-            <button>Все</button>
-            <img
-              class="lg-md:hidden block"
-              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-             alt=""/>
-          </li>
-          <li
-            class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
-            onclick="openTab(event, 'Tab2')"
-          >
-            <button>Поставшики</button>
-            <img
-              class="lg-md:hidden block"
-              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-             alt=""/>
-          </li>
-         <li
-            class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
-            onclick="openTab(event, 'Tab3')"
-          >
-            <button>Производители</button>
-            <img
-              class="lg-md:hidden block"
-              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-             alt=""/>
-          </li>
-         <li
-            class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
-            onclick="openTab(event, 'Tab4')"
-          >
-            <button>Услуги</button>
-            <img
-              class="lg-md:hidden block"
-              src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-             alt=""/>
-          </li>
-
-        </ul>
-
-        <!-- filters -->
-        {% include 'providers/provider_list_includes/filters.html' %}
-        <div
-          id="Tab1"
-          data-banners="{{banners}}"
-          data-banner-order="{{ banner_settings}}"
-          class="flex tab-content flex-col gap-7"
-        >
-          {% for provider in providers %}
-          <div
-            class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
-          >
-            <div
-              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
-            >
-              <img
-                class="w-[100px] h-[100px]"
-                src="{% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
-               alt=""/>
-              <div class="flex flex-col gap-6">
-                <div>
-                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                    {{ provider.title }}
-                  </h6>
-                  <p>{% if provider.mini_descr %}{{ provider.mini_descr }}{% endif %}</p>
-                </div>
-                <div class="flex gap-4">
-                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                    <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
-                  </button>
-                  <a
-                    href="{% url 'chat_create' provider.user.pk %}"
-                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
-                  >
-                    Написать
-                  </a>
-                </div>
-              </div>
-            </div>
-            <ul class="flex gap-2 sm: absolute right-4">
-              {% if provider.is_recomended %}
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-                 alt=""/>
-              </li>
-              {% endif %}
-              <li></li>
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
-                 alt=""/>
-              </li>
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
-                 alt=""/>
-              </li>
-            </ul>
-          </div>
-          {% endfor %}
-        </div>
-        <div id="Tab2" class="flex tab-content hidden flex-col gap-7">
-          {% for provider in wholesale %}
-          <div
-            class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
-          >
-            <div
-              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
-            >
-              <img
-                class="w-[100px] h-[100px]"
-                src="{% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
-               alt=""/>
-              <div class="flex flex-col gap-6">
-                <div>
-                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                    {{ provider.title }}
-                  </h6>
-                  <p>{{ provider.mini_descr }}</p>
-                </div>
-                <div class="flex gap-4">
-                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                    <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
-                  </button>
-                  <a
-                    href="{% url 'chat_create' provider.user.pk %}"
-                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
-                  >
-                    Написать
-                  </a>
-                </div>
-              </div>
-            </div>
-            <ul class="flex gap-2 sm: absolute right-4">
-              {% if provider.is_recomended %}
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-                 alt=""/>
-              </li>
-              {% endif %}
-              <li></li>
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
-                 alt=""/>
-              </li>
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
-                 alt=""/>
-              </li>
-            </ul>
-          </div>
-          {% endfor %}
-        </div>
-        <div id="Tab3" class="flex tab-content hidden flex-col gap-7">
-          {% for provider in manufacturing %}
-          <div
-            class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
-          >
-            <div
-              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
-            >
-              <img
-                class="w-[100px] h-[100px]"
-                src="{% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
-               alt=""/>
-              <div class="flex flex-col gap-6">
-                <div>
-                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                    {{ provider.title }}
-                  </h6>
-                  <p>{{ provider.mini_descr }}</p>
-                </div>
-                <div class="flex gap-4">
-                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                    <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
-                  </button>
-                  <a
-                    href="{% url 'chat_create' provider.user.pk %}"
-                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
-                  >
-                    Написать
-                  </a>
-                </div>
-              </div>
-            </div>
-            <ul class="flex gap-2 sm: absolute right-4">
-              {% if provider.is_recomended %}
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-                 alt=""/>
-              </li>
-              {% endif %}
-              <li></li>
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
-                 alt=""/>
-              </li>
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
-                 alt=""/>
-              </li>
-            </ul>
-          </div>
-          {% endfor %}
-        </div>
-        <div id="Tab4" class="flex tab-content hidden flex-col gap-7">
-          {% for provider in services %}
-          <div
-            class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
-          >
-            <div
-              class="flex md:flex-row flex-col gap-7 md:items-center items-start"
-            >
-              <img
-                class="w-[100px] h-[100px]"
-                src="{% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
-               alt=""/>
-              <div class="flex flex-col gap-6">
-                <div>
-                  <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-                    {{ provider.title }}
-                  </h6>
-                  <p>{{ provider.mini_descr }}</p>
-                </div>
-                <div class="flex gap-4">
-                  <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
-                    <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
-                  </button>
-                  <a
-                    href="{% url 'chat_create' provider.user.pk %}"
-                    class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
-                  >
-                    Написать
-                  </a>
-                </div>
-              </div>
-            </div>
-            <ul class="flex gap-2 sm: absolute right-4">
-              {% if provider.is_recomended %}
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-                 alt=""/>
-              </li>
-              {% endif %}
-              <li></li>
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
-                 alt=""/>
-              </li>
-              <li>
-                <img
-                  src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
-                 alt=""/>
-              </li>
-            </ul>
-          </div>
-          {% endfor %}
-        </div>
-
-        <!-- pagination -->
-        {% include 'includes/pagination.html' %}
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock %} {% block js %}
-<script>
-  const firstitem = document.getElementById("first");
-  const urlParams = new URLSearchParams(window.location.search);
-  // Если элемент найден, добавляем к нему класс
+    <script>
+        const firstitem = document.getElementById("first");
+        const urlParams = new URLSearchParams(window.location.search);
+        // Если элемент найден, добавляем к нему класс
 
-  if (urlParams.has("type")) {
-    const listItem = document.getElementById(`${urlParams.get("type")}`);
-    listItem.classList.add("active"); // Замените 'new-class' на желаемое имя класса
-    firstitem.classList.remove("active"); // Замените 'new-class' на желаемое имя класса
-  }
+        if (urlParams.has("type")) {
+            const listItem = document.getElementById(`${urlParams.get("type")}`);
+            listItem.classList.add("active"); // Замените 'new-class' на желаемое имя класса
+            firstitem.classList.remove("active"); // Замените 'new-class' на желаемое имя класса
+        }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll("a[data-type]");
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("a[data-type]");
 
-    links.forEach((link) => {
-      link.addEventListener("click", function (e) {
-        e.preventDefault(); // Предотвратить стандартное поведение ссылки
+            links.forEach((link) => {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault(); // Предотвратить стандартное поведение ссылки
 
-        // Получаем текущий URL и его параметры
-        const currentUrl = new URL(window.location.href);
-        const params = currentUrl.searchParams;
+                    // Получаем текущий URL и его параметры
+                    const currentUrl = new URL(window.location.href);
+                    const params = currentUrl.searchParams;
 
-        // Устанавливаем или изменяем параметр 'type' на значение из атрибута 'data-type'
-        params.set("type", this.getAttribute("data-type"));
+                    // Устанавливаем или изменяем параметр 'type' на значение из атрибута 'data-type'
+                    params.set("type", this.getAttribute("data-type"));
 
-        // Перенаправляем пользователя на новый URL с обновлёнными параметрами
-        window.location.href = currentUrl.toString();
-      });
-    });
-  });
-</script>
-<script src="{% static 'pages/home/index.js' %}"></script>
-<script src="{% static 'pages/suppliers/suppliers.js' %}"></script>
-<script src="{% static 'pages/filters/filter.js' %}"></script>
+                    // Перенаправляем пользователя на новый URL с обновлёнными параметрами
+                    window.location.href = currentUrl.toString();
+                });
+            });
+        });
+    </script>
+    <script src="{% static 'pages/home/index.js' %}"></script>
+    <script src="{% static 'pages/suppliers/suppliers.js' %}"></script>
+    <script src="{% static 'pages/filters/filter.js' %}"></script>
 
-<script>
-  const container = document.getElementById("Tab1");
+    <script>
+        const container = document.getElementById("Tab1");
 
-  const bannersList = container.getAttribute("data-banners");
-  const bannerOrder = container.getAttribute("data-banner-order");
+        const bannersList = container.getAttribute("data-banners");
+        const bannerOrder = container.getAttribute("data-banner-order");
 
-  const itemsInContainer = container.querySelectorAll(".tab-item");
+        const itemsInContainer = container.querySelectorAll(".tab-item");
 
-  const host = window.location.host;
+        const host = window.location.host;
 
-  console.log(host, itemsInContainer);
+        console.log(host, itemsInContainer);
 
-  const formattedStringData = bannersList.replace(/'/g, '"');
+        const formattedStringData = bannersList.replace(/'/g, '"');
 
-  const banners = JSON.parse(formattedStringData);
-  let bannerIndex = 0; // Index to track which banner to use next
+        const banners = JSON.parse(formattedStringData);
+        let bannerIndex = 0; // Index to track which banner to use next
 
-itemsInContainer.forEach((item, index) => {
-  // Check if the current index + 1 is a multiple of bannerOrder
-  if ((index + 1) % bannerOrder === 0) {
-    // Ensure we have a banner to use
-    if (bannerIndex < banners.length) {
-      const banner = banners[bannerIndex];
-      const div = getBannerElement(banner.image_desktop, banner.link);
-      item.after(div); // Insert the banner after the current item
+        itemsInContainer.forEach((item, index) => {
+            // Check if the current index + 1 is a multiple of bannerOrder
+            if ((index + 1) % bannerOrder === 0) {
+                // Ensure we have a banner to use
+                if (bannerIndex < banners.length) {
+                    const banner = banners[bannerIndex];
+                    const div = getBannerElement(banner.image_desktop, banner.link);
+                    item.after(div); // Insert the banner after the current item
 
-      // Move to the next banner for the next match
-      bannerIndex++;
-    }
-  }
-});
+                    // Move to the next banner for the next match
+                    bannerIndex++;
+                }
+            }
+        });
 
-  function getBannerElement(url,anchorLink) {
-    const div = document.createElement("div");
-      div.classList.add(
-        "cards",
-        "md:flex-row",
-        "flex-col",
-        "justify-center",
-        "items-center",
-        "bg-[#F6F6F6]",
-        "my-7",
-        "rounded-[15px]",
-        "relative"
-      );
-      const image = document.createElement("img");
-      const link = document.createElement("a");
-      link.href = anchorLink;
-      link.style.position = "absolute";
-      link.style.top = "0";
-      link.style.left = "0";
-      link.style.width = "100%";
-      link.style.height = "100%";
-      link.style.zIndex = "1";
-      link.setAttribute("target", "_blank");
+        function getBannerElement(url, anchorLink) {
+            const div = document.createElement("div");
+            div.classList.add(
+                "cards",
+                "md:flex-row",
+                "flex-col",
+                "justify-center",
+                "items-center",
+                "bg-[#F6F6F6]",
+                "my-7",
+                "rounded-[15px]",
+                "relative"
+            );
+            const image = document.createElement("img");
+            const link = document.createElement("a");
+            link.href = anchorLink;
+            link.style.position = "absolute";
+            link.style.top = "0";
+            link.style.left = "0";
+            link.style.width = "100%";
+            link.style.height = "100%";
+            link.style.zIndex = "1";
+            link.setAttribute("target", "_blank");
 
-      image.src = url;
-      image.style.width = '100%';
-      image.style.maxHeight = '366px';
-      image.style.height = 'auto'
-      image.style.minHeight = '100%';
-      image.style.objectFit = 'cover'
-      image.style.borderRadius = '10px'
-      div.appendChild(link);
-      div.appendChild(image);
+            image.src = url;
+            image.style.width = '100%';
+            image.style.maxHeight = '366px';
+            image.style.height = 'auto'
+            image.style.minHeight = '100%';
+            image.style.objectFit = 'cover'
+            image.style.borderRadius = '10px'
+            div.appendChild(link);
+            div.appendChild(image);
 
-      return div
-  }
+            return div
+        }
 
-  console.log(bannersList, bannerOrder);
-</script>
+        console.log(bannersList, bannerOrder);
+    </script>
 {% endblock %}

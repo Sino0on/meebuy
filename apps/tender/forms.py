@@ -1,5 +1,5 @@
 from django import forms
-from apps.tender.models import Tender
+from apps.tender.models import Tender, SearchRequest
 
 
 class TenderForm(forms.ModelForm):
@@ -15,3 +15,9 @@ class TenderForm(forms.ModelForm):
         fields = ['title', 'phone', 'description',
                   'email', 'period', 'requirements',
                   'price', 'currency', 'place_of_sale', 'quantity']
+
+
+class SearchRequestForm(forms.ModelForm):
+    class Meta:
+        model = SearchRequest
+        fields = ['name', 'city']

@@ -122,17 +122,21 @@ class ProductCreateView(CreateView):
 
     def form_valid(self, form):
         provider = Provider.objects.get(user=self.request.user)
+        active_status = provider.user.cabinet.user_status
+        if active_status:
+            max_products = active_status.status.quantity_products
+            current_product_count = Product.objects.filter(provider=provider).count()
+            if current_product_count >= max_products:
+                form.add_error(None, f"Вы достигли максимального количества продуктов ({max_products}).")
+                return self.form_invalid(form)
+
         form.instance.provider = provider
         response = super().form_valid(form)
         images = self.request.FILES.getlist("images")
         if images:
             main_image = images[0]
-            product_img = ProductImg.objects.create(
-                product=self.object, image=main_image
-            )
-            self.object.image = (
-                main_image
-            )
+            ProductImg.objects.create(product=self.object, image=main_image)
+            self.object.image = main_image
             self.object.save()
 
         for image in images[1:]:

@@ -3,11 +3,11 @@
 {% load custom_filters %}
 
 {% block title %}
-Поставщик
+    Поставщик
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'pages/supplierDetail/index.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/supplierDetail/index.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -17,11 +17,11 @@
                 <div class="">
                     <div class="flex gap-4 py-4 items-center">
                         <div class="lg-md:flex hidden items-center gap-4">
-                            <a href="/"><img src="{% static 'assets/images/icons/home.svg' %}" alt="" /></a>
-                            <a href="/"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" /></a>
+                            <a href="/"><img src="{% static 'assets/images/icons/home.svg' %}" alt=""/></a>
+                            <a href="/"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/></a>
                         </div>
                         <a href="/provider/list/" class="font-normal font-mulish text-[#A0A0A0]">Поставщики</a>
-                        <a href="/provider/list/"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt="" /></a>
+                        <a href="/provider/list/"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" alt=""/></a>
                         <p class="font-normal font-mulish text-[#A0A0A0]">{{ provider.title }}</p>
                     </div>
                 </div>
@@ -31,67 +31,69 @@
             <div class="container">
                 <div class="lg-md:flex gap-7">
                     <div
-                        class="cards flex flex-col relative gap-6 bg-[#ffffff] p-5 rounded-2xl mt-8 mb-7 shadow-card-shadow lg-md:w-3/5 lg-md:mt-0 lg-md:mb-0 xl:p-[46px]">
+                            class="cards flex flex-col relative gap-6 bg-[#ffffff] p-5 rounded-2xl mt-8 mb-7 shadow-card-shadow lg-md:w-3/5 lg-md:mt-0 lg-md:mb-0 xl:p-[46px]">
                         <!-- icons -->
                         <div class="absolute right-4 top-4 flex items-center gap-1.5 lg-md:hidden">
 
                             {% if provider.is_recommended %}
                                 <img class="cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}" alt="">
-                                        alt="">
+                                alt="">
                             {% endif %}
                             <svg
                                     class="cursor-pointer transition-colors"
                                     id="heart1" width="36" height="36"
-                                viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
                                 <path
-                                    d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                                    fill="currentColor"></path>
+                                        d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
+                                        fill="currentColor"></path>
                                 <path
-                                    d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                                    fill="#E4DB00"></path>
+                                        d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
+                                        fill="#E4DB00"></path>
                             </svg>
                         </div>
                         <div class="flex gap-5 items-center lg-md:justify-center">
                             <img class="w-1/2" src="{% if provider.image %}{{ provider.image.url }}{% endif %}" alt="">
                         </div>
                         <div
-                            class="items-center gap-5 text-[14px] uppercase lg-md:flex lg-md:flex-col lg-md:items-start lg-md:gap-5 xl:mt-10">
+                                class="items-center gap-5 text-[14px] uppercase lg-md:flex lg-md:flex-col lg-md:items-start lg-md:gap-5 xl:mt-10">
                             <div class="lg-md:flex items-center gap-7">
                                 <p class="font-black text-lg font-mulish lg-md:text-[26px] xl:text-3xl">{{ provider.title }}
                                 </p>
                                 <div class="hidden lg-md:flex items-center gap-[10px]">
-                                {% if provider.is_recommended %}
-                                        <img class="w-6 h-6 cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}"
-                                        alt="">
-                                {% endif %}
+                                    {% if provider.is_recommended %}
+                                        <img class="w-6 h-6 cursor-pointer"
+                                             src="{% static 'assets/images/icons/premium.svg' %}"
+                                             alt="">
+                                    {% endif %}
 
                                     <svg
-                                    {% if user.is_authenticated %}
-                                          onclick="sendGetRequest({{ provider.pk }})"
-                                        {% if provider in user.cabinet.favorite_providers.all %}
-                                            class="transition-colors w-6 h-6 cursor-pointer text-logo-color"
-                                        {% else %}
-                                            class="transition-colors w-6 h-6 cursor-pointer"
-                                        {% endif %}
-                                    {% else %}
-                                          class="transition-colors w-6 h-6 cursor-pointer"
-                                    {% endif %}                                          id="heart2" width="40"
-                                        height="40" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            {% if user.is_authenticated %}
+                                                onclick="sendGetRequest({{ provider.pk }})"
+                                                {% if provider in user.cabinet.favorite_providers.all %}
+                                                class="transition-colors w-6 h-6 cursor-pointer text-logo-color"
+                                                {% else %}
+                                                class="transition-colors w-6 h-6 cursor-pointer"
+                                                {% endif %}
+                                            {% else %}
+                                                class="transition-colors w-6 h-6 cursor-pointer"
+                                            {% endif %}                                          id="heart2" width="40"
+                                                height="40" viewBox="0 0 36 36" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
                                         <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
                                         <path
-                                            d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
-                                            fill="currentColor"></path>
+                                                d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"
+                                                fill="currentColor"></path>
                                         <path
-                                            d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
-                                            fill="#E4DB00"></path>
+                                                d="M17.7397 10.4902C18.8522 9.49437 20.3039 8.96241 21.7965 9.0037C23.289 9.04499 24.7091 9.65638 25.7648 10.7122C26.8196 11.7669 27.4311 13.1852 27.4738 14.6762C27.5165 16.1672 26.9873 17.6181 25.9946 18.7315L17.7378 27L9.48289 18.7315C8.48901 17.6176 7.95928 16.1654 8.00245 14.6732C8.04561 13.1809 8.6584 11.7618 9.71501 10.7072C10.7716 9.6526 12.1919 9.04248 13.6842 9.00214C15.1765 8.96179 16.6277 9.49426 17.7397 10.4902ZM24.3861 12.0881C23.6827 11.3852 22.7369 10.9781 21.7429 10.9504C20.7489 10.9227 19.782 11.2765 19.0406 11.9391L17.7407 13.1056L16.4399 11.9401C15.7015 11.2798 14.7393 10.9257 13.749 10.9497C12.7588 10.9738 11.815 11.3743 11.1095 12.0697C10.4041 12.765 9.99017 13.703 9.95189 14.6928C9.91361 15.6826 10.2539 16.6498 10.9035 17.3975L17.7387 24.2435L24.574 17.3985C25.2209 16.654 25.5612 15.6919 25.5263 14.7063C25.4914 13.7206 25.0839 12.7849 24.3861 12.0881Z"
+                                                fill="#E4DB00"></path>
                                     </svg>
                                 </div>
                             </div>
                             <p class="font-medium text-sm my-[20px] lg-md:my-0 xl:text-lg">{{ provider.mini_desc }}</p>
                             <div class="flex gap-2 text-base text-[#4D4D4D] normal-case xl:text-lg">
                                 <img class="text-[#4D4D4D]" src="{% static 'assets/images/icons/location.svg' %}"
-                                    alt="Location" />
+                                     alt="Location"/>
                                 <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>
                             </div>
                         </div>
@@ -99,8 +101,8 @@
                     <div class="w-full">
                         <div class="grid grid-cols-3 gap-4">
                             {% for image in images %}
-                            <div class="rounded-[15px] overflow-hidden aspect-square"><img
-                                    src="{% if image.image %}{{ image.image.url }}{% endif %}" alt=""></div>
+                                <div class="rounded-[15px] overflow-hidden aspect-square"><img
+                                        src="{% if image.image %}{{ image.image.url }}{% endif %}" alt=""></div>
                             {% endfor %}
                         </div>
                     </div>
@@ -113,52 +115,57 @@
                     <div class="flex gap-4">
                         <!-- active = bg-yellow-second -->
                         <div
-                        onclick="openTab(event, 'Tab1')"
-                            class="filterBy border tabs__item uppercase bg-yellow-second border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                onclick="openTab(event, 'Tab1')"
+                                class="filterBy border tabs__item uppercase bg-yellow-second border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
                             Товары
                         </div>
                         <div
-                        onclick="openTab(event, 'Tab2')"
-                            class="filterBy border tabs__item uppercase border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                onclick="openTab(event, 'Tab2')"
+                                class="filterBy border tabs__item uppercase border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
                             Прайс
                         </div>
                     </div>
                     <div id="Tab1" class="tab-content">
                         <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
                             {% for product in products %}
-                            <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5">
-                                {% if product.new %}
-                                <div
-                                    class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
-                                    NEW
+                                <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5">
+                                    {% if product.new %}
+                                        <div
+                                                class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
+                                            NEW
+                                        </div>
+                                    {% endif %}
+                                    <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
+                                         src="
+                                                 {% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                         alt="Изображение товара">
+                                    <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}
+                                    </h2>
+                                    <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">
+                                        {{ product.description|truncatechars:100 }}</p>
+                                    <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
+                                        Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
+                                    </div>
+                                    <a href="/product/detail/{{ product.id }}/">
+                                        <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
+                                            Подробнее
+                                        </button>
+                                    </a>
                                 </div>
-                                {% endif %}
-                                <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
-                                    src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="Изображение товара">
-                                <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}
-                                </h2>
-                                <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">{{ product.description|truncatechars:100 }}</p>
-                                <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                    Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
-                                </div>
-                                <a href="/product/detail/{{ product.id }}/">
-                                    <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
-                                        Подробнее
-                                    </button>
-                                </a>
-                            </div>
                             {% endfor %}
                         </div>
                     </div>
                     <div id="Tab2" class="tab-content hidden">
                         <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
                             <div class="uploaded_files flex flex-col gap-2.5 mt-8">
-                                <ul id="file-list" style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
+                                <ul id="file-list"
+                                    style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
                                     {% for file in user.provider.files_price.all %}
                                         <li style="margin:15px 0;" id="file-{{ file.id }}">
                                             <div class="uploaded_file_item">
                                                 <div class="flex items-center justify-between gap-[15px]">
-                                                    <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}" class="line-clamp-3" style="max-width: 300px">
+                                                    <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}"
+                                                       class="line-clamp-3" style="max-width: 300px">
                                                         {{ file.file.name|filename }}
                                                     </a>
                                                 </div>
@@ -169,8 +176,8 @@
                             </div>
                         </div>
                     </div>
-{#                    <p class="text-end text-base text-dark-text mt-5 lg:text-lg lg:mt-[30px]"><a href="">Смотреть все#}
-{#                            товары</a></p>#}
+                    {#                    <p class="text-end text-base text-dark-text mt-5 lg:text-lg lg:mt-[30px]"><a href="">Смотреть все#}
+                    {#                            товары</a></p>#}
                 </div>
             </div>
         </section>
@@ -236,39 +243,39 @@
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Варианты оплаты</p>
-                          {% if provider.cash %}
-                                <p class="mt-2.5">Наличными</p>
-                            {% endif %}
-                            {% if provider.bank_transfer %}
-                                <p class="mt-2.5">Безналичная оплата</p>
-                            {% endif %}
-                            {% if provider.credit_card %}
-                                <p class="mt-2.5">Кредитные карты</p>
-                            {% endif %}
-                            {% if provider.electronic_money %}
-                                <p class="mt-2.5">Электронные деньги</p>
-                            {% endif %}
+                                {% if provider.cash %}
+                                    <p class="mt-2.5">Наличными</p>
+                                {% endif %}
+                                {% if provider.bank_transfer %}
+                                    <p class="mt-2.5">Безналичная оплата</p>
+                                {% endif %}
+                                {% if provider.credit_card %}
+                                    <p class="mt-2.5">Кредитные карты</p>
+                                {% endif %}
+                                {% if provider.electronic_money %}
+                                    <p class="mt-2.5">Электронные деньги</p>
+                                {% endif %}
                             </li>
                             <li class="mt-[30px]">
                                 <p class="text-lg font-semibold">Способы доставки</p>
-                                 {% if provider.pickup %}
-                                <p class="mt-2.5">Самовывоз</p>
-                            {% endif %}
-                            {% if provider.transport_company %}
-                                <p class="mt-2.5">Транспортной компанией</p>
-                            {% endif %}
-                            {% if provider.by_car %}
-                                <p class="mt-2.5">Автомобилем</p>
-                            {% endif %}
-                            {% if provider.air_transport %}
-                                <p class="mt-2.5">Авиатранспортом</p>
-                            {% endif %}
-                            {% if provider.rail_transport %}
-                                <p class="mt-2.5">Железной дорогой</p>
-                            {% endif %}
-                            {% if provider.courier %}
-                                <p class="mt-2.5">Курьером</p>
-                            {% endif %}
+                                {% if provider.pickup %}
+                                    <p class="mt-2.5">Самовывоз</p>
+                                {% endif %}
+                                {% if provider.transport_company %}
+                                    <p class="mt-2.5">Транспортной компанией</p>
+                                {% endif %}
+                                {% if provider.by_car %}
+                                    <p class="mt-2.5">Автомобилем</p>
+                                {% endif %}
+                                {% if provider.air_transport %}
+                                    <p class="mt-2.5">Авиатранспортом</p>
+                                {% endif %}
+                                {% if provider.rail_transport %}
+                                    <p class="mt-2.5">Железной дорогой</p>
+                                {% endif %}
+                                {% if provider.courier %}
+                                    <p class="mt-2.5">Курьером</p>
+                                {% endif %}
 
                             </li>
                         </ul>
@@ -277,32 +284,32 @@
                 </div>
             </div>
         </section>
-    {% include 'providers/provider_detail_includes/similar_companies.html' %}
+        {% include 'providers/provider_detail_includes/similar_companies.html' %}
     </main>
 {% endblock %}
 
 {% block js %}
-  <script src="{% static 'pages/supplierDetail/index.js' %}"></script>
-  <script>
-    const slider = new Swiper('.supplier__detail-slider', {
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-    },
-    mousewheel: {
-        enabled: true,
-        sensitivity: 2,
-    },
-    breakpoints: {
-        992: {
-        slidesPerView: 4,
-        spaceBetween: 30,
-        },
-        640: {
-        slidesPerView: 2,
-        spaceBetween: 30,
-        },
-    },
-    });
-  </script>
+    <script src="{% static 'pages/supplierDetail/index.js' %}"></script>
+    <script>
+        const slider = new Swiper('.supplier__detail-slider', {
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            mousewheel: {
+                enabled: true,
+                sensitivity: 2,
+            },
+            breakpoints: {
+                992: {
+                    slidesPerView: 4,
+                    spaceBetween: 30,
+                },
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+            },
+        });
+    </script>
 {% endblock %}

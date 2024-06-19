@@ -1,48 +1,47 @@
 import datetime
 import json
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST, require_GET
-from rest_framework.generics import ListAPIView, GenericAPIView
-from apps.authentication.forms import ProviderForm, UserUpdateForm
-from apps.product.models import Product, ProductCategory, PriceColumn
-from apps.user_cabinet.models import Status, Upping, Cabinet
-from apps.provider.models import ProvideImg, Provider, Category
-from apps.buyer.models import BuyerImg
-from apps.chat.models import Message
-from django.contrib.auth import get_user_model
-from django.views import generic
-from apps.user_cabinet.seriazliers import StatusSerializer
-from apps.user_cabinet.models import (PackageStatus, ActiveUserStatus, Transaction, ViewsCountProfile,
-                                      SiteOpenCount, OpenNumberCount)
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.contrib.auth.models import User
-from django.shortcuts import redirect, render
+import plotly.graph_objs as go
 from django.contrib import messages
-from django.urls import reverse, reverse_lazy
-from django.utils.encoding import force_str
-from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth import get_user_model
 from django.contrib.auth import login
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-
-from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
-# from .freedompay import initiate_payment
-
-from .models import Contacts, FAQ
-
-import plotly.graph_objs as go
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
+from django.views import generic
+from django.views.decorators.http import require_POST, require_GET
+from django.utils.timezone import now
+from datetime import timedelta
 from plotly.offline import plot
+from rest_framework.generics import ListAPIView
 
-from ..tender.models import Tender, Country, Region, City
+from apps.authentication.forms import ProviderForm, UserUpdateForm
+from apps.buyer.models import BuyerImg
+from apps.chat.models import Message
+from apps.product.models import Product, ProductCategory, PriceColumn
+from apps.provider.models import ProvideImg, Provider, Category
+from apps.user_cabinet.models import (PackageStatus, ActiveUserStatus, Transaction, ViewsCountProfile,
+                                      SiteOpenCount, OpenNumberCount)
+from apps.user_cabinet.models import Status, Upping, Cabinet
+from apps.user_cabinet.seriazliers import StatusSerializer
+from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
+from .models import Contacts, FAQ
+from ..tender.models import Tender, Country, Region, City, SearchRequest
+
+
+# from .freedompay import initiate_payment
 
 
 def generate_chart(user):
@@ -199,7 +198,7 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
             self.object.city = city
             category_ids = self.request.POST.get('category')
             if category_ids:
-                categories =category_ids.split(', ')
+                categories = category_ids.split(', ')
                 numbers = list(map(int, categories))
                 categories = Category.objects.filter(id__in=numbers)
                 self.object.category.set(categories)
@@ -275,8 +274,7 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
         if form.is_valid():
             self.object = form.save(
                 commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
-            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите пару минут'
-
+            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
             self.object.save()  # Сохраняем изменения в объект
             form.save_m2m()  # Сохраняем ManyToMany поля
             return redirect(self.get_success_url())  # Переадресация на страницу успеха
@@ -412,7 +410,34 @@ class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
         context['contacts'] = contacts
         provider, _ = Provider.objects.get_or_create(user=self.request.user)
         context['provider'] = provider
+        context['searches'] = self.get_user_search_list()
         return context
+
+    def get_user_search_list(self):
+        search_list = []
+        searches = SearchRequest.objects.filter(user=self.request.user)
+        for search in searches:
+            search_list.append({
+                'id': search.id,
+                'name': search.name,
+                'city': search.city,
+                'date': search.created_at.strftime("%B %d, %Y"),
+                'range': self.get_time_range_label(search.created_at)
+            })
+        return search_list
+
+    def get_time_range_label(self, date):
+        today = now().date()
+        delta = today - date
+
+        if delta <= timedelta(days=7):
+            return "За неделю"
+        elif delta <= timedelta(days=30):
+            return "За месяц"
+        elif delta <= timedelta(days=365):
+            return "За год"
+        else:
+            return "За все время"
 
 
 class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
