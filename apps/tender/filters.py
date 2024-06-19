@@ -1,8 +1,10 @@
-import django_filters
 from functools import reduce
-from django.utils import timezone
 from operator import and_
+
+import django_filters
 from django.db.models import Q
+from django.utils import timezone
+
 from apps.tender.models import Tender, City, Country, Region
 
 

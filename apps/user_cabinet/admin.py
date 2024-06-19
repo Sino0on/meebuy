@@ -1,10 +1,17 @@
-from django.contrib import admin, messages
-from apps.user_cabinet.models import (Cabinet, Transaction, ActiveUserStatus,
-                                      PackageStatus, Status, Upping, ActiveUpping,
-                                      SupportMessage, Contacts, FAQ)
-from django.db.models.functions import TruncWeek, TruncMonth, TruncYear
-from django.db.models import Count, Sum
-from django.utils.translation import gettext as _
+from django.contrib import admin
+
+from apps.user_cabinet.models import (
+    Cabinet,
+    Transaction,
+    ActiveUserStatus,
+    PackageStatus,
+    Status,
+    Upping,
+    ActiveUpping,
+    SupportMessage,
+    Contacts,
+    FAQ
+)
 
 
 @admin.register(Cabinet)
@@ -17,12 +24,12 @@ class CabinetAdmin(admin.ModelAdmin):
             queryset |= self.model.objects.filter(user__email__icontains=search_term)
         return queryset, use_distinct
 
-    search_fields = ('user__email', )
+    search_fields = ('user__email',)
 
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'total', )
+    list_display = ('user', 'total',)
 
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super().get_search_results(request, queryset, search_term)
@@ -30,13 +37,13 @@ class TransactionAdmin(admin.ModelAdmin):
             queryset |= self.model.objects.filter(user__user__email__icontains=search_term)
         return queryset, use_distinct
 
-    search_fields = ('user__user__email', )
+    search_fields = ('user__user__email',)
 
 
 @admin.register(PackageStatus)
 class PackageStatusAdmin(admin.ModelAdmin):
     list_display = ('status', 'price', 'months')
-    list_filter = ('months', )
+    list_filter = ('months',)
 
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super().get_search_results(request, queryset, search_term)
@@ -44,13 +51,13 @@ class PackageStatusAdmin(admin.ModelAdmin):
             queryset |= self.model.objects.filter(status__title__icontains=search_term)
         return queryset, use_distinct
 
-    search_fields = ('status__title', )
+    search_fields = ('status__title',)
 
 
 @admin.register(ActiveUserStatus)
 class ActiveUserStatusAdmin(admin.ModelAdmin):
     list_display = ('status', 'is_active', 'end_date')
-    list_filter = ('is_active', )
+    list_filter = ('is_active',)
 
 
 # @admin.register(Constants)
@@ -74,7 +81,7 @@ class ActiveUserStatusAdmin(admin.ModelAdmin):
 @admin.register(Status)
 class StatusAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_date')
-    search_fields = ('title', )
+    search_fields = ('title',)
 
 
 @admin.register(Upping)
@@ -86,7 +93,7 @@ class UppingAdmin(admin.ModelAdmin):
 @admin.register(ActiveUpping)
 class ActiveUppingAdmin(admin.ModelAdmin):
     list_display = ('is_active', 'end_date')
-    search_fields = ('is_active', )
+    search_fields = ('is_active',)
 
 
 @admin.register(SupportMessage)

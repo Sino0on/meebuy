@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from apps.provider.models import Category
+
 
 class CategoryListSerializer(serializers.ModelSerializer):
     is_selected = serializers.SerializerMethodField()

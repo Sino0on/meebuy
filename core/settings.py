@@ -1,7 +1,6 @@
 import os
-from datetime import timedelta
+
 from pathlib import Path
-from django.utils.translation import gettext_lazy as _
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

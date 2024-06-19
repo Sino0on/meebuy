@@ -1,17 +1,20 @@
 from django.contrib import admin
+
 from apps.buyer.models import Banner, BannerSettings, Buyer
 
-
 admin.site.register(Buyer)
+
 
 class BannerInline(admin.StackedInline):
     model = Banner
     extra = 0
 
+
 @admin.register(BannerSettings)
 class BannerSettingsAdmin(admin.ModelAdmin):
     list_display = ["number"]
     inlines = [BannerInline]
+
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):

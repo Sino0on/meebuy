@@ -1,16 +1,15 @@
 from urllib.parse import urlencode
 
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
-
-from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
 from apps.buyer.models import Banner, BannerSettings
-from apps.tender.forms import TenderForm, SearchRequestForm
-from apps.tender.models import Tender, TenderImg, Country, Region, City, SearchRequest
 from apps.provider.models import Category
 from apps.tender.filters import TenderFilter
+from apps.tender.forms import TenderForm, SearchRequestForm
+from apps.tender.models import Tender, TenderImg, Country, Region, City, SearchRequest
 from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 

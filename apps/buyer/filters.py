@@ -1,8 +1,9 @@
 import django_filters
-from apps.product.models import Product
-from apps.tender.models import Category, Country, City, Region
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+
+from apps.product.models import Product
+from apps.tender.models import Category, Country, City, Region
 
 
 class BuyerFilter(django_filters.FilterSet):

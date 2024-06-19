@@ -7,21 +7,23 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-    <div class="container mx-auto px-4">
-        <h1 class="text-2xl font-bold text-center my-5">Чаты</h1>
-        <div>
-            {% for chat in chat_details %}
-                <div class="bg-white rounded-lg shadow-md p-4 mb-4">
-                    <a href="/chat/{{ chat.chat.id }}"><p class="text-gray-800">Чат между <span class="font-semibold">{{ chat.chat.user_first.email }}</span> и <span class="font-semibold">{{ chat.chat.user_second.email }}</span></p></a>
-                    <p class="text-gray-600 mt-2">Последнее сообщение: "<span class="text-gray-800">{{ chat.last_message.content }}</span>"</p>
-                    {% if chat.unread_count > 0 %}
-                        <p class="text-red-500 font-bold mt-2">Непрочитанные сообщения: {{ chat.unread_count }}</p>
-                    {% else %}
-                        <p class="text-green-500 mt-2">Нет непрочитанных сообщений</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
+<div class="container mx-auto px-4">
+    <h1 class="text-2xl font-bold text-center my-5">Чаты</h1>
+    <div>
+        {% for chat in chat_details %}
+        <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+            <a href="/chat/{{ chat.chat.id }}"><p class="text-gray-800">Чат между <span class="font-semibold">{{ chat.chat.user_first.email }}</span>
+                и <span class="font-semibold">{{ chat.chat.user_second.email }}</span></p></a>
+            <p class="text-gray-600 mt-2">Последнее сообщение: "<span class="text-gray-800">{{ chat.last_message.content }}</span>"
+            </p>
+            {% if chat.unread_count > 0 %}
+            <p class="text-red-500 font-bold mt-2">Непрочитанные сообщения: {{ chat.unread_count }}</p>
+            {% else %}
+            <p class="text-green-500 mt-2">Нет непрочитанных сообщений</p>
+            {% endif %}
         </div>
+        {% endfor %}
     </div>
+</div>
 </body>
 </html>

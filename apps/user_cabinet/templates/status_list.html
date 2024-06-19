@@ -28,7 +28,9 @@
                     <span class="text-4xl font-bold">{{ j.price }}</span>
                 </div>
                 <div class="p-5 text-center">
-                    <button onclick="connectTariff({{ j.id }})" class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-xs px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease">
+                    <button onclick="connectTariff({{ j.id }})"
+                            class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-xs px-6 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1"
+                            type="button" style="transition: all .15s ease">
                         Подключить
                     </button>
                 </div>
@@ -47,67 +49,71 @@
 
 
 <!-- Оверлей и Модальное окно для успешного подключения -->
-<div id="modalSuccess" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" aria-labelledby="modalTitle" role="dialog" aria-modal="true">
-  <div class="flex items-center justify-center min-h-screen">
-    <div class="bg-white rounded-lg overflow-hidden shadow-lg mx-4 md:max-w-md w-full max-w-xs p-6 z-50">
-      <div class="bg-green-500 text-white font-bold p-4 text-center">
-        Тариф подключен
-      </div>
-      <div class="p-4 text-center">
-        Ваш тариф успешно подключен!
-        <button onclick="closeModal('modalSuccess')" class="mt-4 px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition ease-in-out duration-150">
-          Закрыть
-        </button>
-      </div>
+<div id="modalSuccess" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+     aria-labelledby="modalTitle" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded-lg overflow-hidden shadow-lg mx-4 md:max-w-md w-full max-w-xs p-6 z-50">
+            <div class="bg-green-500 text-white font-bold p-4 text-center">
+                Тариф подключен
+            </div>
+            <div class="p-4 text-center">
+                Ваш тариф успешно подключен!
+                <button onclick="closeModal('modalSuccess')"
+                        class="mt-4 px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition ease-in-out duration-150">
+                    Закрыть
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Оверлей и Модальное окно для недостаточного баланса -->
-<div id="modalFailure" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" aria-labelledby="modalTitle" role="dialog" aria-modal="true">
-  <div class="flex items-center justify-center min-h-screen">
-    <div class="bg-white rounded-lg overflow-hidden shadow-lg mx-4 md:max-w-md w-full max-w-xs p-6 z-50">
-      <div class="bg-red-500 text-white font-bold p-4 text-center">
-        Недостаточно средств
-      </div>
-      <div class="p-4 text-center">
-        На вашем балансе недостаточно средств для подключения тарифа.
-        <button onclick="location.href='/'" class="mt-4 px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-700 transition ease-in-out duration-150">
-          Пополнить баланс
-        </button>
-        <button onclick="closeModal('modalFailure')" class="mt-4 px-4 py-2 bg-gray-500 text-white font-bold rounded hover:bg-gray-700 transition ease-in-out duration-150">
-          Закрыть
-        </button>
-      </div>
+<div id="modalFailure" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+     aria-labelledby="modalTitle" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded-lg overflow-hidden shadow-lg mx-4 md:max-w-md w-full max-w-xs p-6 z-50">
+            <div class="bg-red-500 text-white font-bold p-4 text-center">
+                Недостаточно средств
+            </div>
+            <div class="p-4 text-center">
+                На вашем балансе недостаточно средств для подключения тарифа.
+                <button onclick="location.href='/'"
+                        class="mt-4 px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-700 transition ease-in-out duration-150">
+                    Пополнить баланс
+                </button>
+                <button onclick="closeModal('modalFailure')"
+                        class="mt-4 px-4 py-2 bg-gray-500 text-white font-bold rounded hover:bg-gray-700 transition ease-in-out duration-150">
+                    Закрыть
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
-
 <script>
-function connectTariff(id) {
-    fetch('/status/buy/' + encodeURIComponent(id)) // Предположим, что это ваш URL для подключения тарифа
-        .then(response => {
-            if (response.status === 200) {
-                // Показать модальное окно об успешном подключении
-                document.getElementById('modalSuccess').classList.remove('hidden');
-            } else if (response.status === 400) {
-                // Показать модальное окно о недостатке средств
-                document.getElementById('modalFailure').classList.remove('hidden');
-            } else {
-                // Обработка других HTTP статусов или ошибка сети
-                alert('Произошла ошибка. Пожалуйста, попробуйте позже.');
-            }
-        })
-        .catch(error => {
-            console.error('Ошибка при подключении тарифа:', error);
-        });
-}
+    function connectTariff(id) {
+        fetch('/status/buy/' + encodeURIComponent(id)) // Предположим, что это ваш URL для подключения тарифа
+            .then(response => {
+                if (response.status === 200) {
+                    // Показать модальное окно об успешном подключении
+                    document.getElementById('modalSuccess').classList.remove('hidden');
+                } else if (response.status === 400) {
+                    // Показать модальное окно о недостатке средств
+                    document.getElementById('modalFailure').classList.remove('hidden');
+                } else {
+                    // Обработка других HTTP статусов или ошибка сети
+                    alert('Произошла ошибка. Пожалуйста, попробуйте позже.');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при подключении тарифа:', error);
+            });
+    }
 
-function closeModal(modal) {
-    document.getElementById(modal).classList.add('hidden');
-}
+    function closeModal(modal) {
+        document.getElementById(modal).classList.add('hidden');
+    }
 </script>
 
 

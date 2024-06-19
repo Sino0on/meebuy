@@ -14,8 +14,9 @@
         <div class="">
             <div class="flex gap-4 py-4">
                 <div class="flex items-center gap-4">
-                  <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}" /></a>
-                  <a href="{% url 'view_profile' %}"><img src="{% static 'assets/images/icons/arrow-prev.svg' %}" /></a>
+                    <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/home.svg' %}"/></a>
+                    <a href="{% url 'view_profile' %}"><img
+                            src="{% static 'assets/images/icons/arrow-prev.svg' %}"/></a>
                 </div>
                 <p class="font-normal font-mulish text-[#A0A0A0]">Личный кабинет</p>
             </div>
@@ -32,54 +33,54 @@
     <div class="container">
         <div class="lg-md:grid grid-cols-3  pb-[100px] lg-md:pb-[120px] lg-md:gap-5 xl:grid-cols-4">
             <!--  this section is for avatar  -->
-            {% include 'cabinet/cabinet_includes/menu.html' with active_page='chat_list'  %}
+            {% include 'cabinet/cabinet_includes/menu.html' with active_page='chat_list' %}
             <div class="lg-md:col-span-2 xl:col-span-3">
                 <!-- these sections are for main content  -->
                 <section class="main-content mt-[30px] h-[calc(100%-50px)] lg-md:mt-0">
                     <!-- tabs  -->
                     <div class="tabs__wrapper">
                         <button onclick="openTab(event,'Tab1')"
-                            class="tabs__item transition-colors active btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                                class="tabs__item transition-colors active btn-filled-yellow-light py-2 px-2.5 text-nowrap">
                             Входящие
                         </button>
                         <button onclick="openTab(event,'Tab2')"
-                            class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
                             Избранные
                         </button>
                         <button onclick="openTab(event,'Tab3')"
-                            class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
+                                class="tabs__item transition-colors btn-filled-yellow-light py-2 px-2.5 text-nowrap">
                             Удаленные
                         </button>
                     </div>
                     <!-- tabs end  -->
                     <div id="Tab1"
-                        class="card__wrapper h-[calc(100%-70px)] tab-content shadow-card-shadow rounded-[10px] mt-[30px] lg-md:p-5 xl:p-10">
+                         class="card__wrapper h-[calc(100%-70px)] tab-content shadow-card-shadow rounded-[10px] mt-[30px] lg-md:p-5 xl:p-10">
                         {% for i in chat_details %}
                         <a href="{% url 'chat_detail' i.chat.pk %}"
-                            class="card__item flex shadow-card-shadow flex-col lg-md:rounded-[15px] !py-5 relative lg-md:!p-5 lg-md:flex-row lg-md:items-center lg-md:gap-4">
+                           class="card__item flex shadow-card-shadow flex-col lg-md:rounded-[15px] !py-5 relative lg-md:!p-5 lg-md:flex-row lg-md:items-center lg-md:gap-4">
                             <!-- logo  -->
                             <div class="w-[30px] h-[30px] rounded-full overflow-hidden lg-md:w-10 lg-md:h-10">
                                 {% if request.user == i.chat.user_first %}
                                 {% if i.chat.user_second.buyer.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_second.buyer.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% elif i.chat.user_second.provider.image %}
                                 <img class="w-full h-full object-cover"
-                                    src="{{ i.chat.user_second.provider.image.url }}" alt="">
+                                     src="{{ i.chat.user_second.provider.image.url }}" alt="">
                                 {% else %}
                                 <img class="w-full h-full object-cover"
-                                    src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                     src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
                                 {% endif %}
                                 {% else %}
                                 {% if i.chat.user_first.buyer.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_first.buyer.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% elif i.chat.user_first.provider.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_first.provider.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% else %}
                                 <img class="w-full h-full object-cover"
-                                    src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                     src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
                                 {% endif %}
                                 {% endif %}
                             </div>
@@ -95,7 +96,7 @@
                                     {{ i.last_message.content|truncatechars:30 }}</p>
                             </div>
                             <img class="threeDots absolute top-2.5 right-5 cursor-pointer"
-                                src="{% static 'assets/images/icons/pencil_dots-y.svg' %}" alt="">
+                                 src="{% static 'assets/images/icons/pencil_dots-y.svg' %}" alt="">
 
                             <div class="dropdown-content hidden absolute right-0 bg-[#E4DB00] text-white p-2 rounded-[15px]">
                                 <!-- Кнопка для добавления в избранное -->
@@ -117,33 +118,33 @@
 
                     </div>
                     <div id="Tab2"
-                        class="card__wrapper h-[calc(100%-70px)] hidden tab-content shadow-card-shadow rounded-[10px] mt-[30px] lg-md:p-5 xl:p-10">
+                         class="card__wrapper h-[calc(100%-70px)] hidden tab-content shadow-card-shadow rounded-[10px] mt-[30px] lg-md:p-5 xl:p-10">
                         {% for i in favorite_chats %}
                         <a href="{% url 'chat_detail' i.chat.pk %}"
-                            class="card__item flex shadow-card-shadow flex-col lg-md:rounded-[15px] !py-5 relative lg-md:!p-5 lg-md:flex-row lg-md:items-center lg-md:gap-4">
+                           class="card__item flex shadow-card-shadow flex-col lg-md:rounded-[15px] !py-5 relative lg-md:!p-5 lg-md:flex-row lg-md:items-center lg-md:gap-4">
                             <!-- logo  -->
                             <div class="w-[30px] h-[30px] rounded-full overflow-hidden lg-md:w-10 lg-md:h-10">
                                 {% if request.user == i.chat.user_first %}
                                 {% if i.chat.user_second.buyer.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_second.buyer.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% elif i.chat.user_second.provider.image %}
                                 <img class="w-full h-full object-cover"
-                                    src="{{ i.chat.user_second.provider.image.url }}" alt="">
+                                     src="{{ i.chat.user_second.provider.image.url }}" alt="">
                                 {% else %}
                                 <img class="w-full h-full object-cover"
-                                    src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                     src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
                                 {% endif %}
                                 {% else %}
                                 {% if i.chat.user_first.buyer.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_first.buyer.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% elif i.chat.user_first.provider.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_first.provider.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% else %}
                                 <img class="w-full h-full object-cover"
-                                    src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                     src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
                                 {% endif %}
                                 {% endif %}
                             </div>
@@ -161,7 +162,7 @@
                             <!-- item title and description end  -->
                             <!-- content with position  -->
                             <img class="threeDots absolute top-2.5 right-5 cursor-pointer"
-                                src="{% static 'assets/images/icons/pencil_dots-y.svg' %}" alt="">
+                                 src="{% static 'assets/images/icons/pencil_dots-y.svg' %}" alt="">
 
                             <div class="dropdown-content hidden absolute right-0 bg-[#E4DB00] text-white p-2 rounded-[15px]">
                                 <!-- Кнопка для добавления в избранное -->
@@ -182,33 +183,33 @@
 
                     </div>
                     <div id="Tab3"
-                        class="card__wrapper h-[calc(100%-70px)] hidden tab-content shadow-card-shadow rounded-[10px] mt-[30px] lg-md:p-5 xl:p-10">
+                         class="card__wrapper h-[calc(100%-70px)] hidden tab-content shadow-card-shadow rounded-[10px] mt-[30px] lg-md:p-5 xl:p-10">
                         {% for i in deleted_chats %}
                         <a href="{% url 'chat_detail' i.chat.pk %}"
-                            class="card__item flex shadow-card-shadow flex-col lg-md:rounded-[15px] !py-5 relative lg-md:!p-5 lg-md:flex-row lg-md:items-center lg-md:gap-4">
+                           class="card__item flex shadow-card-shadow flex-col lg-md:rounded-[15px] !py-5 relative lg-md:!p-5 lg-md:flex-row lg-md:items-center lg-md:gap-4">
                             <!-- logo  -->
                             <div class="w-[30px] h-[30px] rounded-full overflow-hidden lg-md:w-10 lg-md:h-10">
                                 {% if request.user == i.chat.user_first %}
                                 {% if i.chat.user_second.buyer.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_second.buyer.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% elif i.chat.user_second.provider.image %}
                                 <img class="w-full h-full object-cover"
-                                    src="{{ i.chat.user_second.provider.image.url }}" alt="">
+                                     src="{{ i.chat.user_second.provider.image.url }}" alt="">
                                 {% else %}
                                 <img class="w-full h-full object-cover"
-                                    src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                     src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
                                 {% endif %}
                                 {% else %}
                                 {% if i.chat.user_first.buyer.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_first.buyer.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% elif i.chat.user_first.provider.image %}
                                 <img class="w-full h-full object-cover" src="{{ i.chat.user_first.provider.image.url }}"
-                                    alt="">
+                                     alt="">
                                 {% else %}
                                 <img class="w-full h-full object-cover"
-                                    src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
+                                     src="{% static 'assets/images/icons/Avatar.svg' %}" alt="">
                                 {% endif %}
                                 {% endif %}
                             </div>
@@ -227,7 +228,9 @@
                             <!-- content with position  -->
                             <form method="post" action="{% url 'undelete_chat' i.chat.pk %}">
                                 {% csrf_token %}
-                                <button class="absolute bg-[#E4DB00] p-2 text-xs rounded-[15px] text-white top-1/2 -translate-y-1/2 right-5 cursor-pointer">Восстановить</button>
+                                <button class="absolute bg-[#E4DB00] p-2 text-xs rounded-[15px] text-white top-1/2 -translate-y-1/2 right-5 cursor-pointer">
+                                    Восстановить
+                                </button>
                             </form>
                             <p class="text-right mt-5 lg-md:absolute text-grey-light right-5 bottom-5">
                                 {{ i.last_message.created_at|naturaltime }}</p>

@@ -1,10 +1,12 @@
 import datetime
 import json
+import plotly.graph_objs as go
+
 from datetime import timedelta
 from functools import reduce
 from operator import and_
+from plotly.offline import plot
 
-import plotly.graph_objs as go
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
@@ -27,21 +29,53 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.timezone import now
 from django.views import generic
 from django.views.decorators.http import require_POST, require_GET
-from plotly.offline import plot
+
 from rest_framework.generics import ListAPIView
 
-from apps.authentication.forms import ProviderForm, UserUpdateForm
+from apps.authentication.forms import (
+    ProviderForm,
+    UserUpdateForm
+)
+from apps.product.models import (
+    Product,
+    ProductCategory,
+    PriceColumn
+)
+from apps.provider.models import (
+    ProvideImg,
+    Provider,
+    Category
+)
+from apps.user_cabinet.models import (
+    PackageStatus,
+    ActiveUserStatus,
+    Transaction,
+    ViewsCountProfile,
+    SiteOpenCount,
+    OpenNumberCount
+)
+from apps.user_cabinet.models import (
+    Status,
+    Upping,
+    Cabinet
+)
+from .forms import (
+    ChangePasswordForm,
+    PasswordResetForm,
+    NewPasswordForm,
+    SupportMessageForm
+)
+from ..tender.models import (
+    Tender,
+    Country,
+    Region,
+    City,
+    SearchRequest
+)
+from .models import Contacts, FAQ
+from apps.user_cabinet.seriazliers import StatusSerializer
 from apps.buyer.models import BuyerImg
 from apps.chat.models import Message
-from apps.product.models import Product, ProductCategory, PriceColumn
-from apps.provider.models import ProvideImg, Provider, Category
-from apps.user_cabinet.models import (PackageStatus, ActiveUserStatus, Transaction, ViewsCountProfile,
-                                      SiteOpenCount, OpenNumberCount)
-from apps.user_cabinet.models import Status, Upping, Cabinet
-from apps.user_cabinet.seriazliers import StatusSerializer
-from .forms import ChangePasswordForm, PasswordResetForm, NewPasswordForm, SupportMessageForm
-from .models import Contacts, FAQ
-from ..tender.models import Tender, Country, Region, City, SearchRequest
 
 
 # from .freedompay import initiate_payment
@@ -416,8 +450,6 @@ class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
         context['searches'] = self.get_user_search_list()
         return context
 
-
-
     def get_user_search_list(self):
         search_list = []
         searches = SearchRequest.objects.filter(user=self.request.user)
@@ -448,7 +480,6 @@ class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
 
         return queryset.count()
 
-
     def get_time_range_label(self, date):
         today = now().date()
         delta = today - date
@@ -461,7 +492,6 @@ class TenderListCabinetView(LoginRequiredMixin, generic.TemplateView):
             return "За год"
         else:
             return "За все время"
-
 
 
 class ProductListCabinetView(LoginRequiredMixin, generic.ListView):

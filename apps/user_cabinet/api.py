@@ -1,13 +1,13 @@
 import datetime
 
-from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import IsAuthenticated
-from apps.user_cabinet.models import PackageStatus, ActiveUserStatus, ActiveUpping, Transaction, Upping
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_403_FORBIDDEN
 
+from apps.user_cabinet.models import PackageStatus, ActiveUserStatus, ActiveUpping, Transaction, Upping
 
 User = get_user_model()
 
@@ -25,7 +25,7 @@ class BuyStatusView(GenericAPIView):
             return Response(data={"Info": "Недостаточно средств"}, status=HTTP_400_BAD_REQUEST)
         user.cabinet.user_status = ActiveUserStatus.objects.create(
             status=status,
-            end_date=datetime.date.today() + datetime.timedelta(days=status.months*30)
+            end_date=datetime.date.today() + datetime.timedelta(days=status.months * 30)
         )
         Transaction.objects.create(
             user=user.cabinet,

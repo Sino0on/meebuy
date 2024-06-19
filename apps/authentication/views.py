@@ -1,27 +1,29 @@
+from django.contrib import messages
+from django.contrib.auth import authenticate, logout, login as auth_login, get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.views.generic import TemplateView, FormView, UpdateView, RedirectView
-from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-from django.contrib.auth import authenticate, logout, login as auth_login, get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
-from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils.encoding import force_bytes, force_str
-from django.shortcuts import render, get_object_or_404
-from django.contrib import messages
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.views.generic import TemplateView, UpdateView, RedirectView
+from django.views.generic.edit import FormView
 
-
-from apps.authentication.forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserTypeSelectionForm
+from apps.authentication.forms import (
+    UserRegistrationForm,
+    UserLoginForm,
+    UserProfileForm,
+    UserTypeSelectionForm
+)
 from apps.authentication.token import account_activation_token
-from apps.buyer.models import Buyer
 from apps.product.models import Product
-from apps.tender.models import Tender, Country
 from apps.provider.models import Provider, Category
+from apps.tender.models import Tender, Country
 from apps.user_cabinet.models import Cabinet, Contacts
 
 

@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from django.views import generic
 
 from apps.authentication.models import User
-from apps.buyer.filters import BuyerFilter
 from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
 from apps.provider.models import Provider, Category
@@ -30,7 +28,8 @@ class BuyerListView(generic.ListView):
         context["contacts"] = contacts
         context['categories'] = Category.objects.all()
         context["banners"] = self.get_banners()
-        context["banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
+        context[
+            "banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
 
         context['locations'] = self.get_locations()
         return context

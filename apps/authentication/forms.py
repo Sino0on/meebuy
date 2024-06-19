@@ -1,12 +1,10 @@
 from django import forms
-from django.contrib.auth.password_validation import validate_password
-
 from django.contrib.auth.forms import UserChangeForm
-
-from .models import User
-from apps.provider.models import Provider
+from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
 
+from apps.provider.models import Provider
+from .models import User
 
 
 class UserRegistrationForm(forms.ModelForm):
