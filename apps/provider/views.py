@@ -121,6 +121,7 @@ class ProviderDetailView(generic.DetailView):
         context["companies"] = Provider.objects.exclude(id=self.object.id).filter(
             is_provider=True, is_modered=True, is_active=True
         )
+
         if self.request.GET.get("open"):
             if self.request.user.is_authenticated:
                 print(self.get_object().user)
@@ -132,6 +133,7 @@ class ProviderDetailView(generic.DetailView):
                             user=self.get_object().user.cabinet
                         )
                         context["open"] = "open"
+
         return context
 
 

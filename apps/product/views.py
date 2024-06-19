@@ -100,6 +100,7 @@ class ProductDetailView(DetailView):
         ).exclude(id=product.id)[:5]
         context["prices"] = self.get_product_prices()
 
+
         if self.request.GET.get("open"):
             if self.request.user.is_authenticated:
                 print(self.get_object().provider.user)
@@ -111,6 +112,7 @@ class ProductDetailView(DetailView):
                             user=self.get_object().provider.user.cabinet
                         )
                         context["open"] = "open"
+
 
         return context
 

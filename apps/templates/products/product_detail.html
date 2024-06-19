@@ -42,13 +42,13 @@
           src="{% if product.provider.image %}{{ product.provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
           alt=""
         />
-        <p class="font-black font-mulish">
+        <a href="/provider/detail/{{ product.provider.pk }}/" class="font-black font-mulish">
         {% if product.provider.title %}
             {{ product.provider.title }}
         {% else %}
             Поставщик
         {% endif %}
-        </p>
+        </a>
       </div>
       <div class="lg-md:flex hidden items-center gap-5 text-[14px]">
         <p class="font-medium">{{ product.provider.mini_desc }}</p>
