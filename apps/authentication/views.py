@@ -108,23 +108,30 @@ class LoginView(FormView):
 class SelectUserTypeView(LoginRequiredMixin, FormView):
     form_class = UserTypeSelectionForm
     template_name = 'auth/auth_choice.html'
-    success_url = reverse_lazy('view_profile')  
+    success_url = reverse_lazy('view_profile')
+
+    def dispatch(self, request, *args, **kwargs):
+        user_profile = self.request.user
+        if user_profile.is_authenticated:
+            if user_profile.user_type and user_profile.provider:  # Проверяем, есть ли уже выбранный тип и профиль поставщика
+                return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated:
-            user_profile = self.request.user 
-            user_profile.user_type = form.cleaned_data['user_type']
-            print(form.cleaned_data['user_type'])
-            user_profile.save()
-            if form.cleaned_data['user_type'] == 'provider':
-                user, _ = Provider.objects.get_or_create(user=user_profile)
-                user.is_provider = True
-                user.save()
-            elif user_profile.user_type == 'buyer':
-                user, _ = Provider.objects.get_or_create(user=user_profile)
-                user.is_provider = False
-                user.save()
-            return super().form_valid(form)
+        user_profile = self.request.user
+        user_profile.user_type = form.cleaned_data['user_type']
+        user_profile.save()
+
+        if form.cleaned_data['user_type'] == 'provider':
+            provider, created = Provider.objects.get_or_create(user=user_profile)
+            provider.is_provider = True
+            provider.save()
+        else:
+            provider, created = Provider.objects.get_or_create(user=user_profile)
+            provider.is_provider = False
+            provider.save()
+
+        return super().form_valid(form)
 
 
 class LogoutView(RedirectView):
