@@ -89,7 +89,7 @@ class Banner(models.Model):
     )
     link = models.URLField(verbose_name="ссылка", max_length=200, blank=True, null=True)
     settings = models.ForeignKey(
-        BannerSettings, verbose_name="Настройки", on_delete=models.CASCADE, default=3
+        BannerSettings, verbose_name="Настройки", on_delete=models.CASCADE, blank=True, null=True
     )
     is_active = models.BooleanField(verbose_name="Активный", default=True)
     created_at = models.DateTimeField(
