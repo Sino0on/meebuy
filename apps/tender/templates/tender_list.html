@@ -55,6 +55,38 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        overflow-y: auto;
+        max-height: 80dvh
+    }
+
+    /* Для веб-браузеров на основе WebKit (например, Chrome, Safari) */
+    #filter-window::-webkit-scrollbar {
+        width: 8px; /* Ширина скроллбара */
+    }
+
+    #filter-window::-webkit-scrollbar-track {
+        background: transparent; /* Фон дорожки скроллбара */
+    }
+
+    #filter-window::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2); /* Цвет ползунка скроллбара */
+        border-radius: 4px; /* Скругленные углы */
+        border: 2px solid transparent; /* Пространство вокруг ползунка */
+    }
+
+    #filter-window::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, 0.3); /* Цвет ползунка при наведении */
+    }
+
+    /* Для Firefox */
+    #filter-window {
+        scrollbar-width: thin; /* Тонкий скроллбар */
+        scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* Цвет ползунка и фона */
+    }
+
+    /* Для Internet Explorer и Edge */
+    #filter-window {
+        -ms-overflow-style: -ms-autohiding-scrollbar; /* Автоматически скрывающийся скроллбар */
     }
 
 

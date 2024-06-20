@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404, render
+from django.utils import timezone
 
 from apps.chat.models import Chat, Message
 from apps.chat.models import ChatUserStatus
@@ -69,24 +71,57 @@ def chat_detail(request, pk):
 def create_chat(request, pk):
     user = get_object_or_404(User, id=pk)
 
-    # Проверяем, существует ли уже чат между этими двумя пользователями
-    existing_chat = Chat.objects.filter(
-        (Q(user_first=request.user) & Q(user_second=user)) |
-        (Q(user_first=user) & Q(user_second=request.user))
-    ).first()
+    # Проверяем количество созданных чатов за сегодня
+    today = timezone.now().date()
+    chat_count_today = Chat.objects.filter(
+        Q(user_first=request.user) | Q(user_second=request.user),
+        created_at__date=today
+    ).count()
 
-    if existing_chat:
-        # Если чат существует, редиректим к нему
-        return redirect(f'/chat/{existing_chat.id}')
+    if request.user.cabinet.user_status:
+        if chat_count_today >= request.user.cabinet.user_status.status.active_statues.status.dayly_message:
+            messages.error(request, f'Вы не можете создать более {request.user.cabinet.user_status.status.active_statues.status.dayly_message} чатов за сегодня.')
+            return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            # Проверяем, существует ли уже чат между этими двумя пользователями
+            existing_chat = Chat.objects.filter(
+                (Q(user_first=request.user) & Q(user_second=user)) |
+                (Q(user_first=user) & Q(user_second=request.user))
+            ).first()
 
-    # Если чата нет, создаем новый
-    chat = Chat.objects.create(user_first=request.user, user_second=user)
+            if existing_chat:
+                # Если чат существует, редиректим к нему
+                return redirect(f'/chat/{existing_chat.id}')
 
-    ChatUserStatus.objects.create(chat=chat, user=request.user)
-    ChatUserStatus.objects.create(chat=chat, user=user)
+            # Если чата нет, создаем новый
+            chat = Chat.objects.create(user_first=request.user, user_second=user)
 
-    return redirect(f'/chat/{chat.id}')
+            ChatUserStatus.objects.create(chat=chat, user=request.user)
+            ChatUserStatus.objects.create(chat=chat, user=user)
 
+            return redirect(f'/chat/{chat.id}')
+    else:
+        if chat_count_today >= 0:
+            messages.error(request, f'Вы не можете создать более {10} чатов за сегодня.')
+            return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            # Проверяем, существует ли уже чат между этими двумя пользователями
+            existing_chat = Chat.objects.filter(
+                (Q(user_first=request.user) & Q(user_second=user)) |
+                (Q(user_first=user) & Q(user_second=request.user))
+            ).first()
+
+            if existing_chat:
+                # Если чат существует, редиректим к нему
+                return redirect(f'/chat/{existing_chat.id}')
+
+            # Если чата нет, создаем новый
+            chat = Chat.objects.create(user_first=request.user, user_second=user)
+
+            ChatUserStatus.objects.create(chat=chat, user=request.user)
+            ChatUserStatus.objects.create(chat=chat, user=user)
+
+            return redirect(f'/chat/{chat.id}')
 
 @login_required
 def add_to_favorites(request, chat_id):

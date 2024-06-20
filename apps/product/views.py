@@ -143,11 +143,9 @@ class ProductCreateView(CreateView):
             else:
                 form.instance.is_active = True
         else:
-            form.instance.is_active = False  # Если нет активного статуса, продукт неактивен по умолчанию
-
+            form.instance.is_active = False
         form.instance.provider = provider
 
-        # Печать данных формы для отладки
         print(f"Form data: {form.cleaned_data}")
 
         response = super().form_valid(form)

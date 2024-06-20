@@ -104,16 +104,13 @@ class TenderDetailView(generic.DetailView):
             if self.request.user.is_authenticated:
                 print(self.get_object().user)
                 if self.get_object().user.cabinet.user_status:
-                    if (
-                            self.get_object().user.cabinet.user_status.status.is_publish_phone
-                    ):
+                    if self.get_object().user.cabinet.user_status.status.is_publish_phone:
                         OpenNumberCount.objects.create(
                             user=self.get_object().user.cabinet
                         )
                         context["open"] = "open"
             # context['open'] = 'open'
 
-            print("das")
         context["tenders"] = Tender.objects.exclude(id=self.object.id)
         return context
 
@@ -128,6 +125,18 @@ class TenderCreateView(generic.CreateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
+            if self.request.user.cabinet.user_status:
+                current_tender_count = Tender.objects.filter(user=self.request.user, is_active=True).count()
+                if current_tender_count >= self.request.user.cabinet.user_status.status.status.quantity_tenders:
+                    form.instance.is_active = False
+                else:
+                    form.instance.is_active = True
+            else:
+                if Tender.objects.filter(user=self.request.user, is_active=True).count() >= 3:
+                    form.instance.is_active = False
+                else:
+                    form.instance.is_active = True
+
             tender = form.save(commit=False)
             days = request.POST.get("period")
             tender.user = request.user

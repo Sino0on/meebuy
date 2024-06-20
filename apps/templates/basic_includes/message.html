@@ -1,0 +1,43 @@
+   <style>
+        #error-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #f1c906; /* Изменил цвет на #f44336 для контраста */
+            color: #000000;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 1s; /* Плавное появление и исчезновение */
+        }
+
+        #error-message.show {
+            opacity: 1;
+        }
+    </style>
+<div id="error-message"></div>
+
+  <script>
+        // Функция для отображения сообщения об ошибке
+        function showError(message) {
+            const errorMessageElement = document.getElementById('error-message');
+            errorMessageElement.textContent = message;
+            errorMessageElement.classList.add('show');
+
+            // Скрываем сообщение через 5 секунд
+            setTimeout(() => {
+                errorMessageElement.classList.remove('show');
+            }, 4000);
+        }
+
+        // Проверка на наличие сообщений об ошибке в контексте Django
+        document.addEventListener("DOMContentLoaded", () => {
+            {% if messages %}
+                {% for message in messages %}
+                    showError('{{ message }}');
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
