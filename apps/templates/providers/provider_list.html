@@ -158,56 +158,59 @@
                     ознакомьтесь со всеми рекомендуемыми и новыми поставщиками
                 </h6>
                 <div
-                        class="flex flex-wrap justify-between items-center md:my-10 md: mb-5 lg-md: mt-10"
+                        class="flex justify-between items-center md:my-10 md: mb-5 lg-md: mt-10"
                 >
                     <ul id="tab-list"
-                        class="cards suppliers flex items-center shadow shadow-[#B1B1B14D] rounded-[15px] h-[44px]"
+                        class="cards block suppliers flex flex-wrap items-center shadow shadow-[#B1B1B14D] rounded-[15px] min-h-[44px]"
                     >
                         <li
                                 class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
                                 onclick="openTab(event, 'Tab1')"
                         >
                             <button>Все</button>
-                            <img
-                                    class="lg-md:hidden block"
-                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-                                    alt=""/>
+{#                            <img#}
+{#                                    class="lg-md:hidden block"#}
+{#                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"#}
+{#                                    alt=""/>#}
                         </li>
                         <li
                                 class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
                                 onclick="openTab(event, 'Tab2')"
                         >
                             <button>Поставшики</button>
-                            <img
-                                    class="lg-md:hidden block"
-                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-                                    alt=""/>
+{#                            <img#}
+{#                                    class="lg-md:hidden block"#}
+{#                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"#}
+{#                                    alt=""/>#}
                         </li>
                         <li
                                 class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
                                 onclick="openTab(event, 'Tab3')"
                         >
                             <button>Производители</button>
-                            <img
-                                    class="lg-md:hidden block"
-                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-                                    alt=""/>
+{#                            <img#}
+{#                                    class="lg-md:hidden block"#}
+{#                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"#}
+{#                                    alt=""/>#}
                         </li>
                         <li
                                 class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
                                 onclick="openTab(event, 'Tab4')"
                         >
                             <button>Услуги</button>
-                            <img
-                                    class="lg-md:hidden block"
-                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-                                    alt=""/>
+{#                            <img#}
+{#                                    class="lg-md:hidden block"#}
+{#                                    src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"#}
+{#                                    alt=""/>#}
                         </li>
 
                     </ul>
 
                     <!-- filters -->
+
+
                     {% include 'providers/provider_list_includes/filters.html' %}
+
                     <div
                             id="Tab1"
                             data-banners="{{ banners }}"
