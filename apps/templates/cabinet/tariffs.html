@@ -170,10 +170,12 @@
           </div>
           <!-- price -->
           <div class="tariffs__info-price">
+          {% if tariff.price_month != status.per_month %}
             <div class="tariffs__info-price-old">
               <span class="line-through">${tariff.price_month}</span>
               <span>сом / в месяц</span>
             </div>
+            {% endif %}
             <div class="tariffs__info-price-discount">
               ${status.per_month}
               <span>сом / в месяц</span>
@@ -182,7 +184,9 @@
           <!-- period -->
           <div class="tariffs__info-period">
             <div class="tariffs__info-period_price text-lg">
-              <p>При оплате за <span>${status.months}</span></p>
+              <p>При оплате за <span>${status.months}
+              мес.
+              </span></p>
               <p>Итого: <span>${status.price} сом</span></p>
             </div>
             <div class="tariffs__info-period_term mt-10">
@@ -198,7 +202,7 @@
                             ${index === statusIndex ? "checked" : ""}
                             onclick="updateTariff(${tariff.id}, ${index})"
                           />
-                          <span class="whitespace-nowrap">${status.months} месяца</span>
+                          <span class="whitespace-nowrap">${status.months} мес.</span>
                         </div>`;
                 }).join("")}
               </div>

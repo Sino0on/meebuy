@@ -1,12 +1,10 @@
 import datetime
 import json
-import plotly.graph_objs as go
-
 from datetime import timedelta
 from functools import reduce
 from operator import and_
-from plotly.offline import plot
 
+import plotly.graph_objs as go
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
@@ -29,13 +27,15 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.timezone import now
 from django.views import generic
 from django.views.decorators.http import require_POST, require_GET
-
+from plotly.offline import plot
 from rest_framework.generics import ListAPIView
 
 from apps.authentication.forms import (
     ProviderForm,
     UserUpdateForm
 )
+from apps.buyer.models import BuyerImg
+from apps.chat.models import Message
 from apps.product.models import (
     Product,
     ProductCategory,
@@ -59,12 +59,14 @@ from apps.user_cabinet.models import (
     Upping,
     Cabinet
 )
+from apps.user_cabinet.seriazliers import StatusSerializer
 from .forms import (
     ChangePasswordForm,
     PasswordResetForm,
     NewPasswordForm,
     SupportMessageForm
 )
+from .models import Contacts, FAQ
 from ..tender.models import (
     Tender,
     Country,
@@ -72,10 +74,6 @@ from ..tender.models import (
     City,
     SearchRequest
 )
-from .models import Contacts, FAQ
-from apps.user_cabinet.seriazliers import StatusSerializer
-from apps.buyer.models import BuyerImg
-from apps.chat.models import Message
 
 
 # from .freedompay import initiate_payment
@@ -800,6 +798,11 @@ def tariff_buy(request):
     if user.cabinet.balance < status.price:
         return JsonResponse({"Error": "Недостаточно средств"}, status=400)
     if user.cabinet.user_status:
+
+        if user.cabinet.user_status.status == status:
+            return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
+
+    if user.cabinet.user_status:
         if user.cabinet.user_status.status.status == status.status:
             user.cabinet.user_status.end_date += datetime.timedelta(days=status.months * 30)
             user.cabinet.balance -= status.price
@@ -810,12 +813,12 @@ def tariff_buy(request):
                 total=-status.price,
                 description=f"Транзакция покупки статуса пользователя {status.status.title} - {status.months} месяцев"
             )
-            return JsonResponse(data={"Info": "ok"}, status=200)
-
-    user.cabinet.user_status = ActiveUserStatus.objects.create(
+    new_satus, _ = ActiveUserStatus.objects.get_or_create(
         status=status,
         end_date=datetime.date.today() + datetime.timedelta(days=status.months * 30)
     )
+    user.cabinet.user_status = new_satus
+
     Transaction.objects.create(
         user=user.cabinet,
         total=-status.price,
