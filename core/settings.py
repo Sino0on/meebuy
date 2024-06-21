@@ -312,7 +312,7 @@ SIMPLEUI_CONFIG = {
                 },
                 {
                     'name': 'Кабинеты',
-                    'icon': 'fa fa-house',
+                    'icon': 'fa fa-envelopes-bulk',
                     'url': '/admin/user_cabinet/cabinet/'
                 },
                 {
@@ -389,7 +389,7 @@ SIMPLEUI_CONFIG = {
                 },
                 {
                     'name': 'Банера',
-                    'icon': 'fa fa-map',
+                    'icon': 'fa fa-rectangle-ad',
                     'url': '/admin/buyer/banner/'
                 },
             ]
@@ -420,6 +420,7 @@ SIMPLEUI_CONFIG = {
                 },
                 {
                     'name': 'Premium тарифы',
+                    'icon': 'fa fa-dollar-sign',
                     'models': [
 
                         {
@@ -462,6 +463,8 @@ SIMPLEUI_CONFIG = {
                 },
                 {
                     'name': 'Внутренние настройки сайта',
+                    'icon': 'fa fa-bars',
+
                     'models': [
                         {
                             'name': 'Sites',
@@ -474,17 +477,17 @@ SIMPLEUI_CONFIG = {
                             'models': [
                                 {
                                     'name': ' Social accounts',
-                                    'icon': 'fa fa-truck',
+                                    'icon': 'fa fa-hammer',
                                     'url': '/admin/socialaccount/socialaccount/'
                                 },
                                 {
                                     'name': 'Social application tokens',
-                                    'icon': 'fa fa-truck',
+                                    'icon': 'fa fa-hammer',
                                     'url': '/admin/socialaccount/socialtoken/'
                                 },
                                 {
                                     'name': 'Social applications',
-                                    'icon': 'fa fa-tag',
+                                    'icon': 'fa fa-hammer',
                                     'url': 'Social applications'
                                 }]
                         }
