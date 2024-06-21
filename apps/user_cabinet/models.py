@@ -65,8 +65,8 @@ class Status(models.Model):
 class PackageStatus(models.Model):
     status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='packagestatuses',
                                verbose_name=_('Статус'))
-    price = models.DecimalField(verbose_name=_('Цена'), max_digits=100, decimal_places=1)
-    months = models.PositiveIntegerField(verbose_name=_('Количество месяцев'))
+    price = models.DecimalField(verbose_name=_('Цена'), max_digits=100, decimal_places=1, blank=True, null=True)
+    months = models.PositiveIntegerField(verbose_name=_('Количество месяцев'), blank=True, null=True)
     priorety = models.PositiveIntegerField(blank=True, default=1)
 
     def __str__(self):
