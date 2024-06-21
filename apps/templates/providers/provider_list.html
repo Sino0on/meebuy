@@ -242,12 +242,14 @@
                                             <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
                                                 <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                                             </button>
+                                            {% if user.is_authenticated %}
                                             <a
                                                     href="{% url 'chat_create' provider.user.pk %}"
                                                     class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
                                             >
                                                 Написать
                                             </a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -300,12 +302,15 @@
                                             <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
                                                 <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                                             </button>
+                                            {% if user.is_authenticated %}
                                             <a
                                                     href="{% url 'chat_create' provider.user.pk %}"
                                                     class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
                                             >
                                                 Написать
                                             </a>
+                                            {% endif %}
+
                                         </div>
                                     </div>
                                 </div>
@@ -358,12 +363,14 @@
                                             <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
                                                 <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                                             </button>
+                                            {% if user.is_authenticated %}
                                             <a
                                                     href="{% url 'chat_create' provider.user.pk %}"
                                                     class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
                                             >
                                                 Написать
                                             </a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -416,12 +423,14 @@
                                             <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
                                                 <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                                             </button>
+                                            {% if user.is_authenticated %}
                                             <a
                                                     href="{% url 'chat_create' provider.user.pk %}"
                                                     class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]"
                                             >
                                                 Написать
                                             </a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
