@@ -16,6 +16,9 @@
         #error-message.show {
             opacity: 1;
         }
+        #error-message.message-delete {
+            display: none;
+        }
     </style>
 <div id="error-message"></div>
 
@@ -29,6 +32,8 @@
             // Скрываем сообщение через 5 секунд
             setTimeout(() => {
                 errorMessageElement.classList.remove('show');
+                errorMessageElement.classList.add('message-delete');
+
             }, 4000);
         }
 
