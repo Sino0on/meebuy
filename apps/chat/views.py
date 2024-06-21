@@ -123,6 +123,7 @@ def create_chat(request, pk):
 
             return redirect(f'/chat/{chat.id}')
 
+
 @login_required
 def add_to_favorites(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id)

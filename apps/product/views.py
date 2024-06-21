@@ -7,6 +7,7 @@ from PIL import Image
 from six import BytesIO
 
 from django.conf import settings
+from django.contrib import messages
 from django.core.files.base import ContentFile
 from django.http import HttpResponse, Http404, JsonResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -112,7 +113,6 @@ class ProductDetailView(DetailView):
                         )
                         context["open"] = "open"
 
-
         return context
 
 
@@ -121,13 +121,6 @@ class ProductCreateView(CreateView):
     form_class = ProductForm
     template_name = "cabinet/products.html"
     success_url = reverse_lazy("user_products")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = ProductCategory.objects.all()
-        provider, _ = Provider.objects.get_or_create(user=self.request.user)
-        context['provider'] = provider
-        return context
 
     def form_valid(self, form):
         provider = get_object_or_404(Provider, user=self.request.user)
@@ -138,18 +131,20 @@ class ProductCreateView(CreateView):
             max_products = active_user_status.status.status.quantity_products
             current_product_count = Product.objects.filter(provider=provider).count()
             if current_product_count >= max_products:
-                # Если достигнут лимит, продукт создается, но неактивным
                 form.instance.is_active = False
+                messages.warning(self.request, 'Превышен лимит активных продуктов. Продукт создан, но он неактивен.')
             else:
                 form.instance.is_active = True
+                messages.success(self.request, 'Продукт успешно создан и активен.')
         else:
             form.instance.is_active = False
-        form.instance.provider = provider
+            messages.warning(self.request, 'У вас нет активного тарифа. Продукт создан, но он неактивен.')
 
-        print(f"Form data: {form.cleaned_data}")
+        form.instance.provider = provider
 
         response = super().form_valid(form)
 
+        # Обработка изображений
         images = self.request.FILES.getlist("images")
         if images:
             main_image = images[0]
@@ -161,10 +156,6 @@ class ProductCreateView(CreateView):
             ProductImg.objects.create(product=self.object, image=image)
 
         return response
-
-    def form_invalid(self, form):
-        print(f"Form invalid: {form.errors}")
-        return super().form_invalid(form)
 
 
 class ProductUpdateView(UpdateView):
