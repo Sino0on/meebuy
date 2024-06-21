@@ -101,7 +101,7 @@ def create_chat(request, pk):
 
             return redirect(f'/chat/{chat.id}')
     else:
-        if chat_count_today >= 0:
+        if chat_count_today >= 10:
             messages.error(request, f'Вы не можете создать более {10} чатов за сегодня.')
             return redirect(request.META.get('HTTP_REFERER'))
         else:
