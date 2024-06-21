@@ -302,13 +302,18 @@ SIMPLEUI_CONFIG = {
             'models': [
                 {
                     'name': 'Пользователи',
-                    'icon': 'fa fa-industry',
+                    'icon': 'fa fa-user',
                     'url': '/admin/authentication/user/'
                 },
                 {
                     'name': 'Аккаунты',
-                    'icon': 'fa fa-industry',
+                    'icon': 'fa fa-user-secret',
                     'url': '/admin/provider/provider/'
+                },
+                {
+                    'name': 'Кабинеты',
+                    'icon': 'fa fa-house',
+                    'url': '/admin/user_cabinet/cabinet/'
                 },
                 {
                     'name': 'Configurations',
@@ -429,7 +434,7 @@ SIMPLEUI_CONFIG = {
                         },
                         {
                             'name': 'Активные статусы пользователей',
-                            'icon': 'fa fa-user-secret',
+                            'icon': 'fa fa-signal',
                             'url': '/admin/user_cabinet/activeuserstatus/'
                         },
                         {
@@ -439,7 +444,7 @@ SIMPLEUI_CONFIG = {
                         },
                         {
                             'name': 'Активные поднятия',
-                            'icon': 'fa fa-money-bill',
+                            'icon': 'fa fa-chart-line',
                             'url': '/admin/user_cabinet/activeupping/'
                         },
                         {
