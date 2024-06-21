@@ -224,16 +224,16 @@
           </div>
           <div class="flex items-center flex-col">
             <img src="{% static 'assets/images/icons/box.svg' %}" alt="Box" />
-            <span class="counts">${status.quantity_tenders}</span>
+            <span class="counts">${tariff.quantity_tenders}</span>
             <p>Открытий закупок в месяц (на срок ${status.months} мес.)</p>
           </div>
           <div class="flex items-center flex-col">
             <img src="{% static 'assets/images/icons/message.svg' %}" alt="Message" />
-            <span class="counts">${status.dayly_message}</span>
+            <span class="counts">${tariff.dayly_message}</span>
             <p>Исходящих сообщений в день</p>
           </div>
           <div class="flex items-center flex-col">
-            <span class="counts">${status.quantity_products}</span>
+            <span class="counts">${tariff.quantity_products}</span>
             <p>Лимит товаров</p>
           </div>
           <div class="tariffs__info-bonuses">
