@@ -4,6 +4,7 @@ import requests
 
 from urllib.parse import quote, unquote
 from PIL import Image
+from django.db.models import IntegerField, When, Case, Value
 from six import BytesIO
 
 from django.conf import settings
@@ -54,12 +55,28 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        # Аннотируем поле для сортировки с учетом отсутствующих значений статусов
+        queryset = queryset.annotate(
+            provider_status_priority=Case(
+                When(provider__user_cabinet__user_status__status__priorety=True, then=Value(-1)),
+                default='provider__user_cabinet__user_status__status__priorety',
+                output_field=IntegerField(),
+            )
+        )
+
+        # Получаем параметр сортировки из запроса
         order = self.request.GET.get("order")
+
+        # Применяем сортировку
         if order:
-            queryset = queryset.order_by(order)
+            queryset = queryset.order_by('provider_status_priority', order)
+        else:
+            queryset = queryset.order_by('provider_status_priority')
+
+        # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
         return filter.qs
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()

@@ -1,6 +1,7 @@
 from urllib.parse import urlencode
 
 from django.contrib import messages
+from django.db.models import IntegerField, When, Case, Value
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
@@ -26,12 +27,24 @@ class TenderListView(generic.ListView):
 
     def get_queryset(self):
         queryset = Tender.objects.all()
+        queryset = queryset.annotate(
+            status_priority=Case(
+                When(user_cabinet__user_status__isnull=True, then=Value(-1)),
+                default='user_cabinet__user_status__status__priorety',
+                output_field=IntegerField(),
+            )
+        )
         order = self.request.GET.get("order")
         if order:
-            queryset = queryset.order_by(order)
-        self.filter = TenderFilter(self.request.GET, queryset=queryset)
+            queryset = queryset.order_by('status_priority', order)
+        else:
+            queryset = queryset.order_by('status_priority')
 
-        return self.filter.qs
+        self.filter = TenderFilter(self.request.GET, queryset=queryset)
+        queryset = self.filter.qs
+        for q in queryset:
+            print(q.status_priority)
+        return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

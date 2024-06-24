@@ -191,9 +191,10 @@
             </div>
             <div class="tariffs__info-period_term mt-10">
               <p class="">Срок подключения</p>
-              <div class="flex gap-[30px] mt-5">
+              <div class="flex gap-[30px] mt-5 w-full">
               ${tariff.statuses.map((status, index) => {
-                    return `<div class="flex items-center flex-col justify-center">
+                    return `<div class="flex items-center flex-col justify-around" style="margin: 0 auto"
+>
                           <input
                             class="w-6 h-6"
                             type="radio"
@@ -212,19 +213,36 @@
           <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
           <!-- highest position -->
           <div class="flex items-center flex-col">
-            ${status.priorety === 1 ?
-                    "<img src='{% static 'assets/images/tariffs/graph-free.png' %}' alt='Chart'/>"
-                    : ''}
+           ${status.priorety === 0 ?
+            `<div>
+                <img src="{% static 'assets/images/tariffs/graph-free.png' %}" alt="Chart"/  style="margin: 0 auto">
+                <p>Самая низкая позиция в каталоге, компанию трудно найти среди других</p>
+            </div>`
+            : ''}
+           ${status.priorety === 1 ?
+            `<div>
+                <img src="{% static 'assets/images/tariffs/graph-free.png' %}" alt="Chart"/ style="margin: 0 auto">
+                <p>Низкая позиция в каталоге, компанию трудно найти среди других</p>
+            </div>`
+            : ''}
             ${status.priorety === 2 ?
-                    "<img src='{% static 'assets/images/tariffs/graph-premium-lite.svg' %}' alt='Chart'/>"
-                    : ''}
+                `<div>
+                    <img src="{% static 'assets/images/tariffs/graph-premium-lite.svg' %}" alt="Chart"/ style="margin: 0 auto">
+                    <p>Средняя позиция в каталоге, компанию находят чаще</p>
+                </div>`
+                : ''}
             ${status.priorety === 3 ?
-                    "<img src='{% static 'assets/images/tariffs/graph-premium-standard.svg' %}' alt='Chart'/>"
-                    : ''}
+                `<div>
+                    <img src="{% static 'assets/images/tariffs/graph-premium-standard.svg' %}" alt="Chart"/ style="margin: 0 auto">
+                    <p>Средняя позиция в каталоге, компанию находят еще чаще</p>
+                </div>`
+                : ''}
             ${status.priorety === 4 ?
-                    "<img src='{% static 'assets/images/tariffs/graph-premium-max.svg' %}' alt='Chart'/>"
-                    : ''}
-            <p>Средняя позиция в каталоге, компанию находят чаще</p>
+                `<div>
+                    <img src="{% static 'assets/images/tariffs/graph-premium-max.svg' %}" alt="Chart"/>
+                    <p>Самая высокая позиция, больше всего обращений</p>
+                </div>`
+                : ''}
           </div>
           <div class="flex items-center flex-col">
             <img src="{% static 'assets/images/icons/box.svg' %}" alt="Box" />
