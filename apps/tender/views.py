@@ -1,5 +1,6 @@
 from urllib.parse import urlencode
 
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
@@ -129,11 +130,15 @@ class TenderCreateView(generic.CreateView):
                 current_tender_count = Tender.objects.filter(user=self.request.user, is_active=True).count()
                 if current_tender_count >= self.request.user.cabinet.user_status.status.status.quantity_tenders:
                     form.instance.is_active = False
+                    messages.warning(self.request, 'Вы привысили количество закупок доступных на вашем тарифе.')
+
                 else:
                     form.instance.is_active = True
             else:
-                if Tender.objects.filter(user=self.request.user, is_active=True).count() >= 3:
+                if Tender.objects.filter(user=self.request.user, is_active=True).count() >= 5:
                     form.instance.is_active = False
+                    messages.warning(self.request, 'Вы привысили количество закупок доступных на вашем тарифе.')
+
                 else:
                     form.instance.is_active = True
 

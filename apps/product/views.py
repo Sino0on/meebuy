@@ -129,7 +129,7 @@ class ProductCreateView(CreateView):
 
         if active_user_status:
             max_products = active_user_status.status.status.quantity_products
-            current_product_count = Product.objects.filter(provider=provider).count()
+            current_product_count = Product.objects.filter(provider=provider, is_active=True).count()
             if current_product_count >= max_products:
                 form.instance.is_active = False
                 messages.warning(self.request, 'Превышен лимит активных продуктов. Продукт создан, но он неактивен.')
@@ -137,8 +137,11 @@ class ProductCreateView(CreateView):
                 form.instance.is_active = True
                 messages.success(self.request, 'Продукт успешно создан и активен.')
         else:
-            form.instance.is_active = False
-            messages.warning(self.request, 'У вас нет активного тарифа. Продукт создан, но он неактивен.')
+            if Product.objects.filter(provider=provider, is_active=True).count() >= 100:
+                messages.warning(self.request, 'Превышен лимит активных продуктов. Продукт создан, но он неактивен.')
+                form.instance.is_active = False
+            else:
+                form.instance.is_active = True
 
         form.instance.provider = provider
 
