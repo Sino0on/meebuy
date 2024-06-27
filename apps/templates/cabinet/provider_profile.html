@@ -50,7 +50,11 @@
                             </div>
                             {% endfor %}
                             {% endif %}
-                            <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
+                            {% if provider.is_modered %}
+                                <br>
+                            {% else %}
+                                <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
+                            {% endif %}
                             <a href="{% if provider.is_provider %}{% url 'anketa' %}{% else %}{% url 'anketa_buyer' %}{% endif %}">
                             <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5">Редактировать анкету</button>
                             </a>
