@@ -318,12 +318,6 @@ SIMPLEUI_CONFIG = {
                 {
                     'name': 'Configurations',
                     'models': [
-
-                        {
-                            'name': 'Тэги',
-                            'icon': 'fa fa-tag',
-                            'url': '/admin/provider/tag/'
-                        },
                         {
                             'name': 'Категории Поставщиков',
                             'icon': 'fa fa-columns',
