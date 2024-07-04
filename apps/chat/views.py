@@ -79,9 +79,10 @@ def create_chat(request, pk):
     ).count()
 
     if request.user.cabinet.user_status:
-        if chat_count_today >= request.user.cabinet.user_status.status.active_statues.status.dayly_message:
-            messages.error(request, f'Вы не можете создать более {request.user.cabinet.user_status.status.active_statues.status.dayly_message} чатов за сегодня.')
-            return redirect(request.META.get('HTTP_REFERER'))
+        if request.user.cabinet.user_status.status:
+            if chat_count_today >= request.user.cabinet.user_status.status.active_statues.status.dayly_message:
+                messages.error(request, f'Вы не можете создать более {request.user.cabinet.user_status.status.active_statues.status.dayly_message} чатов за сегодня.')
+                return redirect(request.META.get('HTTP_REFERER'))
         else:
             # Проверяем, существует ли уже чат между этими двумя пользователями
             existing_chat = Chat.objects.filter(
@@ -118,8 +119,8 @@ def create_chat(request, pk):
             # Если чата нет, создаем новый
             chat = Chat.objects.create(user_first=request.user, user_second=user)
 
-            ChatUserStatus.objects.create(chat=chat, user=request.user)
-            ChatUserStatus.objects.create(chat=chat, user=user)
+            ChatUserStatus.objects.get_or_create(chat=chat, user=request.user)
+            ChatUserStatus.objects.get_or_create(chat=chat, user=user)
 
             return redirect(f'/chat/{chat.id}')
 

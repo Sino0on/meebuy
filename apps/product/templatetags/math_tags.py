@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django import template
 from django.shortcuts import get_object_or_404
 
@@ -17,8 +19,14 @@ def calculate(obj_id):
             for formula in formulas:
                 prices.append(formula.apply_formula(product.price))
 
-            return min(prices)
+            min_price = min(prices)
+        else:
+            min_price = product.price
 
-        return product.price
+        min_price = Decimal(min_price).normalize()
+
+        min_price_str = format(min_price, 'f').rstrip('0').rstrip('.')
+
+        return min_price_str
     except Exception as e:
         return str(e)

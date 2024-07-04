@@ -259,7 +259,7 @@
             {{ object.mini_desc }}
           </p>
                                             <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                        Цена: <span class="text-dark-logo font-bold">{% calculate object.id %}</span>
+                                        Цена: <span class="text-dark-logo font-bold">{% calculate object.id %} {% if object.currency %}{{ object.currency }}{% endif %}</span>
                                     </div>
           <div class="mt-auto lg-md:flex justify-between items-end ">
           <a class="btn-filled w-full text-center p-3 lg-md:max-w-[139px] pl-1 pr-1" href="{% url 'product_detail' object.id %}">
