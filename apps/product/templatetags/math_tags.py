@@ -23,9 +23,11 @@ def calculate(obj_id):
         else:
             min_price = product.price
 
-        min_price = Decimal(min_price).normalize()
-
-        min_price_str = format(min_price, 'f').rstrip('0').rstrip('.')
+        min_price_decimal = Decimal(min_price)
+        if min_price_decimal == min_price_decimal.to_integral():
+            min_price_str = str(min_price_decimal.quantize(Decimal('1')))
+        else:
+            min_price_str = str(min_price_decimal).rstrip('0').rstrip('.')
 
         return min_price_str
     except Exception as e:
