@@ -156,7 +156,7 @@
                                     <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">
                                         {{ product.description|truncatechars:100 }}</p>
                                     <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                        Цена: <span class="text-dark-logo font-bold">{% calculate product.id %}</span>
+                                        Цена: <span class="text-dark-logo font-bold">{% calculate product.id %}{{ product.currency }}</span>
                                     </div>
                                     <a href="/product/detail/{{ product.id }}/">
                                         <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
