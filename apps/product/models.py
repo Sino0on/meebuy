@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -120,30 +120,38 @@ class PriceColumn(models.Model):
         price = base_price
         formulas = self.formula.split(";")
 
-        for formula_part in formulas:
-            operator = formula_part[0]
-            value = formula_part[1:]
+        def apply_formula(self, base_price):
+            try:
+                price = base_price
+                formulas = self.formula.split(";")
 
-            if value.endswith("%"):
-                percentage = Decimal(value[:-1]) / 100
-                if operator == "+":
-                    price += price * percentage
-                elif operator == "-":
-                    price -= price * percentage
-            elif value.endswith("$"):
-                amount = Decimal(value[:-1])
-                if operator == "+":
-                    price += amount
-                elif operator == "-":
-                    price -= amount
-            else:
-                amount = Decimal(value)
-                if operator == "+":
-                    price += amount
-                elif operator == "-":
-                    price -= amount
+                for formula_part in formulas:
+                    operator = formula_part[0]
+                    value = formula_part[1:]
 
-        return price
+                    if value.endswith("%"):
+                        percentage = Decimal(value[:-1]) / 100
+                        if operator == "+":
+                            price += price * percentage
+                        elif operator == "-":
+                            price -= price * percentage
+                    elif value.endswith("$"):
+                        amount = Decimal(value[:-1])
+                        if operator == "+":
+                            price += amount
+                        elif operator == "-":
+                            price -= amount
+                    else:
+                        amount = Decimal(value)
+                        if operator == "+":
+                            price += amount
+                        elif operator == "-":
+                            price -= amount
+
+                return price
+            except (InvalidOperation, IndexError, ValueError) as e:
+                # Обработка ошибок
+                return ''
 
     def __str__(self):
         return self.name

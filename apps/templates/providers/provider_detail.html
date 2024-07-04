@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load math_tags %}
+
 {% load custom_filters %}
 
 {% block title %}
@@ -37,7 +39,6 @@
 
                             {% if provider.is_recommended %}
                                 <img class="cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}" alt="">
-                                alt="">
                             {% endif %}
                             <svg
                                     class="cursor-pointer transition-colors"
@@ -108,6 +109,16 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="container">
+                <br>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'chat_create' provider.user.pk %}"
+                       class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                        Написать
+                    </a>
+                {% endif %}
             </div>
         </section>
         <section class="supplier__detail-products mt-12 lg:mt-20">
@@ -145,7 +156,7 @@
                                     <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">
                                         {{ product.description|truncatechars:100 }}</p>
                                     <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                        Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
+                                        Цена: <span class="text-dark-logo font-bold">{% calculate product.id %}</span>
                                     </div>
                                     <a href="/product/detail/{{ product.id }}/">
                                         <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
