@@ -118,6 +118,11 @@
                        class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
                         Написать
                     </a>
+                {% else %}
+                    <a href="{% url 'login' %}"
+                       class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                        Написать
+                    </a>
                 {% endif %}
             </div>
         </section>

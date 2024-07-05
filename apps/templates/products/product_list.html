@@ -211,7 +211,7 @@
       >
         {% for object in object_list %}
         <div
-          class="card product-item shadow-card-shadow p-2.5 lg-md:p-5 relative rounded-[10px] flex flex-col"
+          class="card justify-between product-item shadow-card-shadow p-2.5 lg-md:p-5 relative rounded-[10px] flex flex-col"
         >
           <!-- if favorite add class "active" -->
           <svg
@@ -261,7 +261,7 @@
                                             <div class="text-dark-text text-lg font-light  lg:mt-[26px]">
                                         Цена: <span class="text-dark-logo font-bold">{% calculate object.id %} {% if object.currency %}{{ object.currency }}{% endif %}</span>
                                     </div>
-          <div class="mt-auto lg-md:flex justify-between items-end ">
+          <div class="mt-2 flex lg-md:flex justify-between items-end ">
           <a class="btn-filled w-full text-center p-3 lg-md:max-w-[139px] pl-1 pr-1" href="{% url 'product_detail' object.id %}">
                Подробнее
           </a>
