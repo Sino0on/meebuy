@@ -146,7 +146,7 @@ class ProviderFilter(django_filters.FilterSet):
     def filter_by_category(self, queryset, name, value):
         if value:
             try:
-                category = Category.objects.get(title=value)
+                category = Category.objects.get(id=value)
                 return queryset.filter(category=category)
             except Category.DoesNotExist:
                 return queryset.none()
