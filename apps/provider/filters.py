@@ -1,6 +1,6 @@
 import django_filters
 from django import forms
-from apps.provider.models import Provider
+from apps.provider.models import Provider, Category
 from apps.tender.models import City, Country, Region
 
 
@@ -63,6 +63,7 @@ class ProviderFilter(django_filters.FilterSet):
                                                method='filter_boolean_field')
     electronic_money = django_filters.BooleanFilter(widget=forms.CheckboxInput, label='Электронные деньги',
                                                     method='filter_boolean_field')
+    category = django_filters.CharFilter(label='Категория', method='filter_by_category')
 
     class Meta:
         model = Provider
@@ -140,4 +141,13 @@ class ProviderFilter(django_filters.FilterSet):
     def filter_by_order(self, queryset, name, value):
         if value:
             return queryset.order_by(value)
+        return queryset
+
+    def filter_by_category(self, queryset, name, value):
+        if value:
+            try:
+                category = Category.objects.get(title=value)
+                return queryset.filter(category=category)
+            except Category.DoesNotExist:
+                return queryset.none()
         return queryset
