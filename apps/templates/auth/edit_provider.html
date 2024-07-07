@@ -413,71 +413,83 @@
 {% endblock %} {% block js %}
     <script src="{% static 'pages/profile/myCompany/editProfile/index.js' %}"></script>
     <script src="{% static 'pages/profile/profile.js' %}"></script>
-    <script>
-        const locationContainer = document.getElementById("locationContainer");
-        const countrySelect = document.getElementById("country-options");
-        const selectedCountry = countrySelect.getAttribute("data-selected-country");
-        const regionSelect = document.getElementById("region-options");
-        const selectedRegion = regionSelect.getAttribute("data-selected-region");
-        const citySelect = document.getElementById("city-options");
-        const selectedCity = citySelect.getAttribute("data-selected-city");
-        const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
-        const countries = JSON.parse(formattedString);
-        const transformedData = transformData(countries);
-        const countryOptions = countrySelect.querySelectorAll('option');
+<script>
+    const locationContainer = document.getElementById("locationContainer");
+    const countrySelect = document.getElementById("country-options");
+    const selectedCountry = countrySelect.getAttribute("data-selected-country");
+    const regionSelect = document.getElementById("region-options");
+    const selectedRegion = regionSelect.getAttribute("data-selected-region");
+    const citySelect = document.getElementById("city-options");
+    const selectedCity = citySelect.getAttribute("data-selected-city");
+    const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
+    const countries = JSON.parse(formattedString);
+    const transformedData = transformData(countries);
 
-        countryOptions.forEach(option => {
-            option.selected = option.value === selectedCountry;
-        })
+    // Функция для установки выбранного значения или первого значения по умолчанию
+    function setSelectedValue(selectElement, value, defaultValue) {
+        const options = Array.from(selectElement.options);
+        const selectedOption = options.find(option => option.value === value);
+        if (selectedOption) {
+            selectedOption.selected = true;
+        } else {
+            options[0].selected = true;
+            return options[0].value;
+        }
+        return value;
+    }
 
+    const selectedOrDefaultCountry = setSelectedValue(countrySelect, selectedCountry, countries[0].title);
+    addOptions(regionSelect, transformedData[selectedOrDefaultCountry]);
 
-        addOptions(regionSelect, transformedData[selectedCountry]);
-        addOptions(citySelect, transformedData[selectedCountry][selectedRegion]);
+    const selectedOrDefaultRegion = setSelectedValue(regionSelect, selectedRegion, Object.keys(transformedData[selectedOrDefaultCountry])[0]);
+    addOptions(citySelect, transformedData[selectedOrDefaultCountry][selectedOrDefaultRegion]);
 
-        function transformData(data) {
-            const transformed = {};
+    setSelectedValue(citySelect, selectedCity, Object.keys(transformedData[selectedOrDefaultCountry][selectedOrDefaultRegion])[0]);
 
-            data.forEach((country) => {
-                const countryObj = {};
+    function transformData(data) {
+        const transformed = {};
 
-                country.regions.forEach((region) => {
-                    const regionObj = {};
+        data.forEach((country) => {
+            const countryObj = {};
 
-                    region.cities.forEach((city) => {
-                        regionObj[city.title] = city.title;
-                    });
+            country.regions.forEach((region) => {
+                const regionObj = {};
 
-                    countryObj[region.title] = regionObj;
+                region.cities.forEach((city) => {
+                    regionObj[city.title] = city.title;
                 });
 
-                transformed[country.title] = countryObj;
+                countryObj[region.title] = regionObj;
             });
 
-            return transformed;
-        }
-
-        countrySelect.addEventListener("change", (e) => {
-            const selectedCountry = e.target.value;
-            addOptions(regionSelect, transformedData[selectedCountry]);
-            addOptions(citySelect, transformedData[selectedCountry][regionSelect.value]);
+            transformed[country.title] = countryObj;
         });
 
-        regionSelect.addEventListener("change", (e) => {
-            const selectedRegion = e.target.value;
-            addOptions(citySelect, transformedData[countrySelect.value][selectedRegion]);
-        });
+        return transformed;
+    }
 
-        function addOptions(element, options) {
-            element.innerHTML = "";
-            for (const option in options) {
-                const optionEl = document.createElement("option");
-                optionEl.textContent = option;
-                optionEl.value = option;
-                if (option === selectedCountry || option === selectedRegion || option === selectedCity) {
-                    optionEl.selected = true;
-                }
-                element.appendChild(optionEl);
+    countrySelect.addEventListener("change", (e) => {
+        const selectedCountry = e.target.value;
+        addOptions(regionSelect, transformedData[selectedCountry]);
+        addOptions(citySelect, transformedData[selectedCountry][regionSelect.value]);
+    });
+
+    regionSelect.addEventListener("change", (e) => {
+        const selectedRegion = e.target.value;
+        addOptions(citySelect, transformedData[countrySelect.value][selectedRegion]);
+    });
+
+    function addOptions(element, options) {
+        element.innerHTML = "";
+        for (const option in options) {
+            const optionEl = document.createElement("option");
+            optionEl.textContent = option;
+            optionEl.value = option;
+            if (option === selectedCountry || option === selectedRegion || option === selectedCity) {
+                optionEl.selected = true;
             }
+            element.appendChild(optionEl);
         }
-    </script>
+    }
+</script>
 {% endblock %}
