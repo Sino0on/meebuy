@@ -357,14 +357,13 @@
                     >
                       <input
                         type="file"
-                        name="images"
+                        name="image_1"
                         id="file1"
                         class="photos__input sr-only"
                       />
-                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
-{#                        {% if object.image %}#}
-{#    <img src="{{ object.image.url }}" alt="Product Image 1">#}
-{#{% endif %}#}
+                    {% if image_1 %}
+                        <img src="{{ image_1.image.url }}" alt="Product Image 1">
+                    {% endif %}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -396,14 +395,13 @@
                     >
                       <input
                         type="file"
-                        name="images"
+                        name="image_2"
                         id="file2"
                         class="photos__input sr-only"
                       />
-                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
-{#                        {% if object.images.count > 0 %}#}
-{#    <img src="{{ object.images.all.0.image.url }}" alt="Product Image 2">#}
-{#{% endif %}#}
+                    {% if image_2 %}
+                        <img src="{{ image_2.image.url }}" alt="Product Image 1">
+                    {% endif %}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -434,14 +432,13 @@
                     >
                       <input
                         type="file"
-                        name="images"
+                        name="image_3"
                         id="file3"
                         class="photos__input sr-only"
                       />
-                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
-{#                        {% if object.images.count > 1 %}#}
-{#    <img src="{{ object.images.all.1.image.url }}" alt="Product Image 3">#}
-{#{% endif %}#}
+                {% if image_3 %}
+                        <img src="{{ image_3.image.url }}" alt="Product Image 1">
+                    {% endif %}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -472,14 +469,13 @@
                     >
                       <input
                         type="file"
-                        name="images"
+                        name="image_4"
                         id="file4"
                         class="photos__input sr-only"
                       />
-                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
-{#                        {% if object.images.count > 2 %}#}
-{#    <img src="{{ object.images.all.2.image.url }}" alt="Product Image 4">#}
-{#{% endif %}#}
+                {% if image_4 %}
+                        <img src="{{ image_4.image.url }}" alt="Product Image 1">
+                    {% endif %}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -510,14 +506,13 @@
                     >
                       <input
                         type="file"
-                        name="images"
+                        name="image_5"
                         id="file5"
                         class="photos__input sr-only"
                       />
-                      <!-- Image placeholder that will be replaced or shown when file is chosen -->
-{#                        {% if object.images.count > 3 %}#}
-{#    <img src="{{ object.images.all.3.image.url }}" alt="Product Image 5">#}
-{#{% endif %}#}
+                {% if image_5 %}
+                        <img src="{{ image_5.image.url }}" alt="Product Image 1">
+                    {% endif %}
                       <img
                         src="{% static 'assets/images/pink-boots.png' %}"
                         alt=""
@@ -548,7 +543,7 @@
                     >
                       <input
                         type="file"
-                        name="images"
+                        name="image_6"
                         id="file6"
                         class="photos__input sr-only"
                       />
@@ -558,10 +553,9 @@
                         class="hidden object-cover h-full w-full"
                         id="preview6"
                       />
-                      <!-- Default icon to show before file selection -->
-{#                        {% if object.images.count > 4 %}#}
-{#    <img src="{{ object.images.all.4.image.url }}" alt="Product Image 6">#}
-{#{% endif %}#}
+                {% if image_6 %}
+                        <img src="{{ image_6.image.url }}" alt="Product Image 1">
+                    {% endif %}
                       <svg
                         width="14"
                         height="14"

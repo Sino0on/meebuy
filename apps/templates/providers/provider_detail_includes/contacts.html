@@ -4,13 +4,15 @@
         <div class="flex items-center gap-3">
             <img src="{% static 'assets/images/icons/location.svg' %}" alt=""/>
             <p class="text-[#A0A0A0] font-normal text-[16px]">
-                {% if provider.city and provider.address %}
-                    {{ provider.city }} {{ provider.address }}
+                {% if provider.city %}
+                    {{ provider.city }}   {% if provider.address %}{{ provider.address }}{% endif %}
                 {% else %}
                     Адрес не указан
+
                 {% endif %}
             </p>
         </div>
+
         <div class="flex items-center gap-3">
             <img src="{% static 'assets/images/icons/email.svg' %}" alt=""/>
             <p class="text-[#A0A0A0] font-normal text-[16px]">

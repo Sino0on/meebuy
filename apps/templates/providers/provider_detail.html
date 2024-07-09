@@ -93,10 +93,14 @@
                                 </div>
                             </div>
                             <p class="font-medium text-sm my-[20px] lg-md:my-0 xl:text-lg">{{ provider.mini_desc }}</p>
-                            <div class="flex gap-2 text-base text-[#4D4D4D] normal-case xl:text-lg">
-                                <img class="text-[#4D4D4D]" src="{% static 'assets/images/icons/location.svg' %}"
-                                     alt="Location"/>
-                                <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>
+{#                            <div class="flex gap-2 text-base text-[#4D4D4D] normal-case xl:text-lg">#}
+{#                                <img class="text-[#4D4D4D]" src="{% static 'assets/images/icons/location.svg' %}"#}
+{#                                     alt="Location"/>#}
+{#                            <div>#}
+{#                                                                <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>#}
+                                {% if user.is_authenticated %}
+                                        {% include 'providers/provider_detail_includes/contacts.html' %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -297,7 +301,6 @@
                             </li>
                         </ul>
                     </div>
-                    {% include 'providers/provider_detail_includes/contacts.html' %}
                 </div>
             </div>
         </section>

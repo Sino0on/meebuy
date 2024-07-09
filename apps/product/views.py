@@ -1,21 +1,19 @@
 import os
+from urllib.parse import quote, unquote
+
 import openpyxl
 import requests
-
-from urllib.parse import quote, unquote
 from PIL import Image
-from django.db.models import IntegerField, When, Case, Value
-from six import BytesIO
-
 from django.conf import settings
 from django.contrib import messages
 from django.core.files.base import ContentFile
+from django.db.models import IntegerField, When, Case, Value
 from django.http import HttpResponse, Http404, JsonResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
@@ -24,6 +22,7 @@ from django.views.generic import (
     DetailView,
     FormView,
 )
+from six import BytesIO
 
 from apps.product.filters import ProductFilter
 from apps.product.forms import (
@@ -77,6 +76,7 @@ class ProductListView(ListView):
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
         return filter.qs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()
@@ -116,7 +116,6 @@ class ProductDetailView(DetailView):
             category=product.category
         ).exclude(id=product.id)[:5]
         context["prices"] = self.get_product_prices()
-
 
         if self.request.GET.get("open"):
             if self.request.user.is_authenticated:
@@ -186,21 +185,28 @@ class ProductUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = ProductCategory.objects.all()
+        context["categories"] = ProductCategory.objects.filter(provider=self.object.provider)
+        # Получаем изображения продукта
+        product_images = list(ProductImg.objects.filter(product=self.object))
+        for i in range(1, 7):
+            context[f"image_{i}"] = product_images[i - 1] if i <= len(product_images) else None
+
         return context
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        images = self.request.FILES.getlist("images")
-        if images:
-            ProductImg.objects.filter(product=self.object).delete()
-            main_image = images[0]
-            self.object.image = main_image
-            self.object.save()
 
-        for image in images[1:6]:
-            if image:
-                ProductImg.objects.create(product=self.object, image=image)
+        current_images = list(ProductImg.objects.filter(product=self.object))
+
+        for i in range(1, 7):
+            image_file = self.request.FILES.get(f"image_{i}")
+            if image_file:
+                if i <= len(current_images):
+                    current_images[i - 1].image = image_file
+                    current_images[i - 1].save()
+                else:
+                    ProductImg.objects.create(product=self.object, image=image_file)
+
         return response
 
 
