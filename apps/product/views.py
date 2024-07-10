@@ -48,7 +48,7 @@ from apps.user_cabinet.models import Contacts, OpenNumberCount
 class ProductListView(ListView):
     model = Product
     context_object_name = "products"
-    paginate_by = 10
+    paginate_by = 12
     template_name = "products/product_list.html"
     filter_class = ProductFilter
 

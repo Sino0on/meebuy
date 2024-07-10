@@ -31,4 +31,5 @@ def calculate(obj_id):
 
         return min_price_str
     except Exception as e:
-        return str(e)
+        print(e)
+        return product.price
