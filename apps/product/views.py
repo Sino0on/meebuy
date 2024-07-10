@@ -198,6 +198,10 @@ class ProductUpdateView(UpdateView):
 
         current_images = list(ProductImg.objects.filter(product=self.object))
 
+        if current_images:
+            self.object.image = current_images[0].image
+            self.object.save()
+
         for i in range(1, 7):
             image_file = self.request.FILES.get(f"image_{i}")
             if image_file:
