@@ -1,3 +1,4 @@
+import traceback
 from decimal import Decimal
 
 from django import template
@@ -32,4 +33,5 @@ def calculate(obj_id):
         return min_price_str
     except Exception as e:
         print(e)
+        traceback.print_tb(e.__traceback__)
         return product.price

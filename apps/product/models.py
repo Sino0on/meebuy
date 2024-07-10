@@ -117,41 +117,37 @@ class PriceColumn(models.Model):
     )
 
     def apply_formula(self, base_price):
-        price = base_price
-        formulas = self.formula.split(";")
+        try:
+            price = base_price
+            formulas = self.formula.split(";")
 
-        def apply_formula(self, base_price):
-            try:
-                price = base_price
-                formulas = self.formula.split(";")
+            for formula_part in formulas:
+                operator = formula_part[0]
+                value = formula_part[1:]
 
-                for formula_part in formulas:
-                    operator = formula_part[0]
-                    value = formula_part[1:]
+                if value.endswith("%"):
+                    percentage = Decimal(value[:-1]) / 100
+                    if operator == "+":
+                        price += price * percentage
+                    elif operator == "-":
+                        price -= price * percentage
+                elif value.endswith("$"):
+                    amount = Decimal(value[:-1])
+                    if operator == "+":
+                        price += amount
+                    elif operator == "-":
+                        price -= amount
+                else:
+                    amount = Decimal(value)
+                    if operator == "+":
+                        price += amount
+                    elif operator == "-":
+                        price -= amount
 
-                    if value.endswith("%"):
-                        percentage = Decimal(value[:-1]) / 100
-                        if operator == "+":
-                            price += price * percentage
-                        elif operator == "-":
-                            price -= price * percentage
-                    elif value.endswith("$"):
-                        amount = Decimal(value[:-1])
-                        if operator == "+":
-                            price += amount
-                        elif operator == "-":
-                            price -= amount
-                    else:
-                        amount = Decimal(value)
-                        if operator == "+":
-                            price += amount
-                        elif operator == "-":
-                            price -= amount
-
-                return price
-            except (InvalidOperation, IndexError, ValueError) as e:
-                # Обработка ошибок
-                return ''
+            return price
+        except (InvalidOperation, IndexError, ValueError) as e:
+            # Обработка ошибок
+            return ''
 
     def __str__(self):
         return self.name
