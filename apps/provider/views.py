@@ -46,7 +46,7 @@ class ProviderListView(generic.ListView):
         )
         for cat in categories:
             print(cat.has_children)
-        context['categories'] = categories
+        context['categories'] = categories.distinct()
         context["all"] = True
         context["filter"] = self.filter
         contacts = Contacts.load()
