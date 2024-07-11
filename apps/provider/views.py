@@ -126,7 +126,7 @@ class ProviderCategoryListView(ProviderListView):
             )
         )
         print(categories)
-        context['categories'] = categories
+        context['categories'] = categories.distinct()
         context["all"] = False
 
         return context
