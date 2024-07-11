@@ -107,7 +107,7 @@
                         {% for i in categories %}
                             <li class="">
                                 <a class="flex items-center gap-[10px] w-fit"
-                                   href="/provider/list/?category={{ i.pk }}">
+                                   href="{% if i.has_children %}{% url "provider_category_list" i.id %}{% else %}/provider/list/?category={{ i.pk }}{% endif %}">
                                     <div class="shadow-category-black text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12">
                                         {% if i.icon %}<img src="{{ i.icon.url }}" alt="">{% endif %}
                                     </div>

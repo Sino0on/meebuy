@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
+from django.db.models import When, Case, BooleanField
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
@@ -35,7 +36,15 @@ class HomeView(TemplateView):
         context['rec_products'] = Product.objects.all().order_by('-id')[:6]
         context['new_products'] = Product.objects.all().order_by('-id')[:6]
         context['new_providers'] = Provider.objects.filter(is_modered=True, is_provider=True).order_by('-id')[:4]
-        context['categories'] = Category.objects.filter(category=None)
+        categories = Category.objects.filter(category=None).annotate(
+            has_children=Case(
+                When(categor__isnull=False, then=True),
+                default=False,
+                output_field=BooleanField()
+            )
+        )
+        context['categories'] = categories
+
         context['tenders'] = Tender.objects.all()[:8]
         contacts = Contacts.load()
         context['contacts'] = contacts
