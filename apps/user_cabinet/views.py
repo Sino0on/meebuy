@@ -39,7 +39,7 @@ from apps.chat.models import Message
 from apps.product.models import (
     Product,
     ProductCategory,
-    PriceColumn
+    PriceColumn, Currency
 )
 from apps.provider.models import (
     ProvideImg,
@@ -516,6 +516,11 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
             context['has_products'] = True
         else:
             context['has_products'] = False
+
+        currency = Currency.objects.all()
+        if not currency:
+            currency = Currency.objects.create(name="Сом", code="KGS")
+        context["currencies"] = Currency.objects.all()
 
         return context
 
