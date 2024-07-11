@@ -150,10 +150,6 @@ class ProductCreateView(CreateView):
         provider = get_object_or_404(Provider, user=self.request.user)
         cabinet = provider.user.cabinet
         active_user_status = cabinet.user_status
-        currency = self.request.POST.get("currency")
-        c = Currency.objects.get(id=currency)
-        self.object.currency = c.code
-        self.object.save()
 
         if active_user_status:
             max_products = active_user_status.status.status.quantity_products
@@ -174,6 +170,12 @@ class ProductCreateView(CreateView):
         form.instance.provider = provider
 
         response = super().form_valid(form)
+
+        currency = self.request.POST.get("currency")
+        c = Currency.objects.get(id=currency)
+        self.object.currency = c.code
+        self.object.save()
+
 
         # Обработка изображений
         images = self.request.FILES.getlist("images")
