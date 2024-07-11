@@ -43,7 +43,7 @@ class HomeView(TemplateView):
                 output_field=BooleanField()
             )
         )
-        context['categories'] = categories
+        context['categories'] = categories.distinct()
 
         context['tenders'] = Tender.objects.all()[:8]
         contacts = Contacts.load()

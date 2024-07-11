@@ -99,25 +99,7 @@
         </section>
         <!-- category -->
         <section class="category black bg-dark text-white py-[60px]">
-            <div class="container">
-                <div>
-                    <h2 class="text-center text-lg font-black uppercase md:text-2xl xl:text-3xl">Категории
-                        поставщиков</h2>
-                    <ul class="grid grid-cols-1 gap-9 text-base mt-5 md:grid-cols-2 lg-md:gap-[30px] lg-md:grid-cols-3 xl:text-lg">
-                        {% for i in categories %}
-                            <li class="">
-                                <a class="flex items-center gap-[10px] w-fit"
-                                   href="{% if i.has_children %}{% url "provider_category_list" i.id %}{% else %}/provider/list/?category={{ i.pk }}{% endif %}">
-                                    <div class="shadow-category-black text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12">
-                                        {% if i.icon %}<img src="{{ i.icon.url }}" alt="">{% endif %}
-                                    </div>
-                                    <span>{{ i.title }}</span>
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+            {% include 'includes/caterorylist.html' %}
         </section>
         <!-- recommended products -->
         <section class="recommended__products mt-12">

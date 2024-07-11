@@ -47,7 +47,7 @@ class ProviderListView(generic.ListView):
         for cat in categories:
             print(cat.has_children)
         context['categories'] = categories
-        # context["types"] = Tag.objects.all()
+        context["all"] = True
         context["filter"] = self.filter
         contacts = Contacts.load()
         context["contacts"] = contacts
@@ -127,6 +127,8 @@ class ProviderCategoryListView(ProviderListView):
         )
         print(categories)
         context['categories'] = categories
+        context["all"] = False
+
         return context
 
 
