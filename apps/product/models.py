@@ -155,3 +155,15 @@ class PriceColumn(models.Model):
     class Meta:
         verbose_name = "Колонка цены"
         verbose_name_plural = "Колонки цен"
+
+
+class Currency(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Название валюты")
+    code = models.CharField(max_length=255, verbose_name="Код валюты")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Валюта"
+        verbose_name_plural = "Валюты"

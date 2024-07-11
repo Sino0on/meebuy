@@ -35,7 +35,7 @@ from apps.product.models import (
     Product,
     ProductImg,
     ProductCategory,
-    PriceColumn
+    PriceColumn, Currency
 )
 from apps.provider.models import (
     Category,
@@ -186,7 +186,10 @@ class ProductUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = ProductCategory.objects.filter(provider=self.object.provider)
-        # Получаем изображения продукта
+        currency = Currency.objects.all()
+        if not currency:
+            currency = Currency.objects.create(name="Сом", code="KGS")
+        context["currencies"] = Currency.objects.all()
         product_images = list(ProductImg.objects.filter(product=self.object))
         for i in range(1, 7):
             context[f"image_{i}"] = product_images[i - 1] if i <= len(product_images) else None
@@ -195,6 +198,10 @@ class ProductUpdateView(UpdateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        currency = self.request.POST.get("currency")
+        c = Currency.objects.get(id=currency)
+        self.object.currency = c.code
+        self.object.save()
 
         current_images = list(ProductImg.objects.filter(product=self.object))
 

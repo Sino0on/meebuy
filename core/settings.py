@@ -413,6 +413,11 @@ SIMPLEUI_CONFIG = {
                     'url': '/admin/user_cabinet/faq/'
                 },
                 {
+                    'name': 'Валюты',
+                    'icon': 'fa fa-money-bill',
+                    'url': '/admin/product/currency/'
+                },
+                {
                     'name': 'Premium тарифы',
                     'icon': 'fa fa-dollar-sign',
                     'models': [
