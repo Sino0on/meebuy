@@ -36,7 +36,7 @@ class ProviderListView(generic.ListView):
         context['wholesale'] = queryset.filter(is_modered=True, is_provider=True, type='wholesale')
         context['manufacturing'] = queryset.filter(is_modered=True, is_provider=True, type='manufacturing[')
         context['services'] = queryset.filter(is_modered=True, is_provider=True, type='services')
-        context["categories"] = Category.objects.filter(categor=None)
+        context["categories"] = Category.objects.filter(category=None)
         # context["types"] = Tag.objects.all()
         context["filter"] = self.filter
         contacts = Contacts.load()
@@ -107,8 +107,8 @@ class ProviderCategoryListView(ProviderListView):
         return self.filter.qs
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.filter(categor=self.kwargs['pk'])
-        context['have_children'] = any(Category.objects.filter(categor=self.kwargs['pk']))
+        context["categories"] = Category.objects.filter(category=self.kwargs['pk'])
+        context['have_children'] = any(Category.objects.filter(category=self.kwargs['pk']))
         return context
 
 
