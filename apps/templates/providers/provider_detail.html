@@ -11,53 +11,45 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'pages/supplierDetail/index.css' %}">
     <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-        }
-        .model-flex{
-            display: flex;
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    position: relative;
+    margin: auto;
+    padding: 0;
+    width: 80%;
+    max-width: 1000px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+.btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #808080;
+    background: none;
+    text-shadow: #0f0f0f 1px 1px 2px;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 999;
+}
 
-        }
-
-        .modal-content {
-            position: relative;
-            margin: auto;
-            padding: 0;
-            width: 80%;
-            max-width: 1000px;
-            background-color: white; /* Нужно указать цвет фона, чтобы контент был виден */
-            border-radius: 5px; /* Можно добавить скругленные углы для красоты */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
-        }
-
-        .btn-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #fff;
-            background: none;
-            border: none;
-            font-size: 44px;
-            cursor: pointer;
-            display: none;
-        }
 
     </style>
-    {#    <link rel="stylesheet" href="{% static 'pages/supplierDetail/bootstrap.min.css' %}">#}
-    {##}
-    {#    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"#}
-    {#            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"#}
-    {#            crossorigin="anonymous"></script>#}
+
 
 {% endblock %}
 
@@ -208,6 +200,8 @@
                                     {% endif %}
                                     <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
                                          src="
+
+
 
 
                                                  {% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
@@ -369,8 +363,9 @@
                      class="swiper mySwiper2 mt-5">
                     <div class="swiper-wrapper">
                         {% for image in images %}
-                            <div class="swiper-slide"><img src="{% if image.image %}{{ image.image.url }}{% endif %}"
-                                                           alt=""></div>
+                            <div class="swiper-slide swiper-image"><img
+                                    src="{% if image.image %}{{ image.image.url }}{% endif %}"
+                                    alt=""></div>
                         {% endfor %}
                     </div>
                     <div class="swiper-button-next"></div>
@@ -393,123 +388,97 @@
 
 {% block js %}
 
-
-
-
-    {#    <!-- Modal -->#}
-    {#    <div class="modal fade" id="sliderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-    {#        <div class="modal-dialog modal-fullscreen">#}
-    {#            <div class="modal-content">#}
-    {#                <div class="modal-body" data-bs-dismiss="" style="background: rgba(0,0,0,0.2)">#}
-    {#                    <div class="btn btn-close " data-bs-dismiss="modal"></div>#}
-    {##}
-    {#                    <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"#}
-    {#                         class="swiper mySwiper2 mt-5">#}
-    {#                        <div class="swiper-wrapper">#}
-    {#                            {% for image in images %}#}
-    {#                                <div class="swiper-slide"><img#}
-    {#                                        src="{% if image.image %}{{ image.image.url }}{% endif %}" alt=""></div>#}
-    {#                            {% endfor %}#}
-    {##}
-    {#                        </div>#}
-    {#                        <div class="swiper-button-next"></div>#}
-    {#                        <div class="swiper-button-prev"></div>#}
-    {#                    </div>#}
-    {#                    <div thumbsSlider="" class="swiper mySwiper">#}
-    {#                        <div class="swiper-wrapper">#}
-    {#                            {% for image in images %}#}
-    {#                                <div class="swiper-slide"><img#}
-    {#                                        src="{% if image.image %}{{ image.image.url }}{% endif %}" alt=""></div>#}
-    {#                            {% endfor %}#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
-
-
     <script src="{% static 'pages/supplierDetail/index.js' %}"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script>
-        // Swiper initialization
-        const swiper = new Swiper(".mySwiper", {
-            spaceBetween: 10,
-            slidesPerView: 4,
-            freeMode: true,
-            watchSlidesProgress: true,
-        });
-        const swiper2 = new Swiper(".mySwiper2", {
-            spaceBetween: 40,
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    // Swiper initialization for thumbnails
+    const swiper = new Swiper(".mySwiper", {
+        spaceBetween: 10,
+        freeMode: true,
+        freeModeMomentum: true,
+        loop: true, // Бесконечная прокрутка
+        watchSlidesProgress: true,
+        breakpoints: {
+            640: {
+                slidesPerView: 3,
+                spaceBetween: 10,
             },
-            thumbs: {
-                swiper: swiper,
+            768: {
+                slidesPerView: 4,
+                spaceBetween: 15,
             },
-        });
-
-        // Modal functionality
-        const modal = document.getElementById('sliderModal');
-        const closeModalBtn = document.getElementById('closeModal');
-        const modalTriggers = document.querySelectorAll('.modal-trigger');
-
-        modalTriggers.forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                modal.style.display = 'flex';
-            });
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
+            1024: {
+                slidesPerView: 5,
+                spaceBetween: 20,
+            },
+            1280: {
+                slidesPerView: 7,
+                spaceBetween: 25,
             }
-        });
-    </script>
+        }
+    });
 
-    {#    <script>#}
-    {#        const swiper = new Swiper(".mySwiper", {#}
-    {#            spaceBetween: 10,#}
-    {#            slidesPerView: 4,#}
-    {#            freeMode: true,#}
-    {#            watchSlidesProgress: true,#}
-    {#        });#}
-    {#        const swiper2 = new Swiper(".mySwiper2", {#}
-    {#            spaceBetween: 40,#}
-    {#            navigation: {#}
-    {#                nextEl: ".swiper-button-next",#}
-    {#                prevEl: ".swiper-button-prev",#}
-    {#            },#}
-    {#            thumbs: {#}
-    {#                swiper: swiper,#}
-    {#            },#}
-    {#        });#}
-    {#    </script>#}
-    {#    <script>#}
-    {#        const slider = new Swiper('.supplier__detail-slider', {#}
-    {#            pagination: {#}
-    {#                el: '.swiper-pagination',#}
-    {#                clickable: true,#}
-    {#            },#}
-    {#            mousewheel: {#}
-    {#                enabled: true,#}
-    {#                sensitivity: 2,#}
-    {#            },#}
-    {#            breakpoints: {#}
-    {#                992: {#}
-    {#                    slidesPerView: 4,#}
-    {#                    spaceBetween: 30,#}
-    {#                },#}
-    {#                640: {#}
-    {#                    slidesPerView: 2,#}
-    {#                    spaceBetween: 30,#}
-    {#                },#}
-    {#            },#}
-    {#        });#}
-    {#    </script>#}
+    // Swiper initialization for main slider
+    const swiper2 = new Swiper(".mySwiper2", {
+        spaceBetween: 40,
+        slidesPerView: 1, // Один слайд за раз
+        freeMode: true,
+        freeModeMomentum: true,
+        loop: true, // Бесконечная прокрутка
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        thumbs: {
+            swiper: swiper,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1,
+                spaceBetween: 30,
+            },
+            768: {
+                slidesPerView: 1,
+                spaceBetween: 40,
+            },
+            1024: {
+                slidesPerView: 1,
+                spaceBetween: 50,
+            },
+            1280: {
+                slidesPerView: 1,
+                spaceBetween: 60,
+            }
+        }
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('sliderModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const modalTriggers = document.querySelectorAll('.modal-trigger');
+
+    modalTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Отключаем прокрутку
+
+        });
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Включаем прокрутку
+
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.classList.remove('modal-open'); // Включаем прокрутку
+        }
+    });
+</script>
+
+
+
 {% endblock %}

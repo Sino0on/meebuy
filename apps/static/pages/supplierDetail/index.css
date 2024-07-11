@@ -39,10 +39,20 @@
 #sliderModal .mySwiper2 .swiper-slide{
     width: auto;
     height: auto;
-    max-width: 400px;
     max-height: 400px;
+    object-fit: contain;
 
     margin: 0 auto;
+}
+#sliderModal .mySwiper2 .swiper-slide img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 }
 
 #sliderModal .mySwiper2 .swiper-slide{
