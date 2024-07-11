@@ -108,7 +108,7 @@ class ProviderCategoryListView(ProviderListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.filter(category=self.kwargs['pk'])
-        context['have_children'] = any(Category.objects.filter(category=self.kwargs['pk']))
+        context['have_children'] = any(Category.objects.filter(categor=self.kwargs['pk']))
         return context
 
 
