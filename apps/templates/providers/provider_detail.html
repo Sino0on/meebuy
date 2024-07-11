@@ -193,23 +193,19 @@
                     <div id="Tab1" class="tab-content">
                         <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
                             {% for product in products %}
-                                <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5 flex-col justify-between">
+                                <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5 flex flex-col justify-between">
                                     {% if product.new %}
-                                        <div
-                                                class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
+                                        <div class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
                                             NEW
                                         </div>
                                     {% endif %}
-                                    <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
-                                         src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
-                                         alt="Изображение товара">
-                                    <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}
-                                    </h2>
-                                    <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">
-                                        {{ product.description|truncatechars:100 }}</p>
+                                    <div class="w-full h-64 lg:h-80 overflow-hidden rounded-[10px]">
+                                        <img class="w-full h-full object-cover" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="Изображение товара">
+                                    </div>
+                                    <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}</h2>
+                                    <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">{{ product.description|truncatechars:100 }}</p>
                                     <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                        Цена: <span
-                                            class="text-dark-logo font-bold">{% calculate product.id %}{{ product.currency }}</span>
+                                        Цена: <span class="text-dark-logo font-bold">{% calculate product.id %}{{ product.currency }}</span>
                                     </div>
                                     <a href="/product/detail/{{ product.id }}/">
                                         <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
