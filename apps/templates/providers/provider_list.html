@@ -136,7 +136,7 @@
                         <li class="">
                             <a
                                     class="flex items-center gap-[10px] w-fit"
-                                    href="{% if has_children %}{% url "provider_category_list" i.id %}{% else %}?category={{ i.pk }}{% endif %}"
+                                    href="{% if not has_children %}{% url "provider_category_list" i.id %}{% else %}?category={{ i.pk }}{% endif %}"
                             >
                                 <div
                                         class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
