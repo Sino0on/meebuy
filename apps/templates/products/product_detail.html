@@ -80,9 +80,11 @@
           class="w-[350px] rounded-[10px]"
           src="{% if product.image %}{{ product.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}"
           alt=""
+          id="main-image"
+          style="width: 350px;height: 350px;object-fit: cover"
         />
         <!-- slider -->
-        <div
+        <div id="thumbnails"
           class="mt-5 mb-7 relative lg-md:w-[357px] w-[340px] lg-md:h-[82px] h-[80px]"
         >
           <img
@@ -90,6 +92,7 @@
             class="swiper-button-prev prev"
             src="{% static 'assets/images/icons/prev.svg' %}"
             alt=""
+            aria-disabled="false"
           />
           <div class="swiper swiper1">
             <div class="swiper-wrapper ml-4">
@@ -109,6 +112,7 @@
           <img
             style="right: -16px"
             class="swiper-button-next absolute"
+            aria-disabled="false"
             src="{% static 'assets/images/icons/next.svg' %}"
             alt=""
           />

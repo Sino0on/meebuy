@@ -1,15 +1,10 @@
 const swiper = new Swiper(".swiper1", {
   slidesPerView: 3,
-  direction: getDirection(),
   navigation: {
     nextEl: ".swiper-button-next",
     prevEl: ".swiper-button-prev",
   },
-  on: {
-    resize: function () {
-      swiper.changeDirection(getDirection());
-    },
-  },
+
 });
 
 function getDirection() {
@@ -87,3 +82,13 @@ hearts.forEach((heart) => {
 function toggleActiveHeart(event) {
   event.currentTarget.classList.toggle("text-logo-color");
 }
+
+
+const mainImage = document.getElementById("main-image");
+const thumbnailImages = document.querySelectorAll("#thumbnails .swiper-slide")
+
+thumbnailImages.forEach(thumb => {
+  thumb.addEventListener("click", () => {
+    mainImage.src = thumb.querySelector("img").src
+  })
+})

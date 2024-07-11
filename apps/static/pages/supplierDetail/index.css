@@ -19,10 +19,59 @@
     .supplier__detail .card img {
         aspect-ratio: 3 / 2;
     }
+
+
+#sliderModal .modal-body{
+    padding:16px 75px;
+}
 }
 
 @media (min-width: 1280px) {
     .supplier__detail .card img {
         aspect-ratio: 3 / 2.5;
     }
+}
+
+#sliderModal .modal-content{
+    background: transparent;
+}
+
+#sliderModal .mySwiper2 .swiper-slide{
+    width: auto;
+    height: auto;
+    max-width: 400px;
+    max-height: 400px;
+
+    margin: 0 auto;
+}
+
+#sliderModal .mySwiper2 .swiper-slide{
+    width: 100%;
+    height: 100%;
+        object-fit: cover;
+}
+
+
+#sliderModal .mySwiper .swiper-slide img,#sliderModal .mySwiper .swiper-slide{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sliderModal .mySwiper{
+    margin-top: 20px;
+}
+
+#sliderModal .modal-body{
+    position: relative;
+}
+
+#sliderModal .btn{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    filter: invert(100%) brightness(100%);
 }
