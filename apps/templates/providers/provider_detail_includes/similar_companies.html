@@ -5,7 +5,7 @@
         <div class="swiper supplier__detail-slider mt-[30px] lg:mt-10">
             <div class="swiper-wrapper">
                 {% for company in companies %}
-                    <div class="swiper-slide">
+                    <div class="swiper-slide flex-col justify-between" style="max-width:400px; max-height: 400px; margin-left: 5px ">
                         <div
                                 class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
                         >
@@ -25,7 +25,7 @@
                                         {{ company.title }}
                                     </h6>
                                     <p class="text-base text-dark-logo line-clamp-2">
-                                        {{ company.mini_descr }}
+                                        {% if company.mini_descr %}{{ company.mini_descr }}{% else %}<br>{% endif %}
                                     </p>
                                     <p
                                             class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
