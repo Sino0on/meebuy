@@ -138,10 +138,22 @@ class ProductCreateView(CreateView):
     template_name = "cabinet/products.html"
     success_url = reverse_lazy("user_products")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        currency = Currency.objects.all()
+        if not currency:
+            currency = Currency.objects.create(name="Сом", code="KGS")
+        context["currencies"] = Currency.objects.all()
+        return context
+
     def form_valid(self, form):
         provider = get_object_or_404(Provider, user=self.request.user)
         cabinet = provider.user.cabinet
         active_user_status = cabinet.user_status
+        currency = self.request.POST.get("currency")
+        c = Currency.objects.get(id=currency)
+        self.object.currency = c.code
+        self.object.save()
 
         if active_user_status:
             max_products = active_user_status.status.status.quantity_products
