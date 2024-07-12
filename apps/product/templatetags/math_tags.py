@@ -35,3 +35,8 @@ def calculate(obj_id):
         print(e)
         traceback.print_tb(e.__traceback__)
         return product.price
+
+
+@register.simple_tag
+def nesting_level(level):
+    return '-' * level
