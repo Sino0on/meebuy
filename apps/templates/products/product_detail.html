@@ -78,7 +78,7 @@
       >
         <img
           class="w-[350px] rounded-[10px]"
-          src="{% if product.image %}{{ product.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}"
+          src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
           alt=""
           id="main-image"
           style="width: 350px;height: 350px;object-fit: cover"
