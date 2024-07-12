@@ -15,23 +15,23 @@
 
         <div class="flex items-center gap-3">
             <img src="{% static 'assets/images/icons/email.svg' %}" alt=""/>
-            <p class="text-[#A0A0A0] font-normal text-[16px]">
+            <a type="email" href="mailto:{{ provider.email }}" class="text-[#A0A0A0] font-normal text-[16px]">
                 {% if provider.email %}
                     {{ provider.email }}
                 {% else %}
                     Email не указан
                 {% endif %}
-            </p>
+            </a>
         </div>
         <div class="flex items-center gap-3">
             <img src="{% static 'assets/images/icons/call.svg' %}" alt=""/>
-            <p class="text-[#A0A0A0] font-normal text-[16px]">
+            <a type="phone" href="tel:{{ provider.phones }}" class="text-[#A0A0A0] font-normal text-[16px]">
                 {% if provider.phones %}
                     {{ provider.phones }}
                 {% else %}
                     Телефон не указан
                 {% endif %}
-            </p>
+            </a>
         </div>
         <div class="flex items-center gap-3">
             <img
@@ -39,7 +39,7 @@
                     alt=""
             />
             {% if provider.web_site %}
-                <p class="text-[#A0A0A0] font-normal text-[16px]">{{ provider.web_site }}</p>
+                <a href="{{ provider.web_site }}" class="text-[#A0A0A0] font-normal text-[16px]">{{ provider.web_site }}</a>
             {% else %}
                 Веб сайт не указан
             {% endif %}
