@@ -144,8 +144,18 @@ class ProductCreateView(CreateView):
         if not currency:
             currency = Currency.objects.create(name="Сом", code="KGS")
         context["currencies"] = Currency.objects.all()
+        context['categories'] = categories
+        category_tree = self.build_category_tree(categories)
+        context['category_tree'] = category_tree
         return context
 
+    def build_category_tree(self, categories, parent=None, level=0):
+        tree = []
+        for category in categories:
+            if category.parent == parent:
+                tree.append((category, level))
+                tree.extend(self.build_category_tree(categories, category, level + 1))
+        return tree
     def form_valid(self, form):
         provider = get_object_or_404(Provider, user=self.request.user)
         cabinet = provider.user.cabinet

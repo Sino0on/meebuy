@@ -249,7 +249,7 @@
                                 <img
                                         class="aspect-square h-full w-full"
                                         src="
-                                                {% if object.image %}{{ object.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png {% endif %}"
+                                                {% if object.image %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                         alt=""
                                 />
                             </div>

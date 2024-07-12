@@ -505,9 +505,7 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         contacts = Contacts.load()
         context['contacts'] = contacts
         categories = ProductCategory.objects.filter(provider__user=self.request.user)
-        context['categories'] = categories
-        category_tree = self.build_category_tree(categories)
-        context['category_tree'] = category_tree
+
         context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
         context['decimal'] = self.request.user.provider.decimal_places
         provider, _ = Provider.objects.get_or_create(user=self.request.user)
@@ -523,6 +521,9 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         context["currencies"] = Currency.objects.all()
         categories_change = self.request.GET.get('categories_change', 1)
         context['categories_change'] = int(categories_change)
+        context['categories'] = categories
+        category_tree = self.build_category_tree(categories)
+        context['category_tree'] = category_tree
         return context
 
     def build_category_tree(self, categories, parent=None, level=0):
