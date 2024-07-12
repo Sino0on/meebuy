@@ -247,7 +247,7 @@
                 <div class="grid grid-cols-1 gap-[30px] lg-md:grid-cols-2">
                     <div class="content__wrap px-5 py-[30px] text-dark-logo rounded-[10px]">
                         <h2 class="text-xl font-bold">О компании</h2>
-                        <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ provider.description }}</p>
+                        <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ provider.description|linebreaks|safe }}</p>
                         <ul class="">
                             {% if provider.type %}
                                 <li class="mt-[30px]">
