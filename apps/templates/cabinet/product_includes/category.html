@@ -1,3 +1,4 @@
+{% load math_tags %}
 <div id="category-block"
         {% if categories_change == 2 %}
      style="display: block"
@@ -29,12 +30,9 @@
         {% for category, level in category_tree %}
         <a href="{% url 'edit_category' category.id %}"
           ><li
-            class="text-[#909090] font-normal sm:text-[18px] text-[16px] font-mulish"
-            style="margin-left: {{ level }}0px;"
-          >
-            {{ category.name }}
-          </li></a
-        >
+            class="text-[#909090] font-normal sm:text-[18px] text-[16px] font-mulish"          >
+            {% nesting_level level %}{{ category.name }}
+          </li></a>
         {% endfor %}
       </ul>
       {% else %}
