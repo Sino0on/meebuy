@@ -390,7 +390,6 @@ class ProductCategoryUpdateView(UpdateView):
     model = ProductCategory
     form_class = ProductCategoryForm
     template_name = "cabinet/product_includes/edit_category.html"
-    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -406,6 +405,9 @@ class ProductCategoryUpdateView(UpdateView):
     def form_invalid(self, form):
         print(form.errors)
         return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('user_products') + '?categories_change=2'
 
 
 class ProductCategoryDeleteView(DeleteView):
