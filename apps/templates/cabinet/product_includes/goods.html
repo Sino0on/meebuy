@@ -1,5 +1,12 @@
 {% load static %}
-<div id="goods-block" style="display: block" class="cards sm:p-9 p-5">
+<div id="goods-block"
+                         {% if categories_change == 1%}
+                    style="display: block"
+                    {% else %}
+                         style="display: none"
+
+                    {% endif %}
+      class="cards sm:p-9 p-5">
   <div class="flex flex-col gap-7 font-mulish">
     <div>
       {% if has_products %} {% for i in object_list.all %}

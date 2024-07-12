@@ -521,7 +521,8 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         if not currency:
             currency = Currency.objects.create(name="Сом", code="KGS")
         context["currencies"] = Currency.objects.all()
-
+        categories_change = self.request.GET.get('categories_change', 1)
+        context['categories_change'] = int(categories_change)
         return context
 
     def build_category_tree(self, categories, parent=None, level=0):

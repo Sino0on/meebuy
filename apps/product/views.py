@@ -363,13 +363,14 @@ class ProductCategoryCreateView(CreateView):
     model = ProductCategory
     form_class = ProductCategoryForm
     template_name = "cabinet/products.html"
-    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = ProductCategory.objects.filter(
             provider__user=self.request.user
         )
+        context['categories_change'] = 2
+
         return context
 
     def form_invalid(self, form):
@@ -380,6 +381,9 @@ class ProductCategoryCreateView(CreateView):
         form.instance.provider = Provider.objects.get(user=self.request.user)
 
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('user_products') + '?categories_change=2'
 
 
 class ProductCategoryUpdateView(UpdateView):
