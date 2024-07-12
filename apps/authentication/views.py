@@ -48,6 +48,8 @@ class HomeView(TemplateView):
         context['tenders'] = Tender.objects.all()[:8]
         contacts = Contacts.load()
         context['contacts'] = contacts
+        context['home'] = True
+
         return context
 
 
