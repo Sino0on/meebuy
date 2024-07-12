@@ -15,7 +15,7 @@ from apps.authentication.views import (
 # Buyer views
 from apps.buyer.views import (
     BuyerListView,
-    BuyerDetailView
+    BuyerDetailView, BuyerCategoryListView
 )
 
 # Chat views
@@ -132,6 +132,8 @@ urlpatterns = [
 
     # Buyer
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),
+    path('buyer/list/<int:pk>/', BuyerCategoryListView.as_view(), name='buyer_category_list'),
+
     path('buyer/detail/<int:pk>/', BuyerDetailView.as_view(), name='buyer_detail'),
 
     # Chat
