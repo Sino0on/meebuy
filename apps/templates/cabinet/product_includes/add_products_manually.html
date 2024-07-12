@@ -1,4 +1,4 @@
-{% load static %}
+{% load static math_tags %}
 <div
   id="add-goods-manually-block"
   style="display: none"
@@ -72,9 +72,11 @@
               style="-webkit-appearance: none"
               class="w-full bg-[#F9F9F9] border-[#E6E6E6] py-4 rounded-[15px] outline-none pl-4"
             >
-              {% for category in categories %}
-              <option value="{{ category.id }}">{{ category.name }}</option>
-              {% endfor %}
+                <option value="">-----------</option>
+                {% for category, level in category_tree %}
+
+                <option value="{{ category.id }}">{% nesting_level level %}{{ category.name }}</option>
+                {% endfor %}
             </select>
           </div>
           <p>Что бы добавить продукт надо иметь хотя бы одну категорию</p>
