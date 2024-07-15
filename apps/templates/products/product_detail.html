@@ -50,21 +50,32 @@
         {% endif %}
         </a>
       </div>
-      <div class="lg-md:flex hidden items-center gap-5 text-[14px]">
-        <p class="font-medium">{{ product.provider.mini_desc }}</p>
-        <div class="flex items-center gap-2 text-[#4D4D4D]">
-          <img
-            class="text-[#4D4D4D]"
-            src="{% static 'assets/images/icons/location.svg' %}"
-            alt=""
-          />
-          <p class="text-[#4D4D4D]">
+        <div class="lg-md:flex hidden items-center gap-5 text-[14px]">
+          <p class="font-medium">{{ product.provider.mini_desc }}</p>
+          <div class="flex items-center gap-2 text-[#4D4D4D]">
+            <img
+              class="text-[#4D4D4D]"
+              src="{% static 'assets/images/icons/location.svg' %}"
+              alt=""
+            />
+            <p class="text-[#4D4D4D]">
               {% if product.provider.city %}
-              {{ product.provider.city }}
+                {{ product.provider.city }}
               {% endif %}
-          </p>
+            </p>
+
+            {% if product.provider.is_modered %}
+
+              <img
+                class="ml-4 w-4  h-4"
+                src="{% static 'assets/images/icons/checkmark.svg' %}"
+                alt=""
+                style="width: 20px; height: 20px;"
+              />
+            <span>Прошел модерацию</span>
+            {% endif %}
+          </div>
         </div>
-      </div>
     </div>
   </div>
 </nav>
