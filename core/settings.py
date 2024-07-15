@@ -123,6 +123,7 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int),
     }
 }
+
 STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
 # DATABASES = {
