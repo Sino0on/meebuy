@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -117,33 +117,37 @@ class PriceColumn(models.Model):
     )
 
     def apply_formula(self, base_price):
-        price = base_price
-        formulas = self.formula.split(";")
+        try:
+            price = base_price
+            formulas = self.formula.split(";")
 
-        for formula_part in formulas:
-            operator = formula_part[0]
-            value = formula_part[1:]
+            for formula_part in formulas:
+                operator = formula_part[0]
+                value = formula_part[1:]
 
-            if value.endswith("%"):
-                percentage = Decimal(value[:-1]) / 100
-                if operator == "+":
-                    price += price * percentage
-                elif operator == "-":
-                    price -= price * percentage
-            elif value.endswith("$"):
-                amount = Decimal(value[:-1])
-                if operator == "+":
-                    price += amount
-                elif operator == "-":
-                    price -= amount
-            else:
-                amount = Decimal(value)
-                if operator == "+":
-                    price += amount
-                elif operator == "-":
-                    price -= amount
+                if value.endswith("%"):
+                    percentage = Decimal(value[:-1]) / 100
+                    if operator == "+":
+                        price += price * percentage
+                    elif operator == "-":
+                        price -= price * percentage
+                elif value.endswith("$"):
+                    amount = Decimal(value[:-1])
+                    if operator == "+":
+                        price += amount
+                    elif operator == "-":
+                        price -= amount
+                else:
+                    amount = Decimal(value)
+                    if operator == "+":
+                        price += amount
+                    elif operator == "-":
+                        price -= amount
 
-        return price
+            return price
+        except (InvalidOperation, IndexError, ValueError) as e:
+            # Обработка ошибок
+            return ''
 
     def __str__(self):
         return self.name
@@ -151,3 +155,15 @@ class PriceColumn(models.Model):
     class Meta:
         verbose_name = "Колонка цены"
         verbose_name_plural = "Колонки цен"
+
+
+class Currency(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Название валюты")
+    code = models.CharField(max_length=255, verbose_name="Код валюты")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Валюта"
+        verbose_name_plural = "Валюты"

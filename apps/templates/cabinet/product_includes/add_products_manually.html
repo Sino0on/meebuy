@@ -1,4 +1,4 @@
-{% load static %}
+{% load static math_tags %}
 <div
   id="add-goods-manually-block"
   style="display: none"
@@ -72,9 +72,11 @@
               style="-webkit-appearance: none"
               class="w-full bg-[#F9F9F9] border-[#E6E6E6] py-4 rounded-[15px] outline-none pl-4"
             >
-              {% for category in categories %}
-              <option value="{{ category.id }}">{{ category.name }}</option>
-              {% endfor %}
+                <option value="">-----------</option>
+                {% for category, level in category_tree %}
+
+                <option value="{{ category.id }}">{% nesting_level level %}{{ category.name }}</option>
+                {% endfor %}
             </select>
           </div>
           <p>Что бы добавить продукт надо иметь хотя бы одну категорию</p>
@@ -210,12 +212,22 @@
               Например: KGS
             </p>
             <label>
-              <input
-                class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
-                type="text"
-                value="{{ form.currency.value|default_if_none:'' }}"
-                name="currency"
-              />
+            <select name="currency" class=" relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
+                {% for currency in currencies %}
+
+                    <option value="{{ currency.id }}"
+                    {% if object.currency == currency.code %}
+                        selected
+                    {% endif %}
+                    >{{ currency.name }} - {{ currency.code }}</option>
+                {% endfor %}
+
+                <img
+                        class="absolute right-7 top-6 mr-7"
+                        src="{% static 'assets/images/icons/arrow-down.svg' %}"
+                        alt=""
+                />
+            </select>
               {% if form.currency.errors %}
               <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
               {% endif %}

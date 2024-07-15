@@ -1,3 +1,4 @@
+from django.db.models import BooleanField, When, Case
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from rest_framework.generics import ListAPIView
@@ -36,8 +37,17 @@ class ProviderListView(generic.ListView):
         context['wholesale'] = queryset.filter(is_modered=True, is_provider=True, type='wholesale')
         context['manufacturing'] = queryset.filter(is_modered=True, is_provider=True, type='manufacturing[')
         context['services'] = queryset.filter(is_modered=True, is_provider=True, type='services')
-        context["categories"] = Category.objects.all()
-        # context["types"] = Tag.objects.all()
+        categories = Category.objects.filter(category=None).annotate(
+            has_children=Case(
+                When(categor__isnull=False, then=True),
+                default=False,
+                output_field=BooleanField()
+            )
+        )
+        for cat in categories:
+            print(cat.has_children)
+        context['categories'] = categories.distinct()
+        context["all"] = True
         context["filter"] = self.filter
         contacts = Contacts.load()
         context["contacts"] = contacts
@@ -95,6 +105,31 @@ class ProviderListView(generic.ListView):
                     }
                 )
         return banner_list
+
+
+class ProviderCategoryListView(ProviderListView):
+    def get_queryset(self):
+        queryset = Provider.objects.filter(is_modered=True, is_provider=True, category=self.kwargs['pk'])
+        order = self.request.GET.get("order")
+        if order:
+            queryset = queryset.order_by(order)
+        self.filter = ProviderFilter(self.request.GET, queryset=queryset)
+        return self.filter.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.filter(category=self.kwargs['pk']).annotate(
+            has_children=Case(
+                When(categor__isnull=False, then=True),
+                default=False,
+                output_field=BooleanField()
+            )
+        )
+        print(categories)
+        context['categories'] = categories.distinct()
+        context["all"] = False
+
+        return context
 
 
 class ProviderDetailView(generic.DetailView):

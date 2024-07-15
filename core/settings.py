@@ -303,23 +303,22 @@ SIMPLEUI_CONFIG = {
             'models': [
                 {
                     'name': 'Пользователи',
-                    'icon': 'fa fa-industry',
+                    'icon': 'fa fa-user',
                     'url': '/admin/authentication/user/'
                 },
                 {
                     'name': 'Аккаунты',
-                    'icon': 'fa fa-industry',
+                    'icon': 'fa fa-user-secret',
                     'url': '/admin/provider/provider/'
+                },
+                {
+                    'name': 'Кабинеты',
+                    'icon': 'fa fa-envelopes-bulk',
+                    'url': '/admin/user_cabinet/cabinet/'
                 },
                 {
                     'name': 'Configurations',
                     'models': [
-
-                        {
-                            'name': 'Тэги',
-                            'icon': 'fa fa-tag',
-                            'url': '/admin/provider/tag/'
-                        },
                         {
                             'name': 'Категории Поставщиков',
                             'icon': 'fa fa-columns',
@@ -385,7 +384,7 @@ SIMPLEUI_CONFIG = {
                 },
                 {
                     'name': 'Банера',
-                    'icon': 'fa fa-map',
+                    'icon': 'fa fa-rectangle-ad',
                     'url': '/admin/buyer/banner/'
                 },
             ]
@@ -415,7 +414,13 @@ SIMPLEUI_CONFIG = {
                     'url': '/admin/user_cabinet/faq/'
                 },
                 {
+                    'name': 'Валюты',
+                    'icon': 'fa fa-money-bill',
+                    'url': '/admin/product/currency/'
+                },
+                {
                     'name': 'Premium тарифы',
+                    'icon': 'fa fa-dollar-sign',
                     'models': [
 
                         {
@@ -430,7 +435,7 @@ SIMPLEUI_CONFIG = {
                         },
                         {
                             'name': 'Активные статусы пользователей',
-                            'icon': 'fa fa-user-secret',
+                            'icon': 'fa fa-signal',
                             'url': '/admin/user_cabinet/activeuserstatus/'
                         },
                         {
@@ -440,7 +445,7 @@ SIMPLEUI_CONFIG = {
                         },
                         {
                             'name': 'Активные поднятия',
-                            'icon': 'fa fa-money-bill',
+                            'icon': 'fa fa-chart-line',
                             'url': '/admin/user_cabinet/activeupping/'
                         },
                         {
@@ -458,6 +463,8 @@ SIMPLEUI_CONFIG = {
                 },
                 {
                     'name': 'Внутренние настройки сайта',
+                    'icon': 'fa fa-bars',
+
                     'models': [
                         {
                             'name': 'Sites',
@@ -470,17 +477,17 @@ SIMPLEUI_CONFIG = {
                             'models': [
                                 {
                                     'name': ' Social accounts',
-                                    'icon': 'fa fa-truck',
+                                    'icon': 'fa fa-hammer',
                                     'url': '/admin/socialaccount/socialaccount/'
                                 },
                                 {
                                     'name': 'Social application tokens',
-                                    'icon': 'fa fa-truck',
+                                    'icon': 'fa fa-hammer',
                                     'url': '/admin/socialaccount/socialtoken/'
                                 },
                                 {
                                     'name': 'Social applications',
-                                    'icon': 'fa fa-tag',
+                                    'icon': 'fa fa-hammer',
                                     'url': 'Social applications'
                                 }]
                         }

@@ -69,3 +69,13 @@
 .like-icon {
   fill: yellow;
 }
+
+.swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled{
+      opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto;
+}
+
+.swiper-button-lock{
+  display: block !important;
+}

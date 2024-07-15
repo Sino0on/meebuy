@@ -1,5 +1,12 @@
 {% load static %}
-<div id="goods-block" style="display: block" class="cards sm:p-9 p-5">
+<div id="goods-block"
+                         {% if categories_change != 2%}
+                    style="display: block"
+                    {% else %}
+                         style="display: none"
+
+                    {% endif %}
+      class="cards sm:p-9 p-5">
   <div class="flex flex-col gap-7 font-mulish">
     <div>
       {% if has_products %} {% for i in object_list.all %}
@@ -16,7 +23,7 @@
             >
               <img
                 class="object-cover h-full"
-                src="{% if i.image %} {{ i.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                src="{% if i.images %} {{ i.images.first.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                 alt="empty icon"
                 style="margin: 0 auto"
               />

@@ -15,7 +15,7 @@ from apps.authentication.views import (
 # Buyer views
 from apps.buyer.views import (
     BuyerListView,
-    BuyerDetailView
+    BuyerDetailView, BuyerCategoryListView
 )
 
 # Chat views
@@ -60,6 +60,7 @@ from apps.provider.views import (
     ProviderListView,
     ProviderDetailView,
     CategoryListView,
+    ProviderCategoryListView,
     upload_file
 )
 
@@ -131,6 +132,8 @@ urlpatterns = [
 
     # Buyer
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),
+    path('buyer/list/<int:pk>/', BuyerCategoryListView.as_view(), name='buyer_category_list'),
+
     path('buyer/detail/<int:pk>/', BuyerDetailView.as_view(), name='buyer_detail'),
 
     # Chat
@@ -161,6 +164,7 @@ urlpatterns = [
     # Provider
     path('provider/list/', ProviderListView.as_view(), name='provider_list'),
     path('provider/detail/<int:pk>/', ProviderDetailView.as_view(), name='provider_detail'),
+    path('provider/list/<int:pk>/', ProviderCategoryListView.as_view(), name='provider_category_list'),
     path('upload/', upload_file, name='upload_file'),
     path('download/', DownloadPriceFileView.as_view(), name='download_price_file'),
     path('delete_file/', DeleteFileView.as_view(), name='delete_file'),

@@ -1,3 +1,4 @@
+{% load static %}
 <section class="container mb-20 sticky-section">
     <h6 class="font-semibold text-[20px] font-mulish uppercase mb-6">
         похожие Товары
@@ -9,15 +10,15 @@
                     <div
                             class="swiper-slide"
                     >
-                        <div class="cards shadow-2xl sm:w-[277px] flex flex-col items-center p-5 gap-4 rounded-[15px] bg-[#fff] ml-2 mt-2">
+                        <div class="cards shadow-2xl sm:w-[277px] flex flex-col items-center p-5 gap-4 rounded-[15px] bg-[#fff] ml-2 mt-2" style="height: 400px; justify-content: space-between">
                             <img
-                                    class="rounded-xl"
+                                    class="rounded-xl" style="max-height: 100%; width: 100%; overflow: hidden; object-fit: cover"
                                     src="
-                                            {% if i.image %}{{ i.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}"
+                                            {% if i.image %}{{ i.image.url }}{% else %} {% static 'assets/images/lolo_4.svg' %}{% endif %}"
                                     alt=""
                             />
                             <div class="flex w-full flex-col gap-4 m-0">
-                                <p class="font-extrabold text-[18px] font-mulish">{{ i.title }}</p>
+                                <p class="font-extrabold text-[18px] font-mulish">{{ i.title|slice:":15" }}{% if i.title|length > 15 %}...{% endif %}</p>
                                 <p class="text-[16px] font-normal font-mulish line-clamp-1">
                                     {{ i.mini_desc }}
                                 </p>
@@ -40,8 +41,7 @@
                                                 height="36"
                                                 viewBox="0 0 36 36"
                                                 fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                    >
+                                                xmlns="http://www.w3.org/2000/svg">
                                         <rect width="36" height="36" rx="18" fill="#2B292C"></rect>
                                         <path
                                                 d="M17.5014 11.3247C18.4725 10.4394 19.7396 9.96659 21.0424 10.0033C22.3452 10.04 23.5847 10.5835 24.5062 11.522C25.4269 12.4595 25.9606 13.7201 25.9979 15.0455C26.0352 16.3709 25.5732 17.6606 24.7068 18.6502L17.4997 26L10.2944 18.6502C9.42684 17.6601 8.96446 16.3693 9.00213 15.0428C9.03981 13.7164 9.57469 12.455 10.497 11.5175C11.4192 10.5801 12.6589 10.0378 13.9615 10.0019C15.2641 9.96603 16.5307 10.4393 17.5014 11.3247Z"

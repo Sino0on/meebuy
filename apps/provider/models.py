@@ -68,7 +68,7 @@ class Provider(StatusMixin, models.Model):
         blank=True,
         null=True,
     )
-
+    keywords = models.TextField(blank=True, null=True, verbose_name=_("Ключевые слова"))
     large_wholesale = models.BooleanField(default=False, verbose_name=_("Крупный опт"))
     small_wholesale = models.BooleanField(default=False, verbose_name=_("Мелкий опт"))
     retail = models.BooleanField(default=False, verbose_name=_("Поштучно"))

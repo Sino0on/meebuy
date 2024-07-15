@@ -74,15 +74,17 @@
     <!-- left side -->
     <div class="lg-md:sticky-left">
       <div
-        class="fixed flex sticky-left left-0 top-0 z-0 flex-col lg-md: items-center gap-7"
+        class="fixed flex sticky-left left-0 top-0 z-0 flex-col lg-md: items-center gap-7" style="z-index: 49"
       >
         <img
           class="w-[350px] rounded-[10px]"
-          src="{% if product.image %}{{ product.image.url }}{% else %} https://raw.githubusercontent.com/tturdumamatovv/Namito/main/assets/images/default-product.png{% endif %}"
+          src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
           alt=""
+          id="main-image"
+          style="width: 350px;height: 350px;object-fit: cover"
         />
         <!-- slider -->
-        <div
+        <div id="thumbnails"
           class="mt-5 mb-7 relative lg-md:w-[357px] w-[340px] lg-md:h-[82px] h-[80px]"
         >
           <img
@@ -90,6 +92,7 @@
             class="swiper-button-prev prev"
             src="{% static 'assets/images/icons/prev.svg' %}"
             alt=""
+            aria-disabled="false"
           />
           <div class="swiper swiper1">
             <div class="swiper-wrapper ml-4">
@@ -109,10 +112,11 @@
           <img
             style="right: -16px"
             class="swiper-button-next absolute"
+            aria-disabled="false"
             src="{% static 'assets/images/icons/next.svg' %}"
             alt=""
           />
-          <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
+{#          <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>#}
 
           <!-- Initialize Swiper -->
         </div>

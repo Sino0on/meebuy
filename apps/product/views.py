@@ -1,20 +1,19 @@
 import os
+from urllib.parse import quote, unquote
+
 import openpyxl
 import requests
-
-from urllib.parse import quote, unquote
 from PIL import Image
-from six import BytesIO
-
 from django.conf import settings
 from django.contrib import messages
 from django.core.files.base import ContentFile
+from django.db.models import IntegerField, When, Case, Value
 from django.http import HttpResponse, Http404, JsonResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
@@ -23,6 +22,7 @@ from django.views.generic import (
     DetailView,
     FormView,
 )
+from six import BytesIO
 
 from apps.product.filters import ProductFilter
 from apps.product.forms import (
@@ -35,7 +35,7 @@ from apps.product.models import (
     Product,
     ProductImg,
     ProductCategory,
-    PriceColumn
+    PriceColumn, Currency
 )
 from apps.provider.models import (
     Category,
@@ -48,15 +48,32 @@ from apps.user_cabinet.models import Contacts, OpenNumberCount
 class ProductListView(ListView):
     model = Product
     context_object_name = "products"
-    paginate_by = 10
+    paginate_by = 12
     template_name = "products/product_list.html"
     filter_class = ProductFilter
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        # Аннотируем поле для сортировки с учетом отсутствующих значений статусов
+        queryset = queryset.annotate(
+            provider_status_priority=Case(
+                When(provider__user_cabinet__user_status__status__priorety=True, then=Value(-1)),
+                default='provider__user_cabinet__user_status__status__priorety',
+                output_field=IntegerField(),
+            )
+        )
+
+        # Получаем параметр сортировки из запроса
         order = self.request.GET.get("order")
+
+        # Применяем сортировку
         if order:
-            queryset = queryset.order_by(order)
+            queryset = queryset.order_by('provider_status_priority', order)
+        else:
+            queryset = queryset.order_by('provider_status_priority')
+
+        # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
         return filter.qs
 
@@ -100,7 +117,6 @@ class ProductDetailView(DetailView):
         ).exclude(id=product.id)[:5]
         context["prices"] = self.get_product_prices()
 
-
         if self.request.GET.get("open"):
             if self.request.user.is_authenticated:
                 print(self.get_object().provider.user)
@@ -122,6 +138,24 @@ class ProductCreateView(CreateView):
     template_name = "cabinet/products.html"
     success_url = reverse_lazy("user_products")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        currency = Currency.objects.all()
+        if not currency:
+            currency = Currency.objects.create(name="Сом", code="KGS")
+        context["currencies"] = Currency.objects.all()
+        context['categories'] = categories
+        category_tree = self.build_category_tree(categories)
+        context['category_tree'] = category_tree
+        return context
+
+    def build_category_tree(self, categories, parent=None, level=0):
+        tree = []
+        for category in categories:
+            if category.parent == parent:
+                tree.append((category, level))
+                tree.extend(self.build_category_tree(categories, category, level + 1))
+        return tree
     def form_valid(self, form):
         provider = get_object_or_404(Provider, user=self.request.user)
         cabinet = provider.user.cabinet
@@ -129,7 +163,7 @@ class ProductCreateView(CreateView):
 
         if active_user_status:
             max_products = active_user_status.status.status.quantity_products
-            current_product_count = Product.objects.filter(provider=provider).count()
+            current_product_count = Product.objects.filter(provider=provider, is_active=True).count()
             if current_product_count >= max_products:
                 form.instance.is_active = False
                 messages.warning(self.request, 'Превышен лимит активных продуктов. Продукт создан, но он неактивен.')
@@ -137,12 +171,21 @@ class ProductCreateView(CreateView):
                 form.instance.is_active = True
                 messages.success(self.request, 'Продукт успешно создан и активен.')
         else:
-            form.instance.is_active = False
-            messages.warning(self.request, 'У вас нет активного тарифа. Продукт создан, но он неактивен.')
+            if Product.objects.filter(provider=provider, is_active=True).count() >= 100:
+                messages.warning(self.request, 'Превышен лимит активных продуктов. Продукт создан, но он неактивен.')
+                form.instance.is_active = False
+            else:
+                form.instance.is_active = True
 
         form.instance.provider = provider
 
         response = super().form_valid(form)
+
+        currency = self.request.POST.get("currency")
+        c = Currency.objects.get(id=currency)
+        self.object.currency = c.code
+        self.object.save()
+
 
         # Обработка изображений
         images = self.request.FILES.getlist("images")
@@ -166,21 +209,39 @@ class ProductUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = ProductCategory.objects.all()
+        context["categories"] = ProductCategory.objects.filter(provider=self.object.provider)
+        currency = Currency.objects.all()
+        if not currency:
+            currency = Currency.objects.create(name="Сом", code="KGS")
+        context["currencies"] = Currency.objects.all()
+        product_images = list(ProductImg.objects.filter(product=self.object))
+        for i in range(1, 7):
+            context[f"image_{i}"] = product_images[i - 1] if i <= len(product_images) else None
+
         return context
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        images = self.request.FILES.getlist("images")
-        if images:
-            ProductImg.objects.filter(product=self.object).delete()
-            main_image = images[0]
-            self.object.image = main_image
+        currency = self.request.POST.get("currency")
+        c = Currency.objects.get(id=currency)
+        self.object.currency = c.code
+        self.object.save()
+
+        current_images = list(ProductImg.objects.filter(product=self.object))
+
+        if current_images:
+            self.object.image = current_images[0].image
             self.object.save()
 
-        for image in images[1:6]:
-            if image:
-                ProductImg.objects.create(product=self.object, image=image)
+        for i in range(1, 7):
+            image_file = self.request.FILES.get(f"image_{i}")
+            if image_file:
+                if i <= len(current_images):
+                    current_images[i - 1].image = image_file
+                    current_images[i - 1].save()
+                else:
+                    ProductImg.objects.create(product=self.object, image=image_file)
+
         return response
 
 
@@ -312,13 +373,14 @@ class ProductCategoryCreateView(CreateView):
     model = ProductCategory
     form_class = ProductCategoryForm
     template_name = "cabinet/products.html"
-    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = ProductCategory.objects.filter(
             provider__user=self.request.user
         )
+        context['categories_change'] = 2
+
         return context
 
     def form_invalid(self, form):
@@ -330,12 +392,14 @@ class ProductCategoryCreateView(CreateView):
 
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse('user_products') + '?categories_change=2'
+
 
 class ProductCategoryUpdateView(UpdateView):
     model = ProductCategory
     form_class = ProductCategoryForm
     template_name = "cabinet/product_includes/edit_category.html"
-    success_url = reverse_lazy("user_products")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -351,6 +415,9 @@ class ProductCategoryUpdateView(UpdateView):
     def form_invalid(self, form):
         print(form.errors)
         return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('user_products') + '?categories_change=2'
 
 
 class ProductCategoryDeleteView(DeleteView):

@@ -4,7 +4,7 @@ from .models import (
     Product,
     ProductImg,
     ProductCategory,
-    PriceColumn
+    PriceColumn, Currency
 )
 
 
@@ -35,7 +35,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': (
                 'title', 'provider', 'image', 'description', 'mini_desc', 'type', 'manufacturer', 'price',
                 'min_quantity',
-                'category')
+                'category', 'currency')
         }),
         ('Advanced options', {
             'classes': ('collapse',),
@@ -47,3 +47,8 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImg)  # If you want basic management for ProductImg outside the inline
 admin.site.register(PriceColumn)
+
+
+@admin.register(Currency)
+class CurrencyAdmin(admin.ModelAdmin):
+    pass

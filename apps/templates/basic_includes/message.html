@@ -8,13 +8,19 @@
             color: #000000;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            z-index: 998;
             opacity: 0;
             transition: opacity 1s; /* Плавное появление и исчезновение */
+            pointer-events: none;
         }
+
 
         #error-message.show {
             opacity: 1;
+            pointer-events: auto;
+        }
+        #error-message.message-delete {
+            display: none;
         }
     </style>
 <div id="error-message"></div>
@@ -29,8 +35,14 @@
             // Скрываем сообщение через 5 секунд
             setTimeout(() => {
                 errorMessageElement.classList.remove('show');
+
             }, 4000);
+            setTimeout(() => {
+                errorMessageElement.classList.add('message-delete');
+
+            }, 5000);
         }
+
 
         // Проверка на наличие сообщений об ошибке в контексте Django
         document.addEventListener("DOMContentLoaded", () => {

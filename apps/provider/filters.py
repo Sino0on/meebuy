@@ -1,7 +1,6 @@
 import django_filters
 from django import forms
-
-from apps.provider.models import Provider
+from apps.provider.models import Provider, Category
 from apps.tender.models import City, Country, Region
 
 
@@ -15,19 +14,11 @@ class ProviderFilter(django_filters.FilterSet):
 
     order_by = django_filters.ChoiceFilter(label='Сортировка', choices=ORDER_CHOICES, method='filter_by_order')
 
-    title = django_filters.CharFilter(field_name='title', lookup_expr='icontains', label='Имя')
-    country = django_filters.CharFilter(
-        label='Страна',
-        method='filter_by_country'
-    )
-    region = django_filters.CharFilter(
-        label='Регион',
-        method='filter_by_region'
-    )
-    city = django_filters.CharFilter(
-        label='Город',
-        method='filter_by_city'
-    )
+    title = django_filters.CharFilter(field_name='title', lookup_expr='icontains', label='Имя',
+                                      method='filter_by_title_and_keywords')
+    country = django_filters.CharFilter(label='Страна', method='filter_by_country')
+    region = django_filters.CharFilter(label='Регион', method='filter_by_region')
+    city = django_filters.CharFilter(label='Город', method='filter_by_city')
 
     large_wholesale = django_filters.BooleanFilter(widget=forms.CheckboxInput, label='Крупный опт',
                                                    method='filter_boolean_field')
@@ -72,6 +63,7 @@ class ProviderFilter(django_filters.FilterSet):
                                                method='filter_boolean_field')
     electronic_money = django_filters.BooleanFilter(widget=forms.CheckboxInput, label='Электронные деньги',
                                                     method='filter_boolean_field')
+    category = django_filters.CharFilter(label='Категория', method='filter_by_category')
 
     class Meta:
         model = Provider
@@ -101,7 +93,6 @@ class ProviderFilter(django_filters.FilterSet):
             'credit_card',
             'electronic_money',
             'order_by',
-
         ]
 
     def filter_by_country(self, queryset, name, value):
@@ -116,9 +107,9 @@ class ProviderFilter(django_filters.FilterSet):
     def filter_by_region(self, queryset, name, value):
         if value:
             try:
-                country = Region.objects.get(title=value)
-                return queryset.filter(user__provider__city__region=country.id)
-            except Country.DoesNotExist:
+                region = Region.objects.get(title=value)
+                return queryset.filter(user__provider__city__region=region.id)
+            except Region.DoesNotExist:
                 return queryset.none()
         return queryset
 
@@ -131,6 +122,15 @@ class ProviderFilter(django_filters.FilterSet):
                 return queryset.none()
         return queryset
 
+    def filter_by_title_and_keywords(self, queryset, name, value):
+        if value:
+            keywords = [k.strip() for k in value.split(',')]
+            query = queryset.filter(title__icontains=value)
+            for keyword in keywords:
+                query |= queryset.filter(keywords__icontains=keyword)
+            return query.distinct()
+        return queryset
+
     def filter_boolean_field(self, queryset, name, value):
         if value is None:
             return queryset
@@ -141,4 +141,13 @@ class ProviderFilter(django_filters.FilterSet):
     def filter_by_order(self, queryset, name, value):
         if value:
             return queryset.order_by(value)
+        return queryset
+
+    def filter_by_category(self, queryset, name, value):
+        if value:
+            try:
+                category = Category.objects.get(id=value)
+                return queryset.filter(category=category)
+            except Category.DoesNotExist:
+                return queryset.none()
         return queryset

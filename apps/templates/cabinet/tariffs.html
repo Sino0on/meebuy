@@ -170,10 +170,12 @@
           </div>
           <!-- price -->
           <div class="tariffs__info-price">
+          {% if tariff.price_month != status.per_month %}
             <div class="tariffs__info-price-old">
               <span class="line-through">${tariff.price_month}</span>
               <span>сом / в месяц</span>
             </div>
+            {% endif %}
             <div class="tariffs__info-price-discount">
               ${status.per_month}
               <span>сом / в месяц</span>
@@ -182,14 +184,17 @@
           <!-- period -->
           <div class="tariffs__info-period">
             <div class="tariffs__info-period_price text-lg">
-              <p>При оплате за <span>${status.months}</span></p>
+              <p>При оплате за <span>${status.months}
+              мес.
+              </span></p>
               <p>Итого: <span>${status.price} сом</span></p>
             </div>
             <div class="tariffs__info-period_term mt-10">
               <p class="">Срок подключения</p>
-              <div class="flex gap-[30px] mt-5">
+              <div class="flex gap-[30px] mt-5 w-full">
               ${tariff.statuses.map((status, index) => {
-                    return `<div class="flex items-center flex-col justify-center">
+                    return `<div class="flex items-center flex-col justify-around" style="margin: 0 auto"
+>
                           <input
                             class="w-6 h-6"
                             type="radio"
@@ -198,7 +203,7 @@
                             ${index === statusIndex ? "checked" : ""}
                             onclick="updateTariff(${tariff.id}, ${index})"
                           />
-                          <span class="whitespace-nowrap">${status.months} месяца</span>
+                          <span class="whitespace-nowrap">${status.months} мес.</span>
                         </div>`;
                 }).join("")}
               </div>
@@ -208,32 +213,49 @@
           <div class="divider w-full h-[2px] bg-[#C1BA0166]"></div>
           <!-- highest position -->
           <div class="flex items-center flex-col">
-            ${status.priorety === 1 ?
-                    "<img src='{% static 'assets/images/tariffs/graph-free.png' %}' alt='Chart'/>"
-                    : ''}
+           ${status.priorety === 0 ?
+            `<div>
+                <img src="{% static 'assets/images/tariffs/graph-free.png' %}" alt="Chart"/  style="margin: 0 auto">
+                <p>Самая низкая позиция в каталоге, компанию трудно найти среди других</p>
+            </div>`
+            : ''}
+           ${status.priorety === 1 ?
+            `<div>
+                <img src="{% static 'assets/images/tariffs/graph-free.png' %}" alt="Chart"/ style="margin: 0 auto">
+                <p>Низкая позиция в каталоге, компанию трудно найти среди других</p>
+            </div>`
+            : ''}
             ${status.priorety === 2 ?
-                    "<img src='{% static 'assets/images/tariffs/graph-premium-lite.svg' %}' alt='Chart'/>"
-                    : ''}
+                `<div>
+                    <img src="{% static 'assets/images/tariffs/graph-premium-lite.svg' %}" alt="Chart"/ style="margin: 0 auto">
+                    <p>Средняя позиция в каталоге, компанию находят чаще</p>
+                </div>`
+                : ''}
             ${status.priorety === 3 ?
-                    "<img src='{% static 'assets/images/tariffs/graph-premium-standard.svg' %}' alt='Chart'/>"
-                    : ''}
+                `<div>
+                    <img src="{% static 'assets/images/tariffs/graph-premium-standard.svg' %}" alt="Chart"/ style="margin: 0 auto">
+                    <p>Средняя позиция в каталоге, компанию находят еще чаще</p>
+                </div>`
+                : ''}
             ${status.priorety === 4 ?
-                    "<img src='{% static 'assets/images/tariffs/graph-premium-max.svg' %}' alt='Chart'/>"
-                    : ''}
-            <p>Средняя позиция в каталоге, компанию находят чаще</p>
+                `<div>
+                    <img src="{% static 'assets/images/tariffs/graph-premium-max.svg' %}" alt="Chart"/>
+                    <p>Самая высокая позиция, больше всего обращений</p>
+                </div>`
+                : ''}
           </div>
           <div class="flex items-center flex-col">
             <img src="{% static 'assets/images/icons/box.svg' %}" alt="Box" />
-            <span class="counts">${status.quantity_tenders}</span>
+            <span class="counts">${tariff.quantity_tenders}</span>
             <p>Открытий закупок в месяц (на срок ${status.months} мес.)</p>
           </div>
           <div class="flex items-center flex-col">
             <img src="{% static 'assets/images/icons/message.svg' %}" alt="Message" />
-            <span class="counts">${status.dayly_message}</span>
+            <span class="counts">${tariff.dayly_message}</span>
             <p>Исходящих сообщений в день</p>
           </div>
           <div class="flex items-center flex-col">
-            <span class="counts">${status.quantity_products}</span>
+            <span class="counts">${tariff.quantity_products}</span>
             <p>Лимит товаров</p>
           </div>
           <div class="tariffs__info-bonuses">
@@ -367,4 +389,5 @@
             }, 3000);
         }
     </script>
+    <script src="{% static 'pages/home/index.js' %}"></script>
 {% endblock %}

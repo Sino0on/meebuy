@@ -102,30 +102,7 @@
     <!-- product categories -->
 
     <div class="pb-4">
-        <div class="container">
-            <h6
-                    class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish"
-            >
-                категории товаров
-            </h6>
-            <ul class="grid gap-8 lg-md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-                {% for i in categories %}
-                    <li class="">
-                        <a
-                                class="flex items-center gap-[10px] w-fit"
-                                href="?category={{ i.pk }}"
-                        >
-                            <div
-                                    class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
-                            >
-                                <img src="{{ i.icon.url }}" alt=""/>
-                            </div>
-                            <span>{{ i.title }}</span>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+    {% include 'includes/buyer_categorylist.html' %}
     </div>
 
     <!-- buyers -->

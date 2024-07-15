@@ -1,3 +1,4 @@
+from django.db.models import Case, BooleanField, When
 from django.views import generic
 
 from apps.authentication.models import User
@@ -26,7 +27,16 @@ class BuyerListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context["contacts"] = contacts
-        context['categories'] = Category.objects.all()
+        categories = Category.objects.filter(category=None).annotate(
+            has_children=Case(
+                When(categor__isnull=False, then=True),
+                default=False,
+                output_field=BooleanField()
+            )
+        )
+        for cat in categories:
+            print(cat.has_children)
+        context['categories'] = categories.distinct()
         context["banners"] = self.get_banners()
         context[
             "banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
@@ -81,6 +91,31 @@ class BuyerListView(generic.ListView):
                     }
                 )
         return banner_list
+
+
+class BuyerCategoryListView(BuyerListView):
+    def get_queryset(self):
+        queryset = Provider.objects.filter(is_modered=True, is_provider=False, category=self.kwargs['pk'])
+        order = self.request.GET.get("order")
+        if order:
+            queryset = queryset.order_by(order)
+        self.filter = ProviderFilter(self.request.GET, queryset=queryset)
+        return self.filter.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.filter(category=self.kwargs['pk']).annotate(
+            has_children=Case(
+                When(categor__isnull=False, then=True),
+                default=False,
+                output_field=BooleanField()
+            )
+        )
+        print(categories)
+        context['categories'] = categories.distinct()
+        context["all"] = False
+
+        return context
 
 
 class BuyerDetailView(generic.DetailView):

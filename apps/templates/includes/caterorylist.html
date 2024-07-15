@@ -1,0 +1,38 @@
+<div class="container">
+    <h6 class="text-center text-xl md:mb-10 mb-6 font-semibold uppercase font-mulish">
+        категории поставщиков
+    </h6>
+    <ul class="grid gap-8 lg-md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+        {% for i in categories %}
+            <li class="">
+                <a
+                        class="flex items-center gap-[10px] w-fit"
+                        href="{% if i.has_children %}{% url "provider_category_list" i.id %}{% else %}{% if home %}provider/list/{% endif %}?category={{ i.pk }}{% endif %}"
+                >
+                    <div
+                            class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+                    >
+                        <img src="{{ i.icon.url }}" alt=""/>
+                    </div>
+                    <span>{{ i.title }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    {% if not all %}
+    	        <li class="">
+                <a
+                        class="flex items-center gap-[10px] w-fit"
+                        href="{% url "provider_list" %}"
+                >
+                    <div
+                            class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
+                    >
+                        <img src="https://img.icons8.com/?size=100&id=24865&format=png&color=000000" alt=""/>
+                    </div>
+                    <span>Все категории</span>
+                </a>
+            </li>
+    {% endif %}
+
+    </ul>
+</div>

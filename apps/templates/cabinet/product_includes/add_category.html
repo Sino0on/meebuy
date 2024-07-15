@@ -1,3 +1,5 @@
+{% load math_tags %}
+
 <div
     id="add-category-block"
     style="display: none"
@@ -42,8 +44,9 @@
                 >
             <select name="parent" id="">
                 <option value="">-----------</option>
-                {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% for category, level in category_tree %}
+
+                <option value="{{ category.id }}">{% nesting_level level %}{{ category.name }}</option>
                 {% endfor %}
             </select>
             <br />

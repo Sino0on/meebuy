@@ -116,7 +116,7 @@ class ProviderForm(forms.ModelForm):
             'mini_descr',
             'type',
             'description',
-            # 'category',
+            'keywords',
             'large_wholesale',
             'small_wholesale',
             'retail',

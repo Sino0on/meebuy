@@ -64,13 +64,20 @@
                 >
                   <button
                     id="goods"
+                    {% if categories_change == 1%}
                     style="background-color: #fffb98"
+                    {% endif %}
+
                     class="text-[#2B292C] whitespace-nowrap font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
                   >
                     Товары
                   </button>
                   <button
                     id="category"
+                    {% if categories_change == 2%}
+                    style="background-color: #fffb98"
+                    {% endif %}
+
                     class="text-[#2B292C] whitespace-nowrap font-mulish font-medium md:text-[18px] text-[15px] py-3 px-5 border-[#FFFB98] border-2 rounded-2xl"
                   >
                     Категории
@@ -119,6 +126,7 @@
     </div>
   </main>
 </div>
+
 
 {% endblock %} {% block js %}
 <script src="{% static 'pages/profile/goods/index.js' %}"></script>

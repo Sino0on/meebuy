@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load math_tags %}
+
 {% load custom_filters %}
 
 {% block title %}
@@ -8,6 +10,49 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'pages/supplierDetail/index.css' %}">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 0;
+            width: 80%;
+            max-width: 1000px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #808080;
+            background: none;
+            text-shadow: #0f0f0f 1px 1px 2px;
+            border: none;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+
+    </style>
+
+
 {% endblock %}
 
 {% block content %}
@@ -37,7 +82,6 @@
 
                             {% if provider.is_recommended %}
                                 <img class="cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}" alt="">
-                                alt="">
                             {% endif %}
                             <svg
                                     class="cursor-pointer transition-colors"
@@ -92,22 +136,42 @@
                                 </div>
                             </div>
                             <p class="font-medium text-sm my-[20px] lg-md:my-0 xl:text-lg">{{ provider.mini_desc }}</p>
-                            <div class="flex gap-2 text-base text-[#4D4D4D] normal-case xl:text-lg">
-                                <img class="text-[#4D4D4D]" src="{% static 'assets/images/icons/location.svg' %}"
-                                     alt="Location"/>
-                                <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full">
-                        <div class="grid grid-cols-3 gap-4">
-                            {% for image in images %}
-                                <div class="rounded-[15px] overflow-hidden aspect-square"><img
-                                        src="{% if image.image %}{{ image.image.url }}{% endif %}" alt=""></div>
-                            {% endfor %}
+                            {#                            <div class="flex gap-2 text-base text-[#4D4D4D] normal-case xl:text-lg">#}
+                            {#                                <img class="text-[#4D4D4D]" src="{% static 'assets/images/icons/location.svg' %}"#}
+                            {#                                     alt="Location"/>#}
+                            {#                            <div>#}
+                            {#                                                                <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>#}
+                            {% if user.is_authenticated %}
+                                {% include 'providers/provider_detail_includes/contacts.html' %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+                <div class="w-full">
+                    <div class="grid grid-cols-3 gap-4">
+                        {% for image in images %}
+                            <div class="rounded-[15px] overflow-hidden aspect-square modal-trigger">
+                                <img src="{% if image.image %}{{ image.image.url }}{% endif %}" alt="">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            </div>
+            <div class="container">
+                <br>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'chat_create' provider.user.pk %}"
+                       class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                        Написать
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}"
+                       class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                        Написать
+                    </a>
+                {% endif %}
             </div>
         </section>
         <section class="supplier__detail-products mt-12 lg:mt-20">
@@ -129,23 +193,19 @@
                     <div id="Tab1" class="tab-content">
                         <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
                             {% for product in products %}
-                                <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5">
+                                <div class="card shadow-card-shadow rounded-[10px] p-[10px] w-full relative lg:p-5 flex flex-col justify-between">
                                     {% if product.new %}
-                                        <div
-                                                class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
+                                        <div class="badge absolute top-2.5 left-2.5 bg-[#E74040] text-white py-1 px-2 rounded-[10px] text-sm lg:top-10 lg:left-10 lg:text-base">
                                             NEW
                                         </div>
                                     {% endif %}
-                                    <img class="rounded-[10px] w-full object-cover aspect-video lg:aspect-square"
-                                         src="
-                                                 {% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
-                                         alt="Изображение товара">
-                                    <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}
-                                    </h2>
-                                    <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">
-                                        {{ product.description|truncatechars:100 }}</p>
+                                    <div class="w-full h-64 lg:h-80 overflow-hidden rounded-[10px]">
+                                        <img class="w-full h-full object-cover" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="Изображение товара">
+                                    </div>
+                                    <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}</h2>
+                                    <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">{{ product.description|truncatechars:100 }}</p>
                                     <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                        Цена: <span class="text-dark-logo font-bold">{{ product.price }}</span>
+                                        Цена: <span class="text-dark-logo font-bold">{% calculate product.id %}{{ product.currency }}</span>
                                     </div>
                                     <a href="/product/detail/{{ product.id }}/">
                                         <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
@@ -187,12 +247,14 @@
                 <div class="grid grid-cols-1 gap-[30px] lg-md:grid-cols-2">
                     <div class="content__wrap px-5 py-[30px] text-dark-logo rounded-[10px]">
                         <h2 class="text-xl font-bold">О компании</h2>
-                        <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ provider.description }}</p>
+                        <p class="description text-dark-text mt-5 lg:mt-[30px]">{{ provider.description|linebreaks|safe }}</p>
                         <ul class="">
                             {% if provider.type %}
                                 <li class="mt-[30px]">
                                     <p class="text-lg font-semibold">Тип компании</p>
-                                    <p class="mt-2.5">{{ provider.type }}</p>
+                                    <p class="mt-2.5">{% if provider.type == 'wholesale' %}
+                                        Поставщик{% elif provider.type == 'manufacturing' %}Производитель{% else %}
+                                        Оказание услуг{% endif %}</p>
                                 </li>
                             {% endif %}
                             <li class="mt-[30px]">
@@ -281,36 +343,146 @@
                             </li>
                         </ul>
                     </div>
-                    {% include 'providers/provider_detail_includes/contacts.html' %}
                 </div>
             </div>
         </section>
         {% include 'providers/provider_detail_includes/similar_companies.html' %}
+
+        <!-- Modal -->
+        <div id="sliderModal" class="modal">
+            <div class="modal-content">
+                <button class="btn-close" id="closeModal">&times;</button>
+                <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                     class="swiper mySwiper2 mt-5">
+                    <div class="swiper-wrapper">
+                        {% for image in images %}
+                            <div class="swiper-slide swiper-image"><img
+                                    src="{% if image.image %}{{ image.image.url }}{% endif %}"
+                                    alt=""></div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <div thumbsSlider="" class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        {% for image in images %}
+                            <div class="swiper-slide"><img src="{% if image.image %}{{ image.image.url }}{% endif %}"
+                                                           alt=""></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </main>
 {% endblock %}
 
 {% block js %}
+
     <script src="{% static 'pages/supplierDetail/index.js' %}"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
-        const slider = new Swiper('.supplier__detail-slider', {
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
+        // Swiper initialization for thumbnails
+        const swiper = new Swiper(".mySwiper", {
+            spaceBetween: 10,
+            slidesPerView: 3,
+            freeMode: true,
+            freeModeMomentum: true,
+            loop: true, // Бесконечная прокрутка
+            watchSlidesProgress: true,
+            breakpoints: {
+                640: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                },
+                768: {
+                    slidesPerView: 4,
+                    spaceBetween: 15,
+                },
+                1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                },
+                1280: {
+                    slidesPerView: 6,
+                    spaceBetween: 25,
+                }
+            }
+        });
+
+        // Swiper initialization for main slider
+        const swiper2 = new Swiper(".mySwiper2", {
+            spaceBetween: 40,
+            slidesPerView: 1, // Один слайд за раз
+            freeMode: true,
+            freeModeMomentum: true,
+            loop: true, // Бесконечная прокрутка
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
             },
-            mousewheel: {
-                enabled: true,
-                sensitivity: 2,
+            thumbs: {
+                swiper: swiper,
             },
             breakpoints: {
-                992: {
-                    slidesPerView: 4,
-                    spaceBetween: 30,
-                },
                 640: {
-                    slidesPerView: 2,
+                    slidesPerView: 1,
                     spaceBetween: 30,
                 },
-            },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 1,
+                    spaceBetween: 50,
+                },
+                1280: {
+                    slidesPerView: 1,
+                    spaceBetween: 60,
+                }
+            }
+        });
+        const swiper3 = new Swiper(".mySwiper3", {
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                spaceBetween: 10,
+        });
+        // Modal functionality
+        const modal = document.getElementById('sliderModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const modalTriggers = document.querySelectorAll('.modal-trigger');
+
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Отключаем прокрутку
+
+            });
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // Включаем прокрутку
+
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.classList.remove('modal-open'); // Включаем прокрутку
+            }
         });
     </script>
+
+
+
 {% endblock %}

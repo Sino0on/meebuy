@@ -164,8 +164,7 @@
                                 fill="black"></path>
                     </svg>
                     <button><a href="
-                                {% if user.is_authenticated %}{% url 'tender_create' %}{% else %}{% url 'login' %}{% endif %}">Добавить
-                        закупку</a></button>
+                                {% if user.is_authenticated %}{% url 'user_tenders' %}{% else %}{% url 'login' %}{% endif %}">Добавить закупку</a></button>
                 </div>
             </div>
         </div>

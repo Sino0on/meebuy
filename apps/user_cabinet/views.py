@@ -1,12 +1,10 @@
 import datetime
 import json
-import plotly.graph_objs as go
-
 from datetime import timedelta
 from functools import reduce
 from operator import and_
-from plotly.offline import plot
 
+import plotly.graph_objs as go
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
@@ -29,17 +27,19 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.timezone import now
 from django.views import generic
 from django.views.decorators.http import require_POST, require_GET
-
+from plotly.offline import plot
 from rest_framework.generics import ListAPIView
 
 from apps.authentication.forms import (
     ProviderForm,
     UserUpdateForm
 )
+from apps.buyer.models import BuyerImg
+from apps.chat.models import Message
 from apps.product.models import (
     Product,
     ProductCategory,
-    PriceColumn
+    PriceColumn, Currency
 )
 from apps.provider.models import (
     ProvideImg,
@@ -59,12 +59,14 @@ from apps.user_cabinet.models import (
     Upping,
     Cabinet
 )
+from apps.user_cabinet.seriazliers import StatusSerializer
 from .forms import (
     ChangePasswordForm,
     PasswordResetForm,
     NewPasswordForm,
     SupportMessageForm
 )
+from .models import Contacts, FAQ
 from ..tender.models import (
     Tender,
     Country,
@@ -72,10 +74,6 @@ from ..tender.models import (
     City,
     SearchRequest
 )
-from .models import Contacts, FAQ
-from apps.user_cabinet.seriazliers import StatusSerializer
-from apps.buyer.models import BuyerImg
-from apps.chat.models import Message
 
 
 # from .freedompay import initiate_payment
@@ -507,9 +505,7 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         contacts = Contacts.load()
         context['contacts'] = contacts
         categories = ProductCategory.objects.filter(provider__user=self.request.user)
-        context['categories'] = categories
-        category_tree = self.build_category_tree(categories)
-        context['category_tree'] = category_tree
+
         context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
         context['decimal'] = self.request.user.provider.decimal_places
         provider, _ = Provider.objects.get_or_create(user=self.request.user)
@@ -519,6 +515,15 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         else:
             context['has_products'] = False
 
+        currency = Currency.objects.all()
+        if not currency:
+            currency = Currency.objects.create(name="Сом", code="KGS")
+        context["currencies"] = Currency.objects.all()
+        categories_change = self.request.GET.get('categories_change', 1)
+        context['categories_change'] = int(categories_change)
+        context['categories'] = categories
+        category_tree = self.build_category_tree(categories)
+        context['category_tree'] = category_tree
         return context
 
     def build_category_tree(self, categories, parent=None, level=0):
@@ -561,6 +566,30 @@ class TariffsCabinetView(generic.ListView):
     model = Status
     queryset = Status.objects.all()
     context_object_name = 'statasus'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if not queryset.exists():
+            status = Status.objects.create(
+                title='Базовый тариф',
+                price_month=0.0,
+                is_recomended=False,
+                quantity_products=100,
+                quantity_tenders=5,
+                is_advertise=False,
+                is_contact_prov=False,
+                is_email=False,
+                dayly_message=10,
+                is_publish_phone=False
+            )
+            PackageStatus.objects.create(
+                status=status,
+                price=0,
+                months=1,
+                priorety=1
+            )
+            queryset = super().get_queryset()
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -800,6 +829,11 @@ def tariff_buy(request):
     if user.cabinet.balance < status.price:
         return JsonResponse({"Error": "Недостаточно средств"}, status=400)
     if user.cabinet.user_status:
+
+        if user.cabinet.user_status.status == status:
+            return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
+
+    if user.cabinet.user_status:
         if user.cabinet.user_status.status.status == status.status:
             user.cabinet.user_status.end_date += datetime.timedelta(days=status.months * 30)
             user.cabinet.balance -= status.price
@@ -810,12 +844,12 @@ def tariff_buy(request):
                 total=-status.price,
                 description=f"Транзакция покупки статуса пользователя {status.status.title} - {status.months} месяцев"
             )
-            return JsonResponse(data={"Info": "ok"}, status=200)
-
-    user.cabinet.user_status = ActiveUserStatus.objects.create(
+    new_satus, _ = ActiveUserStatus.objects.get_or_create(
         status=status,
         end_date=datetime.date.today() + datetime.timedelta(days=status.months * 30)
     )
+    user.cabinet.user_status = new_satus
+
     Transaction.objects.create(
         user=user.cabinet,
         total=-status.price,
