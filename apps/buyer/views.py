@@ -1,3 +1,6 @@
+from datetime import timezone
+
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Case, BooleanField, When
 from django.shortcuts import redirect
@@ -8,7 +11,8 @@ from apps.authentication.models import User
 from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
 from apps.provider.models import Provider, Category
-from apps.tender.models import Country, Region, City
+from apps.tender.forms import TenderForm
+from apps.tender.models import Country, Region, City, TenderImg, Tender
 from apps.user_cabinet.models import Contacts
 
 
@@ -83,6 +87,43 @@ class BuyersStepView(LoginRequiredMixin, generic.UpdateView):
         else:
             print(form.errors)  # Вывод ошибок на консоль для отладки
             return self.form_invalid(form)
+
+
+class TenderStepView(generic.CreateView):
+    template_name = "buyer/buyers_step.html"
+    form_class = TenderForm
+    model = Tender
+    queryset = Tender.objects.all()
+    success_url = "/"
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            if self.request.user.cabinet.user_status:
+                current_tender_count = Tender.objects.filter(user=self.request.user, is_active=True).count()
+                if current_tender_count >= self.request.user.cabinet.user_status.status.status.quantity_tenders:
+                    form.instance.is_active = False
+                    messages.warning(self.request, 'Вы привысили количество закупок доступных на вашем тарифе.')
+
+                else:
+                    form.instance.is_active = True
+            else:
+                if Tender.objects.filter(user=self.request.user, is_active=True).count() >= 5:
+                    form.instance.is_active = False
+                    messages.warning(self.request, 'Вы привысили количество закупок доступных на вашем тарифе.')
+
+                else:
+                    form.instance.is_active = True
+
+            tender = form.save(commit=False)
+            days = request.POST.get("period")
+            tender.user = request.user
+            tender.end_date = timezone.now() + timezone.timedelta(days=int(days))
+            tender.save()
+            for i in request.FILES.getlist("file"):
+                TenderImg.objects.create(tender=tender, image=i)
+            return redirect("/profile/tender/list/")
+        return super().post(request, *args, **kwargs)
 
 
 class BuyerListView(generic.ListView):
