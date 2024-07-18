@@ -171,7 +171,7 @@ class Provider(StatusMixin, models.Model):
     )
 
     is_modered = models.BooleanField(
-        default=False, blank=True, null=True, verbose_name=_("Прошла модерацию")
+        default=False, verbose_name=_("Прошла модерацию")
     )
     created_at = models.DateTimeField(
         auto_now_add=True, blank=True, null=True, verbose_name="Дата создания"
