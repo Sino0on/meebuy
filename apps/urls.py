@@ -16,7 +16,7 @@ from apps.buyer.views import (
     BuyerListView,
     BuyerDetailView,
     BuyerCategoryListView,
-    BuyersStepView
+    BuyersStepView, TenderStepView
 )
 # Chat views
 from apps.chat.views import (
@@ -125,7 +125,7 @@ urlpatterns = [
     path('activate/<str:uidb64>/<str:token>/', activate, name='activate'),
     path('login_redirect/', login_redirect, name='login_redirect'),
     path('buyer/step/', BuyersStepView.as_view(), name='buyer_step'),
-    # path('tender/step/', )
+    path('tender/step/', TenderStepView.as_view(), name='tender_step'),
 
     # Buyer
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),

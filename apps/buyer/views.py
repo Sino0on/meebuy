@@ -13,117 +13,17 @@ from apps.provider.filters import ProviderFilter
 from apps.provider.models import Provider, Category
 from apps.tender.forms import TenderForm
 from apps.tender.models import Country, Region, City, TenderImg, Tender
+from apps.tender.views import TenderCreateView
 from apps.user_cabinet.models import Contacts
+from apps.user_cabinet.views import UserAnketaBuyerView
 
 
-class BuyersStepView(LoginRequiredMixin, generic.UpdateView):
+class BuyersStepView(UserAnketaBuyerView):
     template_name = "buyer/buyers_step.html"
-    model = Provider
-    queryset = Provider.objects.all()
-    form_class = ProviderForm
-    context_object_name = 'form'
-    success_url = '/profile/'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        contacts = Contacts.load()
-        context['contacts'] = contacts
-        provider, _ = Provider.objects.get_or_create(user=self.request.user)
-        context['locations'] = self.get_locations()
-        return context
-
-    def get_locations(self):
-        countries = Country.objects.all()
-        locations = []
-
-        for country in countries:
-            country_data = {
-                'id': country.id,
-                'title': country.title,
-                'regions': []
-            }
-
-            regions = Region.objects.filter(country=country)
-            for region in regions:
-                region_data = {
-                    'id': region.id,
-                    'title': region.title,
-                    'cities': []
-                }
-
-                cities = City.objects.filter(region=region)
-                for city in cities:
-                    city_data = {
-                        'id': city.id,
-                        'title': city.title
-                    }
-                    region_data['cities'].append(city_data)
-
-                country_data['regions'].append(region_data)
-
-            locations.append(country_data)
-
-        return locations
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
-    def get_object(self, queryset=None):
-        return self.request.user.provider
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()  # Получаем объект, который будет обновляться
-        form = self.form_class(request.POST, request.FILES, instance=self.object)
-
-        if form.is_valid():
-            self.object = form.save(
-                commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
-            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
-            self.object.save()  # Сохраняем изменения в объект
-            form.save_m2m()  # Сохраняем ManyToMany поля
-            return redirect(self.get_success_url())  # Переадресация на страницу успеха
-        else:
-            print(form.errors)  # Вывод ошибок на консоль для отладки
-            return self.form_invalid(form)
 
 
-class TenderStepView(generic.CreateView):
-    template_name = "buyer/buyers_step.html"
-    form_class = TenderForm
-    model = Tender
-    queryset = Tender.objects.all()
-    success_url = "/"
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            if self.request.user.cabinet.user_status:
-                current_tender_count = Tender.objects.filter(user=self.request.user, is_active=True).count()
-                if current_tender_count >= self.request.user.cabinet.user_status.status.status.quantity_tenders:
-                    form.instance.is_active = False
-                    messages.warning(self.request, 'Вы привысили количество закупок доступных на вашем тарифе.')
-
-                else:
-                    form.instance.is_active = True
-            else:
-                if Tender.objects.filter(user=self.request.user, is_active=True).count() >= 5:
-                    form.instance.is_active = False
-                    messages.warning(self.request, 'Вы привысили количество закупок доступных на вашем тарифе.')
-
-                else:
-                    form.instance.is_active = True
-
-            tender = form.save(commit=False)
-            days = request.POST.get("period")
-            tender.user = request.user
-            tender.end_date = timezone.now() + timezone.timedelta(days=int(days))
-            tender.save()
-            for i in request.FILES.getlist("file"):
-                TenderImg.objects.create(tender=tender, image=i)
-            return redirect("/profile/tender/list/")
-        return super().post(request, *args, **kwargs)
+class TenderStepView(TenderCreateView):
+    template_name = "buyer/tender_step.html"
 
 
 class BuyerListView(generic.ListView):
