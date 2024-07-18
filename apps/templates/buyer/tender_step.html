@@ -49,7 +49,7 @@
                     <div class="card__wrapper mb-28 h-full shadow-card-shadow rounded-[10px] lg-md:mb-0">
                         <div class="px-5 py-[25px] lg-md:px-10 lg-md:py-[27px]">
                             <div class="form mt-[30px]">
-                                <form class="space-y-[30px]" action="" method="post" enctype="multipart/form-data">
+                                <form class="space-y-[30px]" action="{% url 'tender_create' %}" method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     {{ form.non_field_errors }}
 
