@@ -20,10 +20,12 @@ from apps.user_cabinet.views import UserAnketaBuyerView
 
 class BuyersStepView(UserAnketaBuyerView):
     template_name = "buyer/buyers_step.html"
+    success_url = '/tender/step/'
 
 
 class TenderStepView(TenderCreateView):
     template_name = "buyer/tender_step.html"
+    success_url = '/profile/'
 
 
 class BuyerListView(generic.ListView):
