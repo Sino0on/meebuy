@@ -44,147 +44,98 @@ class Provider(StatusMixin, models.Model):
             "Оказание услуг логистики / поиска товаров / таможенного оформления"
         )
 
-    title = models.CharField(
-        max_length=123, verbose_name="Название", blank=True, null=True
-    )
-    mini_descr = models.CharField(
-        max_length=250, verbose_name="Короткое описание", blank=True, null=True
-    )
-    type = models.CharField(
-        max_length=20,
-        choices=BusinessType.choices,
-        verbose_name=_("Основная деятельность вашей компании"),
-        default=BusinessType.WHOLESALE,
-        blank=True, null=True
-    )
+    title = models.CharField(max_length=123, verbose_name="Название", blank=True, null=True)
+    mini_descr = models.CharField(max_length=250, verbose_name="Короткое описание", blank=True, null=True)
+    type = models.CharField(max_length=20, choices=BusinessType.choices,
+                            verbose_name=_("Основная деятельность вашей компании"), default=BusinessType.WHOLESALE,
+                            blank=True, null=True)
     description = models.TextField(verbose_name="Описание", blank=True, null=True)
-    category = models.ManyToManyField(
-        Category, related_name="providers", verbose_name=_("Категории"), blank=True
-    )
-    minimum_order = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        verbose_name=_("Минимальный заказ"),
-        blank=True,
-        null=True,
-    )
+    category = models.ManyToManyField(Category, related_name="providers", verbose_name=_("Категории"), blank=True)
+    minimum_order = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Минимальный заказ"),
+                                        blank=True, null=True, )
     keywords = models.TextField(blank=True, null=True, verbose_name=_("Ключевые слова"))
+    is_modered = models.BooleanField(default=False, verbose_name=_("Прошла модерацию"))
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name="Дата создания")
+    email = models.EmailField(blank=True, null=True, verbose_name="Электронная почта")
+    is_provider = models.BooleanField(default=False, verbose_name="Поставщик")
+    comment = models.TextField(blank=True,
+                               default="Анкета компании заполнена некорректно! Корректно заполните название компании, описание, контактные данные. Затем подайте на перепроверку.",
+                               verbose_name="Комментарий", )
+    decimal_places = models.PositiveSmallIntegerField(default=0, verbose_name="Десятичные разряды")
+
+    # Wholesale Information
     large_wholesale = models.BooleanField(default=False, verbose_name=_("Крупный опт"))
     small_wholesale = models.BooleanField(default=False, verbose_name=_("Мелкий опт"))
     retail = models.BooleanField(default=False, verbose_name=_("Поштучно"))
-    official_distributor = models.BooleanField(
-        verbose_name=_("Официальный дистрибьютор"), blank=True, null=True
-    )
+    official_distributor = models.BooleanField(verbose_name=_("Официальный дистрибьютор"), blank=True, null=True)
 
     # City Information
-    city = models.ForeignKey(
-        "tender.City", on_delete=models.SET_NULL, blank=True, null=True
-    )
-    how_get = models.CharField(
-        max_length=200, verbose_name=_("Как добраться"), blank=True, null=True
-    )
-    post_index = models.CharField(
-        max_length=123, blank=True, null=True, verbose_name=_("Почтовый индекс")
-    )
-    metro = models.CharField(
-        max_length=123, blank=True, null=True, verbose_name=_("Метро")
-    )
-    address = models.CharField(
-        max_length=123, verbose_name=_("Адрес"), blank=True, null=True
-    )
-    work_time = models.CharField(
-        max_length=123, verbose_name=_("Время работы"), blank=True, null=True
-    )
-    phones = models.CharField(
-        max_length=123, verbose_name=_("Телефон"), blank=True, null=True
-    )
+    city = models.ForeignKey("tender.City", on_delete=models.SET_NULL, blank=True, null=True)
+    how_get = models.CharField(max_length=200, verbose_name=_("Как добраться"), blank=True, null=True)
+    post_index = models.CharField(max_length=123, blank=True, null=True, verbose_name=_("Почтовый индекс"))
+    metro = models.CharField(max_length=123, blank=True, null=True, verbose_name=_("Метро"))
+    address = models.CharField(max_length=123, verbose_name=_("Адрес"), blank=True, null=True)
+    work_time = models.CharField(max_length=123, verbose_name=_("Время работы"), blank=True, null=True)
+    phones = models.CharField(max_length=123, verbose_name=_("Телефон"), blank=True, null=True)
     web_site = models.URLField(verbose_name=_("Вебсайт"), blank=True, null=True)
-    youtube_video = models.URLField(
-        verbose_name=_("Видео с Ютуба"), blank=True, null=True
-    )
-    fax = models.CharField(
-        max_length=123, verbose_name=_("Факс"), blank=True, null=True
-    )
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, verbose_name="Пользователь"
-    )
-    image = models.ImageField(
-        blank=True,
-        null=True,
-        upload_to="images/providers/avatars/%Y/%m",
-        verbose_name=_("Аватар"),
-    )
-    banner = models.ImageField(
-        blank=True,
-        null=True,
-        upload_to="images/providers/banners/%Y/%m",
-        verbose_name=_("Банер"),
-    )
+    youtube_video = models.URLField(verbose_name=_("Видео с Ютуба"), blank=True, null=True)
+    fax = models.CharField(max_length=123, verbose_name=_("Факс"), blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    image = models.ImageField(blank=True, null=True, upload_to="images/providers/avatars/%Y/%m",
+                              verbose_name=_("Аватар"), )
+    banner = models.ImageField(blank=True, null=True, upload_to="images/providers/banners/%Y/%m",
+                               verbose_name=_("Банер"), )
     requisites = models.TextField(blank=True, null=True, verbose_name="Реквизиты")
     is_active = models.BooleanField(default=True, verbose_name=_("Активность"))
-    emp_quantity = models.CharField(max_length=100,
-                                    blank=True, null=True, verbose_name=_("Кол-во работников")
-                                    )
-    register_ur = models.DateField(
-        blank=True, null=True, verbose_name=_("Дата регистрации юр лица")
-    )
+    emp_quantity = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Кол-во работников"))
+    register_ur = models.DateField(blank=True, null=True, verbose_name=_("Дата регистрации юр лица"))
 
     # Conditions
-    installment = models.BooleanField(
-        default=False, verbose_name=_("Возможна рассрочка"), blank=True
-    )
+    installment = models.BooleanField(default=False, verbose_name=_("Возможна рассрочка"), blank=True)
     credit = models.BooleanField(default=False, verbose_name=_("Возможен кредит"))
     deposit = models.BooleanField(default=False, verbose_name=_("Возможен депозит"))
-    consignment = models.BooleanField(
-        default=False, verbose_name=_("Возможна передача под реализацию")
-    )
-    dropshipping = models.BooleanField(
-        default=False, verbose_name=_("Возможен дропшиппинг")
-    )
+    consignment = models.BooleanField(default=False, verbose_name=_("Возможна передача под реализацию"))
+    dropshipping = models.BooleanField(default=False, verbose_name=_("Возможен дропшиппинг"))
     showroom = models.BooleanField(default=False, verbose_name=_("Есть шоурум"))
-    marketplace_sale = models.BooleanField(
-        default=False, verbose_name=_("Разрешена продажа на маркетплейсах")
-    )
+    marketplace_sale = models.BooleanField(default=False, verbose_name=_("Разрешена продажа на маркетплейсах"))
 
     # Deliveries
     pickup = models.BooleanField(default=False, verbose_name=_("Самовывоз"))
-    transport_company = models.BooleanField(
-        default=False, verbose_name=_("Транспортной компанией")
-    )
+    transport_company = models.BooleanField(default=False, verbose_name=_("Транспортной компанией"))
     by_car = models.BooleanField(default=False, verbose_name=_("Автомобилем"))
-    air_transport = models.BooleanField(
-        default=False, verbose_name=_("Авиатранспортом")
-    )
-    rail_transport = models.BooleanField(
-        default=False, verbose_name=_("Железной дорогой")
-    )
+    air_transport = models.BooleanField(default=False, verbose_name=_("Авиатранспортом"))
+    rail_transport = models.BooleanField(default=False, verbose_name=_("Железной дорогой"))
     courier = models.BooleanField(default=False, verbose_name=_("Курьером"))
 
     # Payment Types
     cash = models.BooleanField(default=False, verbose_name=_("Наличными"))
-    bank_transfer = models.BooleanField(
-        default=False, verbose_name=_("Безналичная оплата")
-    )
+    bank_transfer = models.BooleanField(default=False, verbose_name=_("Безналичная оплата"))
     credit_card = models.BooleanField(default=False, verbose_name=_("Кредитные карты"))
-    electronic_money = models.BooleanField(
-        default=False, verbose_name=_("Электронные деньги")
-    )
+    electronic_money = models.BooleanField(default=False, verbose_name=_("Электронные деньги"))
 
-    is_modered = models.BooleanField(
-        default=False, verbose_name=_("Прошла модерацию")
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True, blank=True, null=True, verbose_name="Дата создания"
-    )
-    email = models.EmailField(blank=True, null=True, verbose_name="Электронная почта")
-    is_provider = models.BooleanField(default=False, verbose_name="Поставщик")
-    comment = models.TextField(
+    # Sales Locations
+    retail_store = models.BooleanField(default=False, verbose_name=_("Розничный магазин"))
+    marketplaces = models.BooleanField(default=False, verbose_name=_("Маркетплейсы"))
+    online_store = models.BooleanField(default=False, verbose_name=_("Интернет-магазин"))
+    social_networks = models.BooleanField(default=False, verbose_name=_("Соцсети, доски объявлений"))
+    wholesale_resale = models.BooleanField(default=False, verbose_name=_("Оптовая перепродажа"))
+    group_purchases = models.BooleanField(default=False, verbose_name=_("Совместные покупки"))
+    for_personal_use = models.BooleanField(default=False, verbose_name=_("Для собственного потребления"))
+
+    class PurchaseFrequency(models.TextChoices):
+        ONCE = 'once', _("Однократно")
+        WEEKLY = 'weekly', _("Каждую неделю")
+        MONTHLY = 'monthly', _("Каждый месяц")
+        MULTIPLE_TIMES_YEAR = 'multiple_times_year', _("Несколько раз в год")
+        TWICE_YEAR = 'twice_year', _("Пару раз в год")
+
+    purchase_frequency = models.CharField(
+        max_length=20,
+        choices=PurchaseFrequency.choices,
+        verbose_name=_("Как часто планируете закупать"),
+        default=PurchaseFrequency.ONCE,
         blank=True,
-        default="Анкета компании заполнена некорректно! Корректно заполните название компании, описание, контактные данные. Затем подайте на перепроверку.",
-        verbose_name="Комментарий",
-    )
-    decimal_places = models.PositiveSmallIntegerField(
-        default=0, verbose_name="Десятичные разряды"
+        null=True
     )
 
     def __str__(self):

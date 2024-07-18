@@ -126,7 +126,7 @@ class SelectUserTypeView(LoginRequiredMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         user_profile = self.request.user
         if user_profile.is_authenticated:
-            if user_profile.user_type and user_profile.provider:  # Проверяем, есть ли уже выбранный тип и профиль поставщика
+            if user_profile.user_type and user_profile.provider:
                 return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
 

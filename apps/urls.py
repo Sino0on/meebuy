@@ -11,13 +11,13 @@ from apps.authentication.views import (
     activate,
     login_redirect
 )
-
 # Buyer views
 from apps.buyer.views import (
     BuyerListView,
-    BuyerDetailView, BuyerCategoryListView
+    BuyerDetailView,
+    BuyerCategoryListView,
+    BuyersStepView
 )
-
 # Chat views
 from apps.chat.views import (
     chat_detail,
@@ -28,14 +28,12 @@ from apps.chat.views import (
     remove_from_favorites,
     remove_from_deleted
 )
-
 # Pages views
 from apps.pages.views import (
     privacy_policy_view,
     rules_view,
     banner_view
 )
-
 # Product views
 from apps.product.views import (
     ProductListView,
@@ -54,7 +52,6 @@ from apps.product.views import (
     DownloadPriceFileView,
     DeleteFileView
 )
-
 # Provider views
 from apps.provider.views import (
     ProviderListView,
@@ -63,7 +60,6 @@ from apps.provider.views import (
     ProviderCategoryListView,
     upload_file
 )
-
 # Tender views
 from apps.tender.views import (
     TenderListView,
@@ -75,7 +71,6 @@ from apps.tender.views import (
     SearchDetailView,
     SearchDeleteView
 )
-
 # User cabinet views
 from apps.user_cabinet.api import (
     BuyStatusView,
@@ -129,6 +124,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('activate/<str:uidb64>/<str:token>/', activate, name='activate'),
     path('login_redirect/', login_redirect, name='login_redirect'),
+    path('buyer/step/', BuyersStepView.as_view(), name='buyer_setp'),
 
     # Buyer
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),

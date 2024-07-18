@@ -1,12 +1,88 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Case, BooleanField, When
+from django.shortcuts import redirect
 from django.views import generic
 
+from apps.authentication.forms import ProviderForm
 from apps.authentication.models import User
 from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
 from apps.provider.models import Provider, Category
 from apps.tender.models import Country, Region, City
 from apps.user_cabinet.models import Contacts
+
+
+class BuyersStepView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "buyer/buyers_step.html"
+    model = Provider
+    queryset = Provider.objects.all()
+    form_class = ProviderForm
+    context_object_name = 'form'
+    success_url = '/profile/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contacts = Contacts.load()
+        context['contacts'] = contacts
+        provider, _ = Provider.objects.get_or_create(user=self.request.user)
+        context['locations'] = self.get_locations()
+        return context
+
+    def get_locations(self):
+        countries = Country.objects.all()
+        locations = []
+
+        for country in countries:
+            country_data = {
+                'id': country.id,
+                'title': country.title,
+                'regions': []
+            }
+
+            regions = Region.objects.filter(country=country)
+            for region in regions:
+                region_data = {
+                    'id': region.id,
+                    'title': region.title,
+                    'cities': []
+                }
+
+                cities = City.objects.filter(region=region)
+                for city in cities:
+                    city_data = {
+                        'id': city.id,
+                        'title': city.title
+                    }
+                    region_data['cities'].append(city_data)
+
+                country_data['regions'].append(region_data)
+
+            locations.append(country_data)
+
+        return locations
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_object(self, queryset=None):
+        return self.request.user.provider
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()  # Получаем объект, который будет обновляться
+        form = self.form_class(request.POST, request.FILES, instance=self.object)
+
+        if form.is_valid():
+            self.object = form.save(
+                commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
+            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
+            self.object.save()  # Сохраняем изменения в объект
+            form.save_m2m()  # Сохраняем ManyToMany поля
+            return redirect(self.get_success_url())  # Переадресация на страницу успеха
+        else:
+            print(form.errors)  # Вывод ошибок на консоль для отладки
+            return self.form_invalid(form)
 
 
 class BuyerListView(generic.ListView):
