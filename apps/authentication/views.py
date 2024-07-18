@@ -143,6 +143,7 @@ class SelectUserTypeView(LoginRequiredMixin, FormView):
             provider, created = Provider.objects.get_or_create(user=user_profile)
             provider.is_provider = False
             provider.save()
+            return redirect('buyer_step')
 
         return super().form_valid(form)
 

@@ -124,7 +124,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('activate/<str:uidb64>/<str:token>/', activate, name='activate'),
     path('login_redirect/', login_redirect, name='login_redirect'),
-    path('buyer/step/', BuyersStepView.as_view(), name='buyer_setp'),
+    path('buyer/step/', BuyersStepView.as_view(), name='buyer_step'),
+    # path('tender/step/', )
 
     # Buyer
     path('buyer/list/', BuyerListView.as_view(), name='buyer_list'),
