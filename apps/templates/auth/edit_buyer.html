@@ -227,15 +227,26 @@
         const formattedString = locationContainer.getAttribute("data-countries").replace(/'/g, '"');
         const countries = JSON.parse(formattedString);
         const transformedData = transformData(countries);
-        const countryOptions = countrySelect.querySelectorAll('option');
 
-        countryOptions.forEach(option => {
-            option.selected = option.value === selectedCountry;
-        })
+        function setSelectedValue(selectElement, value, defaultValue) {
+            const options = Array.from(selectElement.options);
+            const selectedOption = options.find(option => option.value === value);
+            if (selectedOption) {
+                selectedOption.selected = true;
+            } else {
+                options[0].selected = true;
+                return options[0].value;
+            }
+            return value;
+        }
 
+        const selectedOrDefaultCountry = setSelectedValue(countrySelect, selectedCountry, countries[0].title);
+        addOptions(regionSelect, transformedData[selectedOrDefaultCountry]);
 
-        addOptions(regionSelect, transformedData[selectedCountry]);
-        addOptions(citySelect, transformedData[selectedCountry][selectedRegion]);
+        const selectedOrDefaultRegion = setSelectedValue(regionSelect, selectedRegion, Object.keys(transformedData[selectedOrDefaultCountry])[0]);
+        addOptions(citySelect, transformedData[selectedOrDefaultCountry][selectedOrDefaultRegion]);
+
+        setSelectedValue(citySelect, selectedCity, Object.keys(transformedData[selectedOrDefaultCountry][selectedOrDefaultRegion])[0]);
 
         function transformData(data) {
             const transformed = {};
