@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.views import generic
 
 from apps.buyer.models import Banner, BannerSettings
+from apps.product.models import Currency
 from apps.provider.models import Category
 from apps.tender.filters import TenderFilter
 from apps.tender.forms import TenderForm, SearchRequestForm
@@ -135,6 +136,14 @@ class TenderCreateView(generic.CreateView):
     model = Tender
     queryset = Tender.objects.all()
     success_url = "/"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        currency = Currency.objects.all()
+
+        if not currency:
+            currency = Currency.objects.create(name="Сом", code="KGS")
+        context["currencies"] = Currency.objects.all()
+        return context
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)

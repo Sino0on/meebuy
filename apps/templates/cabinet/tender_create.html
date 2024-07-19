@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="{% static 'pages/profile/profile.css' %}">
     <link rel="stylesheet" href="{% static 'pages/profile/addProductToBuy/index.css' %}">
     <style>
-    .text-red-500{
-        color: red;
-    }
+        .text-red-500 {
+            color: red;
+        }
     </style>
 {% endblock %}
 
@@ -69,7 +69,8 @@
                                         <label class="label" for="name">Что вы хотите купить (кратко)</label>
                                         <p class="tooltip">Например: Купим оптом женскую одежду и обувь</p>
                                         <input id="name" name="title" type="text"
-                                               placeholder="Например: наушники оптом" value="{% if form.description.value %}{{ form.description.value }}{% endif %}">
+                                               placeholder="Например: наушники оптом" value="
+                                                {% if form.description.value %}{{ form.description.value }}{% else %}{% endif %}">
                                         {% if form.title.errors %}
                                             <div class="text-red-500 text-sm">{{ form.title.errors }}</div>
                                         {% endif %}
@@ -81,7 +82,7 @@
                                             объем поставок, сроки, условия доставки
                                             Не публикуйте контактные данные в описании</p>
                                         <textarea id="description" name="description" type="text"
-                                                  placeholder="Например: наушники оптом" >
+                                                  placeholder="Например: наушники оптом">
                                             {% if form.description.value %}{{ form.description.value }}{% endif %}
                                         </textarea>
                                         {% if form.description.errors %}
@@ -95,6 +96,7 @@
                                             брюки, блузки…</p>
                                         <input id="requirements" type="text" name="requirements"
                                                placeholder="Например: наушники оптом" value="
+
                                                 {% if form.requirements.value %}{{ form.requirements.value }}{% endif %}">
                                         {% if form.requirements.errors %}
                                             <div class="text-red-500 text-sm">{{ form.product_list.errors }}</div>
@@ -106,6 +108,7 @@
                                         <p class="tooltip">Введите место реализации</p>
                                         <input id="place_of_sale" type="text" name="place_of_sale"
                                                placeholder="Например: маркетплейс" value="
+
                                                 {% if form.place_of_sale.value %}{{ form.place_of_sale.value }}{% endif %}">
                                         {% if form.place_of_sale.errors %}
                                             <div class="text-red-500 text-sm">{{ form.place_of_sale.errors }}</div>
@@ -122,15 +125,60 @@
                                         {% endif %}
                                     </div>
 
-                                    <div class="form__item">
-                                        <label class="label">Валюта</label>
-                                        <p class="tooltip">Введите валюту</p>
-                                        <input id="currency" type="text" name="currency" placeholder="Например: KGS"
-                                               value="{% if form.currency.value %}{{ form.currency.value }}{% endif %}">
-                                        {% if form.currency.errors %}
-                                            <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
-                                        {% endif %}
+                                    <div
+                                            class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full"
+                                    >
+                                        <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                                            <h6 class="text-[#2B292C] font-semibold text-[18px]">Валюта</h6>
+                                            <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                Например: KGS
+                                            </p>
+                                            <label>
+                                                <select name="currency"
+                                                        class=" relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
+                                                    {% for currency in currencies %}
+
+                                                        <option value="{{ currency.id }}"
+                                                                {% if object.currency == currency.code %}
+                                                                selected
+                                                                {% endif %}
+                                                        >{{ currency.name }} - {{ currency.code }}</option>
+                                                    {% endfor %}
+
+                                                    <img
+                                                            class="absolute right-7 top-6 mr-7"
+                                                            src="{% static 'assets/images/icons/arrow-down.svg' %}"
+                                                            alt=""
+                                                    />
+                                                </select>
+                                                {% if form.currency.errors %}
+                                                    <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
+                                                {% endif %}
+                                            </label>
+                                        </div>
+                                        <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                                            <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                                                Минимальное количество заказа
+                                            </h6>
+                                            <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                Например: 10
+                                            </p>
+                                            <label>
+                                                <input
+                                                        class="pl-5 bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                                                        type="number"
+                                                        value="{{ form.min_quantity.value|default_if_none:'' }}"
+                                                        name="min_quantity"
+                                                />
+                                                {% if form.min_quantity.errors %}
+                                                    <div class="text-red-500 text-sm">
+                                                        {{ form.min_quantity.errors }}
+                                                    </div>
+                                                {% endif %}
+                                            </label>
+                                        </div>
                                     </div>
+                                    <div
 
                                     <div class="form__item">
                                         <label class="label">Количество</label>

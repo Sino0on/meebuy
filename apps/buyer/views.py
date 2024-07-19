@@ -22,6 +22,18 @@ class BuyersStepView(UserAnketaBuyerView):
     template_name = "buyer/buyers_step.html"
     success_url = '/tender/step/'
 
+    def post(self, request, *args, **kwargs):
+        print(self)
+        self.object = self.get_object()
+        form = self.form_class(request.POST, instance=self.object)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            return redirect(self.success_url)
+        else:
+            print(form.errors)
+            return self.form_invalid(form)
+
 
 class TenderStepView(TenderCreateView):
     template_name = "buyer/tender_step.html"

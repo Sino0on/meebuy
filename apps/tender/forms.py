@@ -15,7 +15,20 @@ class TenderForm(forms.ModelForm):
         model = Tender
         fields = ['title', 'phone', 'description',
                   'email', 'period', 'requirements',
-                  'price', 'currency', 'place_of_sale', 'quantity']
+                  'price', 'currency', 'place_of_sale', 'quantity',
+                  'retail_store',
+                  'marketplaces',
+                  'online_store',
+                  'social_networks',
+                  'wholesale_resale',
+                  'group_purchases',
+                  'for_personal_use',
+                  'purchase_frequency',
+                  'large_wholesale',
+                  'small_wholesale',
+                  'retail',
+                  'official_distributor',
+                  ]
 
 
 class SearchRequestForm(forms.ModelForm):

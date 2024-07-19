@@ -143,6 +143,7 @@ class ProductCreateView(CreateView):
         currency = Currency.objects.all()
         if not currency:
             currency = Currency.objects.create(name="Сом", code="KGS")
+        categories = Category.objects.filter(category=None)
         context["currencies"] = Currency.objects.all()
         context['categories'] = categories
         category_tree = self.build_category_tree(categories)

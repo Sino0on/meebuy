@@ -161,14 +161,6 @@ class ProviderForm(forms.ModelForm):
             'air_transport',
             'rail_transport',
             'courier',
-            'retail_store',
-            'marketplaces',
-            'online_store',
-            'social_networks',
-            'wholesale_resale',
-            'group_purchases',
-            'for_personal_use',
-            'purchase_frequency',
 
         ]
         widgets = {

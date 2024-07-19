@@ -26,7 +26,7 @@
         <section class="heading">
             <div class="container">
                 <h1 class="font-black text-dark-logo text-lg uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
-                    редактирование анкеты</h1>
+                    Создайте бесплатную заявку на покупку за 3 минуты</h1>
             </div>
         </section>
         <div class="container">
@@ -36,12 +36,7 @@
                 <!-- these sections are for main content  -->
                 <section class="main-content lg-md:mt-[50px] w-full lg-md:mb-[120px]">
                     <div class="card__wrapper mb-28 h-full shadow-card-shadow rounded-[10px] lg-md:mb-0">
-                        <div class="px-5 py-[25px] lg-md:px-10 lg-md:py-[27px]">
-                            <a class="flex items-center gap-2.5 font-semibold text-dark-logo lg-md:gap-[15px] lg-md:text-lg"
-                               href="{% url 'view_profile' %}">
-                                <img src="{% static '/assets/images/icons/prev-arrow.svg' %}" alt="">
-                                Назад в личный кабинет
-                            </a>
+
                             {% if form.errors %}
                                 <ul>
                                     {% for field in form %}
@@ -53,145 +48,19 @@
                             {% endif %}
 
                             <p class="mt-10 border-b border-b-grey-light pb-[30px]">
-                                Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем
-                                качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.
+{#                                Пожалуйста, потратьте несколько минут на правильное заполнение профиля компании. Чем#}
+{#                                качественнее заполнена анкета, тем больше клиентов обратят на нее внимание.#}
                                 <br>Все анкеты после добавления проходят проверку модератором. Если анкета оформлена
                                 ненадлежащим образом или в тексте содержатся ошибки, анкета может быть заблокирована.
                             </p>
                             <div class="form mt-[30px]">
                                 <form id="form" method="post" enctype="multipart/form-data" class="space-y-[30px]"
-                                      action="{% url 'anketa_buyer' %}">
+                                      action="{% url 'buyer_step' %}">
                                     {% csrf_token %}
                                     <div class="form__item">
-                                        <label class="label">Как часто планируете закупать</label>
-                                        <select name="purchase_frequency" class="form-control">
-                                            <option value="once"
-                                                    {% if form.purchase_frequency.value == 'once' %}selected{% endif %}>
-                                                Однократно
-                                            </option>
-                                            <option value="weekly"
-                                                    {% if form.purchase_frequency.value == 'weekly' %}selected{% endif %}>
-                                                Каждую неделю
-                                            </option>
-                                            <option value="monthly"
-                                                    {% if form.purchase_frequency.value == 'monthly' %}selected{% endif %}>
-                                                Каждый месяц
-                                            </option>
-                                            <option value="multiple_times_year"
-                                                    {% if form.purchase_frequency.value == 'multiple_times_year' %}selected{% endif %}>
-                                                Несколько раз в год
-                                            </option>
-                                            <option value="twice_year"
-                                                    {% if form.purchase_frequency.value == 'twice_year' %}selected{% endif %}>
-                                                Пару раз в год
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="form__item">
-                                        <label class="label">Объем закупок</label>
-                                        <div class="mt-6">
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="large_wholesale"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.large_wholesale.value %}checked{% endif %}
-                                                    >
-                                                    Крупный опт
-                                                </label>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input
-                                                            type="checkbox" name="small_wholesale"
-                                                            class="w-[25px] h-[25px] text-base"
-                                                            {% if form.small_wholesale.value %}checked{% endif %}>
-                                                    Мелкий опт
-                                                </label>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="retail"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.retail.value %}checked{% endif %}>
-                                                    Поштучно
-                                                </label>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="form__item">
-                                        <label class="label">Место реализации</label>
-                                        <div class="mt-6">
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="retail_store"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.retail_store.value %}checked{% endif %}
-                                                    >
-                                                    Розничный магазин
-                                                </label>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="marketplaces"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.marketplaces.value %}checked{% endif %}
-                                                    >
-                                                    Маркетплейсы
-                                                </label>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="online_store"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.online_store.value %}checked{% endif %}
-                                                    >
-                                                    Интернет-магазин
-                                                </label>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="social_networks"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.social_networks.value %}checked{% endif %}
-                                                    >
-                                                    Соцсети, доски объявлений
-                                                </label>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="wholesale_resale"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.wholesale_resale.value %}checked{% endif %}
-                                                    >
-                                                    Оптовая перепродажа
-                                                </label>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="group_purchases"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.group_purchases.value %}checked{% endif %}
-                                                    >
-                                                    Совместные покупки
-                                                </label>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="flex items-center gap-2.5 cursor-pointer select-none text-dark">
-                                                    <input type="checkbox" name="for_personal_use"
-                                                           class="w-[25px] h-[25px] text-base"
-                                                           {% if form.for_personal_use.value %}checked{% endif %}
-                                                    >
-                                                    Для собственного потребления
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form__item">
-                                        <label class="label" for="title">Общеизвестное название компании / бренда
+                                        <label class="label" for="title">Ваше имя или название компании / бренда
                                             *</label>
-                                        <p class="tooltip">Без кавычек. Например: Headphones</p>
+                                        <p class="tooltip">Без кавычек. Например: Иванов Иван</p>
                                         {{ form.title }}
                                     </div>
                                     <div class="form__item">

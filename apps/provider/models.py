@@ -113,30 +113,7 @@ class Provider(StatusMixin, models.Model):
     credit_card = models.BooleanField(default=False, verbose_name=_("Кредитные карты"))
     electronic_money = models.BooleanField(default=False, verbose_name=_("Электронные деньги"))
 
-    # Sales Locations
-    retail_store = models.BooleanField(default=False, verbose_name=_("Розничный магазин"))
-    marketplaces = models.BooleanField(default=False, verbose_name=_("Маркетплейсы"))
-    online_store = models.BooleanField(default=False, verbose_name=_("Интернет-магазин"))
-    social_networks = models.BooleanField(default=False, verbose_name=_("Соцсети, доски объявлений"))
-    wholesale_resale = models.BooleanField(default=False, verbose_name=_("Оптовая перепродажа"))
-    group_purchases = models.BooleanField(default=False, verbose_name=_("Совместные покупки"))
-    for_personal_use = models.BooleanField(default=False, verbose_name=_("Для собственного потребления"))
 
-    class PurchaseFrequency(models.TextChoices):
-        ONCE = 'once', _("Однократно")
-        WEEKLY = 'weekly', _("Каждую неделю")
-        MONTHLY = 'monthly', _("Каждый месяц")
-        MULTIPLE_TIMES_YEAR = 'multiple_times_year', _("Несколько раз в год")
-        TWICE_YEAR = 'twice_year', _("Пару раз в год")
-
-    purchase_frequency = models.CharField(
-        max_length=20,
-        choices=PurchaseFrequency.choices,
-        verbose_name=_("Как часто планируете закупать"),
-        default=PurchaseFrequency.ONCE,
-        blank=True,
-        null=True
-    )
 
     def __str__(self):
         return f"{self.title}"
