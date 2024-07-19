@@ -36,7 +36,7 @@
             <div class="container">
                 <h1
                         class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
-                    добавление закупки
+Что вы хотите купить?
                 </h1>
             </div>
         </section>
@@ -53,6 +53,16 @@
                                       enctype="multipart/form-data">
                                     {% csrf_token %}
                                     {{ form.non_field_errors }}
+                                                                    <div class="form__item">
+                                        <label class="label" for="name">Что вы хотите купить (кратко)</label>
+                                        <p class="tooltip">Например: Купим оптом женскую одежду и обувь</p>
+                                        <input id="name" name="title" type="text"
+                                               placeholder="Например: наушники оптом" value="{% if form.title.value %}{{ form.title.value }}{% endif %}">
+                                        {% if form.title.errors %}
+                                            <div class="text-red-500 text-sm">{{ form.title.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
                                     <div class="form__item">
                                         <label class="label">Как часто планируете закупать</label>
                                         <select name="purchase_frequency" class="form-control">
@@ -180,16 +190,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="form__item">
-                                        <label class="label" for="name">Что вы хотите купить (кратко)</label>
-                                        <p class="tooltip">Например: Купим оптом женскую одежду и обувь</p>
-                                        <input id="name" name="title" type="text"
-                                               placeholder="Например: наушники оптом" value="
-                                                {% if form.description.value %}{{ form.description.value }}{% endif %}">
-                                        {% if form.title.errors %}
-                                            <div class="text-red-500 text-sm">{{ form.title.errors }}</div>
-                                        {% endif %}
-                                    </div>
 
                                     <div class="form__item">
                                         <label for="description">Описание</label>
@@ -197,9 +197,7 @@
                                             объем поставок, сроки, условия доставки
                                             Не публикуйте контактные данные в описании</p>
                                         <textarea id="description" name="description" type="text"
-                                                  placeholder="Например: наушники оптом">
-                                            {% if form.description.value %}{{ form.description.value }}{% endif %}
-                                        </textarea>
+                                                  placeholder="Например: наушники оптом">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
                                         {% if form.description.errors %}
                                             <div class="text-red-500 text-sm">{{ form.description.errors }}</div>
                                         {% endif %}
@@ -210,25 +208,13 @@
                                         <p class="tooltip">Введите необходимые товары через запятую.Пример: Платья,
                                             брюки, блузки…</p>
                                         <input id="requirements" type="text" name="requirements"
-                                               placeholder="Например: наушники оптом" value="
-
-                                                {% if form.requirements.value %}{{ form.requirements.value }}{% endif %}">
+                                               placeholder="Например: наушники оптом" value="{% if form.requirements.value %}{{ form.requirements.value }}{% endif %}">
                                         {% if form.requirements.errors %}
                                             <div class="text-red-500 text-sm">{{ form.product_list.errors }}</div>
                                         {% endif %}
                                     </div>
 
-                                    <div class="form__item">
-                                        <label class="label">Место реализации</label>
-                                        <p class="tooltip">Введите место реализации</p>
-                                        <input id="place_of_sale" type="text" name="place_of_sale"
-                                               placeholder="Например: маркетплейс" value="
 
-                                                {% if form.place_of_sale.value %}{{ form.place_of_sale.value }}{% endif %}">
-                                        {% if form.place_of_sale.errors %}
-                                            <div class="text-red-500 text-sm">{{ form.place_of_sale.errors }}</div>
-                                        {% endif %}
-                                    </div>
 
                                     <div class="form__item">
                                         <label class="label">Бюджет</label>
@@ -293,7 +279,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div
+                                    <div></div>
 
                                     <div class="form__item">
                                         <label class="label">Количество</label>
@@ -309,7 +295,7 @@
                                         <label class="label">Телефон для связи</label>
                                         <p class="tooltip">Телефон является необязательным, но крайне желательным
                                             Он будет показан только заинтересованным поставщикам</p>
-                                        <input name="phone" id="phone" type="text" placeholder="Например: Бишкек"
+                                        <input name="phone" id="phone" type="text" placeholder="Например: +996555555555"
                                                value="{% if form.phone.value %}{{ form.phone.value }}{% endif %}">
                                         {% if form.phone.errors %}
                                             <div class="text-red-500 text-sm">{{ form.phone.errors }}</div>

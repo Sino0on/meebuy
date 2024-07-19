@@ -139,7 +139,6 @@ class TenderCreateView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         currency = Currency.objects.all()
-
         if not currency:
             currency = Currency.objects.create(name="Сом", code="KGS")
         context["currencies"] = Currency.objects.all()
@@ -168,6 +167,10 @@ class TenderCreateView(generic.CreateView):
             days = request.POST.get("period")
             tender.user = request.user
             tender.end_date = timezone.now() + timezone.timedelta(days=int(days))
+
+            currency = self.request.POST.get("currency")
+            c = Currency.objects.get(id=currency)
+            tender.currency = c.code
             tender.save()
             for i in request.FILES.getlist("file"):
                 TenderImg.objects.create(tender=tender, image=i)
@@ -192,6 +195,10 @@ class TenderUpdateView(generic.UpdateView):
             images[i] if i < len(images) else None for i in range(len(context_keys))
         )
         context.update(dict(zip(context_keys, context_values)))
+        currency = Currency.objects.all()
+        if not currency:
+            currency = Currency.objects.create(name="Сом", code="KGS")
+        context["currencies"] = Currency.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -221,6 +228,10 @@ class TenderUpdateView(generic.UpdateView):
                     existing_images[idx].delete()
                 # Save new image
                 TenderImg.objects.create(tender=obj, image=request.FILES[file_field])
+        currency = self.request.POST.get("currency")
+        c = Currency.objects.get(id=currency)
+        obj.currency = c.code
+        obj.save()
 
         return super().post(request, *args, **kwargs)
 
