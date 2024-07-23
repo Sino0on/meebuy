@@ -71,7 +71,7 @@ class ProductListView(ListView):
         if order:
             queryset = queryset.order_by('provider_status_priority', order)
         else:
-            queryset = queryset.order_by('provider_status_priority')
+            queryset = queryset.order_by('provider_status_priority', '-id')
 
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
