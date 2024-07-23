@@ -125,9 +125,26 @@ class TenderDetailView(generic.DetailView):
                         )
                         context["open"] = "open"
             # context['open'] = 'open'
+        context["banners"] = self.get_banners()
 
         context["tenders"] = Tender.objects.exclude(id=self.object.id)
+
         return context
+
+    def get_banners(self):
+        banners = Banner.objects.filter(page_for="tender").order_by('?')[:2]
+        banner_list = []
+        if banners:
+            for banner in banners:
+                banner_list.append(
+                    {
+                        'title': banner.title,
+                        'image_desktop': banner.image_desktop.url,
+                        'image_mobile': banner.image_mobile.url,
+                        'link': banner.link
+                    }
+                )
+        return banner_list
 
 
 class TenderCreateView(generic.CreateView):
@@ -136,6 +153,7 @@ class TenderCreateView(generic.CreateView):
     model = Tender
     queryset = Tender.objects.all()
     success_url = "/"
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         currency = Currency.objects.all()
