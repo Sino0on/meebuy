@@ -141,9 +141,15 @@
                             {#                                     alt="Location"/>#}
                             {#                            <div>#}
                             {#                                                                <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>#}
-                            {% if user.is_authenticated %}
                                 {% include 'providers/provider_detail_includes/contacts.html' %}
-                            {% endif %}
+                                {% if not user.is_authenticated %}
+                                    <a href="{% url 'login' %}">
+                                    <button class="btn-filled py-3 w-full uppercase mt-7 lg:mt-10 max-w-[307px]">
+                                Показать контакты
+                            </button>
+                                    </a>
+                                {% endif %}
+
                         </div>
                     </div>
                 </div>
