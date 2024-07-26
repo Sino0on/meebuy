@@ -10,17 +10,17 @@
     class="cards buyer-item sm:relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
   >
     <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-      <img {% if object.imsage %}{{ object.image.url }}{% else %}{% static
+      <img {% if object.image %}{{ object.image.url }}{% else %}{% static
       'assets/images/logo_4.svg' %}{% endif %} alt="" />
       <div class="flex flex-col gap-9">
         <div class="pt-2">
           <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-            {{ object.provider.title }}
+            {{ object.title }}
           </h6>
-          <p>{{ object.provider.mini_desc }}</p>
+          <p>{{ object.mini_desc }}</p>
         </div>
         <div class="flex gap-4">
-          <a href="{% url 'buyer_detail' object.pk %}">
+          <a href="{% url 'buyer_detail' object.id %}">
             <button class="bg-[#E4DB00] px-6 py-2 rounded-[7px]">
               Подробнее
             </button>
