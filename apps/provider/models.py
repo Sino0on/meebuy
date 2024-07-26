@@ -19,6 +19,7 @@ class Category(models.Model):
     )
     icon = models.FileField(upload_to="images/category/icons/", null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_main_category = models.BooleanField(default=False, verbose_name="Главная категория")
 
     @classmethod
     def get_category_descendants(cls, category):

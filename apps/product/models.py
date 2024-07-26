@@ -20,7 +20,6 @@ class ProductCategory(StatusMixin, models.Model):
     provider = models.ForeignKey(
         "provider.Provider", on_delete=models.PROTECT, related_name="product_categories"
     )
-    is_main_category = models.BooleanField(default=False, verbose_name="Главная категория")
 
     @classmethod
     def get_category_descendants(cls, category):
