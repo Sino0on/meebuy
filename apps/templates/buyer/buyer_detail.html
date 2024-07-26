@@ -142,19 +142,7 @@
                         <h2 class="text-xl font-bold">О компании</h2>
                         <p class="description text-dark-text mt-5 lg:mt-[30px] break-words">{{ object.provider.description }}</p>
                         <ul class="">
-
-                            <li class="mt-[30px]">
-                                <p class="text-lg font-semibold">Объем поставок</p>
-                                {% if object.provider.large_wholesale %}
-                                    <p class="mt-2.5">Крупный опт</p>
-                                {% endif %}
-                                {% if object.provider.small_wholesale %}
-                                    <p class="mt-2.5">Мелкий опт</p>
-                                {% endif %}
-                                {% if object.provider.retail %}
-                                    <p class="mt-2.5">Поштучно</p>
-                                {% endif %}
-                            </li>
+                            {% include 'buyer/buyer_includes/infos.html' %}
                         </ul>
                     </div>
                 {% include 'buyer/buyer_includes/contacts.html' %}

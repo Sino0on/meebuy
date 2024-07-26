@@ -1,0 +1,32 @@
+<li class="mt-[30px]">
+    {% if object.provider.large_wholesale or object.provider.small_wholesale or object.provider.retail  %}
+
+    <p class="text-lg font-semibold">Объем поставок</p>
+    {% if object.provider.large_wholesale %}
+        <p class="mt-2.5">Крупный опт</p>
+    {% endif %}
+    {% if object.provider.small_wholesale %}
+        <p class="mt-2.5">Мелкий опт</p>
+    {% endif %}
+    {% if object.provider.retail %}
+        <p class="mt-2.5">Поштучно</p>
+    {% endif %}
+
+    {% endif %}
+</li>
+
+<li class="mt-[30px]">
+    <p class="text-lg font-semibold">Варианты оплаты</p>
+    {% if provider.cash %}
+        <p class="mt-2.5">Наличными</p>
+    {% endif %}
+    {% if provider.bank_transfer %}
+        <p class="mt-2.5">Безналичная оплата</p>
+    {% endif %}
+    {% if provider.credit_card %}
+        <p class="mt-2.5">Кредитные карты</p>
+    {% endif %}
+    {% if provider.electronic_money %}
+        <p class="mt-2.5">Электронные деньги</p>
+    {% endif %}
+</li>
