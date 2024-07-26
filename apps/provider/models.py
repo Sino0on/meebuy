@@ -45,6 +45,8 @@ class Provider(StatusMixin, models.Model):
             "Оказание услуг логистики / поиска товаров / таможенного оформления"
         )
 
+    is_modered = models.BooleanField(default=False, verbose_name=_("Прошла модерацию"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Активность"))
     title = models.CharField(max_length=123, verbose_name="Название", blank=True, null=True)
     mini_descr = models.CharField(max_length=250, verbose_name="Короткое описание", blank=True, null=True)
     type = models.CharField(max_length=20, choices=BusinessType.choices,
@@ -55,7 +57,6 @@ class Provider(StatusMixin, models.Model):
     minimum_order = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Минимальный заказ"),
                                         blank=True, null=True, )
     keywords = models.TextField(blank=True, null=True, verbose_name=_("Ключевые слова"))
-    is_modered = models.BooleanField(default=False, verbose_name=_("Прошла модерацию"))
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name="Дата создания")
     email = models.EmailField(blank=True, null=True, verbose_name="Электронная почта")
     is_provider = models.BooleanField(default=False, verbose_name="Поставщик")
@@ -87,7 +88,6 @@ class Provider(StatusMixin, models.Model):
     banner = models.ImageField(blank=True, null=True, upload_to="images/providers/banners/%Y/%m",
                                verbose_name=_("Банер"), )
     requisites = models.TextField(blank=True, null=True, verbose_name="Реквизиты")
-    is_active = models.BooleanField(default=True, verbose_name=_("Активность"))
     emp_quantity = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Кол-во работников"))
     register_ur = models.DateField(blank=True, null=True, verbose_name=_("Дата регистрации юр лица"))
 
