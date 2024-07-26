@@ -20,14 +20,14 @@
           <p>{{ object.mini_desc }}</p>
         </div>
         <div class="flex gap-4">
-          <a href="{% url 'buyer_detail' object.id %}">
+          <a href="{% url 'buyer_detail' object.user.id %}">
             <button class="bg-[#E4DB00] px-6 py-2 rounded-[7px]">
               Подробнее
             </button>
           </a>
           {% if user_is_authenticated %}
           <a
-            href="{% url 'chat_create' object.id %}"
+            href="{% url 'chat_create' object.user.id %}"
             class="border border-solid border-[#2B292C] px-6 py-2 rounded-[7px]"
           >
             Написать
