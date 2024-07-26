@@ -36,7 +36,7 @@ class HomeView(TemplateView):
         context['rec_products'] = Product.objects.all().order_by('-id')[:6]
         context['new_products'] = Product.objects.all().order_by('-id')[:6]
         context['new_providers'] = Provider.objects.filter(is_modered=True, is_provider=True).order_by('-id')[:4]
-        categories = Category.objects.filter(category=None).annotate(
+        categories = Category.objects.filter(category=None, is_main_category=True).annotate(
             has_children=Case(
                 When(categor__isnull=False, then=True),
                 default=False,
