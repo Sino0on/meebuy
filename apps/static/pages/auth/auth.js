@@ -6,6 +6,22 @@ const body = document.querySelector('body')
 const policyCheck = document.getElementById("policy")
 // search
 
+const roleBtnCover = document.getElementById("choose-role");
+const roleBtns = document.querySelectorAll("#register-form .role-choose-block");
+const roleInputs = document.querySelectorAll("#user-role input")
+
+roleBtns.forEach((btn) => {
+  btn.addEventListener("click", () => { 
+    if(btn.id === 'role-buyer'){
+        roleInputs[0].checked = true
+    } else {
+        roleInputs[1].checked = true
+    }
+    roleBtnCover.style.display = "none";
+  });
+});
+
+
 const searchForm = document.querySelector("#searchForm");
 const searchIcon = document.querySelector("#searchIconImg");
 
@@ -173,3 +189,5 @@ register.disabled = true;
 if(register.disabled){
   register.style.opacity = 0.4
 }
+
+console.log(document.getElementById("register-form"))

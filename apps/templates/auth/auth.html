@@ -3,6 +3,31 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'pages/auth/auth.css' %}">
+    <style>
+        .role-choose-block{
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .role-choose-block:hover{
+            opacity: 1;
+        }
+
+        .role-choose-block:first-of-type{
+            background-color: #fffb98;
+        }
+
+        .role-choose-block:last-of-type{
+            background-color: #f0f2f5;
+        }
+    </style>
 {% endblock %}
 
 {% block title %}
@@ -40,9 +65,10 @@
                 <!-- register -->
 
                 <div id="register-form"
-                     style="display: flex; flex-direction: column; gap: 15px; z-index: 0; position: relative"
-                     class="overflow-hidden w-full mb-6 pb-[2px]">
-
+                     style="position: relative"
+                     class="overflow-hidden w-full mb-6">
+                <div id="regist-form-cover" style="display: flex; flex-direction: column; gap: 15px; z-index: 0;">
+                    
                     <form class="flex flex-col gap-5" method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <div class="flex flex-col gap-3 w-full">
@@ -123,6 +149,21 @@
                                 <a class="underline decoration-1 text-[#777777]" href="{% url 'privacy_policy' %}">Политики</a>
                             </label>
                         </div>
+
+                        <div id="user-role" class="input flex flex-row gap-4">
+                        <div class="" style=" display: flex;flex-direction: row; align-items: center; gap:10px">
+                            <input id="user-role-buyer" name="user-role" type="radio" value="buyer" class="w-[25px] h-[25px] lg-md:mr-1"/>
+                            <label for="user-role-buyer" class="text-[16px] font-normal font-mulish text-[#777777]">
+                                Я покупатель
+                            </label>
+                        </div>
+                        <div style=" display: flex;flex-direction: row; align-items: center; gap:10px">
+                            <input id="user-role-provider" name="user-role" type="radio" value="provider" class="w-[25px] h-[25px] lg-md:mr-1"/>
+                            <label for="user-role-provider" class="text-[16px] font-normal font-mulish text-[#777777]">
+                                Я продавец
+                            </label>
+                        </div>
+                        </div>
                         <button
                                 id="register"
                                 class="text-[16px] font-medium font-mulish py-3 border border-[#2B292C] rounded-lg uppercase"
@@ -181,6 +222,18 @@
                 </li> -->
                         </ul>
                     </div>
+                </div>
+
+                <div id="choose-role" style="display: flex;flex-direction: row; align-items: center;position: absolute;top: 0;left: 0;
+                 width: 100%;justify-content: center;height: 100%;background: #fff;">
+                    <div id="role-buyer" class="w-1/2 role-choose-block" >
+                        Я покупатель
+                    </div>
+                    <div id="role-provider" class="w-1/2 role-choose-block">
+                        Я продавец
+                    </div>
+                </div>
+
                 </div>
 
                 <!-- login -->
