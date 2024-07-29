@@ -43,72 +43,73 @@
             transition: all .3s ease
         }
 
-    .top-banners-cover {
-      width: 100%;
-      height: 300px;
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-    }
+        .top-banners-cover {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+        }
 
-    .top-banners-cover img {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      object-fit: cover;
-    }
-    .top-banners-cover a {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
+        .top-banners-cover img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+        }
 
-    .side-banners-cover {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 24px;
-      margin-top: 24px;
-    }
+        .top-banners-cover a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
 
-    .side-banner {
-      max-width: 308px;
-      flex-basis: 308px;
-      height: 398px;
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-    }
+        .side-banners-cover {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 24px;
+            margin-top: 24px;
+        }
 
-    .side-banner img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        .side-banner {
+            max-width: 308px;
+            flex-basis: 308px;
+            height: 398px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+        }
 
-    .side-banner a {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+        .side-banner img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .top-products {
-      display: flex;
-      flex-grow: 1;
-      flex-direction: row;
-      align-items: center;
-      gap: 8px;
-    }
+        .side-banner a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .top-products {
+            display: flex;
+            flex-grow: 1;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+        }
 
     </style>
     <nav class="breadcrumbs bg-[#FFFFFC]">
@@ -136,96 +137,107 @@
     </nav>
     <main class="products relative z-0">
         <!-- animation -->
-           <section id="banner-section" class="container">
-    <div class="product-wrapper mt-5" style="width: 100% !important;">
-            <div class="container">
-                <div class="relative z-50 flex flex-col justify-center w-full">
-                    <h2
-                            style="font-size: 36px"
-                            class="text-white font-extrabold sm:pb-8 text-center uppercase">
-                        товары
-                    </h2>
-                    <form class="mt-3" action="/product/list/" method="get">
-                        <div class="relative md:w-[600px] sm:w-[400px] m-auto">
-                            <div class="absolute inset-y-0 end-0 flex items-center pe-2">
-                                <button type="submit">
-                                    <img
-                                            src="{% static 'assets/images/icons/search.svg' %}"
-                                            alt="Search icon"
-                                    />
-                                </button>
+        <section id="banner-section" class="container">
+            <div class="product-wrapper mt-5" style="width: 100% !important;">
+                <div class="container">
+                    <div class="relative z-50 flex flex-col justify-center w-full">
+                        <h2
+                                style="font-size: 36px"
+                                class="text-white font-extrabold sm:pb-8 text-center uppercase">
+                            товары
+                        </h2>
+                        <form class="mt-3" action="/product/list/" method="get">
+                            <div class="relative md:w-[600px] sm:w-[400px] m-auto">
+                                <div class="absolute inset-y-0 end-0 flex items-center pe-2">
+                                    <button type="submit">
+                                        <img
+                                                src="{% static 'assets/images/icons/search.svg' %}"
+                                                alt="Search icon"
+                                        />
+                                    </button>
 
+                                </div>
+                                <label for="default-search"></label
+                                ><input name="title"
+                                        id="default-search"
+                                        class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                                        placeholder="Например: автозапчасти"
+                            />
                             </div>
-                            <label for="default-search"></label
-                            ><input name="title"
-                                    id="default-search"
-                                    class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
-                                    placeholder="Например: автозапчасти"
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-banners-cover">
+                {% if banner_2 %}
+
+                    <div class="side-banner side-banner__left">
+                        <img
+                                src="{{ banner_2.left_banner.url }}"
+                                alt=""
                         />
+                        <a href="#to-a-link" target="_blank"></a>
+                    </div>
+
+                {% endif %}
+
+                <div class="top-products">
+                    {% for object in best_products %}
+                        <div class="top-product__item">
+                            <div class="card justify-between product-item shadow-card-shadow p-2.5 lg-md:p-5 relative rounded-[10px] flex flex-col">
+                                <!-- if favorite add class "active" -->
+                                {#                <svg class="heart__icon transition-colors absolute right-2.5 text-[#2B292C] lg-md:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">#}
+                                {#                    <path class="transition-colors" d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z" fill="transparent"></path>#}
+                                {#                    <path class="transition-colors" d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z" fill="currentColor"></path>#}
+                                {#                </svg>#}
+
+                                <!-- card image -->
+                                <div class="rounded-[10px] h-1/2 overflow-hidden w-full">
+                                    <img class="aspect-square h-full w-full" style="height: 124px; width: 132px"
+                                         src="
+                                                 {% if object.image %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                         alt="">
+                                </div>
+                                <h2 class="text-dar text-lg font-bold mt-5 line-clamp-2">
+                                    {{ best_product.title }}
+                                </h2>
+                                <p class="text-dark-text mt-4 line-clamp-2 min-h-10 mb-[18px] d-none d-lg-block">
+
+                                </p>
+                                <div class="text-dark-text text-sm font-light">
+                                    Цена: <span class="text-dark-logo font-bold">{% calculate object.id %}
+                                    {% if object.currency %}{{ object.currency }}{% endif %}</span>
+                                </div>
+                                <div class="mt-2 flex lg-md:flex justify-between items-end ">
+                                    <a class="btn-filled w-full text-center p-3 lg-md:max-w-[139px] pl-1 pr-1"
+                                       href="{% url 'product_detail' object.id %}">
+                                        Подробнее
+                                    </a>
+                                    {#                    <svg class="heart__icon hidden transition-colors right-2.5 lg-md:block" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">#}
+                                    {#                        <path class="transition-colors" d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z" fill="transparent"></path>#}
+                                    {#                        <path class="transition-colors" d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z" fill="currentColor"></path>#}
+                                    {#                    </svg>#}
+                                </div>
+                            </div>
                         </div>
-                    </form>
+
+                    {% endfor %}
+
                 </div>
+            {% if banner_3 %}
+                <div class="side-banner side-banner__right">
+                    <img
+                            src="{{ banner_3.right_banner.url }}"
+                            alt=""
+                    />
+                    <a href="#to-a-link" target="_blank"></a>
+                </div>
+
+            {% endif %}
+
             </div>
-        </div>
-
-      <div class="side-banners-cover">
-        <div class="side-banner side-banner__left">
-          <img
-            src="{{ banner_2.left_banner.url }}"
-            alt=""
-          />
-          <a href="#to-a-link" target="_blank"></a>
-        </div>
-        <div class="top-products">
-            {% for object in best_products %}
-            	          <div class="top-product__item">
-            <div class="card justify-between product-item shadow-card-shadow p-2.5 lg-md:p-5 relative rounded-[10px] flex flex-col">
-                <!-- if favorite add class "active" -->
-{#                <svg class="heart__icon transition-colors absolute right-2.5 text-[#2B292C] lg-md:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">#}
-{#                    <path class="transition-colors" d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z" fill="transparent"></path>#}
-{#                    <path class="transition-colors" d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z" fill="currentColor"></path>#}
-{#                </svg>#}
-
-                <!-- card image -->
-                <div class="rounded-[10px] h-1/2 overflow-hidden w-full">
-                    <img class="aspect-square h-full w-full" style="height: 124px; width: 132px"
-                         src="{% if object.image %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
-                         alt="">
-                </div>
-                <h2 class="text-dar text-lg font-bold mt-5 line-clamp-2">
-                    {{ best_product.title }}
-                </h2>
-                <p class="text-dark-text mt-4 line-clamp-2 min-h-10 mb-[18px] d-none d-lg-block">
-
-                </p>
-                <div class="text-dark-text text-sm font-light">
-                    Цена: <span class="text-dark-logo font-bold">{% calculate object.id %}
-                    {% if object.currency %}{{ object.currency }}{% endif %}</span>
-                </div>
-                <div class="mt-2 flex lg-md:flex justify-between items-end ">
-                    <a class="btn-filled w-full text-center p-3 lg-md:max-w-[139px] pl-1 pr-1" href="{% url 'product_detail' object.id %}">
-                        Подробнее
-                    </a>
-{#                    <svg class="heart__icon hidden transition-colors right-2.5 lg-md:block" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">#}
-{#                        <path class="transition-colors" d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z" fill="transparent"></path>#}
-{#                        <path class="transition-colors" d="M12.0017 4.53033C13.1441 3.50766 14.6348 2.9614 16.1675 3.0038C17.7002 3.0462 19.1584 3.67404 20.2426 4.7583C21.3258 5.84134 21.9537 7.29771 21.9975 8.82885C22.0414 10.36 21.4979 11.8499 20.4785 12.9932L11.9997 21.4841L3.52277 12.9932C2.50216 11.8493 1.95818 10.3581 2.00251 8.82574C2.04684 7.29337 2.67611 5.83611 3.76114 4.75313C4.84616 3.67015 6.30462 3.04363 7.83707 3.00219C9.36952 2.96076 10.8597 3.50756 12.0017 4.53033ZM18.8268 6.17111C18.1044 5.44933 17.1333 5.03134 16.1125 5.00289C15.0918 4.97445 14.0989 5.3377 13.3375 6.01813L12.0027 7.21597L10.6668 6.01913C9.9086 5.34111 8.92052 4.97746 7.90366 5.00218C6.8868 5.02691 5.91756 5.43814 5.19318 6.15221C4.46879 6.86627 4.04369 7.82951 4.00438 8.84591C3.96508 9.86232 4.31451 10.8555 4.98158 11.6234L12.0007 18.6535L19.0197 11.6244C19.684 10.8599 20.0335 9.87186 19.9977 8.85973C19.9619 7.84759 19.5434 6.88674 18.8268 6.17111Z" fill="currentColor"></path>#}
-{#                    </svg>#}
-                </div>
-            </div>
-          </div>
-
-            {% endfor %}
-
-        </div>
-        <div class="side-banner side-banner__right">
-          <img
-            src="{{ banner_3.right_banner.url }}"
-            alt=""
-          />
-          <a href="#to-a-link" target="_blank"></a>
-        </div>
-      </div>
-    </section>
+        </section>
 
         <!-- products -->
         <section class="mt-10 lg:mt-[70px] mb-24">
@@ -378,12 +390,14 @@
                                 <img
                                         class="aspect-square h-full w-full"
                                         src="
+
                                                 {% if object.image %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                         alt=""
                                         style="max-width: 100%;max-height: 150px;aspect-ratio: 1"
                                 />
                             </div>
-                            <h2 class="text-dar font-bold mt-2 line-clamp-2" style="overflow-wrap:break-word; font-size: 16px">
+                            <h2 class="text-dar font-bold mt-2 line-clamp-2"
+                                style="overflow-wrap:break-word; font-size: 16px">
                                 {{ object.title }}
                             </h2>
                             <p class="text-dark-text mt-4 line-clamp-2 mb-[8px] hidden lg-md:block">
