@@ -387,6 +387,11 @@ SIMPLEUI_CONFIG = {
                     'icon': 'fa fa-rectangle-ad',
                     'url': '/admin/buyer/banner/'
                 },
+                {
+                    'name': 'Банера Продуктов',
+                    'icon': 'fa fa-rectangle-ad',
+                    'url': '/admin/product/productbanner/'
+                },
             ]
         },
         {
