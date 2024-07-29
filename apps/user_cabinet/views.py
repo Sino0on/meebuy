@@ -300,7 +300,11 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
         return kwargs
 
     def get_object(self, queryset=None):
-        return self.request.user.provider
+        try:
+            return self.request.user.provider
+        except Provider.DoesNotExist:
+            provider = Provider.objects.create(user=self.request.user)
+            return provider
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()  # Получаем объект, который будет обновляться

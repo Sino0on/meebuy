@@ -90,6 +90,9 @@ class LoginView(FormView):
                 authenticated_user = authenticate(email=user.email, password=register_form.clean_password2())
                 if authenticated_user is not None:
                     auth_login(self.request, authenticated_user)
+                    if user.is_provider == False:
+                        return redirect(reverse_lazy('buyer_step'))
+
                     return redirect(reverse_lazy('home'))
 
                     # return redirect(reverse_lazy('choice'))
@@ -174,10 +177,10 @@ class ViewProfile(LoginRequiredMixin, UpdateView):
 
 @login_required
 def login_redirect(request):
-    if not request.user.user_type:  
-        return redirect('/select_user_type/')
-    else:
-        return redirect('/profile/')
+    # if not request.user.user_type:
+    #     return redirect('/select_user_type/')
+    # else:
+    return redirect('/profile/')
 
 
 class SelectAuthUserTypeView(FormView):
