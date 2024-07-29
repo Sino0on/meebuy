@@ -167,3 +167,18 @@ class Currency(models.Model):
     class Meta:
         verbose_name = "Валюта"
         verbose_name_plural = "Валюты"
+
+
+class ProductBanner(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Название")
+    wide_banner = models.FileField(upload_to="images/banners/", verbose_name="Широкий баннер", blank=True, null=True)
+    left_banner = models.FileField(upload_to="images/banners/", verbose_name="Левый баннер", blank=True, null=True)
+    right_banner = models.FileField(upload_to="images/banners/", verbose_name="Правый баннер", blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Баннер"
+        verbose_name_plural = "Баннеры"
+

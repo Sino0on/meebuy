@@ -11,6 +11,12 @@
   grid-template-columns: repeat(2, minmax(167px, 380px));
 }
 
+@media (min-width: 672px) {
+  .products .card__wrapper {
+    grid-template-columns: repeat(3, minmax(167px, 380px));
+  }
+}
+
 /* <!-- pagination --> */
 
 .pagination {
@@ -62,7 +68,7 @@
 
 @media (min-width: 992px) {
   .products .card__wrapper {
-    grid-template-columns: repeat(3, minmax(167px, 380px));
+    grid-template-columns: repeat(5, minmax(167px, 380px));
   }
 }
 

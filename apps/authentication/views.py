@@ -60,12 +60,17 @@ class LoginView(FormView):
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('password1'):
+            print(request.POST)
             register_form = UserRegistrationForm(request.POST)
             if register_form.is_valid():
                 user = register_form.save(commit=False)
                 code = self.request.POST.get('country_code')
                 phone = self.request.POST.get('phone')
                 user.phone = str(code) + str(phone)
+                if self.request.POST.get('user-role') == 'provider':
+                    user.is_provider = True
+                else:
+                    user.is_provider = False
                 user.save()
                 Cabinet.objects.get_or_create(user=user)
                 current_site = get_current_site(request)
@@ -85,7 +90,9 @@ class LoginView(FormView):
                 authenticated_user = authenticate(email=user.email, password=register_form.clean_password2())
                 if authenticated_user is not None:
                     auth_login(self.request, authenticated_user)
-                    return redirect(reverse_lazy('choice'))
+                    return redirect(reverse_lazy('home'))
+
+                    # return redirect(reverse_lazy('choice'))
                 else:
                     messages.error(request, 'Ошибка аутентификации пользователя.')
                     return redirect(reverse_lazy('home'))

@@ -1,6 +1,7 @@
 import os
 from urllib.parse import quote, unquote
-
+from django.db.models import Count
+import random
 import openpyxl
 import requests
 from PIL import Image
@@ -35,7 +36,8 @@ from apps.product.models import (
     Product,
     ProductImg,
     ProductCategory,
-    PriceColumn, Currency
+    PriceColumn, Currency,
+    ProductBanner
 )
 from apps.provider.models import (
     Category,
@@ -48,7 +50,7 @@ from apps.user_cabinet.models import Contacts, OpenNumberCount
 class ProductListView(ListView):
     model = Product
     context_object_name = "products"
-    paginate_by = 12
+    paginate_by = 20
     template_name = "products/product_list.html"
     filter_class = ProductFilter
 
@@ -69,9 +71,9 @@ class ProductListView(ListView):
 
         # Применяем сортировку
         if order:
-            queryset = queryset.order_by(order, 'provider_status_priority',)
+            queryset = queryset.order_by(order, 'provider_status_priority', )
         else:
-            queryset = queryset.order_by('-id', 'provider_status_priority',)
+            queryset = queryset.order_by('-id', 'provider_status_priority', )
 
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
@@ -82,6 +84,22 @@ class ProductListView(ListView):
         context["categories"] = Category.objects.all()
         contacts = Contacts.load()
         context["contacts"] = contacts
+        context["best_products"] = Product.objects.filter(is_recommended=True).order_by('?')[:2]
+        wide_count = ProductBanner.objects.filter(wide_banner__isnull=False).count()
+        if wide_count > 0:
+            random_index = random.randint(0, wide_count - 1)
+            context["banner_1"] = ProductBanner.objects.filter(wide_banner__isnull=False)[random_index]
+
+        left_count = ProductBanner.objects.filter(left_banner__isnull=False).count()
+        if left_count > 0:
+            random_index = random.randint(0, left_count - 1)
+            context["banner_2"] = ProductBanner.objects.filter(left_banner__isnull=False)[random_index]
+
+        right_count = ProductBanner.objects.filter(right_banner__isnull=False).count()
+        if right_count > 0:
+            random_index = random.randint(0, right_count - 1)
+            context["banner_3"] = ProductBanner.objects.filter(right_banner__isnull=False)[random_index]
+
         return context
 
 
@@ -157,6 +175,7 @@ class ProductCreateView(CreateView):
                 tree.append((category, level))
                 tree.extend(self.build_category_tree(categories, category, level + 1))
         return tree
+
     def form_valid(self, form):
         provider = get_object_or_404(Provider, user=self.request.user)
         cabinet = provider.user.cabinet
@@ -186,7 +205,6 @@ class ProductCreateView(CreateView):
         c = Currency.objects.get(id=currency)
         self.object.currency = c.code
         self.object.save()
-
 
         # Обработка изображений
         images = self.request.FILES.getlist("images")

@@ -4,7 +4,7 @@ from .models import (
     Product,
     ProductImg,
     ProductCategory,
-    PriceColumn, Currency
+    PriceColumn, Currency, ProductBanner
 )
 
 
@@ -33,6 +33,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
+                'is_new', 'is_recommended', 'is_active',
                 'title', 'provider', 'image', 'description', 'mini_desc', 'type', 'manufacturer', 'price',
                 'min_quantity',
                 'category', 'currency')
@@ -51,4 +52,8 @@ admin.site.register(PriceColumn)
 
 @admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(ProductBanner)
+class ProductBannerAdmin(admin.ModelAdmin):
     pass
