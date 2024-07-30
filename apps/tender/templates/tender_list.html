@@ -493,7 +493,7 @@
                     <p
                             class="text-[#686868] text-[16px] font-mulish font-normal absolute right-9  bottom-8"
                     >
-                        {{ tender.created_at }}
+                            {{ tender.created_at|date:"d.m.Y" }}
                     </p>
                 </div>
                 {% endfor %}
