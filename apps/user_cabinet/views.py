@@ -67,6 +67,8 @@ from .forms import (
     SupportMessageForm
 )
 from .models import Contacts, FAQ
+from ..pages.models import TelegramBotToken
+from ..services.send_telegram_message import send_telegram_message
 from ..tender.models import (
     Tender,
     Country,
@@ -713,12 +715,13 @@ def password_change_success(request):
     return render(request, 'auth/password_change_success.html')
 
 
-@login_required
 def send_message(request):
     if request.method == 'POST':
         form = SupportMessageForm(request.POST)
         if form.is_valid():
+            generate_message(request)
             form.save()
+
             messages.success(request, 'Ваше сообщение успешно отправлено!')
             return redirect('view_profile')
     else:
@@ -727,13 +730,28 @@ def send_message(request):
     return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
 
 
+def generate_message(request):
+    report_data = f'Имя: {request.POST.get("name")}\n'
+    report_data += f'Телефон: {request.POST.get("phone")}\n'
+    report_data += f'Имейл: {request.POST.get("email")}\n'
+    report_data += f'{request.POST.get("regret_to_register")}\n'
+    report_data += f'Сообщение: \n{request.POST.get("message")}'
+
+    token = TelegramBotToken.objects.first()
+    for chat in (chat.strip() for chat in token.report_channels.split(',')):
+        send_telegram_message(token.bot_token, chat, report_data)
+
+
 def send_message_logout(request):
     if request.method == 'POST':
         form = SupportMessageForm(request.POST)
         if form.is_valid():
+            generate_message(request)
             form.save()
             messages.success(request, 'Ваше сообщение успешно отправлено!')
             return redirect('login')
+        else:
+            print(form.errors)
     else:
         form = SupportMessageForm()
 

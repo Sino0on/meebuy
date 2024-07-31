@@ -465,6 +465,7 @@ SIMPLEUI_CONFIG = {
                         },
 
                     ]
+
                 },
                 {
                     'name': 'Внутренние настройки сайта',
@@ -505,6 +506,11 @@ SIMPLEUI_CONFIG = {
             'name': 'Сообщения в поддержку',
             'icon': 'fa fa-industry',
             'url': '/admin/user_cabinet/supportmessage/'
+        },
+        {
+            'name': 'Настройки телеграма',
+            'icon': 'fab fa-telegram',
+            'url': '/admin/pages/telegrambottoken/'
         },
 
     ]
