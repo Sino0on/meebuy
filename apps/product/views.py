@@ -55,7 +55,7 @@ class ProductListView(ListView):
     filter_class = ProductFilter
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().distinct()
 
         # Аннотируем поле для сортировки с учетом отсутствующих значений статусов
         queryset = queryset.annotate(

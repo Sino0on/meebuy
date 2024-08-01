@@ -21,11 +21,13 @@ class ProductForm(forms.ModelForm):
             'country_of_manufacture',
             'characterization',
             'product_link',
+            'small_wholesale',
+            'medium_wholesale',
+            'large_wholesale',
         ]
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
-        # Указываем, какие поля не обязательные
         self.fields['description'].required = False
         self.fields['mini_desc'].required = False
         self.fields['type'].required = False
@@ -36,6 +38,9 @@ class ProductForm(forms.ModelForm):
         self.fields['country_of_manufacture'].required = False
         self.fields['characterization'].required = False
         self.fields['product_link'].required = False
+        self.fields['small_wholesale'].required = False
+        self.fields['medium_wholesale'].required = False
+        self.fields['large_wholesale'].required = False
 
 
 class UploadExcelForm(forms.Form):

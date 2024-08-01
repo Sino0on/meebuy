@@ -1,17 +1,23 @@
 from django.contrib import admin
 
-from .models import Category, Provider, ProvideImg, ProvideFiles
+from .models import Category, Provider, ProvideImg, ProvideFiles, PriceFiles
 
 
 class ProvideImgInline(admin.TabularInline):
     model = ProvideImg
-    extra = 1
+    extra = 0
+    fields = ['image']
+
+
+class PriceFilesInline(admin.TabularInline):
+    model = PriceFiles
+    extra = 0
     fields = ['image']
 
 
 class ProvideFilesInline(admin.TabularInline):
     model = ProvideFiles
-    extra = 1
+    extra = 0
     fields = ['image']
 
 
@@ -20,7 +26,7 @@ class ProviderAdmin(admin.ModelAdmin):
     list_filter = ('is_active', 'is_modered', 'type', 'is_provider')
     search_fields = ('title', 'description', 'mini_descr', 'post_index', 'address')
     fieldsets = ()
-    inlines = [ProvideImgInline, ProvideFilesInline]
+    inlines = [ProvideImgInline, ProvideFilesInline, PriceFilesInline]
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "category":
