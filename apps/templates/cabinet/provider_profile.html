@@ -316,7 +316,7 @@
                                     <div class="flex items-center gap-5">
                                         <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
                                             <img class="object-cover h-full"
-                                                src="{% if i.images %} {{ i.images.first.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                                src="{% if i.images.first %} {{ i.images.first.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                                 alt="empty icon" style="margin: 0 auto">
                                         </div>
                                         <p>{{ i.title|slice:":10" }}{% if i.title|length > 10 %}...{% endif %}</p>

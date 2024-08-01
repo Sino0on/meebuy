@@ -8,47 +8,12 @@
         {% endif %}
      class="cards sm:p-9 p-5">
     <div class="flex flex-col gap-7 font-mulish">
-        <div>
-            {% if has_products %} {% for i in object_list.all %}
-                <div
-                        class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0"
-                >
-                    <a
-                            href="{% url 'product_update' i.pk %}"
-                            class="flex justify-between items-center"
-                    >
-                        <div class="flex items-center gap-5">
-                            <div
-                                    class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full"
-                            >
-                                <img
-                                        class="object-cover h-full"
-                                        src="{% if i.images %} {{ i.images.first.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
-                                        alt="empty icon"
-                                        style="margin: 0 auto"
-                                />
-                            </div>
-                            <p>{{ i.title }}</p>
-                        </div>
-                        <form action="{% url 'product_delete' i.id %}" method="post">
-                            <button type="submit">
-                                {% csrf_token %}
-                                <img
-                                        class="cursor-pointer w-6 h-6"
-                                        src="{% static '/assets/images/icons/trash.svg' %}"
-                                        alt=""
-                                />
-                            </button>
-                        </form>
-                    </a>
-                </div>
-            {% endfor %} {% else %}
-                <h6 class="text-[20px] font-bold">Как добавить свои товары?</h6>
-                <p class="text-[#757575] text-[17px] mt-2">
-                    Есть несколько способов добавить свои товары на сайт:
-                </p>
-            {% endif %}
-        </div>
+        {% if not has_products %}
+            <h6 class="text-[20px] font-bold">Как добавить свои товары?</h6>
+            <p class="text-[#757575] text-[17px] mt-2">
+                Есть несколько способов добавить свои товары на сайт:
+            </p>
+        {% endif %}
         <hr class="h-[2px] w-full bg-[#A0A0A0]"/>
         <div class="flex flex-col gap-2">
             <h6 class="text-[18px] font-semibold">
@@ -81,5 +46,43 @@
                 добавить товар вручную
             </button>
         </div>
+        <div>
+            {% if has_products %} {% for i in object_list.all %}
+                <div
+                        class="card__item !p-5 rounded-[10px] shadow-card-shadow lg-md:shadow-none lg-md:p-0 lg-md:rounded-none lg-md:border-t lg-md:border-t-grey-light lg-md:first:border-t-0"
+                >
+                    <a
+                            href="{% url 'product_update' i.pk %}"
+                            class="flex justify-between items-center"
+                    >
+                        <div class="flex items-center gap-5">
+                            <div
+                                    class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full"
+                            >
+                                <img
+                                        class="object-cover h-full"
+                                        src="{% if i.images.first %} {{ i.images.first.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                        alt="empty icon"
+                                        style="margin: 0 auto"
+                                />
+                            </div>
+                            <p>{{ i.title }}</p>
+                        </div>
+                        <form action="{% url 'product_delete' i.id %}" method="post">
+                            <button type="submit">
+                                {% csrf_token %}
+                                <img
+                                        class="cursor-pointer w-6 h-6"
+                                        src="{% static '/assets/images/icons/trash.svg' %}"
+                                        alt=""
+                                />
+                            </button>
+                        </form>
+                    </a>
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
     </div>
 </div>
