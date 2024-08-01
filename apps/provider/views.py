@@ -190,7 +190,9 @@ class CategoryListView(ListAPIView):
 
 def upload_file(request):
     if request.method == "POST":
+
         form = PriceFilesForm(request.POST, request.FILES)
+        print(form.is_valid())
         if form.is_valid():
             instance = form.save(commit=False)
             instance.providers = request.user.provider
@@ -199,6 +201,7 @@ def upload_file(request):
         else:
             print("Form is not valid", form.errors)
     else:
+        print("Form is not valid")
         form = PriceFilesForm()
 
     context = {

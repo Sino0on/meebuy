@@ -120,9 +120,34 @@ priceInput.addEventListener('change', () => {
             </li>
 
         `);
+sendFild(file)
     }
     ButtonVisibility()
 });
+
+
+async function sendFild(file){
+
+    const formData = new FormData();
+    const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken=')).split('=')[1];
+
+    formData.append("file", file);
+
+    const res = await fetch("http://127.0.0.1:8000/upload/",{
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+    })
+    .catch(error => {
+        console.error(error);
+    })
+}
 
 function deleteFile(name) {
     document.getElementById(name).remove();

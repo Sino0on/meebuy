@@ -12,7 +12,7 @@ class ProvideImgInline(admin.TabularInline):
 class PriceFilesInline(admin.TabularInline):
     model = PriceFiles
     extra = 0
-    fields = ['image']
+    fields = ['file']
 
 
 class ProvideFilesInline(admin.TabularInline):
