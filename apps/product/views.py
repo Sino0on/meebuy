@@ -161,7 +161,7 @@ class ProductCreateView(CreateView):
         currency = Currency.objects.all()
         if not currency:
             currency = Currency.objects.create(name="Сом", code="KGS")
-        categories = Category.objects.filter(category=None)
+        categories = ProductCategory.objects.filter(provider__user=self.request.user)
         context["currencies"] = Currency.objects.all()
         context['categories'] = categories
         category_tree = self.build_category_tree(categories)
@@ -218,6 +218,9 @@ class ProductCreateView(CreateView):
             ProductImg.objects.create(product=self.object, image=image)
 
         return response
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
 
 
 class ProductUpdateView(UpdateView):
