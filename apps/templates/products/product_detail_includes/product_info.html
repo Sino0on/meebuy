@@ -3,15 +3,56 @@
         {{ product.title }}
     </h6>
     <div class="flex flex-col gap-2 font-light">
+        <p class="text-[#4D4D4D] text-[18px] font-mulish">
+
+        </p>
+        {% if product.small_wholesale and product.medium_wholesale_price %}
+            <div class="flex items-center gap-5">
+                <p class="text-[#4D4D4D] text-[18px] font-mulish">
+                    Мелкий опт - от {{ product.small_wholesale }}
+
+                </p>
+                <span class="text-[#2B292C] text-[18px] font-extrabold">
+                    {{ product.small_wholesale_price }}
+                    {% if product.currency %}
+                    {{ product.currency }}
+                    {% endif %}</span>
+            </div>
+        {% endif %}
+        {% if product.medium_wholesale and product.medium_wholesale_price  %}
+                        <div class="flex items-center gap-5">
+
+                <p class="text-[#4D4D4D] text-[18px] font-mulish">
+                    Средний опт - от {{ product.medium_wholesale }}
+                </p>
+                <span class="text-[#2B292C] text-[18px] font-extrabold">
+                    {{ product.medium_wholesale_price }}
+                    {% if product.currency %}
+                    {{ product.currency }}
+                    {% endif %}</span>
+                        </div>
+        {% endif %}
+        {% if product.large_wholesale and product.large_wholesale_price %}
+                        <div class="flex items-center gap-5">
+
+                <p class="text-[#4D4D4D] text-[18px] font-mulish">
+                    Крупный опт - от {{ product.large_wholesale }}
+                </p>
+                <span class="text-[#2B292C] text-[18px] font-extrabold">
+                    {{ product.large_wholesale_price }}
+                    {% if product.currency %}
+                    {{ product.currency }}
+                    {% endif %}</span>
+            </div>
+        {% endif %}
         {% for price in prices %}
             <div class="flex items-center gap-5">
                 <p class="text-[#4D4D4D] text-[18px] font-mulish">
-                    {{ price.name }}
+                    {{ price.name }} {% if price.min_order_amount %}- от {{ price.min_order_amount }}{% endif %}
                 </p>
                 <span class="text-[#2B292C] text-[18px] font-extrabold"
                 >{{ price.price|floatformat:price.decimal }} {% if product.currency %}
-                    {{ product.currency }} {% endif %}</span
-                >
+                    {{ product.currency }} {% endif %}</span>
             </div>
 
         {% endfor %}
@@ -19,6 +60,8 @@
 
     </div>
     <a href="
+
+
             {% if user.is_authenticated %}{% url 'chat_create' product.provider.user.id %}{% else %}{% url 'login' %}{% endif %}">
         <button
                 class="uppercase py-3 px-4 rounded-lg border border-[#2B292C]"

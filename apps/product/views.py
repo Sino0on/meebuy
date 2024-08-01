@@ -119,11 +119,12 @@ class ProductDetailView(DetailView):
                     {
                         "name": formula.name,
                         "price": formula.apply_formula(product.price),
+                        "min_order_amount": formula.min_order_amount,
                         "decimal": decimal,
                     }
                 )
         else:
-            prices.append({"name": "Цена", "price": product.price, "decimal": decimal})
+            prices.append({"name": "Цена", "price": product.price, "decimal": decimal, 'min_order_amount': False})
         return prices
 
     def get_context_data(self, **kwargs):
@@ -482,17 +483,15 @@ class PriceColumnCreateView(CreateView):
         form.instance.provider.save()
         print(form.instance.provider.decimal_places)
         PriceColumn.objects.filter(provider__user=self.request.user).delete()
-        # Обработка данных
         for index, (name, formula, min_order_amount) in enumerate(
                 zip(names, formulas, min_order_amounts)
         ):
-            # Если текущий индекс не равен последнему индексу в списке, создаем объект PriceColumn
             if index != len(names) - 1:
                 PriceColumn.objects.create(
                     provider=form.instance.provider,
                     name=name,
                     formula=formula,
-                    min_order_amount=min_order_amount,
+                    min_order_amount=int(min_order_amount),
                 )
 
         return super().form_valid(form)

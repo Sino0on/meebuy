@@ -244,22 +244,23 @@
                                                     Например: KGS
                                                 </p>
                                                 <label>
-                                                <select name="currency" class=" relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
-                                                    {% for currency in currencies %}
+                                                    <select name="currency"
+                                                            class=" relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
+                                                        {% for currency in currencies %}
 
-                                                        <option value="{{ currency.id }}"
-                                                        {% if object.currency == currency.code %}
-                                                        	selected
-                                                        {% endif %}
-                                                        >{{ currency.name }} - {{ currency.code }}</option>
-                                                    {% endfor %}
+                                                            <option value="{{ currency.id }}"
+                                                                    {% if object.currency == currency.code %}
+                                                                    selected
+                                                                    {% endif %}
+                                                            >{{ currency.name }} - {{ currency.code }}</option>
+                                                        {% endfor %}
 
-                                                    <img
-                                                            class="absolute right-7 top-6 mr-7"
-                                                            src="{% static 'assets/images/icons/arrow-down.svg' %}"
-                                                            alt=""
-                                                    />
-                                                </select>
+                                                        <img
+                                                                class="absolute right-7 top-6 mr-7"
+                                                                src="{% static 'assets/images/icons/arrow-down.svg' %}"
+                                                                alt=""
+                                                        />
+                                                    </select>
                                                     {% if form.currency.errors %}
                                                         <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
                                                     {% endif %}
@@ -365,6 +366,134 @@
                                                     />
                                                     {% if form.characterization.errors %}
                                                         <div class="text-red-500 text-sm">{{ form.characterization.errors }}</div>
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col lg-md:flex-row gap-3 justify-content-between">
+                                            <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                                                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                                                    Мелкий опт количество
+                                                </h6>
+                                                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                    Например: от 10 шт
+                                                </p>
+                                                <label>
+                                                    <input
+                                                            class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                                                            type="number"
+                                                            value="{{ form.small_wholesale.value|default_if_none:'' }}"
+                                                            name="small_wholesale"
+                                                    />
+                                                    {% if form.small_wholesale.errors %}
+                                                        <div class="text-red-500 text-sm">
+                                                            {{ form.small_wholesale.errors }}
+                                                        </div>
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                            <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                                                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                                                    Мелкий опт количество
+                                                </h6>
+                                                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                    Например: от 100 шт
+                                                </p>
+                                                <label>
+                                                    <input
+                                                            class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                                                            type="number"
+                                                            value="{{ form.medium_wholesale.value|default_if_none:'' }}"
+                                                            name="medium_wholesale"
+                                                    />
+                                                    {% if form.medium_wholesale.errors %}
+                                                        <div class="text-red-500 text-sm">
+                                                            {{ form.medium_wholesale.errors }}
+                                                        </div>
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                            <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                                                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                                                    Мелкий опт количество
+                                                </h6>
+                                                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                    Например: от 1000 шт
+                                                </p>
+                                                <label>
+                                                    <input
+                                                            class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                                                            type="number"
+                                                            value="{{ form.large_wholesale.value|default_if_none:'' }}"
+                                                            name="large_wholesale"
+                                                    />
+                                                    {% if form.characterization.errors %}
+                                                        <div class="text-red-500 text-sm">
+                                                            {{ form.large_wholesale.errors }}
+                                                        </div>
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col lg-md:flex-row gap-3 justify-content-between">
+                                            <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                                                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                                                    Цена за мелкий опт
+                                                </h6>
+                                                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                    Например: 1000
+                                                </p>
+                                                <label>
+                                                    <input
+                                                            class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                                                            type="number"
+                                                            value="{{ form.small_wholesale_price.value|default_if_none:'' }}"
+                                                            name="small_wholesale_price"
+                                                    />
+                                                    {% if form.small_wholesale_price.errors %}
+                                                        <div class="text-red-500 text-sm">
+                                                            {{ form.small_wholesale_price.errors }}
+                                                        </div>
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                            <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                                                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                                                    Цена за средний опт
+                                                </h6>
+                                                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                    Например: 950
+                                                </p>
+                                                <label>
+                                                    <input
+                                                            class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                                                            type="number"
+                                                            value="{{ form.medium_wholesale_price.value|default_if_none:'' }}" name="medium_wholesale_price"/>
+                                                    {% if form.medium_wholesale_price.errors %}
+                                                        <div class="text-red-500 text-sm">
+                                                            {{ form.medium_wholesale_price.errors }}
+                                                        </div>
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                            <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                                                <h6 class="text-[#2B292C] font-semibold text-[18px]">
+                                                    Цена за крупный опт
+                                                </h6>
+                                                <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                    Например: 900
+                                                </p>
+                                                <label>
+                                                    <input
+                                                            class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
+                                                            type="number"
+                                                            value="{{ form.large_wholesale_price.value|default_if_none:'' }}"
+                                                            name="large_wholesale_price"
+                                                    />
+                                                    {% if form.large_wholesale_price.errors %}
+                                                        <div class="text-red-500 text-sm">
+                                                            {{ form.large_wholesale_price.errors }}
+                                                        </div>
                                                     {% endif %}
                                                 </label>
                                             </div>

@@ -10,15 +10,17 @@
                     <div
                             class="swiper-slide"
                     >
-                        <div class="cards shadow-2xl sm:w-[277px] flex flex-col items-center p-5 gap-4 rounded-[15px] bg-[#fff] ml-2 mt-2" style="height: 400px; justify-content: space-between">
+                        <div class="cards shadow-2xl sm:w-[277px] flex flex-col items-center p-5 gap-4 rounded-[15px] bg-[#fff] ml-2 mt-2"
+                             style="height: 400px; justify-content: space-between">
                             <img
-                                    class="rounded-xl" style="max-height: 100%; width: 100%; overflow: hidden; object-fit: cover"
-                                    src="
-                                            {% if i.image %}{{ i.image.url }}{% else %} {% static 'assets/images/lolo_4.svg' %}{% endif %}"
+                                    class="rounded-xl"
+                                    style="max-height: 100%; width: 100%; overflow: hidden; object-fit: cover"
+                                    src="{% if i.image %}{{ i.image.url }}{% else %} {% static 'assets/images/lolo_4.svg' %}{% endif %}"
                                     alt=""
                             />
                             <div class="flex w-full flex-col gap-4 m-0">
-                                <p class="font-extrabold text-[18px] font-mulish">{{ i.title|slice:":15" }}{% if i.title|length > 15 %}...{% endif %}</p>
+                                <p class="font-extrabold text-[18px] font-mulish">
+                                    {{ i.title|slice:":15" }}{% if i.title|length > 15 %}...{% endif %}</p>
                                 <p class="text-[16px] font-normal font-mulish line-clamp-1">
                                     {{ i.mini_desc }}
                                 </p>

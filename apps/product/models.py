@@ -90,6 +90,9 @@ class Product(StatusMixin, models.Model):
     small_wholesale = models.IntegerField(verbose_name="Малая партия", blank=True, null=True)
     medium_wholesale = models.IntegerField(verbose_name="Средняя партия", blank=True, null=True)
     large_wholesale = models.IntegerField(verbose_name="Большая партия", blank=True, null=True)
+    small_wholesale_price = models.IntegerField(verbose_name="Цена за малую партию", blank=True, null=True)
+    medium_wholesale_price = models.IntegerField(verbose_name="Цена за среднюю партию", blank=True, null=True)
+    large_wholesale_price = models.IntegerField(verbose_name="Цена за большую партию", blank=True, null=True)
 
     def __str__(self):
         return f"{self.title}"
@@ -121,10 +124,15 @@ class PriceColumn(models.Model):
 
     def apply_formula(self, base_price):
         try:
-            price = base_price
+            # Преобразуем base_price в Decimal, если это возможно
+            price = Decimal(base_price)
             formulas = self.formula.split(";")
 
             for formula_part in formulas:
+                print(formula_part)
+                if not formula_part:  # Пропускаем пустые элементы
+                    continue
+
                 operator = formula_part[0]
                 value = formula_part[1:]
 
@@ -149,9 +157,8 @@ class PriceColumn(models.Model):
 
             return price
         except (InvalidOperation, IndexError, ValueError) as e:
-            # Обработка ошибок
-            return ''
-
+            # Возвращаем исходную цену в случае ошибки
+            return Decimal(base_price)
     def __str__(self):
         return self.name
 

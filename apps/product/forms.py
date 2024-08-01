@@ -24,6 +24,9 @@ class ProductForm(forms.ModelForm):
             'small_wholesale',
             'medium_wholesale',
             'large_wholesale',
+            'small_wholesale_price',
+            'medium_wholesale_price',
+            'large_wholesale_price',
         ]
 
     def __init__(self, *args, **kwargs):
