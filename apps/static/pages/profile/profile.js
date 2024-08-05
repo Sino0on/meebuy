@@ -49,20 +49,31 @@ dropdownBtn.addEventListener('click', () => {
 
 // tabs
 function openTab(_, tabId) {
+    // Скрываем все контентные блоки
     const contents = document.querySelectorAll('.tab-content');
     contents.forEach(content => {
         content.style.display = 'none';
     });
 
+    // Убираем активный класс у всех вкладок
     const allTabs = document.querySelectorAll('.tabs__item');
     allTabs.forEach(tab => {
         tab.classList.remove('active');
     });
 
-    document.getElementById(tabId).style.display = 'block';
-    const activeTab = Array.from(allTabs).find(tab => tab.onclick.toString().includes(`'${tabId}'`));
-    if (activeTab) {
-        activeTab.classList.add('active');
+    // Получаем элемент по ID и проверяем его наличие
+    const tabElement = document.getElementById(tabId);
+    if (tabElement) {
+        tabElement.style.display = 'block'; // Показываем содержимое вкладки, если элемент найден
+
+        // Находим активную вкладку и добавляем ей класс 'active'
+        const activeTab = Array.from(allTabs).find(tab => tab.onclick && tab.onclick.toString().includes(`'${tabId}'`));
+        if (activeTab) {
+            activeTab.classList.add('active');
+        }
+    } else {
+        // Если элемент не найден, выводим предупреждение в консоль
+        console.warn('Element with ID ' + tabId + ' does not exist.');
     }
 }
 

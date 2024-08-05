@@ -363,6 +363,7 @@
                         </p>
                         <label>
                             <input
+                                    id="small_wholesale"
                                     class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                     type="text"
                                     value="{{ form.small_wholesale.value|default_if_none:'' }}"
@@ -377,13 +378,14 @@
                     </div>
                    <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
-                            Мелкий опт количество
+                            Средний опт количество
                         </h6>
                         <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
                             Например: от 100 шт
                         </p>
                         <label>
                             <input
+                                    id="medium_wholesale"
                                     class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                     type="text"
                                     value="{{ form.medium_wholesale.value|default_if_none:'' }}"
@@ -398,13 +400,14 @@
                     </div>
                    <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
-                            Мелкий опт количество
+                            Крупный опт количество
                         </h6>
                         <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
                             Например: от 1000 шт
                         </p>
                         <label>
                             <input
+                                    id="large_wholesale"
                                     class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                     type="text"
                                     value="{{ form.large_wholesale.value|default_if_none:'' }}"
@@ -449,6 +452,7 @@
                         </p>
                         <label>
                             <input
+                                    id="medium_wholesale_price"
                                     class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                     type="text"
                                     value="{{ form.medium_wholesale_price.value|default_if_none:'' }}"
@@ -470,6 +474,7 @@
                         </p>
                         <label>
                             <input
+                                    id="large_wholesale_price"
                                     class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                     type="text"
                                     value="{{ form.large_wholesale_price.value|default_if_none:'' }}"
@@ -720,3 +725,42 @@
         </form>
     </div>
 </div>
+
+<script>
+document.getElementById('submit_form').addEventListener('submit', function(event) {
+    const fieldTranslations = {
+        'small_wholesale': 'мелкого опта',
+        'medium_wholesale': 'среднего опта',
+        'large_wholesale': 'крупного опта'
+    };
+
+    const fields = ['small_wholesale', 'medium_wholesale', 'large_wholesale'];
+    let isValid = true;
+
+    fields.forEach(field => {
+        const qty = document.getElementById(field).value;
+        const price = document.getElementById(field + '_price').value;
+        const errorDivId = field + '_error';
+
+        // Удаляем предыдущее сообщение об ошибке, если оно существует
+        let errorDiv = document.getElementById(errorDivId);
+        if (errorDiv) {
+            errorDiv.remove();
+        }
+
+        // Проверка и создание сообщения об ошибке, если нужно
+        if ((qty && !price) || (!qty && price)) {
+            isValid = false;
+            errorDiv = document.createElement('div');
+            errorDiv.id = errorDivId;
+            errorDiv.style.color = 'red';
+            errorDiv.textContent = 'Пожалуйста, заполните оба поля для ' + fieldTranslations[field] + ' (количество и цена) или оставьте их пустыми.';
+            document.getElementById(field + '_price').insertAdjacentElement('afterend', errorDiv);
+        }
+    });
+
+    if (!isValid) {
+        event.preventDefault(); // Отменить отправку формы
+    }
+});
+</script>
