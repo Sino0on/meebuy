@@ -49,6 +49,18 @@
             z-index: 999;
         }
 
+        .provider-container{
+            display:flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        @media screen and (min-width:992px) {
+            .provider-container{
+                flex-direction: row;
+            }
+        }
+
 
     </style>
 
@@ -73,10 +85,10 @@
             </div>
         </nav>
         <section class="supplier__detail-top">
-            <div class="container">
+            <div class="container provider-container">
                 <div class="lg-md:flex gap-7">
                     <div
-                            class="cards flex flex-col relative gap-6 bg-[#ffffff] p-5 rounded-2xl mt-8 mb-7 shadow-card-shadow lg-md:w-3/5 lg-md:mt-0 lg-md:mb-0 xl:p-[46px]">
+                            class="cards flex flex-col relative gap-6 bg-[#ffffff] p-5 rounded-2xl mt-8 mb-7 shadow-card-shadow w-full lg-md:mt-0 lg-md:mb-0 xl:p-[46px]">
                         <!-- icons -->
                         <div class="absolute right-4 top-4 flex items-center gap-1.5 lg-md:hidden">
 
@@ -153,7 +165,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full">
+                <div class="w-auto">
                     <div class="grid grid-cols-3 gap-4">
                         {% for image in images %}
                             <div class="rounded-[15px] overflow-hidden aspect-square modal-trigger">

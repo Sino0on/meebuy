@@ -114,8 +114,6 @@ class Provider(StatusMixin, models.Model):
     credit_card = models.BooleanField(default=False, verbose_name=_("Кредитные карты"))
     electronic_money = models.BooleanField(default=False, verbose_name=_("Электронные деньги"))
 
-
-
     def __str__(self):
         return f"{self.title}"
 

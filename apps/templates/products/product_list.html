@@ -45,15 +45,19 @@
 
         .top-banners-cover {
             width: 100%;
-            height: 300px;
+            height: auto;
+            min-height: 150px;
+            max-height: 200px;
             position: relative;
             border-radius: 16px;
             overflow: hidden;
+            margin-top: 30px;
         }
 
         .top-banners-cover img {
             width: 100%;
-            height: 100%;
+            height: auto;
+            max-height: 100%;
             position: absolute;
             top: 0;
             left: 0;
@@ -84,6 +88,7 @@
             border-radius: 16px;
             overflow: hidden;
             position: relative;
+            display:none
         }
 
         .side-banner img {
@@ -109,6 +114,12 @@
             flex-direction: row;
             align-items: center;
             gap: 8px;
+        }
+
+        @media screen and (min-width: 992px){
+            .side-banner{
+                display: flex;
+            }
         }
 
     </style>
@@ -169,8 +180,22 @@
                 </div>
             </div>
 
+        <div class="w-full">
+               {% if banner_3 %}
+
+                    <div class="top-banners-cover">
+                        <img
+                                src="{{ banner_3.wide_banner.url }}"
+                                alt=""
+                        />
+                        <a href="#to-a-link" target="_blank"></a>
+                    </div>
+
+                {% endif %}
+        </div>
+
             <div class="side-banners-cover">
-                {% if banner_2 %}
+                {% if banner_3 %}
 
                     <div class="side-banner side-banner__left">
                         <img

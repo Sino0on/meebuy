@@ -58,13 +58,7 @@
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
                             >
-                                <path
-                                        d="M3 7L10 14L17 7"
-                                        stroke="black"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                />
+                                <path d="M3 7L10 14L17 7" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </label>
                         <select
@@ -354,7 +348,7 @@
 
                 </div>
                 <div class="flex flex-col lg-md:flex-row gap-3 justify-content-between">
-                        <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                    <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
                             Мелкий опт количество
                         </h6>
@@ -376,7 +370,7 @@
                             {% endif %}
                         </label>
                     </div>
-                   <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                    <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
                             Средний опт количество
                         </h6>
@@ -398,7 +392,7 @@
                             {% endif %}
                         </label>
                     </div>
-                   <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                    <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
                             Крупный опт количество
                         </h6>
@@ -422,7 +416,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col lg-md:flex-row gap-3 justify-content-between">
-                        <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                    <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
                             Цена за мелкий опт
                         </h6>
@@ -431,6 +425,7 @@
                         </p>
                         <label>
                             <input
+                                    id="small_wholesale_price"
                                     class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                     type="text"
                                     value="{{ form.small_wholesale_price.value|default_if_none:'' }}"
@@ -443,7 +438,7 @@
                             {% endif %}
                         </label>
                     </div>
-                   <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                    <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
                             Цена за средний опт
                         </h6>
@@ -465,7 +460,7 @@
                             {% endif %}
                         </label>
                     </div>
-                   <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
+                    <div class="flex flex-col gap-1 lg-md:w-[30%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
                             Цена за крупный опт
                         </h6>
@@ -727,40 +722,40 @@
 </div>
 
 <script>
-document.getElementById('submit_form').addEventListener('submit', function(event) {
-    const fieldTranslations = {
-        'small_wholesale': 'мелкого опта',
-        'medium_wholesale': 'среднего опта',
-        'large_wholesale': 'крупного опта'
-    };
+    document.getElementById('submit_form').addEventListener('submit', function (event) {
+        const fieldTranslations = {
+            'small_wholesale': 'мелкого опта',
+            'medium_wholesale': 'среднего опта',
+            'large_wholesale': 'крупного опта'
+        };
 
-    const fields = ['small_wholesale', 'medium_wholesale', 'large_wholesale'];
-    let isValid = true;
+        const fields = ['small_wholesale', 'medium_wholesale', 'large_wholesale'];
+        let isValid = true;
 
-    fields.forEach(field => {
-        const qty = document.getElementById(field).value;
-        const price = document.getElementById(field + '_price').value;
-        const errorDivId = field + '_error';
+        fields.forEach(field => {
+            const qty = document.getElementById(field).value;
+            const price = document.getElementById(field + '_price').value;
+            const errorDivId = field + '_error';
 
-        // Удаляем предыдущее сообщение об ошибке, если оно существует
-        let errorDiv = document.getElementById(errorDivId);
-        if (errorDiv) {
-            errorDiv.remove();
-        }
+            // Удаляем предыдущее сообщение об ошибке, если оно существует
+            let errorDiv = document.getElementById(errorDivId);
+            if (errorDiv) {
+                errorDiv.remove();
+            }
 
-        // Проверка и создание сообщения об ошибке, если нужно
-        if ((qty && !price) || (!qty && price)) {
-            isValid = false;
-            errorDiv = document.createElement('div');
-            errorDiv.id = errorDivId;
-            errorDiv.style.color = 'red';
-            errorDiv.textContent = 'Пожалуйста, заполните оба поля для ' + fieldTranslations[field] + ' (количество и цена) или оставьте их пустыми.';
-            document.getElementById(field + '_price').insertAdjacentElement('afterend', errorDiv);
+            // Проверка и создание сообщения об ошибке, если нужно
+            if ((qty && !price) || (!qty && price)) {
+                isValid = false;
+                errorDiv = document.createElement('div');
+                errorDiv.id = errorDivId;
+                errorDiv.style.color = 'red';
+                errorDiv.textContent = 'Пожалуйста, заполните оба поля для ' + fieldTranslations[field] + ' (количество и цена) или оставьте их пустыми.';
+                document.getElementById(field + '_price').insertAdjacentElement('afterend', errorDiv);
+            }
+        });
+
+        if (!isValid) {
+            event.preventDefault(); // Отменить отправку формы
         }
     });
-
-    if (!isValid) {
-        event.preventDefault(); // Отменить отправку формы
-    }
-});
 </script>
