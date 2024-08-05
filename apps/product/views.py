@@ -71,13 +71,13 @@ class ProductListView(ListView):
 
         # Применяем сортировку
         if order:
-            queryset = queryset.order_by(order, 'provider_status_priority', )
+            queryset = queryset.order_by(order, 'provider_status_priority',).distinct()
         else:
-            queryset = queryset.order_by('-id', 'provider_status_priority', )
+            queryset = queryset.order_by('?', 'provider_status_priority', ).distinct()
 
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
-        return filter.qs.distinct()
+        return filter.qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
