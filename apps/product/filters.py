@@ -18,7 +18,7 @@ class ProductFilter(django_filters.FilterSet):
             Q(description__icontains=search_term)
         )
         print('title')
-        return queryset
+        return queryset.distinct()
 
     class Meta:
         model = Product
