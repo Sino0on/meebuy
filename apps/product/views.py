@@ -77,7 +77,7 @@ class ProductListView(ListView):
 
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
-        return filter.qs
+        return filter.qs.distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

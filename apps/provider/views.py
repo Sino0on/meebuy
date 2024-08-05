@@ -24,7 +24,7 @@ class ProviderListView(generic.ListView):
         self.filter = None
 
     def get_queryset(self):
-        queryset = Provider.objects.filter(is_modered=True, is_provider=True)
+        queryset = Provider.objects.filter(is_active=True, is_provider=True, title__isnull=False)
         order = self.request.GET.get("order")
         if order:
             queryset = queryset.order_by(order)
