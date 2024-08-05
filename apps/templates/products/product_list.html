@@ -114,11 +114,25 @@
             flex-direction: row;
             align-items: center;
             gap: 8px;
+            width: 100%;
+            overflow-x:auto;
+            flex-wrap: nowrap;
+            padding: 2px;
+        }
+
+
+
+        .top-products .top-product__item{
+            flex-shrink:0
         }
 
         @media screen and (min-width: 992px){
             .side-banner{
                 display: flex;
+            }
+
+            .top-products{
+                width: auto;
             }
         }
 
@@ -225,18 +239,15 @@
                                                  {% if object.image %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                          alt="">
                                 </div>
-                                <h2 class="text-dar text-lg font-bold mt-5 line-clamp-2">
+                                <h2 class="text-dar text-lg font-bold line-clamp-2" style="margin: 8px 0;">
                                     {{ best_product.title }}
                                 </h2>
-                                <p class="text-dark-text mt-4 line-clamp-2 min-h-10 mb-[18px] d-none d-lg-block">
-
-                                </p>
                                 <div class="text-dark-text text-sm font-light">
                                     Цена: <span class="text-dark-logo font-bold">{% calculate object.id %}
                                     {% if object.currency %}{{ object.currency }}{% endif %}</span>
                                 </div>
                                 <div class="mt-2 flex lg-md:flex justify-between items-end ">
-                                    <a class="btn-filled w-full text-center p-3 lg-md:max-w-[139px] pl-1 pr-1"
+                                    <a class="btn-filled w-full text-center py-1 lg-md:max-w-[139px] pl-1 pr-1"
                                        href="{% url 'product_detail' object.id %}">
                                         Подробнее
                                     </a>
