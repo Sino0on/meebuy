@@ -265,20 +265,19 @@
                                 <div
                                         class="flex md:flex-row flex-col gap-7 md:items-center items-start"
                                 >
-                                    <img
-                                            class="w-[100px] h-[100px]"
-                                            src="
-
-
-
-                                                    {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                    <img class="w-[100px] h-[100px]"
+                                            src="{% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                             alt=""/>
                                     <div class="flex flex-col gap-6">
                                         <div>
                                             <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
                                                 {{ provider.title }}
                                             </h6>
-                                            <p>{{ provider.mini_descr }}</p>
+                                            <p>
+                                                {% if provider.mini_descr %}
+                                                	{{ provider.mini_descr }}
+                                                {% endif %}
+                                            </p>
                                         </div>
                                         <div class="flex gap-4">
                                             <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
