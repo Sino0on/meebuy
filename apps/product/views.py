@@ -64,16 +64,16 @@ class ProductListView(ListView):
                 default='provider__user_cabinet__user_status__status__priorety',
                 output_field=IntegerField(),
             )
-        )
+        ).distinct()
 
         # Получаем параметр сортировки из запроса
         order = self.request.GET.get("order")
 
         # Применяем сортировку
         if order:
-            queryset = queryset.order_by(order, 'provider_status_priority',).distinct()
+            queryset = queryset.distinct().order_by(order, 'provider_status_priority',).distinct()
         else:
-            queryset = queryset.order_by('?', 'provider_status_priority', ).distinct()
+            queryset = queryset.distinct().order_by('?', 'provider_status_priority', ).distinct()
 
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
