@@ -99,6 +99,11 @@ class ProductListView(ListView):
         if right_count > 0:
             random_index = random.randint(0, right_count - 1)
             context["banner_3"] = ProductBanner.objects.filter(right_banner__isnull=False)[random_index]
+        bottom_count = ProductBanner.objects.filter(bottom_banner__isnull=False).count()
+
+        if bottom_count > 0:
+            random_index = random.randint(0, bottom_count - 1)
+            context["banner_4"] = ProductBanner.objects.filter(bottom_banner__isnull=False)[random_index]
 
         return context
 

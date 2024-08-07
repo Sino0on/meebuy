@@ -184,7 +184,7 @@ class ProductBanner(models.Model):
     wide_banner = models.FileField(upload_to="images/banners/", verbose_name="Широкий баннер", blank=True, null=True)
     left_banner = models.FileField(upload_to="images/banners/", verbose_name="Левый баннер", blank=True, null=True)
     right_banner = models.FileField(upload_to="images/banners/", verbose_name="Правый баннер", blank=True, null=True)
-
+    bottom_banner = models.FileField(upload_to="images/banners/", verbose_name="Нижний баннер", blank=True, null=True)
     def __str__(self):
         return self.title
 

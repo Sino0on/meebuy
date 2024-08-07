@@ -88,7 +88,7 @@
             border-radius: 16px;
             overflow: hidden;
             position: relative;
-            display:none
+            display: none
         }
 
         .side-banner img {
@@ -115,23 +115,22 @@
             align-items: center;
             gap: 8px;
             width: 100%;
-            overflow-x:auto;
+            overflow-x: auto;
             flex-wrap: nowrap;
             padding: 2px;
         }
 
 
-
-        .top-products .top-product__item{
-            flex-shrink:0
+        .top-products .top-product__item {
+            flex-shrink: 0
         }
 
-        @media screen and (min-width: 992px){
-            .side-banner{
+        @media screen and (min-width: 992px) {
+            .side-banner {
                 display: flex;
             }
 
-            .top-products{
+            .top-products {
                 width: auto;
             }
         }
@@ -194,8 +193,8 @@
                 </div>
             </div>
 
-        <div class="w-full">
-               {% if banner_3 %}
+            <div class="w-full">
+                {% if banner_3 %}
 
                     <div class="top-banners-cover">
                         <img
@@ -206,7 +205,7 @@
                     </div>
 
                 {% endif %}
-        </div>
+            </div>
 
             <div class="side-banners-cover">
                 {% if banner_3 %}
@@ -235,6 +234,7 @@
                                 <div class="rounded-[10px] h-1/2 overflow-hidden w-full">
                                     <img class="aspect-square h-full w-full" style="height: 124px; width: 132px"
                                          src="
+
 
                                                  {% if object.image %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                          alt="">
@@ -418,7 +418,8 @@
                             <div class="rounded-[10px] overflow-hidden w-full">
                                 <img
                                         class="aspect-square h-full w-full"
-                                        src="{% if object.image %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                        src="
+                                                {% if object.image %}{{ object.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                         alt=""
                                         style="width: 100%;aspect-ratio: 1; object-fit: cover"
                                 />
@@ -468,9 +469,17 @@
                         </div>
 
                     {% endfor %}
+
                 </div>
-
-
+                {% if banner_4 %}
+                    <div class="top-banners-cover">
+                        <img
+                                src="{{ banner_4.bottom_banner.url }}"
+                                alt=""
+                        />
+                        <a href="#to-a-link" target="_blank"></a>
+                    </div>
+                {% endif %}
                 <!-- pagination -->
                 {% include 'includes/pagination.html' %}
             </div>
