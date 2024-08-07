@@ -4,30 +4,44 @@
     <div class="flex items-center gap-3">
         <img src="{% static 'assets/images/icons/location.svg' %}" alt=""/>
         <p class="text-[#A0A0A0] font-normal text-[16px]">
-            {% if product.provider.city and product.provider.address %}
-                {{ product.provider.city }} {{ product.provider.address }}
+            {% if user.is_authenticated %}
+                {% if product.provider.city and product.provider.address %}
+                    {{ product.provider.city }} {{ product.provider.address }}
+                {% else %}
+                    Адрес не указан
+                {% endif %}
             {% else %}
-                Адрес не указан
+                **************
             {% endif %}
         </p>
     </div>
     <div class="flex items-center gap-3">
         <img src="{% static 'assets/images/icons/email.svg' %}" alt=""/>
         <p class="text-[#A0A0A0] font-normal text-[16px]">
-            {% if product.provider.email %}
-                {{ product.provider.email }}
+            {% if user.is_authenticated %}
+
+                {% if product.provider.email %}
+                    {{ product.provider.email }}
+                {% else %}
+                    Email не указан
+                {% endif %}
             {% else %}
-                Email не указан
+                **************
             {% endif %}
         </p>
     </div>
     <div class="flex items-center gap-3">
         <img src="{% static 'assets/images/icons/call.svg' %}" alt=""/>
         <p class="text-[#A0A0A0] font-normal text-[16px]">
-            {% if product.provider.phones %}
-                {{ product.provider.phones }}
+            {% if user.is_authenticated %}
+
+                {% if product.provider.phones %}
+                    {{ product.provider.phones }}
+                {% else %}
+                    Телефон не указан
+                {% endif %}
             {% else %}
-                Телефон не указан
+                **************
             {% endif %}
         </p>
     </div>
@@ -36,10 +50,22 @@
                 src="{% static 'assets/images/icons/earth-location.svg' %}"
                 alt=""
         />
-        {% if product.provider.web_site %}
-            <p class="text-[#A0A0A0] font-normal text-[16px]">{{ product.provider.web_site }}</p>
+        {% if user.is_authenticated %}
+
+            {% if product.provider.web_site %}
+                <p class="text-[#A0A0A0] font-normal text-[16px]">{{ product.provider.web_site }}</p>
+            {% else %}
+                Веб сайт не указан
+            {% endif %}
         {% else %}
-            Веб сайт не указан
+            **************
         {% endif %}
     </div>
+    {% if not user.is_authenticated %}
+        <a href='#loginModal' data-bs-toggle='modal'>
+            <button class="btn-filled p-3 w-full uppercase mt-7 lg:mt-10 max-w-[307px]">
+                Показать контакты
+            </button>
+        </a>
+    {% endif %}
 </div>

@@ -155,8 +155,8 @@
                             {#                                                                <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>#}
                                 {% include 'providers/provider_detail_includes/contacts.html' %}
                                 {% if not user.is_authenticated %}
-                                    <a href="{% url 'login' %}">
-                                    <button class="btn-filled py-3 w-full uppercase mt-7 lg:mt-10 max-w-[307px]">
+                                    <a href='#loginModal' data-bs-toggle='modal'>
+                                    <button class="btn-filled p-3 w-full uppercase mt-7 lg:mt-10 max-w-[307px]">
                                 Показать контакты
                             </button>
                                     </a>
