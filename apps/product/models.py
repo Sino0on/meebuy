@@ -182,9 +182,14 @@ class Currency(models.Model):
 class ProductBanner(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
     wide_banner = models.FileField(upload_to="images/banners/", verbose_name="Широкий баннер", blank=True, null=True)
+    wide_banner_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка')
     left_banner = models.FileField(upload_to="images/banners/", verbose_name="Левый баннер", blank=True, null=True)
+    left_banner_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка')
     right_banner = models.FileField(upload_to="images/banners/", verbose_name="Правый баннер", blank=True, null=True)
+    right_banner_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка')
     bottom_banner = models.FileField(upload_to="images/banners/", verbose_name="Нижний баннер", blank=True, null=True)
+    bottom_banner_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка')
+
     def __str__(self):
         return self.title
 

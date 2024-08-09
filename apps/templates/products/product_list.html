@@ -194,28 +194,29 @@
             </div>
 
             <div class="w-full">
-                {% if banner_3 %}
-
+                {% if banner_1 %}
                     <div class="top-banners-cover">
-                        <img
-                                src="{{ banner_3.wide_banner.url }}"
-                                alt=""
-                        />
-                        <a href="#to-a-link" target="_blank"></a>
+                        <a href="{{ banner_1.wide_banner_link }}">
+                            <img
+                                    src="{{ banner_1.wide_banner.url }}"
+                                    alt=""
+                            />
+                        </a>
+                        <a href="{% if banner_1.wide_banner_link %}{{ banner_1.wide_banner_link }}{% endif %}" target="_blank"></a>
                     </div>
 
                 {% endif %}
             </div>
 
             <div class="side-banners-cover">
-                {% if banner_3 %}
+                {% if banner_2 %}
 
                     <div class="side-banner side-banner__left">
                         <img
                                 src="{{ banner_2.left_banner.url }}"
                                 alt=""
                         />
-                        <a href="#to-a-link" target="_blank"></a>
+                        <a href="{% if banner_2.left_banner_link %}{{ banner_2.left_banner_link }}{% endif %}" target="_blank"></a>
                     </div>
 
                 {% endif %}
@@ -264,11 +265,11 @@
                 </div>
                 {% if banner_3 %}
                     <div class="side-banner side-banner__right">
-                        <img
-                                src="{{ banner_3.right_banner.url }}"
-                                alt=""
-                        />
-                        <a href="#to-a-link" target="_blank"></a>
+                            <img
+                                    src="{{ banner_3.right_banner.url }}"
+                                    alt=""
+                            />
+                        <a href="{% if banner_3.right_banner_link %}{{ banner_3.right_banner_link }}{% endif %}" target="_blank"></a>
                     </div>
 
                 {% endif %}
@@ -473,11 +474,11 @@
                 </div>
                 {% if banner_4 %}
                     <div class="top-banners-cover">
-                        <img
-                                src="{{ banner_4.bottom_banner.url }}"
-                                alt=""
-                        />
-                        <a href="#to-a-link" target="_blank"></a>
+                            <img
+                                    src="{{ banner_4.bottom_banner.url }}"
+                                    alt=""
+                            />
+                        <a href="{% ifbanner_4.bottom_banner_link %}{{ banner_4.bottom_banner_link }}{% endif %}" target="_blank"></a>
                     </div>
                 {% endif %}
                 <!-- pagination -->
