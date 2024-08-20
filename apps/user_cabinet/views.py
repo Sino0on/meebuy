@@ -360,7 +360,7 @@ def change_image(request):
             image.image = image_data
             image.save()
         else:
-            BuyerImg.objects.create(image=image_data, buyer=request.user.buyer)
+            ProvideImg.objects.create(image=image_data, providers=request.user.provider)
 
     return JsonResponse({'message': 'Avatar updated successfully'}, status=200)
 

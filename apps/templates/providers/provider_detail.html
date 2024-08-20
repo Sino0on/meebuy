@@ -239,7 +239,7 @@
                             <div class="uploaded_files flex flex-col gap-2.5 mt-8">
                                 <ul id="file-list"
                                     style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
-                                    {% for file in user.provider.files_price.all %}
+                                    {% for file in provider.files_price.all %}
                                         <li style="margin:15px 0;" id="file-{{ file.id }}">
                                             <div class="uploaded_file_item">
                                                 <div class="flex items-center justify-between gap-[15px]">

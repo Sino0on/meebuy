@@ -76,8 +76,7 @@
                     </li>
                 </ul>
                 <div class="hidden lg-md:flex gap-4">
-                    <a {% if user.is_authenticated %}href="{% url 'view_profile' %}"{% else %}href="#loginModal"
-                       data-bs-toggle='modal'{% endif %}" >
+                    <a href="{% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'login' %}{% endif %}" >
                     <svg
                             class="lg-md:block text-logo-color"
                             width="36"
