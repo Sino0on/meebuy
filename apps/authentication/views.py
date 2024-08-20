@@ -33,7 +33,8 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rec_products'] = Product.objects.all().order_by('-id')[:6]
+        products = Product.objects.filter(is_recommended=True).order_by('-id')[:6]
+        context['rec_products'] = products if products else Product.objects.all().order_by('?')[:6]
         context['new_products'] = Product.objects.all().order_by('-id')[:6]
         context['new_providers'] = Provider.objects.filter(is_modered=True, is_provider=True).order_by('-id')[:4]
         categories = Category.objects.filter(category=None, is_main_category=True).annotate(
@@ -126,6 +127,10 @@ class LoginView(FormView):
     def form_invalid(self, form):
         form.add_error(None, "Неверный email или пароль")
         return self.render_to_response(self.get_context_data(form=form))
+
+
+class RegistrationView(LoginView):
+    template_name = 'auth/register.html'
 
 
 class SelectUserTypeView(LoginRequiredMixin, FormView):
