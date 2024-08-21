@@ -144,9 +144,7 @@
             function renderTariff(tariff, statusIndex) {
                 const status = tariff.statuses[statusIndex];
                 return `
-      <div
-        class="tariffs__info ${tariff.is_recomended ? "recommended" : ""} flex flex-col items-center pb-10"
-      >
+      <div class="tariffs__info ${tariff.is_recomended ? "recommended" : ""} flex flex-col items-center pb-10">
         <div class="tariffs__info-recommended w-full">
           ${tariff.is_recomended ? "<img src='{% static 'assets/images/tariffs/recommended.svg' %}' alt='Recommended' />" : ""}
           ${tariff.is_recomended ? "Рекомендуем" : ""}
