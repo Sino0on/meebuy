@@ -44,6 +44,7 @@ from apps.provider.models import (
     Provider,
     PriceFiles
 )
+from apps.services.tarif_checker import check_user_status_and_open_number
 from apps.user_cabinet.models import Contacts, OpenNumberCount
 
 
@@ -142,16 +143,9 @@ class ProductDetailView(DetailView):
         context["prices"] = self.get_product_prices()
 
         if self.request.GET.get("open"):
-            if self.request.user.is_authenticated:
-                print(self.get_object().provider.user)
-                if self.get_object().provider.user.cabinet.user_status:
-                    if (
-                            self.get_object().provider.user.cabinet.user_status.status.is_publish_phone
-                    ):
-                        OpenNumberCount.objects.create(
-                            user=self.get_object().provider.user.cabinet
-                        )
-                        context["open"] = "open"
+            open_status = check_user_status_and_open_number(self.request)
+            if open_status == "open":
+                context["open"] = "open"
 
         return context
 

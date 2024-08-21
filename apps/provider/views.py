@@ -11,6 +11,7 @@ from apps.tender.models import Category, Country, Region, City
 from apps.user_cabinet.models import Contacts
 from apps.user_cabinet.models import ViewsCountProfile, OpenNumberCount
 from .forms import PriceFilesForm
+from ..services.tarif_checker import check_user_status_and_open_number
 
 
 class ProviderListView(generic.ListView):
@@ -158,16 +159,9 @@ class ProviderDetailView(generic.DetailView):
         )
 
         if self.request.GET.get("open"):
-            if self.request.user.is_authenticated:
-                print(self.get_object().user)
-                if self.get_object().user.cabinet.user_status:
-                    if (
-                            self.get_object().user.cabinet.user_status.status.is_publish_phone
-                    ):
-                        OpenNumberCount.objects.create(
-                            user=self.get_object().user.cabinet
-                        )
-                        context["open"] = "open"
+            open_status = check_user_status_and_open_number(self.request)
+            if open_status == "open":
+                context["open"] = "open"
 
         return context
 

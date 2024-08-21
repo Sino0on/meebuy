@@ -232,7 +232,7 @@
                             </button>
                             </a>
                             {% else %}
-                                     <a href="/tender/detail/{{ tender.pk }}/?open=1">
+                                     <a href="/tender/detail/{{ tender.pk }}/?open=1" id="reloadLink">
                                 <button class="btn-filled py-3 w-full uppercase mt-7 lg:mt-10 max-w-[307px]">
                                     Показать контакты
                                 </button>
@@ -285,4 +285,11 @@
 
 {% block js %}
     <script src="{% static 'pages/purchaseAnnouncements/index.js' %}"></script>
+{#    <script>#}
+{#document.getElementById('reloadLink').addEventListener('click', function(e) {#}
+{#    e.preventDefault(); // Отменяем стандартное поведение ссылки#}
+{#    window.location.href = this.href; // Переход по адресу, указанному в href#}
+{#    window.location.reload(true); // Принудительная перезагрузка страницы с сервера#}
+{#});#}
+{#</script>#}
 {% endblock %}

@@ -10,6 +10,7 @@ from django.views import generic
 from apps.buyer.models import Banner, BannerSettings
 from apps.product.models import Currency
 from apps.provider.models import Category
+from apps.services.tarif_checker import check_user_status_and_open_number
 from apps.tender.filters import TenderFilter
 from apps.tender.forms import TenderForm, SearchRequestForm
 from apps.tender.models import Tender, TenderImg, Country, Region, City, SearchRequest
@@ -114,19 +115,13 @@ class TenderDetailView(generic.DetailView):
     context_object_name = "tender"
 
     def get_context_data(self, **kwargs):
+
         context = super().get_context_data(**kwargs)
         if self.request.GET.get("open"):
-            if self.request.user.is_authenticated:
-                print(self.get_object().user)
-                if self.get_object().user.cabinet.user_status:
-                    if self.get_object().user.cabinet.user_status.status.is_publish_phone:
-                        OpenNumberCount.objects.create(
-                            user=self.get_object().user.cabinet
-                        )
-                        context["open"] = "open"
-            # context['open'] = 'open'
+            open_status = check_user_status_and_open_number(self.request)
+            if open_status == "open":
+                context["open"] = "open"
         context["banners"] = self.get_banners()
-
         context["tenders"] = Tender.objects.exclude(id=self.object.id)
 
         return context
