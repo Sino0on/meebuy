@@ -50,7 +50,7 @@
                      class="overflow-hidden w-full mb-6">
                 <div id="regist-form-cover" style="display: flex; flex-direction: column; gap: 15px; z-index: 0;">
 
-                    <form class="flex flex-col gap-5" method="post" action="{% url 'register' %}">
+                    <form class="flex flex-col gap-5" method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <div class="flex flex-col gap-3 w-full">
                             <label class="text-[18px] font-mulish">Ваш адрес электронной почты Email *</label>
@@ -94,7 +94,9 @@
                             <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
 
                                 <label for="">Придумайте пароль *</label>
-
+                                {% for error in register_form.password1.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
                                 {{ register_form.password1 }}
 
                                 <div class="absolute right-3 top-12">
@@ -120,11 +122,7 @@
                                     />
                                 </div>
                             </div>
-
                         </div>
-                                                              {% for error in register_form.password1.errors %}
-                                    <p style="color: red">{{ error }}</p>
-                                {% endfor %}
                         <div id="confirm" class="input flex items-center gap-2">
                             <input id="policy" name="policy" type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1"/>
                             <label for="policy" class="text-[16px] font-normal font-mulish text-[#777777]">
@@ -310,5 +308,5 @@
     </div>
 {% endblock %}
 {% block js %}
-    <script src="{% static 'pages/auth/auth.js' %}"></script>
+    <script src="{% static 'pages/auth/auth-reverse.js' %}"></script>
 {% endblock %}

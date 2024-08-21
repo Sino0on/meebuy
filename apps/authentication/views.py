@@ -103,8 +103,9 @@ class LoginView(FormView):
 
 
             else:
-                print(register_form.errors)
-                return self.render_to_response(self.get_context_data(register_form=register_form))
+                self.request.session['form_data'] = request.POST
+                self.request.session['form_errors'] = register_form.errors
+                return redirect('register')
 
         return super().post(request, *args, **kwargs)
 
@@ -118,19 +119,48 @@ class LoginView(FormView):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         user = authenticate(self.request, email=email, password=password)
-        if user is not None and user.is_active:  # Проверка, что пользователь активирован
+        if user is not None and user.is_active:
             auth_login(self.request, user)
         else:
             return self.form_invalid(form)
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        form.add_error(None, "Неверный email или пароль")
-        return self.render_to_response(self.get_context_data(form=form))
+        self.request.session['form_data'] = form.data
+        messages.error(self.request, 'Неверный email или пароль.')
+
+        return redirect('authentication')
 
 
 class RegistrationView(LoginView):
     template_name = 'auth/register.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'form_data' in self.request.session:
+            data = self.request.session.pop('form_data')
+            errors = self.request.session.pop('form_errors', None)
+            register_form = UserRegistrationForm(data)
+
+            if errors:
+                # Инициализация _errors как пустого словаря, если он None
+                register_form._errors = register_form._errors or {}
+                for field, error_list in errors.items():
+                    for error in error_list:
+                        if field not in register_form._errors:
+                            register_form._errors[field] = register_form.error_class()
+                        register_form._errors[field].append(error)
+                register_form.is_valid()  # Просто вызываем для обновления состояния формы после добавления ошибок
+
+            context['register_form'] = register_form
+        else:
+            context['register_form'] = UserRegistrationForm()
+        context['countries'] = Country.objects.all()
+        return context
+
+
+class AuthenticationView(LoginView):
+    template_name = 'auth/authentication.html'
 
 
 class SelectUserTypeView(LoginRequiredMixin, FormView):
