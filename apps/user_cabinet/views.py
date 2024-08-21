@@ -67,7 +67,7 @@ from .forms import (
     SupportMessageForm
 )
 from .models import Contacts, FAQ
-from ..pages.models import TelegramBotToken
+from ..pages.models import TelegramBotToken, OurPartners
 from ..services.send_telegram_message import send_telegram_message
 from ..tender.models import (
     Tender,
@@ -602,6 +602,7 @@ class TariffsCabinetView(generic.ListView):
         contacts = Contacts.load()
         context['contacts'] = contacts
         context['faqs'] = FAQ.objects.all()
+        context['parents'] = OurPartners.objects.filter(active=True)
         return context
 
 

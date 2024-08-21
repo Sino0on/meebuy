@@ -42,3 +42,17 @@ class TelegramBotToken(models.Model):
     class Meta:
         verbose_name = _("Токен бота Telegram")
         verbose_name_plural = _("Токены бота Telegram")
+
+
+class OurPartners(models.Model):
+    title = models.CharField(max_length=255, verbose_name=_("Название"))
+    icon = models.FileField(upload_to="partners/", verbose_name=_("Иконка"))
+    link = models.URLField(verbose_name=_("Ссылка"), blank=True, null=True)
+    active = models.BooleanField(default=True, verbose_name=_("Активен"))
+
+    class Meta:
+        verbose_name = _("Партнер")
+        verbose_name_plural = _("Партнеры")
+
+    def __str__(self):
+        return f"{self.title}"
