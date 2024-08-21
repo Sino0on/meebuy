@@ -28,7 +28,9 @@ class ProviderListView(generic.ListView):
         queryset = Provider.objects.filter(is_active=True, is_provider=True, title__isnull=False)
         order = self.request.GET.get("order")
         if order:
-            queryset = queryset.order_by(order)
+            queryset = queryset.order_by(order, "-id")
+        else:
+            queryset = queryset.order_by("-id")
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 
@@ -113,7 +115,9 @@ class ProviderCategoryListView(ProviderListView):
         queryset = Provider.objects.filter(is_modered=True, is_provider=True, category=self.kwargs['pk'])
         order = self.request.GET.get("order")
         if order:
-            queryset = queryset.order_by(order)
+            queryset = queryset.order_by(order, "-id")
+        else:
+            queryset = queryset.order_by("-id")
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 
