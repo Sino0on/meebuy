@@ -175,6 +175,12 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
     context_object_name = 'form'
     success_url = '/profile/'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.provider.is_provider:  # Проверяем, является ли пользователь провайдером
+            return redirect('anketa_buyer')  # URL или имя URL для редиректа покупателей
+        return super(UserAnketaView, self).dispatch(request, *args, **kwargs)
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
@@ -254,6 +260,11 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
     form_class = ProviderForm
     context_object_name = 'form'
     success_url = '/profile/'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.provider.is_provider:  # Проверяем, не является ли пользователь провайдером
+            return redirect('anketa')  # URL или имя URL для редиректа провайдеров
+        return super(UserAnketaBuyerView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
