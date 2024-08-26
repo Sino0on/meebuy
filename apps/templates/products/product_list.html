@@ -61,7 +61,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .top-banners-cover a {
@@ -97,7 +97,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .side-banner a {
@@ -532,11 +532,12 @@
                 "flex-col",
                 "justify-center",
                 "items-center",
-                "bg-[#F6F6F6]",
+                "bg-[#FFF]",
                 "my-7",
                 "rounded-[15px]",
                 "relative"
             );
+            div.style.boxShadow = 'none';
             const image = document.createElement("img");
             const link = document.createElement("a");
             link.href = anchorLink;
@@ -553,7 +554,7 @@
             image.style.maxHeight = '366px';
             image.style.height = 'auto'
             image.style.minHeight = '100%';
-            image.style.objectFit = 'cover'
+            image.style.objectFit = 'contain'
             image.style.borderRadius = '10px'
             div.appendChild(link);
             div.appendChild(image);

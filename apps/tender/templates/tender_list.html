@@ -557,11 +557,12 @@
             "flex-col",
             "justify-center",
             "items-center",
-            "bg-[#F6F6F6]",
+            "bg-[#FFF]",
             "my-7",
             "rounded-[15px]",
             "relative"
         );
+        div.style.boxShadow = 'none';
         const image = document.createElement("img");
         const link = document.createElement("a");
         link.href = anchorLink;
@@ -572,20 +573,16 @@
         link.style.height = "100%";
         link.style.zIndex = "1";
         link.setAttribute("target", "_blank");
-
         image.src = url;
         image.style.width = '100%';
         image.style.maxHeight = '366px';
         image.style.height = 'auto'
         image.style.minHeight = '100%';
-        image.style.objectFit = 'cover'
+        image.style.objectFit = 'contain'
         image.style.borderRadius = '10px'
         div.appendChild(link);
         div.appendChild(image);
-
         return div
     }
-
-    console.log(bannersList, bannerOrder);
 </script>
 {% endblock %}
