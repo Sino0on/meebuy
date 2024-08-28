@@ -162,7 +162,7 @@ class UserDetailView(LoginRequiredMixin, generic.TemplateView):
         context.update(dict(zip(context_keys, context_values)))
         contacts = Contacts.load()
         context['contacts'] = contacts
-        context['products'] = Product.objects.filter(provider__user=self.request.user)[:5]
+        context['products'] = Product.objects.filter(provider__user=self.request.user)[:3]
 
         return context
 
@@ -521,7 +521,7 @@ class ProductListCabinetView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         contacts = Contacts.load()
         context['contacts'] = contacts
-        categories = ProductCategory.objects.filter(provider__user=self.request.user)
+        categories = ProductCategory.objects.all()
 
         context['prices'] = PriceColumn.objects.filter(provider__user=self.request.user)
         context['decimal'] = self.request.user.provider.decimal_places

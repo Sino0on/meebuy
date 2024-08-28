@@ -17,9 +17,10 @@ class ProductCategory(StatusMixin, models.Model):
         verbose_name="Родительская категория",
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    provider = models.ForeignKey(
-        "provider.Provider", on_delete=models.PROTECT, related_name="product_categories"
-    )
+
+    # provider = models.ForeignKey(
+    #     "provider.Provider", on_delete=models.PROTECT, related_name="product_categories"
+    # )
 
     @classmethod
     def get_category_descendants(cls, category):
@@ -34,6 +35,16 @@ class ProductCategory(StatusMixin, models.Model):
     class Meta:
         verbose_name = _("Категория продуктов")
         verbose_name_plural = _("Категории продуктов")
+
+
+class AddNewCategoryRequest(models.Model):
+    parent = models.ForeignKey("ProductCategory", verbose_name="Родительская категория", on_delete=models.CASCADE,
+                               null=True, blank=True)
+    new_category_name = models.CharField(max_length=255, verbose_name="Новая категория")
+
+    class Meta:
+        verbose_name = _("Запрос на добавление новой категории")
+        verbose_name_plural = _("Запросы на добавление новых категорий")
 
 
 class Product(StatusMixin, models.Model):
@@ -159,6 +170,7 @@ class PriceColumn(models.Model):
         except (InvalidOperation, IndexError, ValueError) as e:
             # Возвращаем исходную цену в случае ошибки
             return Decimal(base_price)
+
     def __str__(self):
         return self.name
 
@@ -196,4 +208,3 @@ class ProductBanner(models.Model):
     class Meta:
         verbose_name = "Баннер"
         verbose_name_plural = "Баннеры"
-

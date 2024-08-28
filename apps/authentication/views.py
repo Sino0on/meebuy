@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
 from django.db.models import When, Case, BooleanField
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_str
@@ -269,3 +269,44 @@ def activate(request, uidb64, token):
         return redirect('view_profile')
     else:
         return HttpResponse('Activation link is invalid!')
+
+
+
+# REGISTER V2
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
+from .forms import CustomUserCreationForm
+import random
+import string
+from django.core.mail import send_mail
+
+User = get_user_model()
+
+
+def register_v2(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            # Генерация случайного пароля
+            password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+
+            # Создание пользователя
+            user = User.objects.create(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=make_password(password)  # Хеширование пароля
+            )
+
+            # Отправка пароля на почту пользователя
+            send_mail(
+                'Ваш пароль для входа на сайт',
+                f'Ваш пароль: {password}\nИспользуйте его для входа на сайт.',
+                'from@example.com',
+                [user.email],
+                fail_silently=False,
+            )
+
+            return redirect('login')  # Перенаправление на страницу входа
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'register.html', {'form': form})

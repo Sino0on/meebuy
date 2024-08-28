@@ -49,14 +49,14 @@
             z-index: 999;
         }
 
-        .provider-container{
-            display:flex;
+        .provider-container {
+            display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
-        @media screen and (min-width:992px) {
-            .provider-container{
+        @media screen and (min-width: 992px) {
+            .provider-container {
                 flex-direction: row;
             }
         }
@@ -153,14 +153,14 @@
                             {#                                     alt="Location"/>#}
                             {#                            <div>#}
                             {#                                                                <p class="text-[#4D4D4D]">{% if provider.city %}{{ provider.city }}{% endif %}</p>#}
-                                {% include 'providers/provider_detail_includes/contacts.html' %}
-                                {% if not user.is_authenticated %}
-                                    <a href='#loginModal' data-bs-toggle='modal'>
+                            {% include 'providers/provider_detail_includes/contacts.html' %}
+                            {% if not user.is_authenticated %}
+                                <a href='#loginModal' data-bs-toggle='modal'>
                                     <button class="btn-filled p-3 w-full uppercase mt-7 lg:mt-10 max-w-[307px]">
-                                Показать контакты
-                            </button>
-                                    </a>
-                                {% endif %}
+                                        Показать контакты
+                                    </button>
+                                </a>
+                            {% endif %}
 
                         </div>
                     </div>
@@ -207,6 +207,26 @@
                                 class="filterBy border tabs__item uppercase border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
                             Прайс
                         </div>
+                        {% if provider.is_modered %}
+                            {% if links %}
+                                <div onclick="openTab(event, 'Tab3')"
+                                        class="filterBy border tabs__item uppercase border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                    Ссылки на наши ресурсы
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if documents %}
+                                <div onclick="openTab(event, 'Tab4')"
+                                        class="filterBy border tabs__item uppercase border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                                    Документы
+                                </div>
+
+                            {% endif %}
+
+                        {% endif %}
+
                     </div>
                     <div id="Tab1" class="tab-content">
                         <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
@@ -218,12 +238,17 @@
                                         </div>
                                     {% endif %}
                                     <div class="w-full h-64 lg:h-80 overflow-hidden rounded-[10px]">
-                                        <img class="w-full h-full object-cover" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="Изображение товара">
+                                        <img class="w-full h-full object-cover" src="
+
+                                                {% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                             alt="Изображение товара">
                                     </div>
                                     <h2 class="mt-2 font-bold line-clamp-1 lg:text-lg lg:mt-[26px]">{{ product.title }}</h2>
-                                    <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">{{ product.description|truncatechars:100 }}</p>
+                                    <p class="text-[#737373] line-clamp-2 lg:mt-[26px]">
+                                        {{ product.description|truncatechars:100 }}</p>
                                     <div class="text-dark-text text-lg font-light mt-3 lg:mt-[26px]">
-                                        Цена: <span class="text-dark-logo font-bold">{% calculate product.id %}{{ product.currency }}</span>
+                                        Цена: <span
+                                            class="text-dark-logo font-bold">{% calculate product.id %}{{ product.currency }}</span>
                                     </div>
                                     <a href="/product/detail/{{ product.id }}/">
                                         <button class="btn-filled py-2 w-full mt-5 lg:mt-[26px]">
@@ -255,6 +280,56 @@
                             </div>
                         </div>
                     </div>
+                    {% if provider.is_modered %}
+                        {% if links %}
+                            <div id="Tab3" class="tab-content hidden">
+                                <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
+                                    <div class="uploaded_files flex flex-col gap-2.5 mt-8">
+                                        <ul id="file-list"
+                                            style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
+                                            {% for link in links %}
+                                                <li style="margin:15px 0;" id="link-{{ link.id }}">
+                                                    <div class="uploaded_file_item">
+                                                        <div class="flex items-center justify-between gap-[15px]">
+                                                            <a href="{{ link.link }}" target="_blank"
+                                                               class="line-clamp-3" style="max-width: 300px">
+                                                                {{ link.name }}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if documents %}
+                            <div id="Tab4" class="tab-content hidden">
+                        {% endif %}
+                    {% endif %}
+                    <div class="grid grid-cols-2 gap-4 mt-5 lg-md:grid-cols-3 lg:mt-10">
+                        <div class="uploaded_files flex flex-col gap-2.5 mt-8">
+                            <ul id="file-list"
+                                style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
+                                {% for document in documents %}
+                                    <li style="margin:15px 0;" id="document-{{ file.id }}">
+                                        <div class="uploaded_file_item">
+                                            <div class="flex items-center justify-between gap-[15px]">
+                                                <a href="{% url 'download_price_file' %}?filename={{ document.document }}"
+                                                   class="line-clamp-3" style="max-width: 300px">
+                                                    {{ document.name }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    </div>
+
+
                     {#                    <p class="text-end text-base text-dark-text mt-5 lg:text-lg lg:mt-[30px]"><a href="">Смотреть все#}
                     {#                            товары</a></p>#}
                 </div>
@@ -464,15 +539,15 @@
             }
         });
         const swiper3 = new Swiper(".mySwiper3", {
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                spaceBetween: 10,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            spaceBetween: 10,
         });
         // Modal functionality
         const modal = document.getElementById('sliderModal');

@@ -70,6 +70,8 @@ class User(StatusMixin, AbstractUser):
         max_length=100, null=True, blank=True, verbose_name=_("Должность")
     )
     user_type = models.CharField(max_length=20, verbose_name=_("Тип пользователя"))
+    register_date = models.DateField(auto_now_add=True, blank=True, null=True, verbose_name="Дата регистрации")
+
 
     objects = UserManager()
 

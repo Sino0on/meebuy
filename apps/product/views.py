@@ -30,14 +30,14 @@ from apps.product.forms import (
     ProductForm,
     UploadExcelForm,
     ProductCategoryForm,
-    PriceColumnForm,
+    PriceColumnForm, AddNewCategoryRequestForm,
 )
 from apps.product.models import (
     Product,
     ProductImg,
     ProductCategory,
     PriceColumn, Currency,
-    ProductBanner
+    ProductBanner, AddNewCategoryRequest
 )
 from apps.provider.models import (
     Category,
@@ -322,6 +322,9 @@ class DownloadPriceFileView(View):
             raise Http404("Ошибка при чтении файла")
 
 
+
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class DeleteFileView(View):
     def post(self, request, *args, **kwargs):
@@ -391,16 +394,14 @@ class ExcelUploadView(FormView):
         return super().form_valid(form)
 
 
-class ProductCategoryCreateView(CreateView):
-    model = ProductCategory
-    form_class = ProductCategoryForm
+class AddNewCategoryRequestView(CreateView):
+    model = AddNewCategoryRequest
+    form_class = AddNewCategoryRequestForm
     template_name = "cabinet/products.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = ProductCategory.objects.filter(
-            provider__user=self.request.user
-        )
+        context["categories"] = ProductCategory.objects.all()
         context['categories_change'] = 2
 
         return context
@@ -410,7 +411,7 @@ class ProductCategoryCreateView(CreateView):
         return super().form_invalid(form)
 
     def form_valid(self, form):
-        form.instance.provider = Provider.objects.get(user=self.request.user)
+        print(form)
 
         return super().form_valid(form)
 
@@ -425,9 +426,7 @@ class ProductCategoryUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = ProductCategory.objects.filter(
-            provider__user=self.request.user
-        )
+        context["categories"] = ProductCategory.objects.all()
         return context
 
     def form_valid(self, form):

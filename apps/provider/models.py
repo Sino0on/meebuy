@@ -123,7 +123,7 @@ class Provider(StatusMixin, models.Model):
 
 
 class ProvideImg(models.Model):
-    image = models.ImageField(upload_to="images/providers/%Y/%m/")
+    image = models.ImageField(upload_to="images/providers/%Y/%m/", verbose_name="Изображение Поставщика")
     providers = models.ForeignKey(
         Provider, on_delete=models.CASCADE, related_name="images"
     )
@@ -137,7 +137,7 @@ class ProvideImg(models.Model):
 
 
 class ProvideFiles(models.Model):
-    image = models.FileField(upload_to="images/providers/%Y/%m/")
+    image = models.FileField(upload_to="images/providers/%Y/%m/", verbose_name="Файл Поставщика")
     providers = models.ForeignKey(
         Provider, on_delete=models.CASCADE, related_name="files"
     )
@@ -151,7 +151,7 @@ class ProvideFiles(models.Model):
 
 
 class PriceFiles(models.Model):
-    file = models.FileField(upload_to="files/price/%Y/%m/")
+    file = models.FileField(upload_to="files/price/%Y/%m/", verbose_name="Файл цены")
     providers = models.ForeignKey(
         Provider, on_delete=models.CASCADE, related_name="files_price"
     )
@@ -162,3 +162,31 @@ class PriceFiles(models.Model):
     class Meta:
         verbose_name = _("Файл цены")
         verbose_name_plural = _("Файлы цен")
+
+
+class VerificationDocuments(models.Model):
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="documents")
+    name = models.CharField(max_length=255, verbose_name="Название")
+    document = models.FileField(upload_to='provider_documents/%Y/%m/', verbose_name="Документ")
+    verified = models.BooleanField(default=False, verbose_name='Подтверждено')
+
+    def __str__(self):
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name = _("Документ")
+        verbose_name_plural = _("Документы")
+
+
+class ProviderLink(models.Model):
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="links")
+    name = models.CharField(max_length=255, verbose_name="Название")
+    link = models.URLField(verbose_name="Ссылка")
+    verified = models.BooleanField(default=False, verbose_name='Подтверждено')
+
+    def __str__(self):
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name = _("Ссылка")
+        verbose_name_plural = _("Ссылки")

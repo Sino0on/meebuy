@@ -79,6 +79,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, "apps/templates")
@@ -124,7 +125,7 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
 # DATABASES = {
 #     'default': {
@@ -132,7 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
 # Static files (CSS, JavaScript, Images)

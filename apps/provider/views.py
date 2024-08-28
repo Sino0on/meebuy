@@ -28,9 +28,9 @@ class ProviderListView(generic.ListView):
         queryset = Provider.objects.filter(is_active=True, is_provider=True, title__isnull=False)
         order = self.request.GET.get("order")
         if order:
-            queryset = queryset.order_by(order, "-id")
+            queryset = queryset.order_by(order, 'is_modered', "-id")
         else:
-            queryset = queryset.order_by("-id")
+            queryset = queryset.order_by('is_modered', "-id")
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 
@@ -161,6 +161,8 @@ class ProviderDetailView(generic.DetailView):
         context["companies"] = Provider.objects.exclude(id=self.object.id).filter(
             is_provider=True, is_modered=True, is_active=True
         )
+        context["documents"] = self.object.documents.all()
+        context["links"] = self.object.links.all()
 
         if self.request.GET.get("open"):
             open_status = check_user_status_and_open_number(self.request)

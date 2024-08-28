@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Product, ProductCategory, PriceColumn
+from .models import Product, ProductCategory, PriceColumn, AddNewCategoryRequest
 
 
 class ProductForm(forms.ModelForm):
@@ -54,6 +54,15 @@ class ProductCategoryForm(forms.ModelForm):
     class Meta:
         model = ProductCategory
         fields = ['name', 'parent', ]
+
+
+class AddNewCategoryRequestForm(forms.ModelForm):
+    parent = forms.ModelChoiceField(queryset=ProductCategory.objects.all(), required=False)
+    new_category_name = forms.CharField(max_length=255)
+
+    class Meta:
+        model = AddNewCategoryRequest
+        fields = ['parent', 'new_category_name']
 
 
 class PriceColumnForm(forms.ModelForm):

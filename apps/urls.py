@@ -9,7 +9,7 @@ from apps.authentication.views import (
     SelectAuthUserTypeView,
     cabinet_create,
     activate,
-    login_redirect, RegistrationView, AuthenticationView
+    login_redirect, RegistrationView, AuthenticationView, register_v2
 )
 # Buyer views
 from apps.buyer.views import (
@@ -43,7 +43,7 @@ from apps.product.views import (
     ProductDetailView,
     ExcelTemplateDownloadView,
     ExcelUploadView,
-    ProductCategoryCreateView,
+    AddNewCategoryRequestView,
     ProductCategoryUpdateView,
     ProductCategoryDeleteView,
     PriceColumnCreateView,
@@ -120,6 +120,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegistrationView.as_view(), name='register'),
     path('authentication/', AuthenticationView.as_view(), name='authentication'),
+    path('register_v2/', register_v2, name='register_v2'),
 
     path('choice/', SelectUserTypeView.as_view(), name='choice'),
     path('select_user_type/', SelectUserTypeView.as_view(), name='select_user_type'),
@@ -221,7 +222,7 @@ urlpatterns = [
     path('upping/buy/<int:pk>/', BuyUppingView.as_view(), name='buy_upping'),
     path('redirect_to_site/<int:pk>/', redirect_to_site, name='redirect_to_site'),
     path('category/list/<int:pk>/', CategoryListView.as_view(), name='category_list'),
-    path('create-category/', ProductCategoryCreateView.as_view(), name='create_category'),
+    path('create-category/', AddNewCategoryRequestView.as_view(), name='create_category'),
     path('edit-category/<int:pk>/', ProductCategoryUpdateView.as_view(), name='edit_category'),
     path('delete-category/<int:pk>/', ProductCategoryDeleteView.as_view(), name='delete_category'),
     path('price-columns/create/', PriceColumnCreateView.as_view(), name='price_column_create'),
