@@ -50,7 +50,8 @@ class BuyerListView(generic.ListView):
         queryset = Provider.objects.filter(is_active=True, title__isnull=False, user__tenders__isnull=False)
         order = self.request.GET.get("order")
         if order:
-            queryset = queryset.order_by(order)
+            queryset = queryset.order_by(order, '-id')
+
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 

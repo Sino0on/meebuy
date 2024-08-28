@@ -72,9 +72,9 @@ class ProductListView(ListView):
 
         # Применяем сортировку
         if order:
-            queryset = queryset.distinct().order_by(order, 'provider_status_priority',).distinct()
+            queryset = queryset.distinct().order_by(order, 'provider_status_priority', '-id').distinct()
         else:
-            queryset = queryset.distinct().order_by('?', 'provider_status_priority', ).distinct()
+            queryset = queryset.distinct().order_by('?', 'provider_status_priority', '-id').distinct()
 
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)

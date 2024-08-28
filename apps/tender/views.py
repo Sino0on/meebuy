@@ -38,7 +38,7 @@ class TenderListView(generic.ListView):
         )
         order = self.request.GET.get("order")
         if order:
-            queryset = queryset.order_by('status_priority', '-id', order)
+            queryset = queryset.order_by('status_priority', order, '-id')
         else:
             queryset = queryset.order_by('status_priority', '-id')
 
