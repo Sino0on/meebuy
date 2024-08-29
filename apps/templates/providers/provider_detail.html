@@ -318,7 +318,7 @@
                                             <div class="flex items-center justify-between gap-[15px]">
                                                 <a href="{% url 'download_price_file' %}?filename={{ document.document }}"
                                                    class="line-clamp-3" style="max-width: 300px">
-                                                    {{ document.name }}
+                                                    {{ document.document.name|filename }}
                                                 </a>
                                             </div>
                                         </div>

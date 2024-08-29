@@ -166,12 +166,11 @@ class PriceFiles(models.Model):
 
 class VerificationDocuments(models.Model):
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="documents")
-    name = models.CharField(max_length=255, verbose_name="Название")
     document = models.FileField(upload_to='provider_documents/%Y/%m/', verbose_name="Документ")
     verified = models.BooleanField(default=False, verbose_name='Подтверждено')
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.document.name}"
 
     class Meta:
         verbose_name = _("Документ")

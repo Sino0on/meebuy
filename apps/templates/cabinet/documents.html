@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+    <div class="container flex flex-col content-center items-center gap-8 pt-14">
+        <h3>Загрузите документы</h3>
+        <p>Вы можете выбрать несколько файлов, удерживая клавишу Ctrl (Cmd на Mac) при выборе.</p>
+
+        <form method="post" action="{% url 'document_create' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input id="file-input" type="file" name="documents" multiple>
+
+            <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5">Отправить</button>
+        </form>
+        <div id="file-list" class="mt-8"></div>
+    </div>
+
+    <div class="container" style="padding: 20px; text-align: center;">
+        {% for document in documents %}
+            <a href="{{ document.document.url }}">{{ document.document.url|filename }}  {% if document.verified %}✔{% else %}✘{% endif %} </a>
+            <form action="{% url 'document_delete' document.pk %}" method="post">
+                <button type="submit">
+                    {% csrf_token %}
+                    <img class="cursor-pointer w-6 h-6"
+                         src="{% static '/assets/images/icons/trash.svg' %}"
+                         alt="">
+                </button>
+            </form>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.getElementById('file-input').addEventListener('change', function () {
+            const fileList = this.files; // Get the list of files
+            const fileListContainer = document.getElementById('file-list');
+
+            // Clear previous file names
+            fileListContainer.innerHTML = '';
+
+            // Create a list to display file names
+            const list = document.createElement('ul');
+            list.style.listStyle = 'decimal'
+
+            // Loop through files and create list items for each file name
+            Array.from(fileList).forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name; // Get the file name
+                list.appendChild(listItem);
+            });
+
+            // Append the list to the container
+            fileListContainer.appendChild(list);
+        });
+
+    </script>
+{% endblock %}

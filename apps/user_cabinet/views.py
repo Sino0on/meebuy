@@ -25,8 +25,9 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
 from django.utils.timezone import now
-from django.views import generic
+from django.views import generic, View
 from django.views.decorators.http import require_POST, require_GET
+from django.views.generic import TemplateView
 from plotly.offline import plot
 from rest_framework.generics import ListAPIView
 
@@ -44,7 +45,7 @@ from apps.product.models import (
 from apps.provider.models import (
     ProvideImg,
     Provider,
-    Category
+    Category, VerificationDocuments
 )
 from apps.user_cabinet.models import (
     PackageStatus,
@@ -163,6 +164,8 @@ class UserDetailView(LoginRequiredMixin, generic.TemplateView):
         contacts = Contacts.load()
         context['contacts'] = contacts
         context['products'] = Product.objects.filter(provider__user=self.request.user)[:3]
+        context['links'] = provider.links.all()
+
 
         return context
 
@@ -179,7 +182,6 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
         if not request.user.provider.is_provider:  # Проверяем, является ли пользователь провайдером
             return redirect('anketa_buyer')  # URL или имя URL для редиректа покупателей
         return super(UserAnketaView, self).dispatch(request, *args, **kwargs)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1027,3 +1029,14 @@ def freedompay_success(request):
         return redirect('balance')
     else:
         return JsonResponse({'error': 'Invalid request method'})
+
+
+class DocumentsView(View):
+    def get(self, request):
+        context = {
+            'documents': VerificationDocuments.objects.filter(provider=request.user.provider).distinct(),
+        }
+        return render(request, 'cabinet/documents.html', context=context)
+
+
+

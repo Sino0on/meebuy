@@ -61,6 +61,14 @@
                                         Редактировать анкету
                                     </button>
                                 </a>
+                            {% if provider.is_provider %}
+                                <a href="
+                                        {% url 'documents' %}">
+                                    <button class="mt-[26px] btn-filled-yellow w-full uppercase py-[8px]">
+                                        Мои документы
+                                    </button>
+                                </a>
+                            {% endif %}
                                 <a href="{% url 'tariffs' %}"
                                    class="mt-4 border border-[#E4DB00] bg-[#2B292C] text-bg-white rounded-[15px] flex items-center justify-center w-full gap-2.5 py-[13px] ">
                                     <img class="w-[23px] h-[23px]" src="{% static 'assets/images/icons/premium.svg' %}"
@@ -286,8 +294,6 @@
                                                     </svg>
                                                     Добавить документ
                                                 </div>
-
-
                                             </div>
                                         </label>
 
@@ -337,7 +343,9 @@
                                                    class="flex justify-between items-center">
                                                     <div class="flex items-center gap-5">
                                                         <div class="w-[clamp(40px,20vw,50px)] h-[clamp(40px,20vw,50px)] overflow-hidden rounded-full">
-                                                            <img class="object-cover h-full" src="{% if i.images.first %} {{ i.images.first.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt="empty icon" style="margin: 0 auto">
+                                                            <img class="object-cover h-full"
+                                                                 src="{% if i.images.first %} {{ i.images.first.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                                                 alt="empty icon" style="margin: 0 auto">
                                                         </div>
                                                         <p>{{ i.title|slice:":10" }}{% if i.title|length > 10 %}
                                                             ...{% endif %}</p>
@@ -361,132 +369,73 @@
                                        class="flex items-center gap-2.5 mt-6 border-2 overflow-hidden w-full py-2 border-dashed border-[#AEAEAE] pl-5 rounded-lg flex  items-center">
                                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z" fill="#BEBEBE"></path>
+                                            <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                  fill="#BEBEBE"></path>
                                         </svg>
                                         Добавить
                                     </a>
                                 </div>
 
                                 <!-- ссылки -->
-                                <div class="card__item price text-dark-text shadow-card-shadow">
-                                    <h2 class="content__title">Ссылки</h2>
-                                    <p class="mt-3.5">Вы можете разместить ссылки на ваши ресурсы на Вашей странице</p>
-                                    <!-- Форма загрузки файлов -->
-                                    <form id="file_form" class="relative mt-6">
-                                        {% csrf_token %}
-                                        <label for="price_file"
-                                               class="border-2 overflow-hidden w-full px-4 h-12 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center">
-                                            <div class="h-full w-full flex items-center">
-                                                <input type="file" name="file" id="price_file" class="sr-only">
-                                                <div class="flex items-center gap-2.5" id="price_icon">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z" fill="#BEBEBE"></path>
-                                                    </svg>
-                                                    Добавить документ
-                                                </div>
-
-
-                                            </div>
-                                        </label>
-
-                                    </form>
-                                    <!-- Список загруженных файлов -->
-                                    <div class="uploaded_files flex flex-col gap-2.5 mt-8">
-                                        <ul id="file-list"
-                                            style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
-                                            {% for file in user.provider.files_price.all %}
-                                                <li style="margin:15px 0;" id="file-{{ file.id }}">
-                                                    <div class="uploaded_file_item">
-                                                        <div class="flex items-center justify-between gap-[15px]">
-                                                            <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}"
-                                                               class="line-clamp-3" style="max-width: 300px">
-                                                                {{ file.file.name|filename }}
-                                                            </a>
-                                                            <svg class="delete__icon cursor-pointer" width="10"
-                                                                 height="10" viewBox="0 0 10 10" fill="none"
-                                                                 xmlns="http://www.w3.org/2000/svg"
-                                                                 onclick="removeFile({{ file.id }})">
-                                                                <path d="M7.75511 9.19888L4.87011 6.31388L2.02754 9.15645L0.783035 7.91194L3.6256 5.06937L0.81132 2.25509L2.09825 0.968153L4.91254 3.78244L7.74097 0.95401L8.98547 2.19852L6.15705 5.02695L9.04204 7.91194L7.75511 9.19888Z" fill="#4D4D4D"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                        <div id="show-more" style="text-align: end;cursor: pointer">
-                                            показать больше
-                                        </div>
-                                    </div>
-                                    <p class="relative mt-9 text-dark-logo leading-6">
-                                        <img class="absolute -left-[3px] -top-2.5 -z-[1]"
-                                             src="{% static 'assets/images/icons/bg-yellow-icon.svg' %}" alt="">
-                                        Вы можете загрузить документы в формате: .pdf, .doc, .xls
-                                    </p>
                                 </div>
+                                <div class="card__item mt-6 price text-dark-text shadow-card-shadow"
+                                     style="grid-column:span 2">
+                                <h2 class="content__title">Ссылки</h2>
+                                <p class="mt-3.5">Вы можете разместить ссылки на ваши ресурсы на Вашей странице</p>
+                                <!-- Форма загрузки файлов -->
+                                <form id="" method="post" action="{% url 'add_link' %}" class="relative mt-6">
+                                    {% csrf_token %}
+                                    <div id="links-cover" class="flex flex-col gap-6">
+                                        <div class="h-full w-full flex flex-col lg-md:flex-row items-center link-block gap-4">
+                                            <input type="text" placeholder="Название" name="name"
+                                                   value="{{ form.name.value }}"
+                                                   class="link-input-label rounded-md p-2 border border-1 w-full lg-md:w-[25%]">
+                                            {% if form.name.errors %}
+                                                {% for error in form.name.errors %}
+                                                    <div class="text-red-500">{{ error }}</div>
+                                                {% endfor %}
+                                            {% endif %}
 
-                                <!-- документы -->
-                                <div class="card__item price text-dark-text shadow-card-shadow">
-                                    <h2 class="content__title">Прайс</h2>
-                                    <p class="mt-3.5">Вы можете разместить прайс-листы, файлы, документы на Вашей
-                                        странице</p>
-                                    <!-- Форма загрузки файлов -->
-                                    <form id="file_form" class="relative mt-6">
-                                        {% csrf_token %}
-                                        <label for="price_file"
-                                               class="border-2 overflow-hidden w-full px-4 h-12 border-dashed border-[#AEAEAE] rounded-lg flex justify-center items-center">
-                                            <div class="h-full w-full flex items-center">
-                                                <input type="file" name="file" id="price_file" class="sr-only">
-                                                <div class="flex items-center gap-2.5" id="price_icon">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
-                                                              fill="#BEBEBE"></path>
-                                                    </svg>
-                                                    Добавить документ
-                                                </div>
-                                            </div>
-                                        </label>
-
-                                    </form>
-                                    <!-- Список загруженных файлов -->
-                                    <div class="uploaded_files flex flex-col gap-2.5 mt-8">
-                                        <ul id="file-list"
-                                            style="list-style: decimal;max-height:240px;overflow-y:hidden; padding-left:26px;">
-                                            {% for file in user.provider.files_price.all %}
-                                                <li style="margin:15px 0;" id="file-{{ file.id }}">
-                                                    <div class="uploaded_file_item">
-                                                        <div class="flex items-center justify-between gap-[15px]">
-                                                            <a href="{% url 'download_price_file' %}?filename={{ file.file.name }}"
-                                                               class="line-clamp-3" style="max-width: 300px">
-                                                                {{ file.file.name|filename }}
-                                                            </a>
-                                                            <svg class="delete__icon cursor-pointer" width="10"
-                                                                 height="10" viewBox="0 0 10 10" fill="none"
-                                                                 xmlns="http://www.w3.org/2000/svg"
-                                                                 onclick="removeFile({{ file.id }})">
-                                                                <path d="M7.75511 9.19888L4.87011 6.31388L2.02754 9.15645L0.783035 7.91194L3.6256 5.06937L0.81132 2.25509L2.09825 0.968153L4.91254 3.78244L7.74097 0.95401L8.98547 2.19852L6.15705 5.02695L9.04204 7.91194L7.75511 9.19888Z" fill="#4D4D4D"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                        <div id="show-more" style="text-align: end;cursor: pointer">
-                                            показать больше
+                                            <input type="text" placeholder="Ссылка" name="link"
+                                                   value="{{ form.link.value }}"
+                                                   class="link-input rounded-md p-2 border border-1 w-full lg-md:w-[70%]">
+                                            {% if form.link.errors %}
+                                                {% for error in form.link.errors %}
+                                                    <div class="text-red-500">{{ error }}</div>
+                                                {% endfor %}
+                                            {% endif %}
                                         </div>
+                                    {% for link in links %}
+
+                                            <div class="h-full w-full flex flex-col lg-md:flex-row items-center link-block gap-4">
+                                                <input type="text" placeholder="{{ link.name }}" name="name" value="{{ link.name }}"
+                                                       class=" link-input-label rounded-md p-2 border border-1 w-full lg-md:w-[25%]">
+                                                <input type="text" placeholder="{{ link.link }} " name="link" value="{{ link.link }}"
+                                                       class="link-input  rounded-md p-2 border border-1 w-full lg-md:w-[70%]">
+                                            </div>
+                                        {% endfor %}
+
                                     </div>
-                                    <p class="relative mt-9 text-dark-logo leading-6">
-                                        <img class="absolute -left-[3px] -top-2.5 -z-[1]"
-                                             src="{% static 'assets/images/icons/bg-yellow-icon.svg' %}" alt="">
-                                        Вы можете загрузить документы в формате: .pdf, .doc, .xls
-                                    </p>
-                                </div>
+                                    <div class="flex mt-4 items-center gap-2.5" id="add-link-btn"
+                                         style="cursor: pointer">
+                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5.71951 14V8.1833H0V5.67413H5.71951V0H8.30894V5.67413H14V8.1833H8.30894V14H5.71951Z"
+                                                  fill="#BEBEBE"></path>
+                                        </svg>
+                                        Добавить еще ссылку
+                                    </div>
+
+                                    <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5" type="submit">
+                                        Сохранить
+                                    </button>
+
+                                </form>
 
 
                             {% endif %}
-                        </div>
-                    </div>
+                            </div>
+
                 </section>
             </div>
         </div>
@@ -494,6 +443,7 @@
     </main>
 {% endblock %}
 {% block js %}
+
     <script>
         function getCookie(name) {
             let cookieValue = null;
@@ -567,4 +517,28 @@
     <script src="{% static 'pages/profile/myCompany/index.js' %}"></script>
     <script src="{% static 'pages/profile/profile.js' %}"></script>
     <script src="{% static 'pages/home/index.js' %}"></script>
+    <script>
+        const addLinkBtn = document.getElementById("add-link-btn");
+        const linkBlock = document.querySelector('.link-block');
+        const linksCover = document.getElementById('links-cover');
+
+        // Clear input values initially
+        linkBlock.querySelectorAll('input').forEach(input => {
+            input.value = '';
+        });
+
+        // Function to create a new link input block
+        function createLinkInput() {
+            const newLinkBlock = linkBlock.cloneNode(true); // Clone the existing linkBlock
+            newLinkBlock.querySelectorAll('input').forEach(input => input.value = ''); // Clear any text that was cloned
+            return newLinkBlock;
+        }
+
+        // Add event listener for the button
+        addLinkBtn.addEventListener('click', () => {
+            const newBlock = createLinkInput(); // Create a new link input block
+            linksCover.appendChild(newBlock); // Append the new block to the container
+        });
+
+    </script>
 {% endblock %}

@@ -1,18 +1,12 @@
-from datetime import timezone
-
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Case, BooleanField, When
 from django.shortcuts import redirect
 from django.views import generic
 
-from apps.authentication.forms import ProviderForm
 from apps.authentication.models import User
 from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
 from apps.provider.models import Provider, Category
-from apps.tender.forms import TenderForm
-from apps.tender.models import Country, Region, City, TenderImg, Tender
+from apps.tender.models import Country, Region, City
 from apps.tender.views import TenderCreateView
 from apps.user_cabinet.models import Contacts
 from apps.user_cabinet.views import UserAnketaBuyerView

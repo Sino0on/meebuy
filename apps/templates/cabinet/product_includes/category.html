@@ -24,12 +24,12 @@
       </div>
       {% if category_tree %}
       <h6 class="text-[#4D4D4D] font-black lg-md:text-[20px] text-[18px]">
-        Ваши категории
+        Категории товаров
       </h6>
       <ul>
         {% for category, level in category_tree %}
-{#        <a href="{% url 'edit_category' category.id %}"#}
-          ><li
+{#        <a href="{% url 'edit_category' category.id %}">#}
+            <li style=""
             class="text-[#909090] font-normal sm:text-[18px] text-[16px] font-mulish"          >
             {% nesting_level level %}{{ category.name }}
           </li>

@@ -1,16 +1,19 @@
 from django.db.models import BooleanField, When, Case
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import generic
+from django.views import generic, View
+from django.views.generic import CreateView, FormView
 from rest_framework.generics import ListAPIView
 
 from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
-from apps.provider.models import Provider
+from apps.provider.models import Provider, ProviderLink, VerificationDocuments
 from apps.provider.serializers import CategoryListSerializer
 from apps.tender.models import Category, Country, Region, City
 from apps.user_cabinet.models import Contacts
 from apps.user_cabinet.models import ViewsCountProfile, OpenNumberCount
 from .forms import PriceFilesForm
+from ..pages.models import TelegramBotToken
+from ..services.send_telegram_message import send_telegram_message
 from ..services.tarif_checker import check_user_status_and_open_number
 
 
@@ -112,7 +115,7 @@ class ProviderListView(generic.ListView):
 
 class ProviderCategoryListView(ProviderListView):
     def get_queryset(self):
-        queryset = Provider.objects.filter(is_modered=True, is_provider=True, category=self.kwargs['pk'])
+        queryset = Provider.objects.filter(is_active=True, is_provider=True, category=self.kwargs['pk'])
         order = self.request.GET.get("order")
         if order:
             queryset = queryset.order_by(order, "-id")
@@ -161,8 +164,8 @@ class ProviderDetailView(generic.DetailView):
         context["companies"] = Provider.objects.exclude(id=self.object.id).filter(
             is_provider=True, is_modered=True, is_active=True
         )
-        context["documents"] = self.object.documents.all()
-        context["links"] = self.object.links.all()
+        context["documents"] = self.object.documents.filter(verified=True)
+        context["links"] = self.object.links.filter(verified=True)
 
         if self.request.GET.get("open"):
             open_status = check_user_status_and_open_number(self.request)
@@ -209,3 +212,63 @@ def upload_file(request):
         "provider": Provider.objects.get(user=request.user),
     }
     return render(request, "cabinet/provider_profile.html", context)
+
+
+class DocumentCreateView(View):
+    def get(self, request):
+        context = {
+            'documents': VerificationDocuments.objects.filter(provider=request.user.provider),
+        }
+        return render(request, 'cabinet/documents.html', context=context)
+
+    def post(self, request):
+        files = request.FILES.getlist('documents')
+        for file in files:
+            VerificationDocuments.objects.create(document=file, provider=request.user.provider)
+
+        message = f'Пользователь {request.user} отправил документы для проверки.'
+
+        token = TelegramBotToken.objects.first()
+        for chat in (chat.strip() for chat in token.report_channels.split(',')):
+            send_telegram_message(token.bot_token, chat, message)
+
+        return redirect('documents')
+
+
+class DocumentDeleteView(View):
+    def post(self, request, pk):
+        document = get_object_or_404(VerificationDocuments, pk=pk)
+        document.delete()
+        return redirect('documents')
+
+class AddLinkView(View):
+    template_name = 'cabinet/provider_profile.html'
+
+    def get(self, request):
+        # Отображение пустой формы при GET запросе
+        return render(request, self.template_name)
+
+    def post(self, request):
+        # Получение списков данных для каждого поля
+        names = request.POST.getlist('name')
+        links = request.POST.getlist('link')
+
+        # Проверка количества элементов в обоих списках
+        if len(names) == len(links):
+            # Удаление всех предыдущих ссылок пользователя
+            ProviderLink.objects.filter(provider=request.user.provider).delete()
+
+            # Создание новых объектов ProviderLink
+            for name, link in zip(names, links):
+                if name.strip() and link.strip():  # Сохранение только непустых значений
+                    ProviderLink.objects.create(name=name, link=link, provider=request.user.provider)
+
+            # Перенаправление на профиль пользователя после сохранения
+            return redirect('view_profile')
+        else:
+            # Обработка ошибки, если списки имеют разное количество элементов
+            return render(request, self.template_name, {
+                'error': 'Количество названий и ссылок не совпадает.'
+            })
+
+        return redirect('view_profile')

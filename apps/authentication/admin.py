@@ -10,7 +10,7 @@ from apps.authentication.models import User
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ('id', 'email', 'first_name', 'last_name', 'register_date', 'auth_provider', 'is_staff', 'is_active', 'is_confirm')
+    list_display = ('id', 'email', 'first_name', 'last_name', 'register_date', 'is_staff', 'is_active', 'is_confirm')
     search_fields = ('email', 'first_name', 'last_name', )
     list_filter = ('is_staff', 'is_active', 'is_confirm', )
 

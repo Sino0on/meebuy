@@ -40,13 +40,12 @@
         </p>
         <form action="{% url 'create_category' %}" id="add_category" method="post">
             {% csrf_token %}
-            <label for=""></label
-                >
-            <select name="parent" id="">
-                <option value="">-----------</option>
+            <label for=""></label>
+            <select name="parent" style="padding: 5px; box-shadow: 0 0 1px #0f0f0f" id="">
+                <option value="">----------- ↴</option>
                 {% for category, level in category_tree %}
 
-                <option value="{{ category.id }}">{% nesting_level level %}{{ category.name }}</option>
+                <option style="padding: 5px" value="{{ category.id }}">{% nesting_level level %}{{ category.name }}</option>
                 {% endfor %}
             </select>
             <br />
@@ -62,8 +61,7 @@
                 </label>
                 <button
                     form="add_category"
-                    class="text-[#2B292C] bg-[#E4DB00] rounded-[7px] py-4 text-[16px] font-medium font-mulish uppercase"
-                    >
+                    class="text-[#2B292C] bg-[#E4DB00] rounded-[7px] py-4 text-[16px] font-medium font-mulish uppercase">
                 запрос на добавление категории
                 </button>
             </div>

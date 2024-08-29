@@ -58,7 +58,10 @@ from apps.provider.views import (
     ProviderDetailView,
     CategoryListView,
     ProviderCategoryListView,
-    upload_file
+    upload_file,
+    DocumentCreateView,
+    AddLinkView,
+    DocumentDeleteView
 )
 # Tender views
 from apps.tender.views import (
@@ -112,7 +115,8 @@ from apps.user_cabinet.views import (
     delete_transaction,
     init_payment,
     freedompay_success,
-    UppingListView
+    UppingListView,
+    DocumentsView,
 )
 
 urlpatterns = [
@@ -184,6 +188,11 @@ urlpatterns = [
     path('profile/create/cabinet/', cabinet_create),
     path('profile/', UserDetailView.as_view(), name='view_profile'),
     path('profile/settings/', UserSettingsView.as_view(), name='settings'),
+    path('profile/documents/', DocumentsView.as_view(), name='documents'),
+    path('profile/documents/create/', DocumentCreateView.as_view(), name='document_create'),
+    path('profile/documents/delete/<int:pk>', DocumentDeleteView.as_view(), name='document_delete'),
+    path('profile/add/link/', AddLinkView.as_view(), name='add_link'),
+
     path('profile/anketa/', UserAnketaView.as_view(), name='anketa'),
     path('profile/anketa/buyer/', UserAnketaBuyerView.as_view(), name='anketa_buyer'),
     path('profile/balance/', BalanceView.as_view(), name='balance'),

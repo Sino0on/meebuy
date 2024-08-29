@@ -64,15 +64,18 @@ class LoginView(FormView):
             print(request.POST)
             register_form = UserRegistrationForm(request.POST)
             if register_form.is_valid():
-                user = register_form.save(commit=False)
+                user = register_form.save(commit=True)
                 code = self.request.POST.get('country_code')
                 phone = self.request.POST.get('phone')
                 user.phone = str(code) + str(phone)
+                Provider.objects.create(user=user)
                 if self.request.POST.get('user-role') == 'provider':
-                    user.is_provider = True
+                    print(self.request.POST.get('user-role'))
+                    user.provider.is_provider = True
                 else:
-                    user.is_provider = False
-                user.save()
+                    user.provider.is_provider = False
+
+                user.provider.save()
                 Cabinet.objects.get_or_create(user=user)
                 current_site = get_current_site(request)
                 protocol = 'https' if request.is_secure() else 'http'
@@ -91,7 +94,7 @@ class LoginView(FormView):
                 authenticated_user = authenticate(email=user.email, password=register_form.clean_password2())
                 if authenticated_user is not None:
                     auth_login(self.request, authenticated_user)
-                    if user.is_provider == False:
+                    if user.provider.is_provider == False:
                         return redirect(reverse_lazy('buyer_step'))
 
                     return redirect(reverse_lazy('home'))

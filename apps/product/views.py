@@ -25,6 +25,7 @@ from django.views.generic import (
 )
 from six import BytesIO
 
+from apps.pages.models import TelegramBotToken
 from apps.product.filters import ProductFilter
 from apps.product.forms import (
     ProductForm,
@@ -44,6 +45,7 @@ from apps.provider.models import (
     Provider,
     PriceFiles
 )
+from apps.services.send_telegram_message import send_telegram_message
 from apps.services.tarif_checker import check_user_status_and_open_number
 from apps.user_cabinet.models import Contacts, OpenNumberCount
 
@@ -412,6 +414,13 @@ class AddNewCategoryRequestView(CreateView):
 
     def form_valid(self, form):
         print(form)
+        message = f"Запрос на добавление категории от пользователя {self.request.user}:\n"
+        message += f"Название новой категории: {form.cleaned_data['new_category_name']}\n"
+        if form.cleaned_data['parent']:
+            message += f"Родительская категория: {form.cleaned_data['parent']}\n"
+        token = TelegramBotToken.objects.first()
+        for chat in (chat.strip() for chat in token.report_channels.split(',')):
+            send_telegram_message(token.bot_token, chat, message)
 
         return super().form_valid(form)
 

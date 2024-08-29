@@ -138,12 +138,11 @@ const recommendedSlider = new Swiper('.recommended__slider', {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
-  breakpoints: {
-    992: {
+
       slidesPerView: 2,
       spaceBetween: 30,
-    },
-  },
+
+
 });
 
 const newSlide = new Swiper('.new__slider', {
