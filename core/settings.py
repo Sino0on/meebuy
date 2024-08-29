@@ -125,7 +125,7 @@ DATABASES = {
     }
 }
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
+STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 
 # DATABASES = {
 #     'default': {
@@ -133,7 +133,7 @@ DATABASES = {
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
 
 
 # Static files (CSS, JavaScript, Images)
