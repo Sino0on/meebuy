@@ -87,6 +87,7 @@ def create_chat(request, pk):
                             messages.error(request, f'Вы не можете создать более {request.user.cabinet.user_status.status.active_statues.status.dayly_message} чатов за сегодня.')
                             return redirect(request.META.get('HTTP_REFERER'))
             except Exception as e:
+                print(e)
                 messages.error(request, str(e))
                 return redirect(request.META.get('HTTP_REFERER'))
         else:

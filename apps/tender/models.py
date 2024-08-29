@@ -108,6 +108,23 @@ class Tender(StatusMixin, models.Model):
         blank=True,
         null=True
     )
+
+    def generate_sales_locations(self):
+        # Создание списка для вывода, основанного на значениях в self.tender_data
+        tender_descriptions = {
+            'retail_store': 'Розничный магазин',
+            'marketplaces': 'Маркетплейсы',
+            'online_store': 'Интернет-магазин',
+            'social_networks': 'Соцсети, доски объявлений',
+            'wholesale_resale': 'Оптовая перепродажа',
+            'group_purchases': 'Совместные покупки',
+            'own_consumption': 'Для собственного потребления'
+        }
+
+        # Фильтрация и создание словаря активных тендеров на основе self.tender_data
+        active_tenders = {key: value for key, value in tender_descriptions.items() if self.tender_data.get(key)}
+
+        return active_tenders
     def __str__(self):
         return f"{self.title}"
 

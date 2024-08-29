@@ -208,6 +208,8 @@
 
 
 
+
+
                                                     {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                             alt=""/>
                                     <div class="flex flex-col gap-6">
@@ -215,7 +217,7 @@
                                             <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
                                                 {{ provider.title }}
                                             </h6>
-                                            <p>{% if provider.mini_descr %}{{ provider.mini_descr }}{% endif %}</p>
+                                            <p style="word-break: break-word">{% if provider.mini_descr %}{{ provider.mini_descr }}{% endif %}</p>
                                         </div>
                                         <div class="flex gap-4">
                                             <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
@@ -243,16 +245,70 @@
                                     <li></li>
                                     {% if provider.is_modered %}
                                         <li>
+                                            <img style="color: #0a58ca"
+                                                 src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                 title="Поставщик прошел можерацию"
+                                                 alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.pickup %}
+                                        <li>
                                             <img
-                                                    src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                    style="max-width: 24px; max-height: 24px"
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/user.svg' %}"
+                                                    title="Самовывоз"
+
+                                                    alt=""/>
+
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.transport_company %}
+                                        <li>
+                                            <img                                                     style="max-width: 24px; max-height: 24px"
+
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/company.svg' %}"
+                                                                                                        title="Доставка транспортной компанией"
+
                                                     alt=""/>
                                         </li>
                                     {% endif %}
-
-                                    {% if provider.type == 'services' %}
+                                    {% if provider.by_car %}
                                         <li>
-                                            <img
+                                            <img                                                     style="max-width: 24px; max-height: 24px"
+
                                                     src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                                                                                        title="Доставка автотранспортом"
+
+                                                    alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.air_transport %}
+                                        <li>
+                                            <img                                                     style="max-width: 24px; max-height: 24px"
+
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/airplane.svg' %}"
+                                                                                                        title="Доставка самолетом"
+
+                                                    alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.rail_transport %}
+                                        <li>
+                                            <img                                                    style="max-width: 24px; max-height: 24px"
+
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/train.svg' %}"
+                                                                                                        title="Железнодорожная доставка"
+
+                                                    alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.courier %}
+                                        <li>
+                                            <img                                                    style="max-width: 24px; max-height: 24px"
+
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/delivery_cart.svg' %}"
+                                                                                                        title="Доставка курьером"
+
                                                     alt=""/>
                                         </li>
                                     {% endif %}
@@ -270,7 +326,9 @@
                                 >
                                     <img class="w-[100px] h-[100px]"
                                          src="
-                                               {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+
+
+                                                 {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                          alt=""/>
                                     <div class="flex flex-col gap-6">
                                         <div>
@@ -340,6 +398,8 @@
 
 
 
+
+
                                                     {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                             alt=""/>
                                     <div class="flex flex-col gap-6">
@@ -402,6 +462,8 @@
                                     <img
                                             class="w-[100px] h-[100px]"
                                             src="
+
+
 
 
 

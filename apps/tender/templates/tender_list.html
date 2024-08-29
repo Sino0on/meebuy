@@ -458,7 +458,7 @@
                         >
                             {{ tender.title }}
                         </h6>
-                        <div class="flex flex-col gap-2 font-light">
+                        <div class="flex flex-row flex-wrap  gap-2 font-light">
                             <div class="flex items-center gap-3">
                                 <p class="text-[#686868] text-[16px] font-mulish font-normal">
                                     Количество:
@@ -471,9 +471,7 @@
                                 <p class="text-[#686868] text-[16px] font-mulish font-normal">
                                     Бюджет:
                                 </p>
-                                <span class="text-[#2B292C] text-[16px] font-normal"
-                                >{{ tender.price }}</span
-                                >
+                                <span class="text-[#2B292C] text-[16px] font-normal">{{ tender.price }}</span>
                             </div>
                             <div class="flex items-center gap-3">
                                 <p class="text-[#686868] text-[16px] font-mulish font-normal">
@@ -483,6 +481,55 @@
                                 >мелкий опт</span
                                 >
                             </div>
+                            <div class="flex items-center gap-3">
+                                <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                    Место реализации:
+                                </p>
+                                <span class="text-[#2B292C] text-[16px] font-normal">
+                                    {% if tender.retail_store %}
+                                    	Розничный магазин,
+                                    {% endif %}
+                                    {% if tender.marketplaces %}
+                                    	Маркетплейсы,
+                                    {% endif %}
+                                    {% if tender.online_store %}
+                                    	Интернет-магазин,
+                                    {% endif %}
+                                    {% if tender.social_networks %}
+                                    	Соцсети/доски объявлений,
+                                    {% endif %}
+                                    {% if tender.wholesale_resale %}
+                                    	Оптовая перепродажа,
+                                    {% endif %}
+                                    {% if tender.group_purchases %}
+                                    	Совместные покупки,
+                                    {% endif %}
+                                    {% if tender.group_purchases %}
+                                    	Для собственного потребления
+                                    {% endif %}
+{#                                    {% if not tender.group_purchases and not tender.group_purchases and not tender.group_purchases %}#}
+{#                                    	Для собственного потребления#}
+{#                                    {% endif %}#}
+                                </span>
+                            </div>
+                                                    <div class="flex items-center gap-3">
+                                <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                    Необходимые товары
+:
+                                </p>
+                                <span class="text-[#2B292C] text-[16px] font-normal"
+                                >{{ tender.requirements }}</span>
+
+                            </div>
+                                                    <div class="flex items-center gap-3">
+                                <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                    {{ tender.description }}
+                                </p>
+
+                            </div>
+
+
+
                         </div>
                         <a href="/tender/detail/{{ tender.id }}/"
                            class="bg-[#E4DB00] text-[16px] font-normal rounded-lg py-3 px-6"

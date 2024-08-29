@@ -19,3 +19,6 @@ def filename(value):
 def get_static_pages():
     pages = StaticPage.objects.filter(name__isnull=False)
     return pages
+
+
+

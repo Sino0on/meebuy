@@ -37,8 +37,7 @@ class TenderAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'requirements', 'place_of_sale']
     autocomplete_fields = ['category', 'city', 'user']
     date_hierarchy = 'created_at'
-    fields = ('title', 'description', 'price', 'quantity', 'category', 'city', 'user', 'requirements', 'created_at',
-              'updated_at', 'end_date', 'place_of_sale', 'is_phone')
+
     readonly_fields = ('created_at', 'updated_at')
     inlines = [TenderImgInline]
 

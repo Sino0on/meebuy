@@ -185,12 +185,19 @@
                   <div class="flex flex-col items-start gap-10 font-mulish">
                     <p class="text-[#4D4D4D] text-[18px] font-normal">
                       Для прохождения верификации пришлите сканы/фото документов
-                      о регистрации компании, указанной в реквизитах вашей
-                      анкеты, на адрес ver@optlist.ru
+                      о регистрации компани
+                            {% if provider.is_provider %}
+                                <a href="
+                                        {% url 'documents' %}">
+                                    <button class="mt-[26px] btn-filled-yellow w-full uppercase py-[8px]">
+                                        Мои документы
+                                    </button>
+                                </a>
+                            {% endif %}
                     </p>
                     <p class="text-[#4D4D4D] text-[18px] font-normal">
-                      Письмо должно быть с темой «Верификация», отправлено с
-                      вашего адреса example@gmail.com.
+{#                      Письмо должно быть с темой «Верификация», отправлено с#}
+{#                      вашего адреса example@gmail.com.#}
                     </p>
                   </div>
                 </div>
