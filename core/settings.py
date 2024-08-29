@@ -318,14 +318,7 @@ SIMPLEUI_CONFIG = {
                     'url': '/admin/user_cabinet/cabinet/'
                 },
                 {
-                    'name': 'Configurations',
-                    'models': [
-                        {
-                            'name': 'Категории Поставщиков',
-                            'icon': 'fa fa-columns',
-                            'url': '/admin/product/productcategory/'
-                        },
-                    ]
+
                 },
             ]
         },
@@ -333,6 +326,11 @@ SIMPLEUI_CONFIG = {
             'name': 'Товары',
             'icon': 'fa fa-boxes',
             'models': [
+                {
+                    'name': 'Категории товаров',
+                    'icon': 'fa fa-columns',
+                    'url': '/admin/product/productcategory/'
+                },
                 {
                     'name': 'Товары',
                     'icon': 'fa fa-box',

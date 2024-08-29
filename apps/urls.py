@@ -32,7 +32,7 @@ from apps.chat.views import (
 from apps.pages.views import (
     privacy_policy_view,
     rules_view,
-    banner_view
+    banner_view, StaticPageView
 )
 # Product views
 from apps.product.views import (
@@ -243,4 +243,5 @@ urlpatterns = [
     path('delete-transaction/<int:transaction_id>/', delete_transaction, name='delete_transaction'),
     path('init_payment/', init_payment, name='init_payment'),
     path('freedompay/success/', freedompay_success, name='freedompay_success'),
+    path('static_page/<slug>/', StaticPageView.as_view(), name='staticpages'),
 ]

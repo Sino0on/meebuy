@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load custom_filters %}
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -397,48 +398,51 @@
                 <li><a href="{% url 'rules' %}">Правила</a></li>
                 <li><a href="{% url 'send_message' %}">Техподдержка</a></li>
             </ul>
+            <ul class="font-mulish flex flex-col gap-6 text-[18px]">
+                <li class="uppercase font-mulish font-extrabold">
+                    <h6 class="text-[#FFFFFC]">Страницы</h6>
+                </li>
+                {% get_static_pages as pages %}
+                    {% for obj in pages %}
+                        <li><a href="{% url 'staticpages' obj.slug %}">{{ obj.name }}</a></li>
+                    {% endfor %}
+            </ul>
         </div>
     </div>
 </footer>
 
 <div
         style="border-radius: 15px 15px 0 0"
-        class="sm:hidden flex justify-between items-center bg-[#FFFFFF] rounded-tr-2xl rounded-tl-2xl px-5 pb-3 pt-5 sticky z-50 bottom-0 w-full"
->
+        class="sm:hidden flex justify-between items-center bg-[#FFFFFF] rounded-tr-2xl rounded-tl-2xl px-5 pb-3 pt-5 sticky z-50 bottom-0 w-full">
     <a
             id="menu-home"
             class="menu-tab flex flex-col gap-[10px] items-center"
-            href="/"
-    >
+            href="/">
         <img
                 id="home-none-active"
                 style="display: block"
                 class="none-active-icon w-6 h-6"
                 src="{% static '/assets/images/icons/menu-mobile/home.svg' %}"
-                alt=""
-        />
+                alt=""/>
         <div id="home-active" class="active-icon" style="display: none">
             <svg
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-            >
+                    xmlns="http://www.w3.org/2000/svg">
                 <path
                         d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
                         fill="#2B292C"
                         stroke="#2B292C"
                         stroke-width="2"
                         stroke-linecap="round"
-                        stroke-linejoin="round"
-                ></path>
+                        stroke-linejoin="round"></path>
                 <path
                         d="M9 23V12H15V23"
                         stroke="#FFFFFC"
                         stroke-width="2"
-                        stroke-linejoin="round"
-                ></path>
+                        stroke-linejoin="round"></path>
             </svg>
         </div>
         <span class="text-[#4D4D4D] text-[12px] font-mulish">Главная</span>
@@ -446,8 +450,7 @@
     <a
             id="menu-messages"
             class="menu-tab flex flex-col gap-[10px] items-center"
-            href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}"
-    >
+            href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'login' %}{% endif %}">
         <img
                 id="messages-none-active"
                 class="none-active-icon w-6 h-6"
@@ -490,8 +493,7 @@
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-            >
+                    xmlns="http://www.w3.org/2000/svg">
                 <path
                         d="M21 16.0019V8.00186C20.9996 7.65113 20.9071 7.30667 20.7315 7.00302C20.556 6.69937 20.3037 6.44722 20 6.27186L13 2.27186C12.696 2.09632 12.3511 2.00391 12 2.00391C11.6489 2.00391 11.304 2.09632 11 2.27186L4 6.27186C3.69626 6.44722 3.44398 6.69937 3.26846 7.00302C3.09294 7.30667 3.00036 7.65113 3 8.00186V16.0019C3.00036 16.3526 3.09294 16.697 3.26846 17.0007C3.44398 17.3043 3.69626 17.5565 4 17.7319L11 21.7319C11.304 21.9074 11.6489 21.9998 12 21.9998C12.3511 21.9998 12.696 21.9074 13 21.7319L20 17.7319C20.3037 17.5565 20.556 17.3043 20.7315 17.0007C20.9071 16.697 20.9996 16.3526 21 16.0019Z"
                         fill="#2B292C"

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views import View
 
 from .models import StaticPage
 
@@ -34,3 +35,10 @@ def banner_view(request):
         return render(request, 'staticpages/banner.html', {'banner': banner})
     else:
         return render(request, 'staticpages/banner.html', {'banner': banner})
+
+
+class StaticPageView(View):
+    def get(self, request, slug):
+        print(1231312321)
+        page = StaticPage.objects.get(slug=slug)
+        return render(request, 'staticpages/static_page.html', {'page': page})

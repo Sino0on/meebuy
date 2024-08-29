@@ -1,24 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Баннера{% endblock %}
+{% block title %}{{ page.title }}{% endblock %}
 
 {% block content %}
     <div class="container mt-10 mb-20">
         <div class="flex flex-col w-full gap-10">
             <h1 class="text-[#2B292C] sm:text-[36px] text-[20px] font-black text-center uppercase">
-                Баннера
+                {{ page.title }}
             </h1>
-            <div class="shadow-card-shadow bg-[#FFFFFF] flex flex-col gap-5 sm:p-10 p-4 rounded-2xl md:w-[70%] mx-auto">
+            <div class="shadow-card-shadow bg-[#FFFFFF] flex flex-col gap-10 sm:p-10 p-4 rounded-2xl md:w-[70%] mx-auto">
                 <div class="flex items-center gap-[15px]">
-                    <span class="font-semibold text-[#2B292C]">Баннера Meebuy</span>
+                    <a href="{% url 'home' %}"><img src="{% static 'assets/images/icons/prev-arrow.svg' %}" alt=""/></a>
+                    <span class="font-semibold text-[#2B292C]">На главную</span>
                 </div>
                 <hr class="h-[2px] bg-[#A0A0A0] w-full"/>
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col gap-4">
-                        <h1 class="text-[#2B292C] text-[18px] font-semibold">{{ banner.title }}</h1>
+                        <h1 class="text-[#2B292C] text-[18px] font-semibold">{{ page.title }}</h1>
                     </div>
                     <div class="flex flex-col gap-4">
-                        <h6 class="text-[#2B292C] text-[18px] font-semibold">{{ banner.description|safe }}</h6>
+                        <h6 class="text-[#2B292C] text-[18px] font-semibold">{{ page.description|safe }}</h6>
                     </div>
                 </div>
             </div>

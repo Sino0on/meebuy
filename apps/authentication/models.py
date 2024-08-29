@@ -71,6 +71,7 @@ class User(StatusMixin, AbstractUser):
     )
     user_type = models.CharField(max_length=20, verbose_name=_("Тип пользователя"))
     register_date = models.DateField(auto_now_add=True, blank=True, null=True, verbose_name="Дата регистрации")
+    login_before = models.BooleanField(default=False, verbose_name="Последняя авторизация")
 
 
     objects = UserManager()

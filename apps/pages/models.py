@@ -7,8 +7,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 class StaticPage(models.Model):
-    title = models.CharField(max_length=255, verbose_name=_("Заголовок"))
-    description = RichTextField(verbose_name=_("Описание"))
+    name = models.CharField(max_length=255, verbose_name=_("Название"), blank=True, null=True)
+    title = models.CharField(max_length=255, verbose_name=_("Заголовок"), blank=True, null=True)
+    description = RichTextField(verbose_name=_("Описание"), blank=True, null=True)
     slug = models.SlugField(unique=True, verbose_name=_("Слоган"), blank=True, null=True)
 
     class Meta:
