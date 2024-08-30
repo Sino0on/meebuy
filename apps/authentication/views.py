@@ -308,8 +308,18 @@ def register_v2(request):
                 [user.email],
                 fail_silently=False,
             )
+            print(request.POST.get('user-type'))
+            if request.POST.get('user-type') == 'provider':
+                provider, _ = Provider.objects.get_or_create(user=user)
+                provider.is_provider = True
+                provider.save()
 
-            return redirect('login')  # Перенаправление на страницу входа
+            else:
+                provider, _ = Provider.objects.get_or_create(user=user)
+                provider.is_provider = False
+                provider.save()
+            return redirect('authentication')
+
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})

@@ -228,7 +228,7 @@ from django.contrib.auth.forms import UserCreationForm
 class CustomUserCreationForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'email', 'phone']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
