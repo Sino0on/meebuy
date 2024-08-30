@@ -115,7 +115,10 @@
                                          alt="">
                                     <div class="slide__content flex flex-col justify-between h-full">
                                         <div>
-                                            <span class="text-logo-color sm:text-lg">{{ i.terms_of_sale }}</span>
+                                            <span class="text-logo-color sm:text-lg">
+                                                {% if i.terms_of_sale %}
+                                            	{{ i.terms_of_sale }}
+                                            {% endif %} </span>
                                             <h2 class="uppercase text-base font-black sm:text-3xl">{{ i.title }}</h2>
                                         </div>
                                         <a href="/product/detail/{{ i.pk }}/"
