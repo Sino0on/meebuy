@@ -100,7 +100,7 @@
         </div>
         <div class="flex items-center gap-3">
             <img src="{% static 'assets/images/icons/email.svg' %}" alt=""/>
-            <a type="email" href="mailto:{{ provider.email }}" class="text-[#A0A0A0] font-normal text-[16px]">
+            <a type="email" href="mailto:{% if user.is_authenticated %}{% if provider.email %}{{ provider.email }}{% else %}Email не указан{% endif %}{% else %}*****************{% endif %}" class="text-[#A0A0A0] font-normal text-[16px]">
                 {% if user.is_authenticated %}
                     {% if provider.email %}
                         {{ provider.email }}
@@ -114,9 +114,8 @@
         </div>
         <div class="flex items-center gap-3">
             <img src="{% static 'assets/images/icons/call.svg' %}" alt=""/>
-            <a type="phone" href="tel:{{ provider.phones }}" class="text-[#A0A0A0] font-normal text-[16px]">
+            <a type="phone" href="tel:{% if user.is_authenticated %}{% if provider.phones %}{{ provider.phones }}{% else %}Телефон не указан{% endif %}{% else %}*****************{% endif %}" class="text-[#A0A0A0] font-normal text-[16px]">
                 {% if user.is_authenticated %}
-
                     {% if provider.phones %}
                         {{ provider.phones }}
                     {% else %}
