@@ -117,8 +117,8 @@
                                         <div>
                                             <span class="text-logo-color sm:text-lg">
                                                 {% if i.terms_of_sale %}
-                                            	{{ i.terms_of_sale }}
-                                            {% endif %} </span>
+                                                    {{ i.terms_of_sale }}
+                                                {% endif %} </span>
                                             <h2 class="uppercase text-base font-black sm:text-3xl">{{ i.title }}</h2>
                                         </div>
                                         <a href="/product/detail/{{ i.pk }}/"
@@ -145,6 +145,7 @@
                                 <div class="new__slide relative p-4 lg-md:p-6">
                                     <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
                                          src="
+
 
                                                  {% if i.image %}{{ i.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %} {% endif %}"
                                          alt="">
@@ -202,6 +203,7 @@
                                 </div>
                                 <div class="w-[30%] h-[30%] rounded-[10px] overflow-hidden lg-md:w-[120px] lg-md:h-[120px]">
                                     <img class="w-full h-full object-cover" src="
+
 
                                             {% if i.image %}{{ i.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                          alt=""/>
@@ -266,7 +268,10 @@
                                 {{ i.title }}
                             </h6>
                             <ul class="text-[#686868] flex flex-col gap-4 lg-md:gap-5 mb-8 mt-6">
-                                <li>Количество: <span class="text-dark-logo"> От {{ i.quantity }} шт.</span></li>
+                                {% if i.quantity %}
+                                    <li>Количество: <span class="text-dark-logo"> От {{ i.quantity }} шт.</span></li>
+
+                                {% endif %}
                                 <li>Бюджет: <span class="text-dark-logo">{{ i.price }} {% if i.currency %}
                                     {{ i.currency }} {% endif %}</span></li>
                                 <!--                        <li>Объем: <span class="text-dark-logo">{{ i.type }}</span></li>-->
