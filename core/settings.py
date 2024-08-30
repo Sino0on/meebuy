@@ -317,9 +317,7 @@ SIMPLEUI_CONFIG = {
                     'icon': 'fa fa-envelopes-bulk',
                     'url': '/admin/user_cabinet/cabinet/'
                 },
-                {
 
-                },
             ]
         },
         {
