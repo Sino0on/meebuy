@@ -48,19 +48,13 @@ class Tender(StatusMixin, models.Model):
     title = models.CharField(max_length=123, verbose_name="Название")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     price = models.PositiveIntegerField(blank=True, default=0, null=True, verbose_name="Цена")
-    currency = models.CharField(
-        max_length=100, verbose_name="Валюта", blank=True, null=True
-    )
+    currency = models.CharField(max_length=100, verbose_name="Валюта", blank=True, null=True)
     quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name="Количество")
-    category = models.ForeignKey(
-        Category, on_delete=models.PROTECT, blank=True, null=True, verbose_name="Категория"
-    )
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True, verbose_name="Категория")
     city = models.ForeignKey(City, on_delete=models.PROTECT, blank=True, null=True, verbose_name="Город")
     phone = models.CharField(max_length=123, blank=True, null=True, verbose_name="Телефон")
     email = models.EmailField(blank=True, null=True, verbose_name="Электронная почта")
-    user = models.ForeignKey(
-        User, related_name="tenders", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Пользователь"
-    )
+    user = models.ForeignKey(User, related_name="tenders", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Пользователь")
     requirements = models.CharField(max_length=123, blank=True, null=True, verbose_name="Требования")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
@@ -71,13 +65,9 @@ class Tender(StatusMixin, models.Model):
     is_active = models.BooleanField(default=True, blank=True, null=True, verbose_name="Активен")
     # Payment Types
     cash = models.BooleanField(default=False, verbose_name="Наличными")
-    bank_transfer = models.BooleanField(
-        default=False, verbose_name="Безналичная оплата"
-    )
+    bank_transfer = models.BooleanField(default=False, verbose_name="Безналичная оплата")
     credit_card = models.BooleanField(default=False, verbose_name="Кредитные карты")
-    electronic_money = models.BooleanField(
-        default=False, verbose_name="Электронные деньги"
-    )
+    electronic_money = models.BooleanField(default=False, verbose_name="Электронные деньги")
     # Sales Locations
     retail_store = models.BooleanField(default=False, verbose_name=_("Розничный магазин"))
     marketplaces = models.BooleanField(default=False, verbose_name=_("Маркетплейсы"))
@@ -109,22 +99,6 @@ class Tender(StatusMixin, models.Model):
         null=True
     )
 
-    def generate_sales_locations(self):
-        # Создание списка для вывода, основанного на значениях в self.tender_data
-        tender_descriptions = {
-            'retail_store': 'Розничный магазин',
-            'marketplaces': 'Маркетплейсы',
-            'online_store': 'Интернет-магазин',
-            'social_networks': 'Соцсети, доски объявлений',
-            'wholesale_resale': 'Оптовая перепродажа',
-            'group_purchases': 'Совместные покупки',
-            'own_consumption': 'Для собственного потребления'
-        }
-
-        # Фильтрация и создание словаря активных тендеров на основе self.tender_data
-        active_tenders = {key: value for key, value in tender_descriptions.items() if self.tender_data.get(key)}
-
-        return active_tenders
     def __str__(self):
         return f"{self.title}"
 
@@ -135,9 +109,7 @@ class Tender(StatusMixin, models.Model):
 
 
 class TenderImg(models.Model):
-    tender = models.ForeignKey(
-        Tender, on_delete=models.CASCADE, related_name="tender_images", blank=True
-    )
+    tender = models.ForeignKey(Tender, on_delete=models.CASCADE, related_name="tender_images", blank=True)
     image = models.ImageField(upload_to="images/tenders/")
 
     def __str__(self):
@@ -149,9 +121,7 @@ class TenderImg(models.Model):
 
 
 class SearchRequest(models.Model):
-    user = models.ForeignKey(
-        User, related_name="search_requests", on_delete=models.CASCADE, null=True, blank=True,
-        verbose_name="Пользователь")
+    user = models.ForeignKey(User, related_name="search_requests", on_delete=models.CASCADE, null=True, blank=True, verbose_name="Пользователь")
     created_at = models.DateField(auto_now=True)
     name = models.TextField(verbose_name='Запрос', null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
