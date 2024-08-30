@@ -1,30 +1,107 @@
 {% load static %}
 <!-- under slider -->
+
+<div>
+    <ul class="flex gap-2 sm: absolute right-4">
+                                    {% if provider.is_recomended %}
+                                        <li>
+                                            <img
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                                    alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    <li></li>
+                                    {% if provider.is_modered %}
+                                        <li>
+                                            <img style="color: #0a58ca"
+                                                 src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                 title="Прошел модерацию"
+                                                 alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.pickup %}
+                                        <li>
+                                            <img
+                                                    style="max-width: 24px; max-height: 24px"
+                                                    src="{% static 'assets/images/suppliers/suppliers/icons/user.svg' %}"
+                                                    title="Самовывоз"
+
+                                                    alt=""/>
+
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.transport_company %}
+                                        <li>
+                                            <img style="max-width: 24px; max-height: 24px"
+
+                                                 src="{% static 'assets/images/suppliers/suppliers/icons/company.svg' %}"
+                                                 title="Доставка транспортной компанией"
+
+                                                 alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.by_car %}
+                                        <li>
+                                            <img style="max-width: 24px; max-height: 24px"
+
+                                                 src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                                 title="Доставка автотранспортом"
+
+                                                 alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.air_transport %}
+                                        <li>
+                                            <img style="max-width: 24px; max-height: 24px"
+
+                                                 src="{% static 'assets/images/suppliers/suppliers/icons/airplane.svg' %}"
+                                                 title="Доставка самолетом"
+
+                                                 alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.rail_transport %}
+                                        <li>
+                                            <img style="max-width: 24px; max-height: 24px"
+
+                                                 src="{% static 'assets/images/suppliers/suppliers/icons/train.svg' %}"
+                                                 title="Железнодорожная доставка"
+
+                                                 alt=""/>
+                                        </li>
+                                    {% endif %}
+                                    {% if provider.courier %}
+                                        <li>
+                                            <img style="max-width: 24px; max-height: 24px"
+
+                                                 src="{% static 'assets/images/suppliers/suppliers/icons/delivery_cart.svg' %}"
+                                                 title="Доставка курьером"
+
+                                                 alt=""/>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+</div>
 <div class="cards w-full flex flex-col gap-4 p-5 rounded-2xl">
+
         <div class="flex items-center gap-3">
             <img src="{% static 'assets/images/icons/location.svg' %}" alt=""/>
             <p class="text-[#A0A0A0] font-normal text-[16px]">
             {% if user.is_authenticated %}
-
-
                 {% if provider.city %}
                     {{ provider.city }}   {% if provider.address %}{{ provider.address }}{% endif %}
                 {% else %}
                     Адрес не указан
-
                 {% endif %}
-
             {% else %}
                 *****************
             {% endif %}
             </p>
         </div>
-
         <div class="flex items-center gap-3">
             <img src="{% static 'assets/images/icons/email.svg' %}" alt=""/>
             <a type="email" href="mailto:{{ provider.email }}" class="text-[#A0A0A0] font-normal text-[16px]">
                 {% if user.is_authenticated %}
-
                     {% if provider.email %}
                         {{ provider.email }}
                     {% else %}

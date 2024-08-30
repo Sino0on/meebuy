@@ -4,9 +4,9 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'pages/auth/auth.css' %}">
     <style>
-        .role-choose-block:hover{
-          background:black;
-            color:white;
+        .role-choose-block:hover {
+            background: black;
+            color: white;
         }
     </style>
 {% endblock %}
@@ -48,134 +48,138 @@
                 <div id="register-form"
                      style="position: relative"
                      class="overflow-hidden w-full mb-6">
-                <div id="regist-form-cover" style="display: flex; flex-direction: column; gap: 15px; z-index: 0;">
-                    
-                    <form class="flex flex-col gap-5" method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        <div class="flex flex-col gap-3 w-full">
-                            <label class="text-[18px] font-mulish">Ваш адрес электронной почты Email *</label>
-                            {{ register_form.email }}
-                            {% for error in register_form.email.errors %}
-                                <p style="color: red">{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                        <div id="name" class="input flex flex-col gap-3">
-                            <label for="">Ваше ФИО*</label>
-                            {{ register_form.first_name }}
-                            {% for error in register_form.first_name.errors %}
-                                <p style="color: red">{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                        <div id="number" class="input flex flex-col gap-3">
-                            <label for="">Ваш номер телефона*</label>
-                            {% for error in register_form.phone.errors %}
-                                <p style="color: red">{{ error }}</p>
-                            {% endfor %}
-                            <div class="form__item">
-                                <div class="flex items-center gap-4">
-                                    <div>
-                                        <select name="country_code" id="countryCode"
-                                                class="relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
-                                            {% for country in countries %}
-                                                <option data-countryCode="GB" value="{{ country.code }}"
-                                                        selected>{{ country.code }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="flex-grow">
-                                        <input placeholder="Номер" type="tel" name="phone" id="phoneNumber1"
-                                               class='relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'>
-                                    </div>
-                                </div>
-                            </div>
+                    <div id="regist-form-cover" style="display: flex; flex-direction: column; gap: 15px; z-index: 0;">
 
-                        </div>
-                        <div id="password" class="input flex lg-md:flex-row flex-col gap-2">
-                            <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
-
-                                <label for="">Придумайте пароль *</label>
-                                {% for error in register_form.password1.errors %}
+                        <form class="flex flex-col gap-5" method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="flex flex-col gap-3 w-full">
+                                <label class="text-[18px] font-mulish">Ваш адрес электронной почты Email *</label>
+                                {{ register_form.email }}
+                                {% for error in register_form.email.errors %}
                                     <p style="color: red">{{ error }}</p>
                                 {% endfor %}
-                                {{ register_form.password1 }}
-
-                                <div class="absolute right-3 top-12">
-                                    <img
-                                            class="show-password w-[24px] h-[24px]"
-                                            src="{% static 'assets/images/icons/password-close.svg' %}"
-                                            alt=""
-                                    />
-                                </div>
                             </div>
-                            <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
-
-                                <label for="">Подтвердите пароль *</label>
-                                {{ register_form.password2 }}
-                                {% for error in register_form.password2.errors %}
+                            <div id="name" class="input flex flex-col gap-3">
+                                <label for="">Ваше ФИО*</label>
+                                {{ register_form.first_name }}
+                                {% for error in register_form.first_name.errors %}
                                     <p style="color: red">{{ error }}</p>
                                 {% endfor %}
-                                <div class="absolute right-3 top-12">
-                                    <img
-                                            class="show-password w-[24px] h-[24px]"
-                                            src="{% static 'assets/images/icons/password-close.svg' %}"
-                                            alt=""
-                                    />
+                            </div>
+                            <div id="number" class="input flex flex-col gap-3">
+                                <label for="">Ваш номер телефона*</label>
+                                {% for error in register_form.phone.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+                                <div class="form__item">
+                                    <div class="flex items-center gap-4">
+                                        <div>
+                                            <select name="country_code" id="countryCode"
+                                                    class="relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
+                                                {% for country in countries %}
+                                                    <option data-countryCode="GB" value="{{ country.code }}"
+                                                            selected>{{ country.code }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="flex-grow">
+                                            <input placeholder="Номер" type="tel" name="phone" id="phoneNumber1"
+                                                   class='relative outline-none px-4  w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div id="password" class="input flex lg-md:flex-row flex-col gap-2">
+                                <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
+
+                                    <label for="">Придумайте пароль *</label>
+                                    {% for error in register_form.password1.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                    {{ register_form.password1 }}
+
+                                    <div class="absolute right-3 top-12">
+                                        <img
+                                                class="show-password w-[24px] h-[24px]"
+                                                src="{% static 'assets/images/icons/password-close.svg' %}"
+                                                alt=""
+                                        />
+                                    </div>
+                                </div>
+                                <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
+
+                                    <label for="">Подтвердите пароль *</label>
+                                    {{ register_form.password2 }}
+                                    {% for error in register_form.password2.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                    <div class="absolute right-3 top-12">
+                                        <img
+                                                class="show-password w-[24px] h-[24px]"
+                                                src="{% static 'assets/images/icons/password-close.svg' %}"
+                                                alt=""
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="confirm" class="input flex items-center gap-2">
-                            <input id="policy" name="policy" type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1"/>
-                            <label for="policy" class="text-[16px] font-normal font-mulish text-[#777777]">
-                                Я ознакомился и согласен с условиями
-                                <a class="underline decoration-1 text-[#777777]" href="{% url 'privacy_policy' %}">Политики</a>
-                            </label>
-                        </div>
+                            <div id="confirm" class="input flex items-center gap-2">
+                                <input id="policy" name="policy" type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1"/>
+                                <label for="policy" class="text-[16px] font-normal font-mulish text-[#777777]">
+                                    Я ознакомился и согласен с условиями
+                                    <a class="underline decoration-1 text-[#777777]" href="{% url 'privacy_policy' %}">Политики</a>
+                                </label>
+                            </div>
 
-                        <div id="user-role" class="input flex flex-row gap-4">
-                        <div class="" style=" display: flex;flex-direction: row; align-items: center; gap:10px">
-                            <input id="user-role-buyer" name="user-role" type="radio" value="buyer" class="w-[25px] h-[25px] lg-md:mr-1"/>
-                            <label for="user-role-buyer" class="text-[16px] font-normal font-mulish text-[#777777]">
-                                Я покупатель
-                            </label>
-                        </div>
-                        <div style=" display: flex;flex-direction: row; align-items: center; gap:10px">
-                            <input id="user-role-provider" name="user-role" type="radio" value="provider" class="w-[25px] h-[25px] lg-md:mr-1"/>
-                            <label for="user-role-provider" class="text-[16px] font-normal font-mulish text-[#777777]">
-                                Я продавец
-                            </label>
-                        </div>
-                        </div>
-                        <button
-                                id="register"
-                                class="text-[16px] font-medium font-mulish py-3 border border-[#2B292C] rounded-lg uppercase"
-                        >
-                            Зарегистрироваться
-                        </button>
-                    </form>
-                    <div class="flex flex-col items-center gap-5">
-                        <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
-                        <ul class="flex items-center gap-5 w-[323px] justify-center">
-                            <li class="cards -mt-[5px] rounded-[12px] p-2">
-                                {% load socialaccount %}
-                                <form action="/accounts/google/login/" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit"
-                                    ><img
-                                            src="{% static 'assets/images/icons/google.svg' %}"
-                                            alt="google"
-                                    /></button>
-                                </form>
+                            <div id="user-role" class="input flex flex-row gap-4">
+                                <div class="" style=" display: flex;flex-direction: row; align-items: center; gap:10px">
+                                    <input id="user-role-buyer" name="user-role" type="radio" value="buyer"
+                                           class="w-[25px] h-[25px] lg-md:mr-1"/>
+                                    <label for="user-role-buyer"
+                                           class="text-[16px] font-normal font-mulish text-[#777777]">
+                                        Я покупатель
+                                    </label>
+                                </div>
+                                <div style=" display: flex;flex-direction: row; align-items: center; gap:10px">
+                                    <input id="user-role-provider" name="user-role" type="radio" value="provider"
+                                           class="w-[25px] h-[25px] lg-md:mr-1"/>
+                                    <label for="user-role-provider"
+                                           class="text-[16px] font-normal font-mulish text-[#777777]">
+                                        Я продавец
+                                    </label>
+                                </div>
+                            </div>
+                            <button
+                                    id="register"
+                                    class="text-[16px] font-medium font-mulish py-3 border border-[#2B292C] rounded-lg uppercase"
+                            >
+                                Зарегистрироваться
+                            </button>
+                        </form>
+                        <div class="flex flex-col items-center gap-5">
+                            <p class="font-normal font-mulish">Или Вы можете войти через сервисы</p>
+                            <ul class="flex items-center gap-5 w-[323px] justify-center">
+                                <li class="cards -mt-[5px] rounded-[12px] p-2">
+                                    {% load socialaccount %}
+                                    <form action="/accounts/google/login/" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                        ><img
+                                                src="{% static 'assets/images/icons/google.svg' %}"
+                                                alt="google"
+                                        /></button>
+                                    </form>
 
-                            </li>
-                            <li class="cards -mt-[5px] rounded-[12px] py-2 px-3">
-                                <form action="{% url 'yandex_login' %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit">
-                                        <img src="{% static 'assets/images/icons/yandex.svg' %}" alt="yandex"/>
-                                    </button>
-                                </form>
-                            </li>
-                            <!-- <li class="cards rounded-[12px] p-2">
+                                </li>
+                                <li class="cards -mt-[5px] rounded-[12px] py-2 px-3">
+                                    <form action="{% url 'yandex_login' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit">
+                                            <img src="{% static 'assets/images/icons/yandex.svg' %}" alt="yandex"/>
+                                        </button>
+                                    </form>
+                                </li>
+                                <!-- <li class="cards rounded-[12px] p-2">
                   <form action="/accounts/mailru/login/" method="post">
                     {% csrf_token %}
                     <button type="submit"
@@ -201,136 +205,112 @@
                     </button>
                   </form>
                 </li> -->
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                <div id="choose-role" style="display: flex;flex-direction: row; align-items: center;position: absolute;top: 0;left: 0;
+                    <div id="choose-role" style="display: flex;flex-direction: row; align-items: center;position: absolute;top: 0;left: 0;
                  width: 100%;justify-content: center;height: 100%;background: #fff;">
 
 
-                      <div
-            class="w-full flex flex-col justify-center items-center text-center gap-6 overflow-y-auto h-full"
-    >
-        <div class="lg-md:flex hidden flex-col gap-2">
-            <h4 class="text-[#2B292C] uppercase text-[20px] font-black">
-                регистрация
-            </h4>
-            <div>
-                <p class="font-normal font-mulish text-[14px]">
-                    Чтобы зарегистрироваться, Вам необходимо выбрать одно из направлений
-                </p>
-                <p class="font-normal font-mulish text-[12px]">
-                    После регистрации Вы сможете публиковать свои объявления
-                </p>
-            </div>
-        </div>
-        <div class="flex flex-col gap-8 items-center justify-center mt-16">
-            <div id="role-provider"
-                    class="cards cardBox role-choose-block relative rounded-[15px] pt-12 pb-10 px-9 flex flex-col gap-5 items-center w-[320px]"
-            >
+                        <div
+                                class="w-full flex flex-col justify-center items-center text-center gap-6 overflow-y-auto h-full"
+                        >
+                            <div class="lg-md:flex hidden flex-col gap-2">
+                                <h4 class="text-[#2B292C] uppercase text-[20px] font-black">
+                                    регистрация
+                                </h4>
+                                {#            <div>#}
+                                {#                <p class="font-normal font-mulish text-[14px]">#}
+                                {#                    Чтобы зарегистрироваться, Вам необходимо выбрать одно из направлений#}
+                                {#                </p>#}
+                                {#                <p class="font-normal font-mulish text-[12px]">#}
+                                {#                    После регистрации Вы сможете публиковать свои объявления#}
+                                {#                </p>#}
+                                {#            </div>#}
+                            </div>
+                            <div class="flex flex-col gap-8 items-center justify-center mt-16">
+                                <div id="role-provider"
+                                     class="cards cardBox role-choose-block relative rounded-[15px] pt-12 pb-10 px-9 flex flex-col gap-5 items-center w-[320px]"
+                                >
 
-                <div class="cards absolute top-[-30px] bg-[#E4DB00] p-3 rounded-full">
-                    <svg
-                            id="svgBackground"
-                            fill="currentColor"
-                            width="35"
-                            height="32"
-                            viewBox="0 0 35 32"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                                d="M8.3319 5.74064e-06C8.11089 2.78275e-05 7.89893 0.0878343 7.74265 0.244113C7.58637 0.400393 7.49857 0.612346 7.49855 0.833358V3.33423H3.33422C3.11321 3.33425 2.90126 3.42206 2.74498 3.57834C2.5887 3.73462 2.50089 3.94657 2.50087 4.16758V7.49855H0.833353C0.373124 7.4986 4.60011e-05 7.87168 0 8.3319V26.6673C0 28.0379 1.13026 29.1682 2.50087 29.1682H3.4449C3.81834 30.5989 5.12224 31.6658 6.66519 31.6658C7.65876 31.6658 8.55336 31.2221 9.16607 30.5256C9.77876 31.2219 10.6736 31.6658 11.6669 31.6658C13.2099 31.6658 14.5155 30.5989 14.8897 29.1682H25.5263C25.9004 30.599 27.2069 31.6658 28.7499 31.6658C30.2928 31.6658 31.5993 30.599 31.9734 29.1682H34.1666C34.6269 29.1681 35 28.795 35 28.3348V16.6679C35.0006 16.4464 34.913 16.2338 34.7567 16.077L29.7557 11.0761C29.5989 10.9197 29.3864 10.8322 29.1649 10.8328H24.1672V9.99942C24.1672 8.62881 23.037 7.49855 21.6664 7.49855H20.8322V3.33423C20.8326 3.22464 20.8114 3.11604 20.7698 3.01466C20.7282 2.91328 20.667 2.8211 20.5897 2.7434L18.0888 0.242524C18.0111 0.16524 17.9189 0.104039 17.8175 0.0624244C17.7162 0.0208098 17.6076 -0.000400997 17.498 5.74064e-06H8.3319ZM9.16607 1.66671H17.1537L19.1655 3.67848V7.49855H17.498V5.83185C17.4981 5.72234 17.4766 5.61389 17.4347 5.5127C17.3929 5.4115 17.3315 5.31954 17.2541 5.24208C17.1768 5.16461 17.0849 5.10315 16.9837 5.06121C16.8825 5.01928 16.7741 4.99769 16.6646 4.99768H12.5003V4.16758C12.5003 3.94657 12.4125 3.73462 12.2562 3.57834C12.0999 3.42206 11.8879 3.33425 11.6669 3.33423H9.16607V1.66671ZM4.16432 4.99768H10.8328V7.49855H4.16432V4.99768ZM12.5003 6.6652H15.8345V7.49855H12.5003V6.6652ZM1.66671 9.16607H21.6664C22.1424 9.16607 22.4997 9.52335 22.4997 9.99942V27.5006H14.8897C14.5155 26.0692 13.2099 25.0006 11.6669 25.0006C10.6735 25.0006 9.77876 25.4452 9.16607 26.1424C8.55336 25.4449 7.65883 25.0006 6.66519 25.0006C5.12224 25.0006 3.81834 26.0692 3.4449 27.5006H2.50087C2.02478 27.5006 1.66671 27.1434 1.66671 26.6673V9.16607ZM24.1672 12.5003H28.8207L33.3325 17.0121V27.5006H31.9734C31.5993 26.0692 30.2928 25.0006 28.7499 25.0006C27.2069 25.0006 25.9004 26.0692 25.5263 27.5006H24.1672V12.5003ZM6.66519 26.6673C7.59556 26.6673 8.3319 27.4044 8.3319 28.3348C8.3319 29.2652 7.59556 29.9983 6.66519 29.9983C5.73483 29.9983 4.99767 29.2652 4.99767 28.3348C4.99767 27.4044 5.73483 26.6673 6.66519 26.6673ZM11.6669 26.6673C12.5973 26.6673 13.3336 27.4044 13.3336 28.3348C13.3336 29.2652 12.5973 29.9983 11.6669 29.9983C10.7366 29.9983 9.99942 29.2652 9.99942 28.3348C9.99942 27.4044 10.7366 26.6673 11.6669 26.6673ZM28.7499 26.6673C29.6802 26.6673 30.4174 27.4044 30.4174 28.3348C30.4174 29.2652 29.6802 29.9983 28.7499 29.9983C27.8195 29.9983 27.0823 29.2652 27.0823 28.3348C27.0823 27.4044 27.8195 26.6673 28.7499 26.6673Z"
-                                fill="currentColor"></path>
-                        <path
-                                d="M26.6695 14.168C26.56 14.168 26.4516 14.1895 26.3505 14.2314C26.2494 14.2733 26.1575 14.3347 26.0801 14.4121C26.0026 14.4895 25.9412 14.5814 25.8994 14.6825C25.8575 14.7836 25.8359 14.8921 25.8359 15.0015V19.9998C25.8359 20.1093 25.8575 20.2177 25.8994 20.3188C25.9412 20.42 26.0026 20.5119 26.08 20.5893C26.1575 20.6667 26.2493 20.728 26.3505 20.7699C26.4516 20.8118 26.56 20.8334 26.6695 20.8334H30.8342C30.9437 20.8334 31.0521 20.8118 31.1532 20.7699C31.2544 20.728 31.3463 20.6667 31.4237 20.5893C31.5011 20.5119 31.5625 20.42 31.6043 20.3188C31.6462 20.2177 31.6678 20.1093 31.6678 19.9998V17.9174C31.6681 17.8079 31.6468 17.6993 31.6051 17.598C31.5634 17.4967 31.5021 17.4045 31.4248 17.3269L28.5089 14.411C28.4312 14.3336 28.3391 14.2723 28.2378 14.2306C28.1364 14.1889 28.0279 14.1677 27.9183 14.168H26.6695ZM27.5031 15.8351H27.5738L30.0006 18.2619V19.1662H27.503L27.5031 15.8351Z"
-                                fill="currentColor"></path>
-                        <path
-                                d="M8.33356 12.5C8.11249 12.5 7.90047 12.5878 7.74414 12.7441C7.58782 12.9005 7.5 13.1125 7.5 13.3336C7.5 13.5546 7.58782 13.7666 7.74414 13.923C7.90047 14.0793 8.11249 14.1671 8.33356 14.1671H15.002C15.2231 14.1671 15.4351 14.0793 15.5914 13.923C15.7478 13.7666 15.8356 13.5546 15.8356 13.3336C15.8356 13.1125 15.7478 12.9005 15.5914 12.7441C15.4351 12.5878 15.2231 12.5 15.002 12.5H8.33356Z"
-                                fill="currentColor"></path>
-                        <path
-                                d="M11.6633 15.8334C11.5499 15.8268 11.4364 15.8435 11.3297 15.8823C11.223 15.9211 11.1254 15.9813 11.0428 16.0592C10.9602 16.1371 10.8944 16.2311 10.8494 16.3353C10.8044 16.4396 10.7812 16.5519 10.7812 16.6655C10.7812 16.779 10.8044 16.8913 10.8494 16.9956C10.8944 17.0998 10.9602 17.1938 11.0428 17.2717C11.1254 17.3496 11.223 17.4098 11.3297 17.4487C11.4364 17.4875 11.5499 17.5041 11.6633 17.4975H18.3286C18.442 17.5041 18.5555 17.4875 18.6622 17.4487C18.7689 17.4098 18.8665 17.3496 18.9491 17.2717C19.0317 17.1938 19.0975 17.0998 19.1425 16.9956C19.1875 16.8913 19.2107 16.779 19.2107 16.6655C19.2107 16.5519 19.1875 16.4396 19.1425 16.3353C19.0975 16.2311 19.0317 16.1371 18.9491 16.0592C18.8665 15.9813 18.7689 15.9211 18.6622 15.8823C18.5555 15.8435 18.442 15.8268 18.3286 15.8334H11.6633Z"
-                                fill="currentColor"></path>
-                        <path
-                                d="M6.66168 19.166C6.44061 19.166 6.22859 19.2538 6.07227 19.4102C5.91595 19.5665 5.82812 19.7785 5.82812 19.9996C5.82812 20.2206 5.91595 20.4327 6.07227 20.589C6.22859 20.7453 6.44061 20.8331 6.66168 20.8331H14.9973C15.2183 20.8331 15.4303 20.7453 15.5867 20.589C15.743 20.4327 15.8308 20.2206 15.8308 19.9996C15.8308 19.7785 15.743 19.5665 15.5867 19.4102C15.4303 19.2538 15.2183 19.166 14.9973 19.166H6.66168Z"
-                                fill="currentColor"></path>
-                        <path
-                                d="M9.99483 16.6654C9.99483 16.7748 9.97328 16.8832 9.9314 16.9843C9.88952 17.0854 9.82813 17.1773 9.75075 17.2547C9.67336 17.332 9.5815 17.3934 9.48039 17.4353C9.37928 17.4772 9.27092 17.4988 9.16148 17.4988C9.05204 17.4988 8.94367 17.4772 8.84257 17.4353C8.74146 17.3934 8.64959 17.332 8.57221 17.2547C8.49482 17.1773 8.43344 17.0854 8.39156 16.9843C8.34968 16.8832 8.32812 16.7748 8.32813 16.6654C8.32813 16.4444 8.41593 16.2324 8.57221 16.0761C8.7285 15.9198 8.94046 15.832 9.16148 15.832C9.38249 15.832 9.59446 15.9198 9.75074 16.0761C9.90703 16.2324 9.99483 16.4444 9.99483 16.6654Z"
-                                fill="currentColor"></path>
-                    </svg>
-                </div>
-                <h6 class="title_box font-bold uppercase text-[20px] font-mulish">
-                    поставщик
-                </h6>
-                <p class="border-b-4 border-[#E4DB00] w-[50px]"></p>
-                <p class="descBox text-[18px] font-mulish font-normal text-center">
-                    У Вас производство/поставка/логистика товаров
-                </p>
+                                    <div class="cards absolute top-[-30px] bg-[#E4DB00] p-3 rounded-full">
+                                        <svg
+                                                id="svgBackground"
+                                                fill="currentColor"
+                                                width="35"
+                                                height="32"
+                                                viewBox="0 0 35 32"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path d="M8.3319 5.74064e-06C8.11089 2.78275e-05 7.89893 0.0878343 7.74265 0.244113C7.58637 0.400393 7.49857 0.612346 7.49855 0.833358V3.33423H3.33422C3.11321 3.33425 2.90126 3.42206 2.74498 3.57834C2.5887 3.73462 2.50089 3.94657 2.50087 4.16758V7.49855H0.833353C0.373124 7.4986 4.60011e-05 7.87168 0 8.3319V26.6673C0 28.0379 1.13026 29.1682 2.50087 29.1682H3.4449C3.81834 30.5989 5.12224 31.6658 6.66519 31.6658C7.65876 31.6658 8.55336 31.2221 9.16607 30.5256C9.77876 31.2219 10.6736 31.6658 11.6669 31.6658C13.2099 31.6658 14.5155 30.5989 14.8897 29.1682H25.5263C25.9004 30.599 27.2069 31.6658 28.7499 31.6658C30.2928 31.6658 31.5993 30.599 31.9734 29.1682H34.1666C34.6269 29.1681 35 28.795 35 28.3348V16.6679C35.0006 16.4464 34.913 16.2338 34.7567 16.077L29.7557 11.0761C29.5989 10.9197 29.3864 10.8322 29.1649 10.8328H24.1672V9.99942C24.1672 8.62881 23.037 7.49855 21.6664 7.49855H20.8322V3.33423C20.8326 3.22464 20.8114 3.11604 20.7698 3.01466C20.7282 2.91328 20.667 2.8211 20.5897 2.7434L18.0888 0.242524C18.0111 0.16524 17.9189 0.104039 17.8175 0.0624244C17.7162 0.0208098 17.6076 -0.000400997 17.498 5.74064e-06H8.3319ZM9.16607 1.66671H17.1537L19.1655 3.67848V7.49855H17.498V5.83185C17.4981 5.72234 17.4766 5.61389 17.4347 5.5127C17.3929 5.4115 17.3315 5.31954 17.2541 5.24208C17.1768 5.16461 17.0849 5.10315 16.9837 5.06121C16.8825 5.01928 16.7741 4.99769 16.6646 4.99768H12.5003V4.16758C12.5003 3.94657 12.4125 3.73462 12.2562 3.57834C12.0999 3.42206 11.8879 3.33425 11.6669 3.33423H9.16607V1.66671ZM4.16432 4.99768H10.8328V7.49855H4.16432V4.99768ZM12.5003 6.6652H15.8345V7.49855H12.5003V6.6652ZM1.66671 9.16607H21.6664C22.1424 9.16607 22.4997 9.52335 22.4997 9.99942V27.5006H14.8897C14.5155 26.0692 13.2099 25.0006 11.6669 25.0006C10.6735 25.0006 9.77876 25.4452 9.16607 26.1424C8.55336 25.4449 7.65883 25.0006 6.66519 25.0006C5.12224 25.0006 3.81834 26.0692 3.4449 27.5006H2.50087C2.02478 27.5006 1.66671 27.1434 1.66671 26.6673V9.16607ZM24.1672 12.5003H28.8207L33.3325 17.0121V27.5006H31.9734C31.5993 26.0692 30.2928 25.0006 28.7499 25.0006C27.2069 25.0006 25.9004 26.0692 25.5263 27.5006H24.1672V12.5003ZM6.66519 26.6673C7.59556 26.6673 8.3319 27.4044 8.3319 28.3348C8.3319 29.2652 7.59556 29.9983 6.66519 29.9983C5.73483 29.9983 4.99767 29.2652 4.99767 28.3348C4.99767 27.4044 5.73483 26.6673 6.66519 26.6673ZM11.6669 26.6673C12.5973 26.6673 13.3336 27.4044 13.3336 28.3348C13.3336 29.2652 12.5973 29.9983 11.6669 29.9983C10.7366 29.9983 9.99942 29.2652 9.99942 28.3348C9.99942 27.4044 10.7366 26.6673 11.6669 26.6673ZM28.7499 26.6673C29.6802 26.6673 30.4174 27.4044 30.4174 28.3348C30.4174 29.2652 29.6802 29.9983 28.7499 29.9983C27.8195 29.9983 27.0823 29.2652 27.0823 28.3348C27.0823 27.4044 27.8195 26.6673 28.7499 26.6673Z" fill="currentColor"></path>
+                                            <path d="M26.6695 14.168C26.56 14.168 26.4516 14.1895 26.3505 14.2314C26.2494 14.2733 26.1575 14.3347 26.0801 14.4121C26.0026 14.4895 25.9412 14.5814 25.8994 14.6825C25.8575 14.7836 25.8359 14.8921 25.8359 15.0015V19.9998C25.8359 20.1093 25.8575 20.2177 25.8994 20.3188C25.9412 20.42 26.0026 20.5119 26.08 20.5893C26.1575 20.6667 26.2493 20.728 26.3505 20.7699C26.4516 20.8118 26.56 20.8334 26.6695 20.8334H30.8342C30.9437 20.8334 31.0521 20.8118 31.1532 20.7699C31.2544 20.728 31.3463 20.6667 31.4237 20.5893C31.5011 20.5119 31.5625 20.42 31.6043 20.3188C31.6462 20.2177 31.6678 20.1093 31.6678 19.9998V17.9174C31.6681 17.8079 31.6468 17.6993 31.6051 17.598C31.5634 17.4967 31.5021 17.4045 31.4248 17.3269L28.5089 14.411C28.4312 14.3336 28.3391 14.2723 28.2378 14.2306C28.1364 14.1889 28.0279 14.1677 27.9183 14.168H26.6695ZM27.5031 15.8351H27.5738L30.0006 18.2619V19.1662H27.503L27.5031 15.8351Z" fill="currentColor"></path>
+                                            <path d="M8.33356 12.5C8.11249 12.5 7.90047 12.5878 7.74414 12.7441C7.58782 12.9005 7.5 13.1125 7.5 13.3336C7.5 13.5546 7.58782 13.7666 7.74414 13.923C7.90047 14.0793 8.11249 14.1671 8.33356 14.1671H15.002C15.2231 14.1671 15.4351 14.0793 15.5914 13.923C15.7478 13.7666 15.8356 13.5546 15.8356 13.3336C15.8356 13.1125 15.7478 12.9005 15.5914 12.7441C15.4351 12.5878 15.2231 12.5 15.002 12.5H8.33356Z" fill="currentColor"></path>
+                                            <path d="M11.6633 15.8334C11.5499 15.8268 11.4364 15.8435 11.3297 15.8823C11.223 15.9211 11.1254 15.9813 11.0428 16.0592C10.9602 16.1371 10.8944 16.2311 10.8494 16.3353C10.8044 16.4396 10.7812 16.5519 10.7812 16.6655C10.7812 16.779 10.8044 16.8913 10.8494 16.9956C10.8944 17.0998 10.9602 17.1938 11.0428 17.2717C11.1254 17.3496 11.223 17.4098 11.3297 17.4487C11.4364 17.4875 11.5499 17.5041 11.6633 17.4975H18.3286C18.442 17.5041 18.5555 17.4875 18.6622 17.4487C18.7689 17.4098 18.8665 17.3496 18.9491 17.2717C19.0317 17.1938 19.0975 17.0998 19.1425 16.9956C19.1875 16.8913 19.2107 16.779 19.2107 16.6655C19.2107 16.5519 19.1875 16.4396 19.1425 16.3353C19.0975 16.2311 19.0317 16.1371 18.9491 16.0592C18.8665 15.9813 18.7689 15.9211 18.6622 15.8823C18.5555 15.8435 18.442 15.8268 18.3286 15.8334H11.6633Z" fill="currentColor"></path>
+                                            <path d="M6.66168 19.166C6.44061 19.166 6.22859 19.2538 6.07227 19.4102C5.91595 19.5665 5.82812 19.7785 5.82812 19.9996C5.82812 20.2206 5.91595 20.4327 6.07227 20.589C6.22859 20.7453 6.44061 20.8331 6.66168 20.8331H14.9973C15.2183 20.8331 15.4303 20.7453 15.5867 20.589C15.743 20.4327 15.8308 20.2206 15.8308 19.9996C15.8308 19.7785 15.743 19.5665 15.5867 19.4102C15.4303 19.2538 15.2183 19.166 14.9973 19.166H6.66168Z" fill="currentColor"></path>
+                                            <path d="M9.99483 16.6654C9.99483 16.7748 9.97328 16.8832 9.9314 16.9843C9.88952 17.0854 9.82813 17.1773 9.75075 17.2547C9.67336 17.332 9.5815 17.3934 9.48039 17.4353C9.37928 17.4772 9.27092 17.4988 9.16148 17.4988C9.05204 17.4988 8.94367 17.4772 8.84257 17.4353C8.74146 17.3934 8.64959 17.332 8.57221 17.2547C8.49482 17.1773 8.43344 17.0854 8.39156 16.9843C8.34968 16.8832 8.32812 16.7748 8.32813 16.6654C8.32813 16.4444 8.41593 16.2324 8.57221 16.0761C8.7285 15.9198 8.94046 15.832 9.16148 15.832C9.38249 15.832 9.59446 15.9198 9.75074 16.0761C9.90703 16.2324 9.99483 16.4444 9.99483 16.6654Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                    <h6 class="title_box font-bold uppercase text-[20px] font-mulish">
+                                        поставщик
+                                    </h6>
+                                    <p class="border-b-4 border-[#E4DB00] w-[50px]"></p>
+                                    <p class="descBox text-[18px] font-mulish font-normal text-center">
+                                        У Вас производство/поставка/логистика товаров
+                                    </p>
 
-                    <input type="hidden" value="provider" name="user_type">
-                    <button class="text-[#2B292C] bg-[#E4DB00] font-medium px-8 py-4 rounded-[7px] uppercase">
-                        я поставщик
-                    </button>
-
-            </div>
-            <div id="role-buyer"
-                    class="cards cardBox role-choose-block relative rounded-[15px] pt-12 pb-10 px-9 flex flex-col gap-5 items-center w-[320px]"
-            >
-                <div
-                        class="cards absolute top-[-30px] bg-[#E4DB00] py-[15px] pl-[11px] pr-[15px] rounded-full"
-                >
-                    <svg
-                            width="35"
-                            height="29"
-                            viewBox="0 0 35 29"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M0.845089 0.000111446C-0.281696 -0.0158239 -0.281696 1.68249 0.845089 1.66656H4.40988C5.10359 1.66656 5.43338 1.82589 5.62717 1.99041C5.82096 2.15493 5.92724 2.37555 5.99008 2.67228L9.6932 20.9942C9.8531 21.7938 10.2715 22.4279 10.8071 22.8104C11.2274 23.1105 11.694 23.2564 12.144 23.3067C11.8482 23.8042 11.6745 24.3815 11.6745 24.9984C11.6745 26.8293 13.1742 28.3289 15.005 28.3289C16.8358 28.3289 18.3387 26.8293 18.3387 24.9984C18.3387 24.3914 18.1706 23.8225 17.883 23.3303H23.7937C23.5066 23.8224 23.3388 24.3915 23.3388 24.9984C23.3388 26.8293 24.8393 28.3289 26.6701 28.3289C28.5009 28.3289 30.0038 26.8293 30.0038 24.9984C30.0038 24.3914 29.8358 23.8225 29.5481 23.3303H29.5725C30.128 23.3303 30.74 23.1929 31.2756 22.8104C31.8113 22.4279 32.2297 21.7938 32.3896 20.9942L34.9503 8.18913C35.0885 7.49763 34.9427 6.73169 34.4596 6.09142C33.9765 5.45116 33.1219 4.99945 32.073 4.99945H29.5213L24.7628 0.24422C24.6037 0.0859394 24.3875 -0.00148282 24.1631 0.00173883C23.9463 0.00432182 23.7391 0.0913174 23.5854 0.24422L21.5235 2.30612C20.5245 0.88277 18.8795 0.000545555 17.0929 0.000111446C14.2519 -0.000578879 11.9128 2.21171 11.6981 4.99945H8.18624L7.61991 2.32728C7.50711 1.79466 7.24876 1.1816 6.70531 0.720231C6.16187 0.258865 5.38262 0.000111446 4.40988 0.000111446H0.845089ZM17.0929 1.66656C18.4336 1.66688 19.6524 2.37857 20.3192 3.51039L18.8302 4.99945H13.3678C13.5735 3.11728 15.1536 1.66609 17.0929 1.66656ZM24.1761 2.01319L27.1624 4.99945H21.1899L24.1761 2.01319ZM8.52717 6.66589H32.073C32.6892 6.66589 32.9548 6.8625 33.13 7.09471C33.3052 7.32691 33.3572 7.65759 33.3164 7.86202L32.8892 9.99878H19.176C18.0492 9.98285 18.0492 11.6812 19.176 11.6652H32.5556L30.7557 20.6671C30.6656 21.1174 30.5001 21.3165 30.3065 21.4548C30.1129 21.593 29.8503 21.6639 29.5726 21.6639H12.5102C12.2325 21.6639 11.969 21.593 11.7754 21.4548C11.5818 21.3165 11.4171 21.1174 11.3271 20.6671L9.5272 11.6652H12.5102C13.637 11.6812 13.637 9.98285 12.5102 9.99878H9.19359L8.52717 6.66589ZM15.8431 9.99878C15.3829 9.99878 15.0099 10.3718 15.0099 10.832C15.0099 11.2922 15.3829 11.6652 15.8431 11.6652C16.3033 11.6652 16.6763 11.2922 16.6763 10.832C16.6763 10.3718 16.3033 9.99878 15.8431 9.99878ZM15.005 23.3312C15.9352 23.3312 16.6714 24.0682 16.6714 24.9984C16.6714 25.9286 15.9352 26.6616 15.005 26.6616C14.0748 26.6616 13.341 25.9286 13.341 24.9984C13.341 24.0682 14.0748 23.3312 15.005 23.3312ZM26.6701 23.3312C27.6003 23.3312 28.3366 24.0682 28.3366 24.9984C28.3366 25.9286 27.6003 26.6616 26.6701 26.6616C25.7399 26.6616 25.0061 25.9286 25.0061 24.9984C25.0061 24.0682 25.7399 23.3312 26.6701 23.3312Z"
-                                fill="currentColor"></path>
-                    </svg>
-                </div>
-                <h6 class="title_box font-bold uppercase text-[20px] font-mulish">
-                    покупатель
-                </h6>
-                <p class="border-b-4 border-[#E4DB00] w-[50px]"></p>
-                <p class="descBox text-[18px] font-mulish font-normal text-center">
-                    Вы покупаете товары оптом или в розницу
-                </p>
-
-                    <input type="hidden" value="buyer" name="user_type">
-                    <button
-                            class="text-[#2B292C] bg-[#E4DB00] font-medium px-8 py-4 rounded-[7px] uppercase"
-                    >
-
-                        я покупатель
-
-                    </button>
-
-            </div>
-        </div>
-    </div>
-                </div>
-
+                                    <input type="hidden" value="provider" name="user_type">
+                                    <button class="text-[#2B292C] bg-[#E4DB00] font-medium px-8 py-4 rounded-[7px] uppercase">
+                                        я поставщик
+                                    </button>
+                                </div>
+                                <div id="role-buyer"
+                                     class="cards cardBox role-choose-block relative rounded-[15px] pt-12 pb-10 px-9 flex flex-col gap-5 items-center w-[320px]">
+                                    <div class="cards absolute top-[-30px] bg-[#E4DB00] py-[15px] pl-[11px] pr-[15px] rounded-full">
+                                        <svg
+                                                width="35"
+                                                height="29"
+                                                viewBox="0 0 35 29"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                    fill-rule="evenodd"
+                                                    clip-rule="evenodd"
+                                                    d="M0.845089 0.000111446C-0.281696 -0.0158239 -0.281696 1.68249 0.845089 1.66656H4.40988C5.10359 1.66656 5.43338 1.82589 5.62717 1.99041C5.82096 2.15493 5.92724 2.37555 5.99008 2.67228L9.6932 20.9942C9.8531 21.7938 10.2715 22.4279 10.8071 22.8104C11.2274 23.1105 11.694 23.2564 12.144 23.3067C11.8482 23.8042 11.6745 24.3815 11.6745 24.9984C11.6745 26.8293 13.1742 28.3289 15.005 28.3289C16.8358 28.3289 18.3387 26.8293 18.3387 24.9984C18.3387 24.3914 18.1706 23.8225 17.883 23.3303H23.7937C23.5066 23.8224 23.3388 24.3915 23.3388 24.9984C23.3388 26.8293 24.8393 28.3289 26.6701 28.3289C28.5009 28.3289 30.0038 26.8293 30.0038 24.9984C30.0038 24.3914 29.8358 23.8225 29.5481 23.3303H29.5725C30.128 23.3303 30.74 23.1929 31.2756 22.8104C31.8113 22.4279 32.2297 21.7938 32.3896 20.9942L34.9503 8.18913C35.0885 7.49763 34.9427 6.73169 34.4596 6.09142C33.9765 5.45116 33.1219 4.99945 32.073 4.99945H29.5213L24.7628 0.24422C24.6037 0.0859394 24.3875 -0.00148282 24.1631 0.00173883C23.9463 0.00432182 23.7391 0.0913174 23.5854 0.24422L21.5235 2.30612C20.5245 0.88277 18.8795 0.000545555 17.0929 0.000111446C14.2519 -0.000578879 11.9128 2.21171 11.6981 4.99945H8.18624L7.61991 2.32728C7.50711 1.79466 7.24876 1.1816 6.70531 0.720231C6.16187 0.258865 5.38262 0.000111446 4.40988 0.000111446H0.845089ZM17.0929 1.66656C18.4336 1.66688 19.6524 2.37857 20.3192 3.51039L18.8302 4.99945H13.3678C13.5735 3.11728 15.1536 1.66609 17.0929 1.66656ZM24.1761 2.01319L27.1624 4.99945H21.1899L24.1761 2.01319ZM8.52717 6.66589H32.073C32.6892 6.66589 32.9548 6.8625 33.13 7.09471C33.3052 7.32691 33.3572 7.65759 33.3164 7.86202L32.8892 9.99878H19.176C18.0492 9.98285 18.0492 11.6812 19.176 11.6652H32.5556L30.7557 20.6671C30.6656 21.1174 30.5001 21.3165 30.3065 21.4548C30.1129 21.593 29.8503 21.6639 29.5726 21.6639H12.5102C12.2325 21.6639 11.969 21.593 11.7754 21.4548C11.5818 21.3165 11.4171 21.1174 11.3271 20.6671L9.5272 11.6652H12.5102C13.637 11.6812 13.637 9.98285 12.5102 9.99878H9.19359L8.52717 6.66589ZM15.8431 9.99878C15.3829 9.99878 15.0099 10.3718 15.0099 10.832C15.0099 11.2922 15.3829 11.6652 15.8431 11.6652C16.3033 11.6652 16.6763 11.2922 16.6763 10.832C16.6763 10.3718 16.3033 9.99878 15.8431 9.99878ZM15.005 23.3312C15.9352 23.3312 16.6714 24.0682 16.6714 24.9984C16.6714 25.9286 15.9352 26.6616 15.005 26.6616C14.0748 26.6616 13.341 25.9286 13.341 24.9984C13.341 24.0682 14.0748 23.3312 15.005 23.3312ZM26.6701 23.3312C27.6003 23.3312 28.3366 24.0682 28.3366 24.9984C28.3366 25.9286 27.6003 26.6616 26.6701 26.6616C25.7399 26.6616 25.0061 25.9286 25.0061 24.9984C25.0061 24.0682 25.7399 23.3312 26.6701 23.3312Z"
+                                                    fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                    <h6 class="title_box font-bold uppercase text-[20px] font-mulish">
+                                        покупатель
+                                    </h6>
+                                    <p class="border-b-4 border-[#E4DB00] w-[50px]"></p>
+                                    <p class="descBox text-[18px] font-mulish font-normal text-center">
+                                        Вы покупаете товары оптом или в розницу
+                                    </p>
+                                    <input type="hidden" value="buyer" name="user_type">
+                                    <button
+                                            class="text-[#2B292C] bg-[#E4DB00] font-medium px-8 py-4 rounded-[7px] uppercase">
+                                        я покупатель
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- login -->
 
-                <div id="login-form" style="display: flex; flex-direction: column; gap: 30px"
-                     class=" login-form overflow-hidden w-full mb-6 pb-[2px]">
+                <div id="login-form" style="display: flex; flex-direction: column; gap: 30px" class=" login-form overflow-hidden w-full mb-6 pb-[2px]">
                     {#            {% for field, errors in form.errors.items %}#}
                     {#                {% for error in errors %}#}
                     {#                    <p class="has-error" style="color: red">{{ error }}</p>#}
                     {#                {% endfor %}#}
                     {#            {% endfor %}#}
+                    <form method="post">
+
                     <div class="flex flex-col gap-3  w-full">
-                        <form method="post">
-                            <label clas="text-[18px] font-mulish" for=""
-                            >Ваш адрес электронной почты Email *</label
-                            >
+                            <label clas="text-[18px] font-mulish" for="">
+                                Ваш адрес электронной почты Email *</label>
                             {{ form.email }}
                             {% csrf_token %}
                     </div>
@@ -342,8 +322,7 @@
                                     class="show-password w-[24px] h-[24px]"
                                     style="display: block"
                                     src="{% static 'assets/images/icons/password-close.svg' %}"
-                                    alt=""
-                            />
+                                    alt=""/>
                         </div>
                         <p class="flex justify-end text-[#0035FF] text-[18px] font-mulish font-normal">
                             <a href="{% url 'reset_password' %}">Забыли пароль?</a>
@@ -351,8 +330,7 @@
                     </div>
                     <button
                             id="login"
-                            class="text-[16px] font-medium font-mulish py-4 border border-[#2B292C] rounded-lg uppercase"
-                    >
+                            class="text-[16px] font-medium font-mulish py-4 border border-[#2B292C] rounded-lg uppercase px-3">
                         войти в личный кабинет
                     </button>
                     </form>
