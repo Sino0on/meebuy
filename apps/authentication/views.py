@@ -333,4 +333,5 @@ def register_v2(request):
 
     else:
         form = CustomUserCreationForm()
-    return render(request, 'auth/authentication.html', {'form': form})
+    countries = Country.objects.all()
+    return render(request, 'auth/authentication.html', {'form': form, 'countries': countries})

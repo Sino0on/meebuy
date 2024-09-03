@@ -245,7 +245,8 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
                 numbers = list(map(int, categories))
                 categories = Category.objects.filter(id__in=numbers)
                 self.object.category.set(categories)
-            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подожтите.'
+            if not self.object.is_modered:
+                self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подожтите.'
             self.object.save()
             return redirect(self.get_success_url())
         else:
@@ -326,7 +327,8 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
         if form.is_valid():
             self.object = form.save(
                 commit=False)  # Сохраняем форму с возможностью дополнительной обработки перед окончательным сохранением
-            self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
+            if not self.object.is_modered:
+                self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
             self.object.save()  # Сохраняем изменения в объект
             form.save_m2m()  # Сохраняем ManyToMany поля
             return redirect(self.get_success_url())  # Переадресация на страницу успеха
