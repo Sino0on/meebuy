@@ -94,7 +94,6 @@ def create_chat(request, pk):
 
             return redirect(f'/chat/{chat.id}')
         else:
-            messages.error(request, 'xnj njnj.')
             return redirect(request.META.get('HTTP_REFERER'))
 
     else:
