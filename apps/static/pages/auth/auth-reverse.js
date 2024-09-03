@@ -105,17 +105,17 @@ const login = document.getElementById("login");
 const register = document.getElementById("register");
 const lastName = document.getElementById("name");
 const number = document.getElementById("number");
-const password = document.getElementById("password");
+// const password = document.getElementById("password");
 const passwordLog = document.getElementById("passwordLog");
-const confirmAuth = document.getElementById("confirm");
+// const confirmAuth = document.getElementById("confirm");
 
 const toggleTabRegister = () => {
   registerForm.style.maxHeight = `max-content`;
   loginForm.style.maxHeight = "0px";
   lastName.classList.add("input-change");
   number.classList.add("password-an");
-  password.classList.add("password-an");
-  confirmAuth.classList.add("password-an");
+  // password.classList.add("password-an");
+  // confirmAuth.classList.add("password-an");
   register.classList.add("register-an");
   registerTab.classList.add("tab-hover");
   loginTab.classList.remove("tab-hover");
@@ -127,8 +127,8 @@ const toggleTabRegister = () => {
       registerForm.classList.remove("input-change", "password-an");
       lastName.classList.remove("input-change");
       number.classList.remove("password-an");
-      password.classList.remove("password-an");
-      confirmAuth.classList.remove("password-an");
+      // password.classList.remove("password-an");
+      // confirmAuth.classList.remove("password-an");
       register.classList.remove("register-an");
     },
     { once: true }

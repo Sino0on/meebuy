@@ -50,18 +50,18 @@
                      class="overflow-hidden w-full mb-6">
                 <div id="regist-form-cover" style="display: flex; flex-direction: column; gap: 15px; z-index: 0;">
 
-                    <form class="flex flex-col gap-5" method="post" action="{% url 'login' %}">
+                    <form class="flex flex-col gap-5" method="post" action="{% url 'register_v2' %}">
                         {% csrf_token %}
                         <div class="flex flex-col gap-3 w-full">
-                            <label class="text-[18px] font-mulish">Ваш адрес электронной почты Email *</label>
-                            {{ register_form.email }}
+                            <label class="text-[18px] font-mulish" for="id_email">Ваш адрес электронной почты Email *</label>
+                          <input type="text" name="email" class="border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]" placeholder="Email *" maxlength="320" required="" id="id_email">
                             {% for error in register_form.email.errors %}
                                 <p style="color: red">{{ error }}</p>
                             {% endfor %}
                         </div>
                         <div id="name" class="input flex flex-col gap-3">
-                            <label for="">Ваше ФИО*</label>
-                            {{ register_form.first_name }}
+                            <label for=id_first_name"">Ваше ФИО*</label>
+                          <input type="text" name="first_name" class="border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]" placeholder="ФИО" required="" id="id_first_name">
                             {% for error in register_form.first_name.errors %}
                                 <p style="color: red">{{ error }}</p>
                             {% endfor %}
@@ -90,39 +90,39 @@
                             </div>
 
                         </div>
-                        <div id="password" class="input flex lg-md:flex-row flex-col gap-2">
-                            <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
-
-                                <label for="">Придумайте пароль *</label>
-                                {% for error in register_form.password1.errors %}
-                                    <p style="color: red">{{ error }}</p>
-                                {% endfor %}
-                                {{ register_form.password1 }}
-
-                                <div class="absolute right-3 top-12">
-                                    <img
-                                            class="show-password w-[24px] h-[24px]"
-                                            src="{% static 'assets/images/icons/password-close.svg' %}"
-                                            alt=""
-                                    />
-                                </div>
-                            </div>
-                            <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">
-
-                                <label for="">Подтвердите пароль *</label>
-                                {{ register_form.password2 }}
-                                {% for error in register_form.password2.errors %}
-                                    <p style="color: red">{{ error }}</p>
-                                {% endfor %}
-                                <div class="absolute right-3 top-12">
-                                    <img
-                                            class="show-password w-[24px] h-[24px]"
-                                            src="{% static 'assets/images/icons/password-close.svg' %}"
-                                            alt=""
-                                    />
-                                </div>
-                            </div>
-                        </div>
+{#                        <div id="password" class="input flex lg-md:flex-row flex-col gap-2">#}
+{#                            <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">#}
+{##}
+{#                                <label for="">Придумайте пароль *</label>#}
+{#                                {% for error in register_form.password1.errors %}#}
+{#                                    <p style="color: red">{{ error }}</p>#}
+{#                                {% endfor %}#}
+{#                                {{ register_form.password1 }}#}
+{##}
+{#                                <div class="absolute right-3 top-12">#}
+{#                                    <img#}
+{#                                            class="show-password w-[24px] h-[24px]"#}
+{#                                            src="{% static 'assets/images/icons/password-close.svg' %}"#}
+{#                                            alt=""#}
+{#                                    />#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="flex w-full lg-md:w-1/2 flex-col gap-3 relative">#}
+{##}
+{#                                <label for="">Подтвердите пароль *</label>#}
+{#                                {{ register_form.password2 }}#}
+{#                                {% for error in register_form.password2.errors %}#}
+{#                                    <p style="color: red">{{ error }}</p>#}
+{#                                {% endfor %}#}
+{#                                <div class="absolute right-3 top-12">#}
+{#                                    <img#}
+{#                                            class="show-password w-[24px] h-[24px]"#}
+{#                                            src="{% static 'assets/images/icons/password-close.svg' %}"#}
+{#                                            alt=""#}
+{#                                    />#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
                         <div id="confirm" class="input flex items-center gap-2">
                             <input id="policy" name="policy" type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1"/>
                             <label for="policy" class="text-[16px] font-normal font-mulish text-[#777777]">
@@ -219,15 +219,18 @@
                     {#            {% endfor %}#}
                     <div class="flex flex-col gap-3  w-full">
                         <form method="post">
-                            <label clas="text-[18px] font-mulish" for=""
-                            >Ваш адрес электронной почты Email *</label
-                            >
-                            {{ form.email }}
+                             <label class="text-[18px] font-mulish mt-2" for="id_email">
+                                Ваш адрес электронной почты Email *</label>
+{#                            {{ form.email }}#}
+                        <input type="text"  name="email" class="mt-2 border border-[#E6E6E6] w-[100%] bg-[#F9F9F9] rounded-2xl px-5 py-3 text-[#737373]" placeholder="example@mail.com" required="" id="id_email">
                             {% csrf_token %}
-                    </div>
-                    <div id="passwordLog" class="flex flex-col gap-3 relative">
-                        <label for="">Ваш пароль*</label>
-                        {{ form.password }}
+                            {% csrf_token %}
+
+                    <div id="passwordLog" class="flex flex-col gap-3 relative mt-2">
+                       <label for="id_password">Ваш пароль*</label>
+{#                        {{ form.password }}#}
+                        <input type="password" name="password" class="password-input border border-[#E6E6E6] bg-[#F9F9F9] rounded-2xl pl-5 py-3 pr-10 text-[#737373]" placeholder="*******" required="" id="id_password">
+
                         <div class="absolute right-3 top-12">
                             <img
                                     class="show-password w-[24px] h-[24px]"

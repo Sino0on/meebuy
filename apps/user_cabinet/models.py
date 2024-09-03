@@ -44,6 +44,8 @@ class Status(models.Model):
     is_recomended = models.BooleanField(blank=True, default=False, verbose_name='РЕКОМЕНДУЕМ')
     quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'))
     quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'))
+    quantity_opening = models.PositiveIntegerField(verbose_name=_('Количество открытий'))
+
     image = models.FileField(upload_to='images/packages/', blank=True, default='1', verbose_name='Изображение')
     is_advertise = models.BooleanField(default=False, blank=True, verbose_name='Просмотр сайта без рекламы')
     is_contact_prov = models.BooleanField(default=False, blank=True, verbose_name='Просмотр контактов поставщиков')

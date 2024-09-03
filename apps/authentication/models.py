@@ -41,13 +41,7 @@ class User(StatusMixin, AbstractUser):
         (_("buyer"), _("Покупатель")),
     ]
 
-    phone = models.CharField(
-        max_length=20,
-        null=True,
-        unique=True,
-        verbose_name=_("Номер телефона"),
-        blank=True,
-    )
+    phone = models.CharField(max_length=20, null=True, unique=True, verbose_name=_("Номер телефона"), blank=True,)
     email = models.EmailField(unique=True)
     username = models.CharField(
         unique=False,

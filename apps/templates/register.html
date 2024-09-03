@@ -11,6 +11,19 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+<fieldset>
+            <legend>Выберите тип пользователя:</legend>
+
+            <label for="provider">
+                <input type="radio" id="provider" name="user-type" value="provider">
+                Provider
+            </label>
+
+            <label for="buyer">
+                <input type="radio" id="buyer" name="user-type" value="buyer">
+                Buyer
+            </label>
+        </fieldset>
         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
     </form>
 </div>

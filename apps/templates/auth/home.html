@@ -119,9 +119,9 @@
                                                 {% if i.terms_of_sale %}
                                                     {{ i.terms_of_sale }}
                                                 {% endif %} </span>
-                                            <h2 class="uppercase text-base font-black sm:text-3xl">{{ i.title }}</h2>
+                                            <a href="/product/detail/{{ i.pk }}/"> <h2 class="uppercase text-base font-black sm:text-3xl">{{ i.title }}</h2></a>
                                         </div>
-                                        <a href="/product/detail/{{ i.pk }}/"
+                                        <a href="`/product/detail/{{ i.pk }}/`"
                                            class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
                                     </div>
                                 </div>

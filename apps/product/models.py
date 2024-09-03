@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal, InvalidOperation
 
 from django.db import models
@@ -104,6 +105,12 @@ class Product(StatusMixin, models.Model):
     small_wholesale_price = models.IntegerField(verbose_name="Цена за малую партию", blank=True, null=True)
     medium_wholesale_price = models.IntegerField(verbose_name="Цена за среднюю партию", blank=True, null=True)
     large_wholesale_price = models.IntegerField(verbose_name="Цена за большую партию", blank=True, null=True)
+
+
+    @staticmethod
+    def get_count_for_today(sender):
+        return Product.objects.filter(user_first=sender, is_active=True).count()
+
 
     def __str__(self):
         return f"{self.title}"

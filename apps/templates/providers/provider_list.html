@@ -102,7 +102,9 @@
                                             <img src="{% static 'assets/images/icons/search.svg' %}" alt="Search icon"/>
                                         </button>
                                     </div>
-                                    <label for="default-search"></label><input id="default-search" name="title" class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full" placeholder="Например: автозапчасти"/>
+                                    <label for="default-search"></label><input id="default-search" name="title"
+                                                                               class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
+                                                                               placeholder="Например: автозапчасти"/>
                                 </div>
                             </form>
                         </div>
@@ -125,7 +127,7 @@
                     <ul id="tab-list"
                         class="cards block suppliers flex flex-wrap items-center shadow shadow-[#B1B1B14D] rounded-[15px] min-h-[44px]">
                         <li class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold active text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
-                                onclick="openTab(event, 'Tab1')">
+                            onclick="openTab(event, 'Tab1')">
                             <button>Все</button>
                             {#                            <img#}
                             {#                                    class="lg-md:hidden block"#}
@@ -133,7 +135,7 @@
                             {#                                    alt=""/>#}
                         </li>
                         <li class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
-                                onclick="openTab(event, 'Tab2')">
+                            onclick="openTab(event, 'Tab2')">
                             <button>Поставшики</button>
                             {#                            <img#}
                             {#                                    class="lg-md:hidden block"#}
@@ -141,7 +143,7 @@
                             {#                                    alt=""/>#}
                         </li>
                         <li class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
-                                onclick="openTab(event, 'Tab3')">
+                            onclick="openTab(event, 'Tab3')">
                             <button>Производители</button>
                             {#                            <img#}
                             {#                                    class="lg-md:hidden block"#}
@@ -149,7 +151,7 @@
                             {#                                    alt=""/>#}
                         </li>
                         <li class="flex items-center cursor-pointer transition-colors tabs__item gap-2 font-semibold text-sm capitalize py-3 px-6 font-mulish focus:bg-[#FFFB98] text-center rounded-[15px]"
-                                onclick="openTab(event, 'Tab4')">
+                            onclick="openTab(event, 'Tab4')">
                             <button>Услуги</button>
                             {#                            <img#}
                             {#                                    class="lg-md:hidden block"#}
@@ -165,13 +167,15 @@
                     {% include 'providers/provider_list_includes/filters.html' %}
 
                     <div id="Tab1"
-                            data-banners="{{ banners }}"
-                            data-banner-order="{{ banner_settings }}"
-                            class="flex tab-content flex-col gap-7">
+                         data-banners="{{ banners }}"
+                         data-banner-order="{{ banner_settings }}"
+                         class="flex tab-content flex-col gap-7">
                         {% for provider in providers %}
-                            <div class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
+                            <div class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px] overflow-x-hidden">
                                 <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-                                    <img class="w-[100px] h-[100px]" src="{% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt=""/>
+                                    <img class="w-[100px] h-[100px]" src="
+                                            {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                         alt=""/>
                                     <div class="flex flex-col gap-6">
                                         <div>
                                             <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
@@ -179,13 +183,26 @@
                                             </h6>
                                             <p style="word-break: break-word">
                                                 {% if provider.mini_descr %}{{ provider.mini_descr }}{% endif %}</p>
+                                        <p style="word-break: break-word">
+                                                {% if provider.city %}{{ provider.city.title }}{% endif %}</p>
                                         </div>
+                                        <div class="flex sm:flex-row w-full gap-2.5 overflow-x-auto max-w-[750px] ">
+                                            {% for image in provider.images.all %}
+                                                <img src="{{ image.image.url }}" alt=""
+                                                     style="width: 60px;height: 60px; object-fit: cover">
+
+                                            {% endfor %}
+                                        </div>
+
+
                                         <div class="flex gap-4">
                                             <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+
                                                 <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                                             </button>
                                             {% if user.is_authenticated %}
-                                                <a href="{% url 'chat_create' provider.user.pk %}" class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                                                <a href="{% url 'chat_create' provider.user.pk %}"
+                                                   class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
                                                     Написать
                                                 </a>
                                             {% endif %}
@@ -287,6 +304,7 @@
 
 
 
+
                                                  {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                          alt=""/>
                                     <div class="flex flex-col gap-6">
@@ -306,7 +324,7 @@
                                             </button>
                                             {% if user.is_authenticated %}
                                                 <a href="{% url 'chat_create' provider.user.pk %}"
-                                                        class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                                                   class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
                                                     Написать
                                                 </a>
                                             {% endif %}
@@ -317,18 +335,21 @@
                                 <ul class="flex gap-2 sm: absolute right-4">
                                     {% if provider.is_recomended %}
                                         <li>
-                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}" alt=""/>
+                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                                 alt=""/>
                                         </li>
                                     {% endif %}
                                     <li></li>
                                     {% if provider.is_modered %}
                                         <li>
-                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}" alt=""/>
+                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                 alt=""/>
                                         </li>
                                     {% endif %}
                                     {% if provider.type == 'services' %}
                                         <li>
-                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}" alt=""/>
+                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                                 alt=""/>
                                         </li>
                                     {% endif %}
                                 </ul>
@@ -340,7 +361,9 @@
                             <div class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
                                 <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
                                     <img class="w-[100px] h-[100px]"
-                                            src="{% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt=""/>
+                                         src="
+                                                 {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                         alt=""/>
                                     <div class="flex flex-col gap-6">
                                         <div>
                                             <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
@@ -353,7 +376,8 @@
                                                 <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                                             </button>
                                             {% if user.is_authenticated %}
-                                                <a href="{% url 'chat_create' provider.user.pk %}" class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                                                <a href="{% url 'chat_create' provider.user.pk %}"
+                                                   class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
                                                     Написать
                                                 </a>
                                             {% endif %}
@@ -363,18 +387,21 @@
                                 <ul class="flex gap-2 sm: absolute right-4">
                                     {% if provider.is_recomended %}
                                         <li>
-                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}" alt=""/>
+                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                                 alt=""/>
                                         </li>
                                     {% endif %}
                                     <li></li>
                                     {% if provider.is_modered %}
                                         <li>
-                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}" alt=""/>
+                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                                 alt=""/>
                                         </li>
                                     {% endif %}
                                     {% if provider.type == 'services' %}
                                         <li>
-                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}" alt=""/>
+                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                                 alt=""/>
                                         </li>
                                     {% endif %}
                                 </ul>
@@ -386,7 +413,9 @@
                             <div class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
                                 <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
                                     <img class="w-[100px] h-[100px]" src="
-                                                    {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}" alt=""/>
+
+                                            {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                         alt=""/>
                                     <div class="flex flex-col gap-6">
                                         <div>
                                             <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
@@ -399,7 +428,8 @@
                                                 <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                                             </button>
                                             {% if user.is_authenticated %}
-                                                <a href="{% url 'chat_create' provider.user.pk %}" class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                                                <a href="{% url 'chat_create' provider.user.pk %}"
+                                                   class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
                                                     Написать
                                                 </a>
                                             {% endif %}
@@ -409,15 +439,18 @@
                                 <ul class="flex gap-2 sm: absolute right-4">
                                     {% if provider.is_recomended %}
                                         <li>
-                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}" alt=""/>
+                                            <img src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                                 alt=""/>
                                         </li>
                                     {% endif %}
                                     <li></li>
                                     <li>
-                                        <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}" alt=""/>
+                                        <img src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                                             alt=""/>
                                     </li>
                                     <li>
-                                        <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}" alt=""/>
+                                        <img src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                                             alt=""/>
                                     </li>
                                 </ul>
                             </div>

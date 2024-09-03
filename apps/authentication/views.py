@@ -119,14 +119,23 @@ class LoginView(FormView):
         return context
 
     def form_valid(self, form):
-        email = form.cleaned_data['email']
-        password = form.cleaned_data['password']
-        user = authenticate(self.request, email=email, password=password)
+        username = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password')
+        user = authenticate(email=username, password=password)
         if user is not None and user.is_active:
-            auth_login(self.request, user)
+            auth_login(self.request, user)  # Аутентификация пользователя
+
+            # Проверяем, входил ли пользователь ранее и является ли он поставщиком
+            if not user.login_before and not user.provider.is_provider:
+                user.login_before = True  # Обновляем флаг первого входа
+                user.save(update_fields=['login_before'])
+                return redirect('buyer_step')  # Путь для покупателей, входящих в первый раз
+            else:
+                return redirect('home')  # Стандартный путь для входа
         else:
+            # Если аутентификация не удалась, добавляем сообщение об ошибке
+            messages.error(self.request, 'Неверный логин или пароль.')
             return self.form_invalid(form)
-        return super().form_valid(form)
 
     def form_invalid(self, form):
         self.request.session['form_data'] = form.data
@@ -318,8 +327,10 @@ def register_v2(request):
                 provider, _ = Provider.objects.get_or_create(user=user)
                 provider.is_provider = False
                 provider.save()
+
+            messages.success(request, 'Регистрация прошла успешно, мы выслали ваш пароль вам на почту!')
             return redirect('authentication')
 
     else:
         form = CustomUserCreationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'auth/authentication.html', {'form': form})

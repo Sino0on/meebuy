@@ -27,7 +27,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.timezone import now
 from django.views import generic, View
 from django.views.decorators.http import require_POST, require_GET
-from django.views.generic import TemplateView
 from plotly.offline import plot
 from rest_framework.generics import ListAPIView
 
@@ -165,7 +164,6 @@ class UserDetailView(LoginRequiredMixin, generic.TemplateView):
         context['contacts'] = contacts
         context['products'] = Product.objects.filter(provider__user=self.request.user)[:3]
         context['links'] = provider.links.all()
-
 
         return context
 
@@ -860,6 +858,7 @@ def add_provider_fav(request, pk):
 
 
 def tariff_buy(request):
+    today = datetime.date.today()
     status = get_object_or_404(PackageStatus, id=int(request.GET.get('id')))
     user = request.user
     if user.cabinet.balance < status.price:
@@ -869,9 +868,10 @@ def tariff_buy(request):
         if user.cabinet.user_status.status == status:
             return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
 
-    if user.cabinet.user_status:
+
         if user.cabinet.user_status.status.status == status.status:
             user.cabinet.user_status.end_date += datetime.timedelta(days=status.months * 30)
+            user.cabinet.user_status.is_active = True
             user.cabinet.balance -= status.price
             user.cabinet.save()
             user.cabinet.user_status.save()
@@ -1037,6 +1037,3 @@ class DocumentsView(View):
             'documents': VerificationDocuments.objects.filter(provider=request.user.provider).distinct(),
         }
         return render(request, 'cabinet/documents.html', context=context)
-
-
-

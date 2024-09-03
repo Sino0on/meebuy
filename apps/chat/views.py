@@ -8,6 +8,7 @@ from django.utils import timezone
 from apps.chat.models import Chat, Message
 from apps.chat.models import ChatUserStatus
 from apps.provider.models import Provider
+from apps.services.tarif_checker import check_user_status_and_create_new_chat
 from apps.user_cabinet.models import Contacts
 
 User = get_user_model()
@@ -70,30 +71,12 @@ def chat_detail(request, pk):
 
 def create_chat(request, pk):
     user = get_object_or_404(User, id=pk)
-
-    # Проверяем количество созданных чатов за сегодня
-    today = timezone.now().date()
-    chat_count_today = Chat.objects.filter(
-        Q(user_first=request.user) | Q(user_second=request.user),
-        created_at__date=today
-    ).count()
+    # if request.user.is_authenticated:
+    #     messages.error(request, 'Вы не авторизованы.')
+    #     return redirect(request.META.get('HTTP_REFERER'))
 
     if request.user.cabinet.user_status:
-        # if request.user.cabinet.user_status.status:
-        #     try:
-        #         if request.user.cabinet.user_status.status.active_statues:
-        #             print(request.user.cabinet.user_status.status.active_statues)
-        #             if request.user.cabinet.user_status.status.active_statues.status:
-        #                 print(2)
-        #                 if chat_count_today >= request.user.cabinet.user_status.status.active_statues.status.dayly_message:
-        #                     messages.error(request, f'Вы не можете создать более {request.user.cabinet.user_status.status.active_statues.status.dayly_message} чатов за сегодня.')
-        #                     return redirect(request.META.get('HTTP_REFERER'))
-        #     except Exception as e:
-        #         print(e)
-        #         messages.error(request, str(e))
-        #         return redirect(request.META.get('HTTP_REFERER'))
-        # else:
-            # Проверяем, существует ли уже чат между этими двумя пользователями
+        if check_user_status_and_create_new_chat(request):
             existing_chat = Chat.objects.filter(
                 (Q(user_first=request.user) & Q(user_second=user)) |
                 (Q(user_first=user) & Q(user_second=request.user))
@@ -110,28 +93,17 @@ def create_chat(request, pk):
             ChatUserStatus.objects.create(chat=chat, user=user)
 
             return redirect(f'/chat/{chat.id}')
-    else:
-        if chat_count_today >= 10:
-            messages.error(request, f'Вы не можете создать более {10} чатов за сегодня.')
-            return redirect(request.META.get('HTTP_REFERER'))
         else:
-            # Проверяем, существует ли уже чат между этими двумя пользователями
-            existing_chat = Chat.objects.filter(
-                (Q(user_first=request.user) & Q(user_second=user)) |
-                (Q(user_first=user) & Q(user_second=request.user))
-            ).first()
+            messages.error(request, 'xnj njnj.')
+            return redirect(request.META.get('HTTP_REFERER'))
 
-            if existing_chat:
-                # Если чат существует, редиректим к нему
-                return redirect(f'/chat/{existing_chat.id}')
+    else:
+        messages.error(request, 'Вы не можете создать чат, вам необходимо подключиться к тарифу.')
 
-            # Если чата нет, создаем новый
-            chat = Chat.objects.create(user_first=request.user, user_second=user)
+        return redirect('tariffs')
 
-            ChatUserStatus.objects.get_or_create(chat=chat, user=request.user)
-            ChatUserStatus.objects.get_or_create(chat=chat, user=user)
+        # return redirect(request.META.get('HTTP_REFERER'))
 
-            return redirect(f'/chat/{chat.id}')
 
 
 @login_required

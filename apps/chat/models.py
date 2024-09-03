@@ -15,6 +15,11 @@ class Chat(models.Model):
     def __str__(self):
         return f'{self.user_first} {self.user_second}'
 
+    @staticmethod
+    def get_count_for_today(sender):
+        today = datetime.now().date()
+        return Chat.objects.filter(user_first=sender, created_at__date=today).count()
+
     class Meta:
         verbose_name = 'Чат'
         verbose_name_plural = 'Чаты'
