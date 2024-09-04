@@ -74,10 +74,13 @@ class Banner(models.Model):
         verbose_name="Телефон", max_length=123, blank=True, null=True
     )
     image_desktop = models.ImageField(
-        verbose_name="Картинка круп", upload_to="images/banners/desktop/%Y/%m/"
+        verbose_name="Картинка круп", upload_to="images/banners/desktop/%Y/%m/", blank=True, null=True
     )
     image_mobile = models.ImageField(
-        verbose_name="Картинка моб", upload_to="images/banners/mobile/%Y/%m/"
+        verbose_name="Картинка моб", upload_to="images/banners/mobile/%Y/%m/", blank=True, null=True
+    )
+    image_vertical = models.FileField(
+        verbose_name="Картинка верт", upload_to="images/banners/vertical/%Y/%m/", blank=True, null=True
     )
     page_for = models.CharField(
         verbose_name="Страница",

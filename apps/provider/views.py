@@ -91,7 +91,7 @@ class ProviderListView(generic.ListView):
             "banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
 
         context['locations'] = self.get_locations()
-        context["side_banner"] = Banner.objects.filter(image_mobile__isnull=False, page_for="provider" ).order_by('?').first()
+        context["side_banner"] = Banner.objects.filter(image_vertical__isnull=False, page_for="provider" ).order_by('?').first()
         return context
 
     def get_locations(self):

@@ -31,6 +31,7 @@ class BannerAdmin(admin.ModelAdmin):
         "get_image_desktop",
         "image_mobile",
         "get_image_mobile",
+        'image_vertical',
         "is_active",
         "created_at",
     )
