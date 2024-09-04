@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.db.models import BooleanField, Case, Value, When
+from django.db.models import BooleanField, Case, Value, When, F
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now
 from django.views import generic, View
@@ -39,13 +39,15 @@ class ProviderListView(generic.ListView):
                 When(created_at__date=yesterday, then=Value(True)),
                 default=Value(False),
                 output_field=BooleanField()
-            )
+            ),
+        tariff_title = F('user__cabinet__user_status__status__status__title')
+
         ).filter(is_active=True, is_provider=True, title__isnull=False)
         order = self.request.GET.get("order")
         if order:
-            queryset = queryset.order_by(order, 'is_modered', "-id")
+            queryset = queryset.order_by(order, '-is_modered', "-id")
         else:
-            queryset = queryset.order_by('is_modered', "-id")
+            queryset = queryset.order_by('-is_modered', "-id")
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 

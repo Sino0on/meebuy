@@ -5,6 +5,7 @@
         <img class="w-[100px] h-[100px]" src="
 
 
+
                 {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
              alt=""/>
         <div class="flex flex-col gap-6">
@@ -45,17 +46,26 @@
         </div>
     </div>
     <ul class="flex gap-2 sm: absolute right-4">
+        {% if provider.tariff_title %}
+            <li>
+                <img style="color: #0a58ca"
+                     src="{% static 'assets/images/icons/star.svg' %}"
+                     title="{{ provider.tariff_title }}"
+                     alt=""/>
+            </li>
+
+        {% endif %}
         {% if provider.new %}
-            <p>НОВОЕ</p>
+            <p style="color:white; background-color: #00a400; border-radius: 10px; padding: 0 6px; font-size: 14px;">
+                Новое</p>
         {% endif %}
         {% if provider.is_recomended %}
             <li>
                 <img
-                    src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-                    alt=""/>
+                        src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                        alt=""/>
             </li>
         {% endif %}
-        <li></li>
         {% if provider.is_modered %}
             <li>
                 <img style="color: #0a58ca"
