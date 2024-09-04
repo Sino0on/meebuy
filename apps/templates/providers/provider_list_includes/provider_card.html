@@ -1,45 +1,85 @@
 {% load static %}
 
+<style>
+
+    .card-imgs{
+        width: 100%;
+        max-width: calc(100% - 290px);
+    }
+
+    .card-imgs::-webkit-scrollbar{
+        display: none;
+    }
+
+    .card-btns{
+        width: 100%;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .card-btns button{
+        height: 50px;
+    }
+
+    @media screen and (min-width: 992px){
+        .card-btns{
+            width: 278px;
+        }
+
+        .card-imgs{
+            width: calc(100% - 290px);
+            max-width: 320px;
+        }
+
+    }
+</style>
+
 <div class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px] overflow-x-hidden">
-    <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
+    <div class="flex md:flex-row flex-col gap-7 md:items-center items-start w-full">
         <img class="w-[100px] h-[100px]" src="
                 {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
              alt=""/>
-        <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-6 flex-grow">
             <div>
-                <h6 class="pb-2 text-[20px] font-extrabold font-mulish">
+                <h6 class="pb-2 font-mulish" style="color: red;font-size: 24px;font-weight: 900">
                     {{ provider.title }}
                 </h6>
-                <p style="word-break: break-word; font-size: 18px; font-weight: 650;">
+                <p style="word-break: break-word; font-size: 18px; font-weight: 650;color: #0060C8">
                     {% if provider.mini_descr %}{{ provider.mini_descr|truncatechars:50 }}{% endif %}
                 </p>
-                <p style="word-break: break-word; font-size: 14px; color: dimgrey; display: flex">
+                <p style="word-break: break-word; font-size: 20px; color: dimgrey; display: flex;margin-top: 8px">
                     {% if provider.city %}<img src="{% static 'assets/images/icons/location.svg' %}" alt="">{{ provider.city.title }}{% endif %}
                 </p>
 
-                <p style="word-break: break-word; margin-top: 4px">
+                <p style="word-break: break-word; margin-top: 8px">
                     {% if provider.description %}
-                        {{ provider.description|truncatechars:200 }}
+                        {{ provider.description|truncatechars:255 }}
                     {% endif %}
                 </p>
             </div>
-            <div class="flex sm:flex-row w-full gap-2.5 overflow-x-auto max-w-[750px] ">
+        <div class="flex flex-col gap-2 md:flex-row w-full justify-between overflow-x-hidden" >
+            <div class="flex sm:flex-row card-imgs gap-2.5 overflow-x-auto pe-2">
                 {% for image in provider.images.all %}
                     <img src="{{ image.image.url }}" alt="" style="width: 60px;height: 60px; object-fit: cover"></img>
                 {% endfor %}
             </div>
-            <div class="flex gap-4">
+            <div class="flex gap-4 card-btns"  >
                 <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
 
                     <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
                 </button>
                 {% if user.is_authenticated %}
+                                    <button class="bg-[#FFF] px-6 py-3 rounded-[7px] " style="border: 1px solid black">
+
                     <a href="{% url 'chat_create' provider.user.pk %}"
-                       class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                      >
                         Написать
                     </a>
+                </button>
+
                 {% endif %}
             </div>
+        </div>
         </div>
     </div>
     <ul class="flex gap-2 sm: absolute right-4">
