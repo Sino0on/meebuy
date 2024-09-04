@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.db.models import BooleanField, Case, Value, When, F
+from django.db.models import BooleanField, Case, Value, When, F, Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now
 from django.views import generic, View
@@ -40,14 +40,29 @@ class ProviderListView(generic.ListView):
                 default=Value(False),
                 output_field=BooleanField()
             ),
-        tariff_title = F('user__cabinet__user_status__status__status__title')
-
+            tariff_title=F('user__cabinet__user_status__status__status__title'),
+            # Аннотация для сортировки по is_upping и end_date
+            is_upping_active=Case(
+                When(
+                    Q(user__cabinet__is_upping__is_active=True) &
+                    Q(user__cabinet__is_upping__end_date__gte=today),
+                    then=Value(True)
+                ),
+                default=Value(False),
+                output_field=BooleanField()
+            ),
+            # Аннотация для сортировки по цене тарифа
+            tariff_price=F('user__cabinet__user_status__status__status__price_month')
         ).filter(is_active=True, is_provider=True, title__isnull=False)
+
+        # Получаем параметр сортировки из запроса
         order = self.request.GET.get("order")
+        # Добавляем новое условие сортировки к существующему
         if order:
-            queryset = queryset.order_by(order, '-is_modered', "-id")
+            queryset = queryset.order_by('-is_upping_active', 'tariff_price', order, '-is_modered', "-id")
         else:
-            queryset = queryset.order_by('-is_modered', "-id")
+            queryset = queryset.order_by('-is_upping_active', 'tariff_price', '-is_modered', "-id")
+
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 

@@ -82,7 +82,18 @@
         </div>
         </div>
     </div>
+
     <ul class="flex gap-2 sm: absolute right-4">
+            {% if provider.is_upping_active %}
+            <li>
+                <img style="color: #0a58ca; width: 25px; height: 25px;"
+                     src="{% static 'assets/images/icons/upping.svg' %}"
+                     title="Поднято"
+                     alt=""/>
+            </li>
+
+        {% endif %}
+
         {% if provider.tariff_title %}
             <li>
                 <img style="color: #0a58ca; width: 25px; height: 25px;"

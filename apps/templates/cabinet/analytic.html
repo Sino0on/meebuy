@@ -265,7 +265,7 @@ function showToast(type, title, message) {
 
   // Create toast container
   const toast = document.createElement('div');
-  toast.className = `fixed bottom-8 right-4 z-50 ${colors[type].bg} border-l-4 ${colors[type].border} ${colors[type].text} px-6 py-4 shadow-lg`; // Increased padding
+  toast.className = `fixed bottom-8 right-4 ${colors[type].bg} border-l-4 ${colors[type].border} ${colors[type].text} px-6 py-4 shadow-lg`; // Increased padding
   toast.setAttribute('role', 'alert');
 
   // Create inner flex container

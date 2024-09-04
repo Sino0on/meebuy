@@ -237,10 +237,6 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
             region = Region.objects.get(country=country, title=region_name)
             city_name = self.request.POST.get('city')
             city = City.objects.get(region=region, title=city_name)
-            if self.object.is_modered:
-                self.object.is_modered = True
-            if self.object.is_active:
-                self.object.is_active = True
             self.object.save()
             self.object = form.save(commit=False)
             self.object.city = city
