@@ -46,12 +46,12 @@ def check_user_status_and_create_new_chat(request):
             print(request.user.cabinet.user_status.end_date, today)
             print(request.user.cabinet.user_status.is_active)
 
-            if request.user.cabinet.user_status.end_date > today and request.user.cabinet.user_status.is_active:
+            if request.user.cabinet.user_status.end_date > today:
                 if request.user.cabinet.user_status.status:
                     can_be_created = request.user.cabinet.user_status.status.status.dayly_message
                     count_today = Chat.get_count_for_today(request.user)
                     print(count_today, can_be_created)
-                    if can_be_created > count_today:
+                    if can_be_created >= count_today:
                         return True
                     else:
                         messages.error(request, 'Вы не можете открыть больше чатов за сегодня.')
