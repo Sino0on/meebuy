@@ -16,11 +16,11 @@
                 <p style="word-break: break-word; font-size: 18px; font-weight: 650;">
                     {% if provider.mini_descr %}{{ provider.mini_descr|truncatechars:50 }}{% endif %}
                 </p>
-                <p style="word-break: break-word; font-size: 14px; color: dimgrey">
-                    {% if provider.city %}{{ provider.city.title }}{% endif %}
+                <p style="word-break: break-word; font-size: 14px; color: dimgrey; display: flex">
+                    {% if provider.city %}<img src="{% static 'assets/images/icons/location.svg' %}" alt="">{{ provider.city.title }}{% endif %}
                 </p>
 
-                <p style="word-break: break-word">
+                <p style="word-break: break-word; margin-top: 4px">
                     {% if provider.description %}
                         {{ provider.description|truncatechars:200 }}
                     {% endif %}
