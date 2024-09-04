@@ -1,7 +1,9 @@
-from django.db.models import BooleanField, When, Case
+from datetime import timedelta
+
+from django.db.models import BooleanField, Case, Value, When
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.timezone import now
 from django.views import generic, View
-from django.views.generic import CreateView, FormView
 from rest_framework.generics import ListAPIView
 
 from apps.buyer.models import Banner, BannerSettings
@@ -10,7 +12,7 @@ from apps.provider.models import Provider, ProviderLink, VerificationDocuments
 from apps.provider.serializers import CategoryListSerializer
 from apps.tender.models import Category, Country, Region, City
 from apps.user_cabinet.models import Contacts
-from apps.user_cabinet.models import ViewsCountProfile, OpenNumberCount
+from apps.user_cabinet.models import ViewsCountProfile
 from .forms import PriceFilesForm
 from ..pages.models import TelegramBotToken
 from ..services.send_telegram_message import send_telegram_message
@@ -28,7 +30,17 @@ class ProviderListView(generic.ListView):
         self.filter = None
 
     def get_queryset(self):
-        queryset = Provider.objects.filter(is_active=True, is_provider=True, title__isnull=False)
+        today = now().date()
+        yesterday = today - timedelta(days=1)
+
+        queryset = Provider.objects.annotate(
+            new=Case(
+                When(created_at__date=today, then=Value(True)),
+                When(created_at__date=yesterday, then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField()
+            )
+        ).filter(is_active=True, is_provider=True, title__isnull=False)
         order = self.request.GET.get("order")
         if order:
             queryset = queryset.order_by(order, 'is_modered', "-id")
@@ -240,6 +252,7 @@ class DocumentDeleteView(View):
         document = get_object_or_404(VerificationDocuments, pk=pk)
         document.delete()
         return redirect('documents')
+
 
 class AddLinkView(View):
     template_name = 'cabinet/provider_profile.html'

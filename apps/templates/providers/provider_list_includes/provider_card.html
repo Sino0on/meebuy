@@ -1,0 +1,129 @@
+{% load static %}
+
+<div class="cards tab-item sm: relative flex sm:justify-between items-start p-[20px] rounded-[15px] overflow-x-hidden">
+    <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
+        <img class="w-[100px] h-[100px]" src="
+
+
+                {% if provider.image %}{{ provider.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+             alt=""/>
+        <div class="flex flex-col gap-6">
+            <div>
+                <h6 class="pb-2 text-[20px] font-extrabold font-mulish">
+                    {{ provider.title }}
+                </h6>
+                <p style="word-break: break-word; font-size: 18px; font-weight: 650;">
+                    {% if provider.mini_descr %}{{ provider.mini_descr|truncatechars:50 }}{% endif %}
+                </p>
+                <p style="word-break: break-word; font-size: 14px; color: dimgrey">
+                    {% if provider.city %}{{ provider.city.title }}{% endif %}
+                </p>
+
+                <p style="word-break: break-word">
+                    {% if provider.description %}
+                        {{ provider.description|truncatechars:200 }}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="flex sm:flex-row w-full gap-2.5 overflow-x-auto max-w-[750px] ">
+                {% for image in provider.images.all %}
+                    <img src="{{ image.image.url }}" alt="" style="width: 60px;height: 60px; object-fit: cover"></img>
+                {% endfor %}
+            </div>
+            <div class="flex gap-4">
+                <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
+
+                    <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
+                </button>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'chat_create' provider.user.pk %}"
+                       class="border border-solid border-[#2B292C] px-6 py-3 rounded-[7px]">
+                        Написать
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <ul class="flex gap-2 sm: absolute right-4">
+        {% if provider.new %}
+            <p>НОВОЕ</p>
+        {% endif %}
+        {% if provider.is_recomended %}
+            <li>
+                <img
+                    src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                    alt=""/>
+            </li>
+        {% endif %}
+        <li></li>
+        {% if provider.is_modered %}
+            <li>
+                <img style="color: #0a58ca"
+                     src="{% static 'assets/images/suppliers/suppliers/icons/check.svg' %}"
+                     title="Прошел модерацию"
+                     alt=""/>
+            </li>
+        {% endif %}
+        {% if provider.pickup %}
+            <li>
+                <img
+                        style="max-width: 24px; max-height: 24px"
+                        src="{% static 'assets/images/suppliers/suppliers/icons/user.svg' %}"
+                        title="Самовывоз"
+
+                        alt=""/>
+
+            </li>
+        {% endif %}
+        {% if provider.transport_company %}
+            <li>
+                <img style="max-width: 24px; max-height: 24px"
+
+                     src="{% static 'assets/images/suppliers/suppliers/icons/company.svg' %}"
+                     title="Доставка транспортной компанией"
+
+                     alt=""/>
+            </li>
+        {% endif %}
+        {% if provider.by_car %}
+            <li>
+                <img style="max-width: 24px; max-height: 24px"
+
+                     src="{% static 'assets/images/suppliers/suppliers/icons/cruiz.svg' %}"
+                     title="Доставка автотранспортом"
+
+                     alt=""/>
+            </li>
+        {% endif %}
+        {% if provider.air_transport %}
+            <li>
+                <img style="max-width: 24px; max-height: 24px"
+
+                     src="{% static 'assets/images/suppliers/suppliers/icons/airplane.svg' %}"
+                     title="Доставка самолетом"
+
+                     alt=""/>
+            </li>
+        {% endif %}
+        {% if provider.rail_transport %}
+            <li>
+                <img style="max-width: 24px; max-height: 24px"
+
+                     src="{% static 'assets/images/suppliers/suppliers/icons/train.svg' %}"
+                     title="Железнодорожная доставка"
+
+                     alt=""/>
+            </li>
+        {% endif %}
+        {% if provider.courier %}
+            <li>
+                <img style="max-width: 24px; max-height: 24px"
+
+                     src="{% static 'assets/images/suppliers/suppliers/icons/delivery_cart.svg' %}"
+                     title="Доставка курьером"
+
+                     alt=""/>
+            </li>
+        {% endif %}
+    </ul>
+</div>
