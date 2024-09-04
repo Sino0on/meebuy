@@ -129,12 +129,24 @@ class ProviderListView(generic.ListView):
 
 class ProviderCategoryListView(ProviderListView):
     def get_queryset(self):
-        queryset = Provider.objects.filter(is_active=True, is_provider=True, category=self.kwargs['pk'])
+        today = now().date()
+        yesterday = today - timedelta(days=1)
+
+        queryset = Provider.objects.annotate(
+            new=Case(
+                When(created_at__date=today, then=Value(True)),
+                When(created_at__date=yesterday, then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField()
+            ),
+        tariff_title = F('user__cabinet__user_status__status__status__title')
+
+        ).filter(is_active=True, is_provider=True, title__isnull=False)
         order = self.request.GET.get("order")
         if order:
-            queryset = queryset.order_by(order, "-id")
+            queryset = queryset.order_by(order, '-is_modered', "-id")
         else:
-            queryset = queryset.order_by("-id")
+            queryset = queryset.order_by('-is_modered', "-id")
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 
