@@ -867,24 +867,25 @@ def tariff_buy(request):
         return JsonResponse({"Error": "Недостаточно средств"}, status=400)
     if user.cabinet.user_status:
 
-        if user.cabinet.user_status.status == status:
+        if user.cabinet.user_status.status == status and user.cabinet.user_status.end_date > today and user.cabinet.user_status.is_active:
             return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
 
 
-        if user.cabinet.user_status.status.status == status.status:
-            user.cabinet.user_status.end_date += datetime.timedelta(days=status.months * 30)
-            user.cabinet.user_status.is_active = True
-            user.cabinet.balance -= status.price
-            user.cabinet.save()
-            user.cabinet.user_status.save()
-            Transaction.objects.create(
-                user=user.cabinet,
-                total=-status.price,
-                description=f"Транзакция покупки статуса пользователя {status.status.title} - {status.months} месяцев"
-            )
+        # if user.cabinet.user_status.status.status == status.status:
+        #     user.cabinet.user_status.end_date += datetime.timedelta(days=status.months * 30)
+        #     user.cabinet.user_status.is_active = True
+        #     user.cabinet.balance -= status.price
+        #     user.cabinet.save()
+        #     user.cabinet.user_status.save()
+        #     Transaction.objects.create(
+        #         user=user.cabinet,
+        #         total=-status.price,
+        #         description=f"Транзакция покупки статуса пользователя {status.status.title} - {status.months} месяцев"
+        #     )
     new_satus, _ = ActiveUserStatus.objects.get_or_create(
         status=status,
-        end_date=datetime.date.today() + datetime.timedelta(days=status.months * 30)
+        end_date=datetime.date.today() + datetime.timedelta(days=status.months * 30),
+        is_active=True
     )
     user.cabinet.user_status = new_satus
 
