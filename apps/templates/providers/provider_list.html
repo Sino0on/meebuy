@@ -50,6 +50,52 @@
             transform: translate(-50%, -50%);
         }
 
+        .providers__list{
+            width: 100%;
+        }
+
+        .providers__side__baner{
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: fit-content;
+        }
+
+        .providers__side__baner img{
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .providers__list__container{
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+
+
+        @media screen and (min-width: 992px) {
+            .providers__list{
+                width: 75%;
+            }
+
+            .providers__side__baner{
+                width: 25%;
+                padding-left: 16px;
+                position: sticky;
+                top: 10px;
+                right: 0px;
+            }
+               .providers__list__container{
+
+            flex-direction: row;
+        }
+
+        }
+
         @media (max-width: 1000px) {
             .filter-width {
                 width: 500px;
@@ -165,11 +211,13 @@
                     <!-- filters -->
                     {% include 'providers/provider_list_includes/filters.html' %}
                 </div>
+            <div class="providers__list__container relative">
 
-                    <div id="Tab1"
+            <div class="providers__list">
+                 <div id="Tab1"
                          data-banners="{{ banners }}"
                          data-banner-order="{{ banner_settings }}"
-                         class="flex tab-content flex-col gap-7 w-full  lg-md:w-3/4">
+                         class="flex tab-content flex-col gap-7">
                         {% for provider in providers %}
                             {% include 'providers/provider_list_includes/provider_card.html' with provider=provider %}
                         {% endfor %}
@@ -189,6 +237,15 @@
                             {% include 'providers/provider_list_includes/provider_card.html' with provider=provider %}
                         {% endfor %}
                     </div>
+            </div>
+
+
+                <div class="providers__side__baner">
+                <img src="{{ side_banner.image_mobile.url }}" alt="">
+                <img src="{{ side_banner.image_mobile.url }}" alt="">
+
+            </div>
+            </div>
 
                     <!-- pagination -->
                     {% include 'includes/pagination.html' %}
