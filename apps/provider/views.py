@@ -81,14 +81,12 @@ class ProviderListView(generic.ListView):
     def get_locations(self):
         countries = Country.objects.all()
         locations = []
-
         for country in countries:
             country_data = {
                 'id': country.id,
                 'title': country.title,
                 'regions': []
             }
-
             regions = Region.objects.filter(country=country)
             for region in regions:
                 region_data = {
@@ -96,7 +94,6 @@ class ProviderListView(generic.ListView):
                     'title': region.title,
                     'cities': []
                 }
-
                 cities = City.objects.filter(region=region)
                 for city in cities:
                     city_data = {
@@ -104,11 +101,8 @@ class ProviderListView(generic.ListView):
                         'title': city.title
                     }
                     region_data['cities'].append(city_data)
-
                 country_data['regions'].append(region_data)
-
             locations.append(country_data)
-
         return locations
 
     def get_banners(self):
@@ -128,27 +122,6 @@ class ProviderListView(generic.ListView):
 
 
 class ProviderCategoryListView(ProviderListView):
-    def get_queryset(self):
-        today = now().date()
-        yesterday = today - timedelta(days=1)
-
-        queryset = Provider.objects.annotate(
-            new=Case(
-                When(created_at__date=today, then=Value(True)),
-                When(created_at__date=yesterday, then=Value(True)),
-                default=Value(False),
-                output_field=BooleanField()
-            ),
-        tariff_title = F('user__cabinet__user_status__status__status__title')
-
-        ).filter(is_active=True, is_provider=True, title__isnull=False)
-        order = self.request.GET.get("order")
-        if order:
-            queryset = queryset.order_by(order, '-is_modered', "-id")
-        else:
-            queryset = queryset.order_by('-is_modered', "-id")
-        self.filter = ProviderFilter(self.request.GET, queryset=queryset)
-        return self.filter.qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
