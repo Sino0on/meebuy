@@ -7,7 +7,7 @@
 >
   {% for object in object_list %}
   <div
-    class="cards buyer-item sm:relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
+    class="cards buyer-item relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
   >
     <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
       <img {% if object.image %}{{ object.image.url }}{% else %}{% static
