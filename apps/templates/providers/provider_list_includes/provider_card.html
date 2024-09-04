@@ -45,8 +45,8 @@
     <ul class="flex gap-2 sm: absolute right-4">
         {% if provider.tariff_title %}
             <li>
-                <img style="color: #0a58ca"
-                     src="{% static 'assets/images/icons/star.svg' %}"
+                <img style="color: #0a58ca; width: 25px; height: 25px;"
+                     src="{% static 'assets/images/icons/crown.svg' %}"
                      title="{{ provider.tariff_title }}"
                      alt=""/>
             </li>
@@ -59,8 +59,8 @@
         {% if provider.is_recomended %}
             <li>
                 <img
-                        src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-                        alt=""/>
+                    src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                    alt=""/>
             </li>
         {% endif %}
         {% if provider.is_modered %}
