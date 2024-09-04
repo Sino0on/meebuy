@@ -46,8 +46,8 @@
 
 
         @media (max-width: 1000px) {
-               #filter-window  {
-            transform: translate(-50%, -60%);
+            #filter-window {
+                transform: translate(-50%, -60%);
 
             }
         }
@@ -102,7 +102,7 @@
     <!-- product categories -->
 
     <div class="pb-4">
-    {% include 'includes/buyer_categorylist.html' %}
+        {% include 'includes/buyer_categorylist.html' %}
     </div>
 
     <!-- buyers -->
@@ -171,26 +171,18 @@
                                                     <option value="{{ country.title }}">{{ country.title }}</option>
                                                 {% endfor %}
                                             </select>
-
-
                                         </div>
                                         <div class="flex flex-row gap-4">
                                             <div class="w-1/2">
                                                 <p
-                                                        class="text-[#737373] w-full text-[16px] font-light"
-                                                >
+                                                        class="text-[#737373] w-full text-[16px] font-light">
                                                     Область
                                                 </p>
-
                                                 <!-- Начально будет выбрано второе значение -->
                                                 <select name="region" id="region-options"
-                                                        class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-                                                >
+                                                        class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl">
                                                 </select>
-
-
                                             </div>
-
                                             <div class="w-1/2">
                                                 <p
                                                         class="text-[#737373] w-full text-[16px] font-light"
@@ -216,8 +208,7 @@
                             <button
                                     id="filterBtn"
                                     type="submit"
-                                    class="bg-[#E4DB00] w-full rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7"
-                            >
+                                    class="bg-[#E4DB00] w-full rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7">
                                 Применить
                             </button>
                         </form>
@@ -227,22 +218,19 @@
             <!-- select -->
             <div
                     class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
-                    id="selectContainer"
-            >
+                    id="selectContainer">
                 <p>Рекомендуем</p>
                 <a class="toggle-icon" id="toggleLink">
                     <img
                             src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
                             alt="Open"
                             class="openIcon"
-                            style="display: block"
-                    />
+                            style="display: block"/>
                     <img
                             src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
                             alt="Close"
                             class="closeIcon"
-                            style="display: none"
-                    />
+                            style="display: none"/>
                 </a>
                 <!-- select modal -->
                 <ul

@@ -2,6 +2,7 @@ from django.contrib import messages
 
 from apps.chat.models import Chat
 from apps.product.models import Product
+from apps.tender.models import Tender
 from apps.user_cabinet.models import OpenNumberCount
 from datetime import datetime
 
@@ -80,6 +81,36 @@ def check_user_status_and_create_new_product(request):
                 if request.user.cabinet.user_status.status:
                     can_be_created = request.user.cabinet.user_status.status.status.dayly_message
                     count_today = Chat.get_count_for_today(request.user)
+                    if can_be_created > count_today:
+
+                        return True
+                    else:
+                        messages.error(request, 'Вы не можете открыть больше чатов за сегодня.')
+                        return None
+                else:
+                    messages.error(request, 'Вы не можете открыть больше чатов за сегодня.')
+                    return None
+            else:
+                messages.error(request, 'Ваш тариф истек.')
+                request.user.cabinet.user_status.is_active = False
+                request.user.cabinet.user_status.save()
+                return None
+        else:
+            messages.error(request, 'У вас не подключен ни один тариф.')
+            return None
+    else:
+        messages.error(request, 'Вы не авторизованы .')
+        return None
+
+
+def check_user_status_and_create_new_tedner(request):
+    today = datetime.now().date()
+    if request.user.is_authenticated:
+        if request.user.cabinet.user_status:
+            if request.user.cabinet.user_status.end_date > today and request.user.cabinet.user_status.is_active:
+                if request.user.cabinet.user_status.status:
+                    can_be_created = request.user.cabinet.user_status.status.status.dayly_message
+                    count_today = Tender.get_count_for_today(request.user)
                     if can_be_created > count_today:
 
                         return True

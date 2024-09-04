@@ -102,6 +102,9 @@ class Tender(StatusMixin, models.Model):
     def __str__(self):
         return f"{self.title}"
 
+    @staticmethod
+    def get_count_for_this_month(user):
+        return Tender.get_count_for_today(user)
     class Meta:
         verbose_name = _("Тендер")
         verbose_name_plural = _("Тендеры")
