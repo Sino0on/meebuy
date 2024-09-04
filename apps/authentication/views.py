@@ -321,11 +321,13 @@ def register_v2(request):
             if request.POST.get('user-role') == 'provider':
                 provider, _ = Provider.objects.get_or_create(user=user)
                 provider.is_provider = True
+                provider.is_active = True
                 provider.save()
 
             else:
                 provider, _ = Provider.objects.get_or_create(user=user)
                 provider.is_provider = False
+                provider.is_active = True
                 provider.save()
 
             messages.success(request, 'Регистрация прошла успешно, мы выслали ваш пароль вам на почту!')

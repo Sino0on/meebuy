@@ -237,6 +237,11 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
             region = Region.objects.get(country=country, title=region_name)
             city_name = self.request.POST.get('city')
             city = City.objects.get(region=region, title=city_name)
+            if self.object.is_modered:
+                self.object.is_modered = True
+            if self.object.is_active:
+                self.object.is_active = True
+            self.object.save()
             self.object = form.save(commit=False)
             self.object.city = city
             category_ids = self.request.POST.get('category')
@@ -245,9 +250,8 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
                 numbers = list(map(int, categories))
                 categories = Category.objects.filter(id__in=numbers)
                 self.object.category.set(categories)
-            if not self.object.is_modered:
-                self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подожтите.'
-            self.object.save()
+
+
             return redirect(self.get_success_url())
         else:
             print(form.errors)
