@@ -587,7 +587,7 @@ class TariffsCabinetView(generic.ListView):
     context_object_name = 'statasus'
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by('price_month', '-id')
+        queryset = super().get_queryset()
         if not queryset.exists():
             status = Status.objects.create(
                 title='Базовый тариф',
@@ -608,7 +608,7 @@ class TariffsCabinetView(generic.ListView):
                 priorety=1
             )
             queryset = super().get_queryset()
-        return queryset
+        return queryset.order_by('price_month', '-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
