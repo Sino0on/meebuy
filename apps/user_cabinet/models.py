@@ -23,12 +23,14 @@ class Cabinet(models.Model):
         related_name='user_statuses',
         verbose_name=_('Статус пользователя')
     )
-    favorite_products = models.ManyToManyField(Product, related_name='user_cabinet',
-                                               verbose_name=_('Избранные продукты'), blank=True)
-    favorite_tenders = models.ManyToManyField(Tender, related_name='user_cabinet', verbose_name=_('Избранные закупки'),
-                                              blank=True)
-    favorite_providers = models.ManyToManyField(Provider, related_name='user_cabinet',
-                                                verbose_name=_('Избранные оптовики'), blank=True)
+    favorite_products = models.ManyToManyField(Product, related_name='user_cabinet', verbose_name=_('Избранные продукты'), blank=True)
+    favorite_tenders = models.ManyToManyField(Tender, related_name='user_cabinet', verbose_name=_('Избранные закупки'), blank=True)
+    favorite_providers = models.ManyToManyField(Provider, related_name='user_cabinet', verbose_name=_('Избранные оптовики'), blank=True)
+
+    quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'), default=0)
+    quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'), default=0)
+    quantity_opening = models.PositiveIntegerField(verbose_name=_('Количество открытий'), default=0)
+    opened_tender_contacts = models.ManyToManyField(Tender, related_name='opened_tender_contacts', blank=True)
 
     def __str__(self):
         return f'{self.user.pk} - {self.user.email}'
@@ -49,11 +51,9 @@ class Status(models.Model):
     image = models.FileField(upload_to='images/packages/', blank=True, default='1', verbose_name='Изображение')
     is_advertise = models.BooleanField(default=False, blank=True, verbose_name='Просмотр сайта без рекламы')
     is_contact_prov = models.BooleanField(default=False, blank=True, verbose_name='Просмотр контактов поставщиков')
-    is_email = models.BooleanField(default=False, blank=True,
-                                   verbose_name='Показ Вашего E-mail и ссылки на ваш сайт / соцсети')
+    is_email = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего E-mail и ссылки на ваш сайт / соцсети')
     dayly_message = models.PositiveIntegerField(blank=True, default=30, verbose_name='Исходящих сообщений в день')
-    is_publish_phone = models.BooleanField(default=False, blank=True,
-                                           verbose_name='Показ Вашего телефона незарегистрированным посетителям')
+    is_publish_phone = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего телефона незарегистрированным посетителям')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'), blank=True, null=True)
 
     def __str__(self):
@@ -260,6 +260,14 @@ class OpenNumberCount(models.Model):
             user=user,
             created_at__year=today.year
         ).count()
+
+
+class OpenNumberTenderCount(OpenNumberCount):
+    tender = models.ForeignKey(Tender, on_delete=models.CASCADE, related_name='numbers_count')
+
+    @staticmethod
+    def get_count_tender(user, tender):
+        return OpenNumberTenderCount.objects.filter(user=user, tender=tender).count()
 
 
 class SiteOpenCount(models.Model):

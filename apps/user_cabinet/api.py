@@ -28,6 +28,13 @@ class BuyStatusView(GenericAPIView):
             end_date=datetime.date.today() + datetime.timedelta(days=status.months * 30),
             is_active=True
         )
+        user.cabinet.quantity_opening += status.status.quantity_opening * status.months
+        print(user.cabinet.quantity_products)
+        user.cabinet.quantity_products += status.status.quantity_products * status.months
+        print(user.cabinet.quantity_tenders)
+        user.cabinet.quantity_tenders += status.status.quantity_tenders * status.months
+        print(user.cabinet.quantity_opening)
+        user.cabinet.save()
         Transaction.objects.create(
             user=user.cabinet,
             total=-status.price,

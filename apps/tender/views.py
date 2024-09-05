@@ -10,7 +10,7 @@ from django.views import generic
 from apps.buyer.models import Banner, BannerSettings
 from apps.product.models import Currency
 from apps.provider.models import Category
-from apps.services.tarif_checker import check_user_status_and_open_number
+from apps.services.tarif_checker import check_user_status_and_open_number, check_user_status_and_open_tender
 from apps.tender.filters import TenderFilter
 from apps.tender.forms import TenderForm, SearchRequestForm
 from apps.tender.models import Tender, TenderImg, Country, Region, City, SearchRequest
@@ -118,7 +118,7 @@ class TenderDetailView(generic.DetailView):
 
         context = super().get_context_data(**kwargs)
         if self.request.GET.get("open"):
-            open_status = check_user_status_and_open_number(self.request)
+            open_status = check_user_status_and_open_tender(self.request, self.object.id)
             if open_status == "open":
                 context["open"] = "open"
         context["banners"] = self.get_banners()

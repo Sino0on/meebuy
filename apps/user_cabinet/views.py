@@ -895,6 +895,12 @@ def tariff_buy(request):
         description=f"Транзакция покупки статуса пользователя {status.status.title}"
     )
     user.cabinet.balance -= status.price
+    user.cabinet.quantity_opening += status.status.quantity_opening * status.months
+    print(user.cabinet.quantity_products)
+    user.cabinet.quantity_products += status.status.quantity_products * status.months
+    print(user.cabinet.quantity_tenders)
+    user.cabinet.quantity_tenders += status.status.quantity_tenders * status.months
+    print(user.cabinet.quantity_opening)
     user.cabinet.save()
     return JsonResponse(data={"Info": "ok"}, status=200)
 
