@@ -608,7 +608,7 @@ class TariffsCabinetView(generic.ListView):
                 priorety=1
             )
             queryset = super().get_queryset()
-        return queryset.order_by('price_month', '-id')
+        return queryset.order_by('-price_month', '-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
