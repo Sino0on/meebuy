@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Поставщик
+    Покупатель
 {% endblock %}
 
 {% block css %}
@@ -53,8 +53,7 @@
                         <div
                             class="items-center gap-5 text-[14px] uppercase lg-md:flex lg-md:flex-col lg-md:items-start lg-md:gap-5 xl:mt-10">
                             <div class="lg-md:flex items-center gap-7">
-                                <p class="font-black text-lg font-mulish lg-md:text-[26px] xl:text-3xl">{{ object.provider.title }}
-                                </p>
+                                <p class="font-black text-lg font-mulish lg-md:text-[26px] xl:text-3xl">{{ object.provider.title }}</p>
                                 <div class="hidden lg-md:flex items-center gap-[10px]">
                                 {% if object.is_recommended %}
                                         <img class="w-6 h-6 cursor-pointer" src="{% static 'assets/images/icons/premium.svg' %}"
@@ -100,8 +99,7 @@
                 <div>
                     <div class="flex gap-4">
                         <!-- active = bg-yellow-second -->
-                        <div
-                            class="filterBy border uppercase bg-yellow-second border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
+                        <div class="filterBy border uppercase bg-yellow-second border-yellow-second rounded-[15px] font-bold text-dark-logo py-2 px-2.5 cursor-pointer">
                             Закупки
                         </div>
 
@@ -138,8 +136,7 @@
                         </div>
                         {% endfor %}
                     </div>
-                    <p class="text-end text-base text-dark-text mt-5 lg:text-lg lg:mt-[30px]"><a href="">Смотреть все
-                            закупки</a></p>
+                    <p class="text-end text-base text-dark-text mt-5 lg:text-lg lg:mt-[30px]"><a href="{% url 'buyer_list' %}">Смотреть все закупки</a></p>
                 </div>
             </div>
         </section>
@@ -166,16 +163,10 @@
                         {% for buyer in buyers %}
                                               <div class="swiper-slide">
                         <div
-                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]"
-                        >
+                          class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]">
                           <div
-                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full"
-                          >
-                            <img
-                              class="w-full h-full object-cover"
-                              src="{% static 'assets/images/home/headphones-white.svg' %}"
-                              alt=""
-                            />
+                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full">
+                            <img class="w-full h-full object-cover" src="{% static 'assets/images/home/headphones-white.svg' %}" alt=""/>
                           </div>
                           <div class="mt-6">
                             <div>
@@ -186,13 +177,8 @@
                                   {{ buyer.mini_desc }}
                               </p>
                               <p
-                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]"
-                              >
-                                <img
-                                  class="mr-[6px]"
-                                  src="{% static 'assets/images/home/headphones-white.svg' %}"
-                                  alt=""
-                                />
+                                class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]">
+                                <img class="mr-[6px]" src="{% static 'assets/images/home/headphones-white.svg' %}" alt=""/>
                                 {{ buyer.city }} {{ buyer.city.region.country }}
                               </p>
                             </div>

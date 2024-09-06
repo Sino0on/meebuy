@@ -15,8 +15,12 @@
             <p>Наш адрес
                 <a href="" class="underline">
                     {% if object.provider.city and object.provider.address %}
-                        {{ object.provider.city }} {{ object.provider.address }}
+                        {% if open %}
+                            {{ object.provider.city }} {{ object.provider.address }}
                         {% else %}
+                            *************
+                        {% endif %}
+                    {% else %}
                         Адрес не указан
                     {% endif %}
                 </a>
@@ -31,9 +35,14 @@
             </svg>
 
             <span>E-mail</span> <a href="" class="underline">
-                        {% if object.provider.email %}
-                {{ object.provider.email }}
+            {% if object.provider.email %}
+                {% if open %}
+                    {{ object.provider.email }}
                 {% else %}
+                    *************
+                {% endif %}
+
+            {% else %}
                 Email не указан
             {% endif %}
         </a>
@@ -47,9 +56,13 @@
             </svg>
 
             <span>Телефон</span> <a href="" class="underline">
-                {% if object.provider.phone %}
-                {{ object.provider.phone }}
+            {% if object.provider.phone %}
+                {% if open %}
+                    {{ object.provider.phone }}
                 {% else %}
+                    *************
+                {% endif %}
+            {% else %}
                 Телеофон не указан
             {% endif %}
         </a>
@@ -64,8 +77,12 @@
 
             <span>Сайт</span> <a href="" class="underline">
             {% if object.provider.website %}
+                                {% if open %}
                 {{ object.provider.website }}
                 {% else %}
+                    *************
+                {% endif %}
+            {% else %}
                 Сайт не указан
             {% endif %}
         </a>

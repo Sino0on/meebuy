@@ -65,32 +65,22 @@
                     </a>
                     <p class="font-normal font-mulish text-[#A0A0A0]">Покупатели</p>
                 </div>
-
             </div>
         </div>
         <div class="suppliers-wrapper">
             <div class="container">
                 <div class="relative z-50 flex flex-col justify-center w-full">
-                    <h2
-                            style="font-size: 36px"
-                            class="text-white font-extrabold sm:pb-8 text-center uppercase">
+                    <h2 style="font-size: 36px" class="text-white font-extrabold sm:pb-8 text-center uppercase">
                         покупатели
                     </h2>
                     <form class="mt-3">
                         <div class="relative md:w-[600px] sm:w-[400px] m-auto">
                             <div class="absolute inset-y-0 end-0 flex items-center pe-2">
                                 <button type="submit">
-                                    <img
-                                            src="{% static 'assets/images/icons/search.svg' %}"
-                                            alt="Search icon"
-                                    />
+                                    <img src="{% static 'assets/images/icons/search.svg' %}" alt="Search icon"/>
                                 </button>
                             </div>
-                            <input
-                                    id="default-search"
-                                    class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full"
-                                    placeholder="Например: автозапчасти"
-                            />
+                            <input id="default-search" class="p-2 pl-4 pe-10 text-sm text-[#9A9A9A] border border-grey-light rounded-md bg-[#FFFFFC] w-full" placeholder="Например: автозапчасти"/>
                         </div>
                     </form>
                 </div>
@@ -98,38 +88,25 @@
         </div>
     </div>
     </div>
-
     <!-- product categories -->
-
     <div class="pb-4">
         {% include 'includes/buyer_categorylist.html' %}
     </div>
-
     <!-- buyers -->
-
     <div class="bg-[#FFFFFC] pb-16 pt-2">
     <div class="container">
         <!-- filters -->
-        <div
-                class="flex gap-6 lg-md: items-center md:my-10 md: mb-5 lg-md: mt-10"
-        >
+        <div class="flex gap-6 lg-md: items-center md:my-10 md: mb-5 lg-md: mt-10">
             <!-- filter -->
-            <div
-                    id="filterContainer"
-                    class="relative cursor-pointer z-50 shadow-card-shadow rounded-[15px] py-3 px-6"
-            >
+            <div id="filterContainer" class="relative cursor-pointer z-50 shadow-card-shadow rounded-[15px] py-3 px-6">
                 <div class="flex items-center gap-4">
                     Фильтр
-                    <img
-                            src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}"
-                            alt=""
-                    />
+                    <img src="{% static 'assets/images/suppliers/suppliers/icons/filter.svg' %}" alt=""/>
                 </div>
                 <!-- filter modal-->
                 <div id="openFilter" data-countries="{{ locations }}" style="display: none" class="filter-container">
                     <div id="filter-window"
-                         class=" z-50  flex flex-col gap-8 bg-[#fff] rounded-[15px] py-6 px-4 sm:w-[450px] w-auto"
-                    >
+                         class=" z-50  flex flex-col gap-8 bg-[#fff] rounded-[15px] py-6 px-4 sm:w-[450px] w-auto">
                         <form method="get" id="country-form" action="{% url 'buyer_list' %}">
                             <div class="flex flex-col gap-4">
                                 <div class="w-full">
@@ -156,16 +133,11 @@
                                     </div>
                                     <div class="flex flex-col gap-5">
                                         <div>
-                                            <p
-                                                    class="text-[#737373] w-full text-[16px] font-light"
-                                            >
+                                            <p class="text-[#737373] w-full text-[16px] font-light">
                                                 Страна
                                             </p>
-
                                             <!-- Начально будет выбрано второе значение -->
-                                            <select name="country" id="country-options"
-                                                    class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-                                            >
+                                            <select name="country" id="country-options" class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl">
                                                 <!--Supplement an id here instead of using 'name'-->
                                                 {% for country in locations %}
                                                     <option value="{{ country.title }}">{{ country.title }}</option>
@@ -174,41 +146,27 @@
                                         </div>
                                         <div class="flex flex-row gap-4">
                                             <div class="w-1/2">
-                                                <p
-                                                        class="text-[#737373] w-full text-[16px] font-light">
+                                                <p class="text-[#737373] w-full text-[16px] font-light">
                                                     Область
                                                 </p>
                                                 <!-- Начально будет выбрано второе значение -->
-                                                <select name="region" id="region-options"
-                                                        class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl">
+                                                <select name="region" id="region-options" class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl">
                                                 </select>
                                             </div>
                                             <div class="w-1/2">
-                                                <p
-                                                        class="text-[#737373] w-full text-[16px] font-light"
-                                                >
+                                                <p class="text-[#737373] w-full text-[16px] font-light">
                                                     Город
                                                 </p>
-
                                                 <!-- Начально будет выбрано второе значение -->
-                                                <select name="city" id="city-options"
-                                                        class=" text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
-                                                >
+                                                <select name="city" id="city-options" class=" text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl">
                                                     <!--Supplement an id here instead of using 'name'-->
                                                 </select>
-
-
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
-                            <button
-                                    id="filterBtn"
-                                    type="submit"
-                                    class="bg-[#E4DB00] w-full rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7">
+                            <button id="filterBtn" type="submit" class="bg-[#E4DB00] w-full rounded-[7px] mt-6 py-2 px-16 text-[#2B292C] text-[16px] font-mulish mb-7">
                                 Применить
                             </button>
                         </form>
@@ -216,59 +174,28 @@
                 </div>
             </div>
             <!-- select -->
-            <div
-                    class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6"
-                    id="selectContainer">
+            <div class="relative cards cursor-pointer flex gap-2 items-center shadow-card-shadow rounded-[15px] py-3 px-6" id="selectContainer">
                 <p>Рекомендуем</p>
                 <a class="toggle-icon" id="toggleLink">
-                    <img
-                            src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}"
-                            alt="Open"
-                            class="openIcon"
-                            style="display: block"/>
-                    <img
-                            src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}"
-                            alt="Close"
-                            class="closeIcon"
-                            style="display: none"/>
+                    <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-down.svg' %}" alt="Open" class="openIcon" style="display: block"/>
+                    <img src="{% static 'assets/images/suppliers/suppliers/icons/arrow-up.svg' %}" alt="Close" class="closeIcon" style="display: none"/>
                 </a>
                 <!-- select modal -->
-                <ul
-                        id="selectModal"
-                        class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] w-[178px] h-[100px]"
-                >
-                    <li
-                            id="recommended-list"
-                            class="cursor-pointer selected border-b  flex items-center justify-between"
-                    >
+                <ul id="selectModal" class="modal shadow-card-shadow absolute left-0 top-[60px] z-50 rounded-2xl bg-[#fff] w-[178px] h-[100px]">
+                    <li id="recommended-list" class="cursor-pointer selected border-b  flex items-center justify-between">
                         Рекомендуем
-                        <img
-                                id="recommended"
-                                style="display: none"
-                                src="{% static 'assets/images/icons/check.svg' %}"
-                                alt="check"
-                        />
+                        <img id="recommended" style="display: none" src="{% static 'assets/images/icons/check.svg' %}" alt="check"/>
                     </li>
-                    <li
-                            id="new-list"
-                            class="cursor-pointer selected flex items-center justify-between"
-                    >
+                    <li id="new-list" class="cursor-pointer selected flex items-center justify-between">
                         Новые
-                        <img
-                                id="new"
-                                style="display: none"
-                                src="{% static 'assets/images/icons/check.svg' %}"
-                                alt="check"
-                        />
+                        <img id="new" style="display: none" src="{% static 'assets/images/icons/check.svg' %}" alt="check"/>
                     </li>
                 </ul>
             </div>
         </div>
-
         <!-- cards -->
         {% include 'buyer/buyer_list_includes/buyer_cards.html' %}
         <!-- pagination -->
-
         {% include 'includes/pagination.html' %}
     </div>
 {% endblock %}
