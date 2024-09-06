@@ -47,7 +47,7 @@
                                 <ul>
                                     {% for field in form %}
                                         {% for error in field.errors %}
-                                            <li>{{ field.name }} - {{ error }}</li>
+                                            <li><p style="color: red; font-size: 24px;">{{ field.name }} - {{ error }}</p></li>
                                         {% endfor %}
                                     {% endfor %}
                                 </ul>
@@ -102,6 +102,7 @@
                                                 <!-- Начально будет выбрано второе значение -->
                                                 <select name="country" id="country-options"
                                                         data-selected-country="{{ object.city.region.country }}"
+                                                        required
                                                         class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
                                                 >
                                                     <!--Supplement an id here instead of using 'name'-->
@@ -119,6 +120,7 @@
                                                     </p>
                                                     <!-- Начально будет выбрано второе значение -->
                                                     <select name="region" id="region-options"
+                                                            required
                                                             data-selected-region="{{ object.city.region }}"
                                                             class="text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
                                                     >
@@ -133,6 +135,7 @@
                                                     <!-- Начально будет выбрано второе значение -->
                                                     <select name="city" id="city-options"
                                                             data-selected-city="{{ object.city }}"
+                                                            required
                                                             class=" text-[#737373] mt-2 w-full text-[16px] font-light bg-[#F9F9F9] border border-[#E6E6E6] px-5 py-3 rounded-2xl"
                                                     >
                                                         <!--Supplement an id here instead of using 'name'-->
