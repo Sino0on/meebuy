@@ -122,9 +122,9 @@
                             </div>
 
                         </div>
-                                                              {% for error in register_form.password1.errors %}
-                                    <p style="color: red">{{ error }}</p>
-                                {% endfor %}
+                            {% for error in register_form.password1.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
                         <div id="confirm" class="input flex items-center gap-2">
                             <input id="policy" name="policy" type="checkbox" class="w-[25px] h-[25px] lg-md:mr-1"/>
                             <label for="policy" class="text-[16px] font-normal font-mulish text-[#777777]">

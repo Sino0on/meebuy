@@ -14,9 +14,10 @@ from apps.tender.models import Category, Country, Region, City
 from apps.user_cabinet.models import Contacts
 from apps.user_cabinet.models import ViewsCountProfile
 from .forms import PriceFilesForm
-from ..pages.models import TelegramBotToken
-from ..services.send_telegram_message import send_telegram_message
-from ..services.tarif_checker import check_user_status_and_open_number
+from apps.pages.models import TelegramBotToken
+from apps.services.send_telegram_message import send_telegram_message
+from apps.services.tarif_checker import check_user_status_and_open_number
+from django.core.mail import send_mail
 
 
 class ProviderListView(generic.ListView):
@@ -246,6 +247,14 @@ class DocumentCreateView(View):
         token = TelegramBotToken.objects.first()
         for chat in (chat.strip() for chat in token.report_channels.split(',')):
             send_telegram_message(token.bot_token, chat, message)
+        if token.email:
+            send_mail(
+                'Документы отправлены на проверку',
+                f'Уважаемый {request.user}, ваши документы были успешно отправлены и находятся на рассмотрении.',
+                'your-email@example.com',  # От кого
+                [f'{token.email}'],  # Кому
+                fail_silently=False,
+            )
 
         return redirect('documents')
 

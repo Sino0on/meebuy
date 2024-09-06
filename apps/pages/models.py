@@ -28,6 +28,7 @@ class StaticPage(models.Model):
 class TelegramBotToken(models.Model):
     bot_token = models.CharField(max_length=200, unique=True, verbose_name=_("Телеграм Бот Токен"))
     report_channels = models.TextField(max_length=200, blank=True, null=True, verbose_name=_("Айди каналов"))
+    email = models.EmailField(max_length=200, blank=True, null=True, verbose_name=_("Email"))
 
     def clean(self):
         if TelegramBotToken.objects.exists() and not self.pk:

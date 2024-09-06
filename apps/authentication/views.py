@@ -299,17 +299,12 @@ def register_v2(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            # Генерация случайного пароля
             password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
-
-            # Создание пользователя
             user = User.objects.create(
                 username=form.cleaned_data['username'],
                 email=form.cleaned_data['email'],
-                password=make_password(password)  # Хеширование пароля
+                password=make_password(password)
             )
-
-            # Отправка пароля на почту пользователя
             send_mail(
                 'Ваш пароль для входа на сайт',
                 f'Ваш пароль: {password}\nИспользуйте его для входа на сайт.',
@@ -323,15 +318,18 @@ def register_v2(request):
                 provider.is_provider = True
                 provider.is_active = True
                 provider.save()
-
             else:
                 provider, _ = Provider.objects.get_or_create(user=user)
                 provider.is_provider = False
                 provider.is_active = True
                 provider.save()
-
             messages.success(request, 'Регистрация прошла успешно, мы выслали ваш пароль вам на почту!')
             return redirect('authentication')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+            return render(request, 'auth/authentication.html', {'form': form})
 
     else:
         form = CustomUserCreationForm()
