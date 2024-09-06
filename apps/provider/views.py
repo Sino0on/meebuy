@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now
 from django.views import generic, View
 from rest_framework.generics import ListAPIView
+from django.core.mail import EmailMessage
 
 from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
@@ -239,22 +240,32 @@ class DocumentCreateView(View):
 
     def post(self, request):
         files = request.FILES.getlist('documents')
+        if not files:
+            return redirect('documents')  # Если файлов нет, возвращаем пользователя
+
+        # Создание записей документов и сбор их названий
+        file_names = [file.name for file in files]
         for file in files:
             VerificationDocuments.objects.create(document=file, provider=request.user.provider)
 
-        message = f'Пользователь {request.user} отправил документы для проверки.'
+        # Формирование сообщения с перечислением имен файлов
+        file_names_text = ', '.join(file_names)
+        message = f'Пользователь {request.user} отправил следующие документы для проверки: {file_names_text}.'
 
         token = TelegramBotToken.objects.first()
-        for chat in (chat.strip() for chat in token.report_channels.split(',')):
-            send_telegram_message(token.bot_token, chat, message)
-        if token.email:
-            send_mail(
-                'Документы отправлены на проверку',
-                f'Уважаемый {request.user}, ваши документы были успешно отправлены и находятся на рассмотрении.',
-                'your-email@example.com',  # От кого
-                [f'{token.email}'],  # Кому
-                fail_silently=False,
-            )
+        if token:
+            for chat in (chat.strip() for chat in token.report_channels.split(',')):
+                send_telegram_message(token.bot_token, chat, message)  # Отправка сообщения в Telegram
+
+            if token.email:
+                # Отправка email с именами файлов
+                email = EmailMessage(
+                    'Документы отправлены на проверку',
+                    f'Юзер {request.user}, следующие документы были отправлены на проверку: {file_names_text}.',
+                    'your-email@example.com',  # Этот email должен быть настроен в вашем Django settings
+                    [token.email],  # Получатель
+                )
+                email.send(fail_silently=False)  # Отправляем email
 
         return redirect('documents')
 
