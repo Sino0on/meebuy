@@ -82,6 +82,10 @@ class ProductListView(ListView):
         filter = self.filter_class(self.request.GET, queryset=queryset)
         return filter.qs.distinct()
 
+        category_id = self.request.GET.get('category')
+        if category_id:
+            filtered_queryset = filtered_queryset.filter(category__id=category_id)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         categories = ProductCategory.objects.filter(children__isnull=False).annotate(
