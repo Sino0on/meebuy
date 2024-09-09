@@ -164,6 +164,7 @@ class UserDetailView(LoginRequiredMixin, generic.TemplateView):
         context['contacts'] = contacts
         context['products'] = Product.objects.filter(provider__user=self.request.user)[:3]
         context['links'] = provider.links.all()
+        context['actual_tariff'] = self.request.user.cabinet.user_status if self.request.user.cabinet else None
 
         return context
 
@@ -616,6 +617,10 @@ class TariffsCabinetView(generic.ListView):
         context['contacts'] = contacts
         context['faqs'] = FAQ.objects.all()
         context['parents'] = OurPartners.objects.filter(active=True)
+        try:
+            context['actual_tariff'] = self.request.user.cabinet.user_status.status.id
+        except AttributeError:
+            context['actual_tariff'] = None
         return context
 
 
@@ -862,13 +867,23 @@ def add_provider_fav(request, pk):
 def tariff_buy(request):
     today = datetime.date.today()
     status = get_object_or_404(PackageStatus, id=int(request.GET.get('id')))
+    print(int(request.GET.get('id')))
     user = request.user
     if user.cabinet.balance < status.price:
         return JsonResponse({"Error": "Недостаточно средств"}, status=400)
-    if user.cabinet.user_status:
+    # if user.cabinet.user_status:
 
-        if user.cabinet.user_status.status == status and user.cabinet.user_status.end_date > today and user.cabinet.user_status.is_active:
-            return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
+        # if user.cabinet.user_status.status == status and user.cabinet.user_status.end_date > today and user.cabinet.user_status.is_active:
+        #     print(user.cabinet.user_status.status)
+        #     return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
+
+    if status.status.base_tariff:
+        if not user.cabinet.base_tariff_connected_date:
+            user.cabinet.base_tariff_connected_date = datetime.date.today()
+        else:
+            return JsonResponse(
+                {"Error": f"У вас уже был подключен базовый тариф - {user.cabinet.base_tariff_connected_date}"},
+                status=400)
 
 
         # if user.cabinet.user_status.status.status == status.status:
@@ -895,15 +910,12 @@ def tariff_buy(request):
         description=f"Транзакция покупки статуса пользователя {status.status.title}"
     )
     user.cabinet.balance -= status.price
-    user.cabinet.quantity_opening += status.status.quantity_opening * status.months
-    print(user.cabinet.quantity_products)
-    user.cabinet.quantity_products += status.status.quantity_products * status.months
-    print(user.cabinet.quantity_tenders)
-    user.cabinet.quantity_tenders += status.status.quantity_tenders * status.months
-    print(user.cabinet.quantity_opening)
+    user.cabinet.quantity_opening = status.status.quantity_opening * status.months
+    user.cabinet.quantity_products = status.status.quantity_products * status.months
+    user.cabinet.quantity_tenders = status.status.quantity_tenders * status.months
+
     user.cabinet.save()
     return JsonResponse(data={"Info": "ok"}, status=200)
-
 
 def redirect_to_site(request, pk):
     provider = get_object_or_404(Cabinet, id=pk)

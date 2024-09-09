@@ -43,7 +43,10 @@
 }
 
 span.active {
-    color: #008000;
+    color: #FFF;
+    background: #008000;
+    border-radius: 5px;
+    padding: 1px 3px;
 }
 
 .tree__item--parent img {

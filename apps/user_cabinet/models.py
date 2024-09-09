@@ -27,10 +27,13 @@ class Cabinet(models.Model):
     favorite_tenders = models.ManyToManyField(Tender, related_name='user_cabinet', verbose_name=_('Избранные закупки'), blank=True)
     favorite_providers = models.ManyToManyField(Provider, related_name='user_cabinet', verbose_name=_('Избранные оптовики'), blank=True)
 
+    base_tariff_connected_date = models.DateField(blank=True, null=True)
+
     quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'), default=0)
     quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'), default=0)
     quantity_opening = models.PositiveIntegerField(verbose_name=_('Количество открытий'), default=0)
-    opened_tender_contacts = models.ManyToManyField(Tender, related_name='opened_tender_contacts', blank=True)
+    quantity_opening_tenders = models.ManyToManyField(Tender, related_name='opened_tender_contacts', blank=True)
+
 
     def __str__(self):
         return f'{self.user.pk} - {self.user.email}'
@@ -41,6 +44,7 @@ class Cabinet(models.Model):
 
 
 class Status(models.Model):
+    base_tariff = models.BooleanField(default=False, blank=True, verbose_name='Базовый тариф')
     title = models.CharField(max_length=123, verbose_name=_('Название'))
     price_month = models.DecimalField(verbose_name='Цена за месяц', max_digits=100, decimal_places=1)
     is_recomended = models.BooleanField(blank=True, default=False, verbose_name='РЕКОМЕНДУЕМ')

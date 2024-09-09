@@ -127,12 +127,15 @@
                 </div>
             </div>
         </section>
+    <div id="tariff-data" data-actual-tariff="{{ actual_tariff }}"></div>
+
     </main>
 {% endblock %}
 {% block js %}
     <script src="{% static 'pages/tariffs/tariffs.js' %}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            const actualTariff = document.getElementById('tariff-data').dataset.actualTariff;
             let tariffsData = [];
 
             async function fetchTariffsData() {
@@ -198,8 +201,7 @@
               <p class="">Срок подключения</p>
               <div class="flex gap-[30px] mt-5 w-full">
               ${tariff.statuses.map((status, index) => {
-                    return `<div class="flex items-center flex-col justify-around" style="margin: 0 auto"
->
+                    return `<div class="flex items-center flex-col justify-around" style="margin: 0 auto">
                           <input
                             class="w-6 h-6"
                             type="radio"
@@ -284,8 +286,8 @@
                     : ''}
 
           </div>
-          <button class="btn-filled py-5 px-[30px] uppercase mt-auto" onclick="connectTariff(${status.id})">
-            Подключить
+          <button class="btn-filled py-5 px-[30px] uppercase mt-auto tarif-btn" id="${status.id}" onclick="connectTariff(${status.id})">
+                ${actualTariff == status.id ? 'Обновить' : 'Подключить '}
           </button>
         </div>
       </div>
@@ -306,14 +308,31 @@
                 tariffElement.outerHTML = renderTariff(tariffsData[tariffIndex], statusIndex);
             };
 
-            window.connectTariff = (statusId) => {
+            window.connectTariff = (statusId,e) => {
+                const clickedBtn = document.getElementById(+statusId);
+                const tarifBtns = document.querySelectorAll('.tarif-btn')
+
+                clickedBtn.disabled = true;
+
                 fetch(`/connect_tariff?id=${statusId}`, {
                     method: 'GET',
                 })
                     .then(response => response.json())
                     .then(data => {
                         if (data.Info) {
+
                             showToast('success', 'Успешно', 'Вы успешно подключили тариф');
+                clickedBtn.disabled = false;
+
+                            tarifBtns.forEach((btn)=>{
+
+                                if(Number(btn.id) === statusId){
+                                    btn.textContent = "Обновить"
+                                } else {
+                                    btn.textContent = "Подключить"
+
+                                }
+                            })
                         } else {
                             showToast('error', 'Ошибка', data.Error);
                         }

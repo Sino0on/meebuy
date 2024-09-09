@@ -25,8 +25,7 @@
     <main class="profile-myCompany">
         <section class="heading">
             <div class="container">
-                <h1
-                        class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
+                <h1 class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
                     личный кабинет
                 </h1>
             </div>
@@ -55,26 +54,39 @@
                                 {% else %}
                                     <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
                                 {% endif %}
-                                <a href="
-                                        {% if provider.is_provider %}{% url 'anketa' %}{% else %}{% url 'anketa_buyer' %}{% endif %}">
-                                    <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5">
+
+                                <a href="{% if provider.is_provider %}{% url 'anketa' %}{% else %}{% url 'anketa_buyer' %}{% endif %}">
+                                    <button class="btn-filled-yellow w-full uppercase py-2">
                                         Редактировать анкету
                                     </button>
                                 </a>
-                            {% if provider.is_provider %}
-                                <a href="
-                                        {% url 'documents' %}">
-                                    <button class="mt-[26px] btn-filled-yellow w-full uppercase py-[8px]">
-                                        Мои документы
-                                    </button>
-                                </a>
-                            {% endif %}
-                                <a href="{% url 'tariffs' %}"
-                                   class="mt-4 border border-[#E4DB00] bg-[#2B292C] text-bg-white rounded-[15px] flex items-center justify-center w-full gap-2.5 py-[13px] ">
-                                    <img class="w-[23px] h-[23px]" src="{% static 'assets/images/icons/premium.svg' %}"
-                                         alt="">
-                                    <span>Подключить <span class="uppercase">Premium</span> тариф</span>
-                                </a>
+                                {% if provider.is_provider %}
+                                    <a href="{% url 'documents' %}">
+                                        <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2">
+                                            Мои документы
+                                        </button>
+                                    </a>
+                                {% endif %}
+                                {% if not actual_tariff %}
+                                    <a href="{% url 'tariffs' %}"
+                                       class="mt-4 border border-[#E4DB00] bg-[#2B292C] text-bg-white rounded-[15px] flex items-center justify-center w-full gap-2.5 py-[13px] ">
+                                        <img class="w-[23px] h-[23px]"
+                                             src="{% static 'assets/images/icons/premium.svg' %}"
+                                             alt="">
+                                        <span>Подключить <span class="uppercase">Premium</span> тариф</span>
+                                    </a>
+                                {% else %}
+                                  <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-top: 10px">
+                                        <h4 style="color: #333; font-size: 18px; margin-bottom: 10px;">Активный тариф: {{ provider.user.cabinet.user_status.status.status.title }}</h4>
+                                        <p style="color: #666; font-size: 16px; margin-bottom: 5px;">Oткрытий контактов: <span style="color: #ffb700; font-weight: bold; text-shadow: 0 0 #696969">{{ provider.user.cabinet.quantity_opening }}</span></p>
+                                        <p style="color: #666; font-size: 16px; margin-bottom: 5px;">Oткрытий чатов с поставщиками: <span style="color: #ffc400; font-weight: bold; text-shadow: 0 0 #696969">{{ provider.user.cabinet.quantity_tenders }}</span></p>
+                                        <p style="color: #666; font-size: 16px;">Количество созданий продуктов: <span style="color: #ffcc00; font-weight: bold; text-shadow: 0 0 #696969">{{ provider.user.cabinet.quantity_products }}</span></p>
+                                      <br>
+                                      <p style="color: #666; font-size: 16px;">Дата окончания: <span style="color: #ffcc00; font-weight: bold; text-shadow: 0 0 #696969">{{ provider.user.cabinet.user_status.end_date }}</span></p>
+
+                                  </div>
+
+                                {% endif %}
                             </div>
                             <!--  Фотографии  -->
                             <div class="card__item photos text-dark-text shadow-card-shadow">
@@ -405,12 +417,14 @@
                                                 {% endfor %}
                                             {% endif %}
                                         </div>
-                                    {% for link in links %}
+                                        {% for link in links %}
 
                                             <div class="h-full w-full flex flex-col lg-md:flex-row items-center link-block gap-4">
-                                                <input type="text" placeholder="{{ link.name }}" name="name" value="{{ link.name }}"
+                                                <input type="text" placeholder="{{ link.name }}" name="name"
+                                                       value="{{ link.name }}"
                                                        class=" link-input-label rounded-md p-2 border border-1 w-full lg-md:w-[25%]">
-                                                <input type="text" placeholder="{{ link.link }} " name="link" value="{{ link.link }}"
+                                                <input type="text" placeholder="{{ link.link }} " name="link"
+                                                       value="{{ link.link }}"
                                                        class="link-input  rounded-md p-2 border border-1 w-full lg-md:w-[70%]">
                                             </div>
                                         {% endfor %}

@@ -240,6 +240,7 @@ urlpatterns = [
 
     # Payment and transactions
     path('connect_tariff/', tariff_buy, name='connect_tariff'),
+
     path('delete-transaction/<int:transaction_id>/', delete_transaction, name='delete_transaction'),
     path('init_payment/', init_payment, name='init_payment'),
     path('freedompay/success/', freedompay_success, name='freedompay_success'),

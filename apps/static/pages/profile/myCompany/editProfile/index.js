@@ -49,6 +49,7 @@ function createTree(treeArray, depth = 0) {
         if (index === -1) {
           selectedItems.push(item.id);
           span.classList.add("active");
+
         } else {
           selectedItems.splice(index, 1);
           span.classList.remove("active");
