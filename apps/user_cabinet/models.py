@@ -32,8 +32,7 @@ class Cabinet(models.Model):
     quantity_products = models.PositiveIntegerField(verbose_name=_('Количество объявлений'), default=0)
     quantity_tenders = models.PositiveIntegerField(verbose_name=_('Количество закупок'), default=0)
     quantity_opening = models.PositiveIntegerField(verbose_name=_('Количество открытий'), default=0)
-    quantity_opening_tenders = models.ManyToManyField(Tender, related_name='opened_tender_contacts', blank=True)
-
+    opened_tender_contacts = models.ManyToManyField(Tender, related_name='opened_tender_contacts', blank=True)
 
     def __str__(self):
         return f'{self.user.pk} - {self.user.email}'
@@ -57,6 +56,7 @@ class Status(models.Model):
     is_contact_prov = models.BooleanField(default=False, blank=True, verbose_name='Просмотр контактов поставщиков')
     is_email = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего E-mail и ссылки на ваш сайт / соцсети')
     dayly_message = models.PositiveIntegerField(blank=True, default=30, verbose_name='Исходящих сообщений в день')
+
     is_publish_phone = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего телефона незарегистрированным посетителям')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'), blank=True, null=True)
 

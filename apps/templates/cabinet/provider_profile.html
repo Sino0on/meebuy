@@ -78,14 +78,12 @@
                                 {% else %}
                                   <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-top: 10px">
                                         <h4 style="color: #333; font-size: 18px; margin-bottom: 10px;">Активный тариф: {{ provider.user.cabinet.user_status.status.status.title }}</h4>
-                                        <p style="color: #666; font-size: 16px; margin-bottom: 5px;">Oткрытий контактов: <span style="color: #ffb700; font-weight: bold; text-shadow: 0 0 #696969">{{ provider.user.cabinet.quantity_opening }}</span></p>
-                                        <p style="color: #666; font-size: 16px; margin-bottom: 5px;">Oткрытий чатов с поставщиками: <span style="color: #ffc400; font-weight: bold; text-shadow: 0 0 #696969">{{ provider.user.cabinet.quantity_tenders }}</span></p>
-                                        <p style="color: #666; font-size: 16px;">Количество созданий продуктов: <span style="color: #ffcc00; font-weight: bold; text-shadow: 0 0 #696969">{{ provider.user.cabinet.quantity_products }}</span></p>
+                                        <p style="color: #666; font-size: 16px; margin-bottom: 5px;">Oткрытий контактов: <span style="color: #ffb700; font-weight: bold; text-shadow: 0 0 10px rgba(105,105,105,0.25)">{{ provider.user.cabinet.quantity_opening }}</span></p>
+                                        <p style="color: #666; font-size: 16px; margin-bottom: 5px;">Oткрытий чатов с поставщиками: <span style="color: #ffc400; font-weight: bold; text-shadow: 0 0 10px rgba(105,105,105,0.25)">{{ provider.user.cabinet.quantity_tenders }}</span></p>
+                                        <p style="color: #666; font-size: 16px;">Количество созданий продуктов: <span style="color: #ffcc00; font-weight: bold; text-shadow: 0 0 10px rgba(105,105,105,0.25)">{{ provider.user.cabinet.quantity_products }}</span></p>
                                       <br>
-                                      <p style="color: #666; font-size: 16px;">Дата окончания: <span style="color: #ffcc00; font-weight: bold; text-shadow: 0 0 #696969">{{ provider.user.cabinet.user_status.end_date }}</span></p>
-
+                                      <p style="color: #666; font-size: 16px;">Дата окончания: <span style="color: #ffcc00; font-weight: bold; text-shadow: 0 0 10px rgba(105,105,105,0.25)">{{ provider.user.cabinet.user_status.end_date }}</span></p>
                                   </div>
-
                                 {% endif %}
                             </div>
                             <!--  Фотографии  -->

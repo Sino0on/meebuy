@@ -6,6 +6,7 @@ from apps.authentication.models import User
 from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
 from apps.provider.models import Provider, Category
+from apps.services.tarif_checker import check_user_status_and_open_tender, check_user_status_and_open_buyer
 from apps.tender.models import Country, Region, City
 from apps.tender.views import TenderCreateView
 from apps.user_cabinet.models import Contacts
@@ -45,7 +46,6 @@ class BuyerListView(generic.ListView):
         order = self.request.GET.get("order")
         if order:
             queryset = queryset.order_by(order, '-id')
-
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 
@@ -73,14 +73,12 @@ class BuyerListView(generic.ListView):
     def get_locations(self):
         countries = Country.objects.all()
         locations = []
-
         for country in countries:
             country_data = {
                 'id': country.id,
                 'title': country.title,
                 'regions': []
             }
-
             regions = Region.objects.filter(country=country)
             for region in regions:
                 region_data = {
@@ -88,7 +86,6 @@ class BuyerListView(generic.ListView):
                     'title': region.title,
                     'cities': []
                 }
-
                 cities = City.objects.filter(region=region)
                 for city in cities:
                     city_data = {
@@ -96,11 +93,8 @@ class BuyerListView(generic.ListView):
                         'title': city.title
                     }
                     region_data['cities'].append(city_data)
-
                 country_data['regions'].append(region_data)
-
             locations.append(country_data)
-
         return locations
 
     def get_banners(self):
@@ -149,9 +143,19 @@ class BuyerDetailView(generic.DetailView):
     model = User
 
     def get_context_data(self, **kwargs):
+        check_result = self.check_open_and_status()
         context = super().get_context_data(**kwargs)
-        context["open"] = False
+        context["open"] = check_result
         return context
+
+    def check_open_and_status(self):
+        if self.request.GET.get("open"):
+            check_result = check_user_status_and_open_buyer(self.request)
+            if check_result:
+                return True
+        return False
+
+
 
     def get_banners(self):
         banners = Banner.objects.filter(page_for="buyer").order_by('?')
@@ -167,4 +171,3 @@ class BuyerDetailView(generic.DetailView):
                     }
                 )
         return banner_list
-
