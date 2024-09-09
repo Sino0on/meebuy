@@ -50,7 +50,7 @@ from apps.product.views import (
     PriceColumnUpdateView,
     PriceColumnDeleteView,
     DownloadPriceFileView,
-    DeleteFileView
+    DeleteFileView, ProductCategoryListView
 )
 # Provider views
 from apps.provider.views import (
@@ -158,6 +158,8 @@ urlpatterns = [
 
     # Product
     path('product/list/', ProductListView.as_view(), name='product_list'),
+    path('product/list/<int:pk>/', ProductCategoryListView.as_view(), name='product_category_list'),
+
     path('product/detail/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
     path('product/create/', ProductCreateView.as_view(), name='product_create'),
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update'),

@@ -18,6 +18,7 @@ class ProductCategory(StatusMixin, models.Model):
         verbose_name="Родительская категория",
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    icon = models.FileField(upload_to="images/categories/", verbose_name="Иконка", blank=True, null=True)
 
     # provider = models.ForeignKey(
     #     "provider.Provider", on_delete=models.PROTECT, related_name="product_categories"

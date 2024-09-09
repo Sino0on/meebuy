@@ -1,6 +1,6 @@
 import os
 from urllib.parse import quote, unquote
-from django.db.models import Count
+from django.db.models import Count, BooleanField
 import random
 import openpyxl
 import requests
@@ -80,11 +80,20 @@ class ProductListView(ListView):
 
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
-        return filter.qs
+        return filter.qs.distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
+        categories = ProductCategory.objects.filter(children__isnull=False).annotate(
+            has_children=Case(
+                When(children__isnull=False, then=True),
+                default=False,
+                output_field=BooleanField()
+            )
+        )
+        print(categories)
+        context['categories'] = categories.distinct()
+        context["all"] = False
         contacts = Contacts.load()
         context["contacts"] = contacts
         context["best_products"] = Product.objects.filter(is_recommended=True).order_by('?')[:3]
@@ -107,6 +116,24 @@ class ProductListView(ListView):
         if bottom_count > 0:
             random_index = random.randint(0, bottom_count - 1)
             context["banner_4"] = ProductBanner.objects.filter(bottom_banner__isnull=False)[random_index]
+
+        return context
+
+
+class ProductCategoryListView(ProductListView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = ProductCategory.objects.filter(parent__id=self.kwargs['pk']).annotate(
+            has_children=Case(
+                When(children__isnull=False, then=True),
+                default=False,
+                output_field=BooleanField()
+            )
+        )
+        print(categories)
+        context['categories'] = categories.distinct()
+        context["all"] = False
 
         return context
 
@@ -220,6 +247,7 @@ class ProductCreateView(CreateView):
             ProductImg.objects.create(product=self.object, image=image)
 
         return response
+
     def form_invalid(self, form):
         print(form.errors)
         return super().form_invalid(form)
@@ -322,9 +350,6 @@ class DownloadPriceFileView(View):
         except Exception as e:
             print(f"Error reading file: {e}")
             raise Http404("Ошибка при чтении файла")
-
-
-
 
 
 @method_decorator(csrf_exempt, name='dispatch')
