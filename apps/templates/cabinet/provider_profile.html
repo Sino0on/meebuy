@@ -52,7 +52,9 @@
                                 {% if provider.is_modered %}
                                     <br>
                                 {% else %}
-                                    <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
+                                    {% if provider.is_provider %}
+                                        <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
+                                    {% endif %}
                                 {% endif %}
 
                                 <a href="{% if provider.is_provider %}{% url 'anketa' %}{% else %}{% url 'anketa_buyer' %}{% endif %}">
