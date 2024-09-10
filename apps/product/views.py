@@ -58,7 +58,7 @@ class ProductListView(ListView):
     filter_class = ProductFilter
 
     def get_queryset(self):
-        queryset = super().get_queryset().distinct()
+        queryset = super().get_queryset()
 
         # Аннотируем поле для сортировки с учетом отсутствующих значений статусов
         queryset = queryset.annotate(
@@ -67,24 +67,25 @@ class ProductListView(ListView):
                 default='provider__user_cabinet__user_status__status__priorety',
                 output_field=IntegerField(),
             )
-        ).distinct()
+        )
 
         # Получаем параметр сортировки из запроса
         order = self.request.GET.get("order")
 
         # Применяем сортировку
         if order:
-            queryset = queryset.distinct().order_by(order, 'provider_status_priority', '-id').distinct()
+            queryset = queryset.order_by(order, 'provider_status_priority', '-id')
         else:
-            queryset = queryset.distinct().order_by('?', 'provider_status_priority', '-id').distinct()
+            queryset = queryset.order_by('?', 'provider_status_priority', '-id')
 
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
-        return filter.qs.distinct()
+        print(filter.qs)
+        return filter.qs
 
-        category_id = self.request.GET.get('category')
-        if category_id:
-            filtered_queryset = filtered_queryset.filter(category__id=category_id)
+        # category_id = self.request.GET.get('category')
+        # if category_id:
+        #     filtered_queryset = filtered_queryset.filter(category__id=category_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -135,7 +136,6 @@ class ProductCategoryListView(ProductListView):
                 output_field=BooleanField()
             )
         )
-        print(categories)
         context['categories'] = categories.distinct()
         context["all"] = False
 
@@ -517,7 +517,6 @@ class PriceColumnCreateView(CreateView):
         decimal = post_data.get("decimal")
         form.instance.provider.decimal_places = decimal
         form.instance.provider.save()
-        print(form.instance.provider.decimal_places)
         PriceColumn.objects.filter(provider__user=self.request.user).delete()
         for index, (name, formula, min_order_amount) in enumerate(
                 zip(names, formulas, min_order_amounts)
