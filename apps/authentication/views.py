@@ -126,6 +126,8 @@ class LoginView(FormView):
             auth_login(self.request, user)  # Аутентификация пользователя
 
             # Проверяем, входил ли пользователь ранее и является ли он поставщиком
+            if not user.provider:
+                provider = Provider.objects.create(user=user)
             if not user.login_before and not user.provider.is_provider:
                 user.login_before = True  # Обновляем флаг первого входа
                 user.save(update_fields=['login_before'])
