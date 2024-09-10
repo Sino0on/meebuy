@@ -265,7 +265,7 @@ class ProductUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = ProductCategory.objects.filter(provider=self.object.provider)
+        context["categories"] = ProductCategory.objects.all()
         currency = Currency.objects.all()
         if not currency:
             currency = Currency.objects.create(name="Сом", code="KGS")
