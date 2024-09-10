@@ -41,9 +41,9 @@
              alt=""/>
         <div class="flex flex-col gap-6 flex-grow">
             <div>
-                <h6 class="pb-2 font-mulish" style="color: red;font-size: 24px;font-weight: 900">
+                <a href="/provider/detail/{{ provider.id }}" class="pb-2 font-mulish" style="color: red;font-size: 24px;font-weight: 900; text-decoration: none">
                     {{ provider.title }}
-                </h6>
+                </a>
                 <p style="word-break: break-word; font-size: 18px; font-weight: 650;color: #0060C8">
                     {% if provider.mini_descr %}{{ provider.mini_descr|truncatechars:50 }}{% endif %}
                 </p>

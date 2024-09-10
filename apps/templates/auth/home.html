@@ -108,8 +108,11 @@
                 <div class="swiper recommended__slider mt-7">
                     <div class="swiper-wrapper">
                         {% for i in rec_products %}
-                            <div class="swiper-slide">
+                            <div class="swiper-slide" style="position: relative">
+                                <a href="{% url 'product_detail' i.id %}" style="position: absolute; top:0; left: 0; width: 100%;height: 100%; z-index: 100"></a>
+
                                 <div class="recommended__slide relative text-white p-4 xl:p-7">
+
                                     <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
                                          src="{% if i.image %}  {{ i.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
                                          alt="">
@@ -119,7 +122,7 @@
                                                 {% if i.terms_of_sale %}
                                                     {{ i.terms_of_sale }}
                                                 {% endif %} </span>
-                                            <a href="{% url 'product_detail' i.id %}"> <h2 class="uppercase text-base font-black sm:text-3xl">{{ i.title }}</h2></a>
+                                             <h2 class="uppercase text-base font-black sm:text-3xl">{{ i.title }}</h2>
                                         </div>
                                         <a href="{% url 'product_detail' i.id %}"
                                            class="underline text-[#E8E8E8] sm:text-lg w-fit">Подробнее</a>
@@ -152,7 +155,8 @@
                                     <div class="relative flex flex-col justify-between h-full lg-md:block">
                                         <div>
                                             <span class="text-logo-color text-base sm:text-lg">{{ i.terms_of_sale }}</span>
-                                            <h2 class="text-base text-white uppercase font-black sm:text-3xl">{{ i.title }}</h2>
+
+                                            <a href="{% url 'product_detail' i.id %}"> <h2 class="text-base text-white uppercase font-black sm:text-3xl">{{ i.title }}</h2></a>
                                         </div>
                                         <div class=" lg-md:mt-10">
                                             <a href="/product/detail/{{ i.pk }}/"
