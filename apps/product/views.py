@@ -60,32 +60,26 @@ class ProductListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
-        # Аннотируем поле для сортировки с учетом отсутствующих значений статусов
         queryset = queryset.annotate(
             provider_status_priority=Case(
                 When(provider__user_cabinet__user_status__status__priorety=True, then=Value(-1)),
-                default='provider__user_cabinet__user_status__status__priorety',
+                default=Value(0),
                 output_field=IntegerField(),
             )
         )
 
-        # Получаем параметр сортировки из запроса
         order = self.request.GET.get("order")
 
         # Применяем сортировку
         if order:
-            queryset = queryset.order_by(order, 'provider_status_priority', '-id')
+            queryset = queryset.order_by(order, 'provider_status_priority', '-id').distinct(order,
+                                                                                            'provider_status_priority',
+                                                                                            'id')
         else:
-            queryset = queryset.order_by('?', 'provider_status_priority', '-id')
-
+            queryset = queryset.order_by('provider_status_priority', '-id').distinct('provider_status_priority', 'id')
         # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
-        print(filter.qs)
         return filter.qs
-
-        # category_id = self.request.GET.get('category')
-        # if category_id:
-        #     filtered_queryset = filtered_queryset.filter(category__id=category_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
