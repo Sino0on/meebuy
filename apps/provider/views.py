@@ -63,9 +63,6 @@ class ProviderListView(generic.ListView):
         ).filter(is_active=True, is_provider=True, title__isnull=False)
 
         # Получаем параметр сортировки из запроса
-        for provider in queryset.order_by('-is_upping_active', '-tariff_price', '-is_modered', "-id"):
-            print(provider.tariff_title)
-            print(provider.tariff_price)
         order = self.request.GET.get("order")
         # Добавляем новое условие сортировки к существующему
         if order:
