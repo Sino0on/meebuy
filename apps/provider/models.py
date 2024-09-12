@@ -114,6 +114,21 @@ class Provider(StatusMixin, models.Model):
     credit_card = models.BooleanField(default=False, verbose_name=_("Кредитные карты"))
     electronic_money = models.BooleanField(default=False, verbose_name=_("Электронные деньги"))
 
+    @property
+    def is_verified(self):
+        # Проверяем, есть ли у провайдера документы
+        if self.documents.exists():
+            # Проверяем, все ли документы верифицированы
+            if not self.documents.filter(verified=False).exists():
+                # Все документы верифицированы
+                return 2
+            else:
+                # Не все документы верифицированы
+                return 1
+        else:
+            # Документы отсутствуют
+            return 0
+
     def __str__(self):
         return f"{self.title}"
 

@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.db.models import BooleanField, Case, Value, When, F, Q, IntegerField
+from django.db.models import BooleanField, Case, Value, When, F, Q, IntegerField, Exists, OuterRef
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now
 from django.views import generic, View
@@ -59,16 +59,23 @@ class ProviderListView(generic.ListView):
                      then=F('user__cabinet__user_status__status__status__price_month')),
                 default=Value(-1),
                 output_field=IntegerField()
+            ),
+            is_verified_case = Case(
+                When(~Exists(VerificationDocuments.objects.filter(provider=OuterRef('pk'))), then=Value(0)),
+                When(Exists(VerificationDocuments.objects.filter(provider=OuterRef('pk'), verified=False)), then=Value(1)),
+                default=Value(2),
+                output_field=IntegerField()
             )
         ).filter(is_active=True, is_provider=True, title__isnull=False)
-
+        for q in queryset:
+            print(q.is_verified_case)
         # Получаем параметр сортировки из запроса
         order = self.request.GET.get("order")
         # Добавляем новое условие сортировки к существующему
         if order:
-            queryset = queryset.order_by('-is_upping_active', '-tariff_price', order, '-is_modered', "-id")
+            queryset = queryset.order_by('-is_upping_active', order, '-tariff_price', '-is_verified_case', '-is_modered', "-id")
         else:
-            queryset = queryset.order_by('-is_upping_active', '-tariff_price', '-is_modered', "-id")
+            queryset = queryset.order_by('-is_upping_active', '-tariff_price', '-is_verified_case', '-is_modered', "-id")
 
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs

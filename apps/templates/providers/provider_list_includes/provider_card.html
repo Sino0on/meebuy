@@ -84,6 +84,17 @@
     </div>
 
     <ul class="flex gap-2 sm: absolute right-4">
+        {% if provider.is_verified_case == 2 %}
+                    <img style="color: #0a58ca; width: 25px; height: 25px;"
+                     src="{% static 'assets/images/icons/verified.svg' %}"
+                     title="Верифицирован"
+                     alt=""/>
+        {% endif %}
+{#        {% elif provider.is_verified_case == 1 %}#}
+{#            <span>{{ provider.title }} - Частично верифицирован (есть неверифицированные документы)</span>#}
+{#        {% else %}#}
+{#            <span>{{ provider.title }} - Не верифицирован (документы отсутствуют)</span>#}
+{#        {% endif %}#}
             {% if provider.is_upping_active %}
             <li>
                 <img style="color: #0a58ca; width: 25px; height: 25px;"
