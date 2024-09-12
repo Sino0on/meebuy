@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.db.models import BooleanField, Case, Value, When, F, Q
+from django.db.models import BooleanField, Case, Value, When, F, Q, IntegerField
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now
 from django.views import generic, View
@@ -54,16 +54,24 @@ class ProviderListView(generic.ListView):
                 output_field=BooleanField()
             ),
             # Аннотация для сортировки по цене тарифа
-            tariff_price=F('user__cabinet__user_status__status__status__price_month')
+            tariff_price=Case(
+                When(user__cabinet__user_status__status__status__price_month__isnull=False,
+                     then=F('user__cabinet__user_status__status__status__price_month')),
+                default=Value(-1),
+                output_field=IntegerField()
+            )
         ).filter(is_active=True, is_provider=True, title__isnull=False)
 
         # Получаем параметр сортировки из запроса
+        for provider in queryset.order_by('-is_upping_active', '-tariff_price', '-is_modered', "-id"):
+            print(provider.tariff_title)
+            print(provider.tariff_price)
         order = self.request.GET.get("order")
         # Добавляем новое условие сортировки к существующему
         if order:
-            queryset = queryset.order_by('-is_upping_active', 'tariff_price', order, '-is_modered', "-id")
+            queryset = queryset.order_by('-is_upping_active', '-tariff_price', order, '-is_modered', "-id")
         else:
-            queryset = queryset.order_by('-is_upping_active', 'tariff_price', '-is_modered', "-id")
+            queryset = queryset.order_by('-is_upping_active', '-tariff_price', '-is_modered', "-id")
 
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
@@ -81,8 +89,6 @@ class ProviderListView(generic.ListView):
                 output_field=BooleanField()
             )
         )
-        for cat in categories:
-            print(cat.has_children)
         context['categories'] = categories.distinct()
         context["all"] = True
         context["filter"] = self.filter
