@@ -186,7 +186,7 @@ class ProviderDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["products"] = self.object.products.all()[:3]
+        context["products"] = self.object.products.all().order_by("?")
         context["images"] = self.object.images.all()
         context["companies"] = Provider.objects.exclude(id=self.object.id).filter(
             is_provider=True, is_modered=True, is_active=True

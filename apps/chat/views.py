@@ -99,7 +99,7 @@ def create_chat(request, pk):
     else:
         messages.error(request, 'Вы не можете создать чат, вам необходимо подключиться к тарифу.')
 
-        return redirect('tariffs')
+        return redirect(request.META.get('HTTP_REFERER'))
 
         # return redirect(request.META.get('HTTP_REFERER'))
 

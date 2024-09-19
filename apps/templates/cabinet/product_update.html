@@ -166,7 +166,7 @@
 
                                             <label>
                 <textarea name="description"
-                          class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
+                          class="bg-[#F9F9F9] w-full outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
                 >{{ form.description.value|default_if_none:'' }}</textarea>
                                                 {% if form.description.errors %}
                                                     <div class="text-red-500 text-sm">{{ form.description.errors }}</div>
@@ -182,7 +182,7 @@
                                             </p>
                                             <label>
                 <textarea name="mini_desc"
-                          class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
+                          class="bg-[#F9F9F9] w-full outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
                 >{{ form.mini_desc.value|default_if_none:'' }}</textarea>
                                                 {% if form.mini_desc.errors %}
                                                     <div class="text-red-500 text-sm">{{ form.mini_desc.errors }}</div>

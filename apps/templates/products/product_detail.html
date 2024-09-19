@@ -92,7 +92,7 @@
           src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
           alt=""
           id="main-image"
-          style="width: 350px;height: 350px;object-fit: cover"
+          style="width: 350px;height: 350px;object-fit: contain"
         />
         <!-- slider -->
         <div id="thumbnails"

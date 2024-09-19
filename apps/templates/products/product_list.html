@@ -113,6 +113,7 @@
             flex-grow: 1;
             flex-direction: row;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             width: 100%;
             overflow-x: auto;
@@ -224,7 +225,7 @@
                 <div class="top-products">
                     {% for object in best_products %}
                         <div class="top-product__item">
-                            <div class="card justify-between product-item shadow-card-shadow p-2.5 lg-md:p-5 relative rounded-[10px] flex flex-col">
+                            <div class="card justify-between product-item shadow-card-shadow p-2.5 lg-md:p-2 relative rounded-[10px] flex flex-col">
                                 <!-- if favorite add class "active" -->
                                 {#                <svg class="heart__icon transition-colors absolute right-2.5 text-[#2B292C] lg-md:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">#}
                                 {#                    <path class="transition-colors" d="M12.0013 5.32466C12.9153 4.43944 14.1078 3.96659 15.334 4.00329C16.5602 4.03999 17.7267 4.58345 18.5941 5.522C19.4606 6.45949 19.9629 7.72013 19.998 9.0455C20.0331 10.3709 19.5984 11.6606 18.7828 12.6502L11.9997 20L5.21822 12.6502C4.40173 11.6601 3.96655 10.3693 4.00201 9.04282C4.03747 7.71638 4.54089 6.45496 5.40891 5.51752C6.27693 4.58008 7.44369 4.03776 8.66965 4.0019C9.89562 3.96603 11.0878 4.43935 12.0013 5.32466Z" fill="transparent"></path>#}
@@ -233,7 +234,7 @@
 
                                 <!-- card image -->
                                 <div class="rounded-[10px] h-1/2 overflow-hidden w-full">
-                                    <img class="aspect-square h-full w-full" style="height: 124px; width: 132px"
+                                    <img class="aspect-square h-full w-full" style="height: 124px; width: 132px;object-fit:contain;"
                                          src="
 
 

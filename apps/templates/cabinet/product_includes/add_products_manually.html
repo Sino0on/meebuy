@@ -62,7 +62,7 @@
                             </svg>
                         </label>
                         <select
-                                name="decimal"
+                                name="category"
                                 style="-webkit-appearance: none"
                                 class="w-full bg-[#F9F9F9] border-[#E6E6E6] py-4 rounded-[15px] outline-none pl-4"
                         >
@@ -124,12 +124,7 @@
                     </p>
 
                     <label>
-            <textarea
-                    name="description"
-                    class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
-            >
-{{ form.description.value|default_if_none:'' }}</textarea
-            >
+            <textarea name="description" class="bg-[#F9F9F9] w-full outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]">{{ form.description.value|default_if_none:'' }}</textarea>
                         {% if form.description.errors %}
                             <div class="text-red-500 text-sm">
                                 {{ form.description.errors }}
@@ -147,8 +142,7 @@
                     <label>
             <textarea
                     name="mini_desc"
-                    class="bg-[#F9F9F9] outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]"
-            >
+                    class="bg-[#F9F9F9] w-full outline-none pl-5 pt-5 rounded-[15px] md:h-[140px] h-[100px] border border-[#E6E6E6]">
 {{ form.mini_desc.value|default_if_none:'' }}</textarea
             >
                         {% if form.mini_desc.errors %}
@@ -157,8 +151,7 @@
                     </label>
                 </div>
                 <div
-                        class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full"
-                >
+                        class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full">
                     <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
                         <h6 class="text-[#2B292C] font-semibold text-[18px]">
                             Производитель
@@ -171,8 +164,7 @@
                                     class="pl-5 w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                     type="text"
                                     value="{{ form.manufacturer.value|default_if_none:'' }}"
-                                    name="manufacturer"
-                            />
+                                    name="manufacturer"/>
                             {% if form.manufacturer.errors %}
                                 <div class="text-red-500 text-sm">
                                     {{ form.manufacturer.errors }}
@@ -191,8 +183,7 @@
                                     type="number"
                                     name="price"
                                     value="{{ form.price.value|default_if_none:'' }}"
-                                    required
-                            />
+                                    required/>
                             {% if form.price.errors %}
                                 <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
                             {% endif %}

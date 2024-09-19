@@ -241,12 +241,17 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
             self.object.save()
             self.object = form.save(commit=False)
             self.object.city = city
+
             category_ids = self.request.POST.get('category')
             if category_ids:
                 categories = category_ids.split(', ')
                 numbers = list(map(int, categories))
                 categories = Category.objects.filter(id__in=numbers)
                 self.object.category.set(categories)
+
+            if not self.object.is_modered:
+                self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
+            self.object.save()
 
 
             return redirect(self.get_success_url())
@@ -370,7 +375,7 @@ def change_image(request):
             ProvideImg.objects.create(image=image_data, providers=request.user.provider)
     else:
         if request.POST.get('oldImage'):
-            image = BuyerImg.objects.filter(image__endswith=request.POST.get('oldImage')).first()
+            image = ProvideImg.objects.filter(image__endswith=request.POST.get('oldImage')).first()
             image.image = image_data
             image.save()
         else:

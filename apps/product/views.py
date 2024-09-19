@@ -70,14 +70,12 @@ class ProductListView(ListView):
 
         order = self.request.GET.get("order")
 
-        # Применяем сортировку
         if order:
             queryset = queryset.order_by(order, 'provider_status_priority', '-id').distinct(order,
                                                                                             'provider_status_priority',
                                                                                             'id')
         else:
             queryset = queryset.order_by('provider_status_priority', '-id').distinct('provider_status_priority', 'id')
-        # Применяем фильтрацию
         filter = self.filter_class(self.request.GET, queryset=queryset)
         return filter.qs
 
@@ -90,7 +88,6 @@ class ProductListView(ListView):
                 output_field=BooleanField()
             )
         )
-        print(categories)
         context['categories'] = categories.distinct()
         context["all"] = False
         contacts = Contacts.load()
@@ -227,7 +224,7 @@ class ProductCreateView(CreateView):
         form.instance.provider = provider
 
         response = super().form_valid(form)
-
+        category = self.request.POST.get("category")
         currency = self.request.POST.get("currency")
         c = Currency.objects.get(id=currency)
         self.object.currency = c.code
