@@ -626,6 +626,8 @@ class TariffsCabinetView(generic.ListView):
             context['actual_tariff'] = self.request.user.cabinet.user_status.status.id
         except AttributeError:
             context['actual_tariff'] = None
+        token = TelegramBotToken.objects.first()
+        context['token'] = token
         return context
 
 
