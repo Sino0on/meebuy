@@ -92,7 +92,7 @@ class ProductListView(ListView):
         context["all"] = False
         contacts = Contacts.load()
         context["contacts"] = contacts
-        context["best_products"] = Product.objects.filter(is_recommended=True).order_by('?')[:8]
+        context["best_products"] = Product.objects.filter(is_recommended=True).order_by('?')
         wide_count = ProductBanner.objects.filter(wide_banner__isnull=False).count()
         if wide_count > 0:
             random_index = random.randint(0, wide_count - 1)

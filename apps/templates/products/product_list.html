@@ -200,7 +200,7 @@
                     <div class="top-banners-cover">
                         <a href="{{ banner_1.wide_banner_link }}">
                             <img
-                                    src="{{ banner_1.wide_banner.url }}"
+                                    src="{% if banner_1.wide_banner %}{{ banner_1.wide_banner.url }}{% endif %}"
                                     alt=""
                             />
                         </a>
@@ -215,7 +215,7 @@
 
                     <div class="side-banner side-banner__left">
                         <img
-                                src="{{ banner_2.left_banner.url }}"
+                                src="{% if banner_2.left_banner %}{{ banner_2.left_banner.url }}{% endif %}"
                                 alt=""
                         />
                         <a href="{% if banner_2.left_banner_link %}{{ banner_2.left_banner_link }}{% endif %}" target="_blank"></a>
@@ -268,7 +268,7 @@
                 {% if banner_3 %}
                     <div class="side-banner side-banner__right">
                             <img
-                                    src="{{ banner_3.right_banner.url }}"
+                                    src="{% if banner_3.right_banner %}{{ banner_3.right_banner.url }}{% endif %}"
                                     alt=""
                             />
                         <a href="{% if banner_3.right_banner_link %}{{ banner_3.right_banner_link }}{% endif %}" target="_blank"></a>
@@ -480,7 +480,7 @@
                 {% if banner_4 %}
                     <div class="top-banners-cover">
                             <img
-                                    src="{{ banner_4.bottom_banner.url }}"
+                                    src="{% if banner_4.bottom_banner %}{{ banner_4.bottom_banner.url }}{% endif %}"
                                     alt=""
                             />
                         <a href="{% if banner_4.bottom_banner_link %}{{ banner_4.bottom_banner_link }}{% endif %}" target="_blank"></a>
