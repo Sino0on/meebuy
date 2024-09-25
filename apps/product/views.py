@@ -60,6 +60,7 @@ class ProductListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
+        # Annotate to include the priority
         queryset = queryset.annotate(
             provider_status_priority=Case(
                 When(provider__user_cabinet__user_status__status__priorety=True, then=Value(-1)),
@@ -70,13 +71,18 @@ class ProductListView(ListView):
 
         order = self.request.GET.get("order")
 
+        # Adjust the order and distinct fields
         if order:
-            queryset = queryset.order_by(order, 'provider_status_priority', '-id').distinct(order,
-                                                                                            'provider_status_priority',
-                                                                                            'id')
+            # Make sure the order field is included in the distinct call
+            # Order by 'order', then '-id' (ensure records are unique by id)
+            queryset = queryset.order_by(order, '-id', 'provider_status_priority').distinct(order, 'id')
         else:
-            queryset = queryset.order_by('provider_status_priority', '-id').distinct('provider_status_priority', 'id')
+            # Default ordering and distinct to ensure each ID is unique
+            queryset = queryset.order_by('-id', 'provider_status_priority').distinct('id')
+
+        # Apply the filter
         filter = self.filter_class(self.request.GET, queryset=queryset)
+
         return filter.qs
 
     def get_context_data(self, **kwargs):
