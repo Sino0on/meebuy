@@ -1,40 +1,38 @@
 from django.contrib.auth import get_user_model
-from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.provider.mixins import StatusMixin
 
 User = get_user_model()
+from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
 
-
-class Category(models.Model):
+class Category(MPTTModel):
     title = models.CharField(max_length=123)
-    category = models.ForeignKey(
-        "Category",
+    category = TreeForeignKey(
+        'self',
         on_delete=models.PROTECT,
-        related_name="categor",
+        related_name='categor',
         null=True,
         blank=True,
-        verbose_name="Родительская категория",
+        verbose_name="Родительская категория"
     )
-    icon = models.FileField(upload_to="images/category/icons/", null=False, blank=False)
+    icon = models.FileField(upload_to="images/category/icons/", blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     is_main_category = models.BooleanField(default=False, verbose_name="Главная категория")
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
-    @classmethod
-    def get_category_descendants(cls, category):
-        """Рекурсивно получает все подкатегории для указанной категории."""
-        categories = [category]
-        for child in category.categor.all():
-            categories.extend(cls.get_category_descendants(child))
-        return categories
+    class MPTTMeta:
+        order_insertion_by = ['title']
+        parent_attr = 'category'
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 
     class Meta:
-        verbose_name = _("Категория")
-        verbose_name_plural = _("Категории")
+        ordering = ['order']
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
 
 
 class Provider(StatusMixin, models.Model):

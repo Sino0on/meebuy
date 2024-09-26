@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db import transaction
+from mptt.admin import DraggableMPTTAdmin
 
 from .models import Category, Provider, ProvideImg, ProvideFiles, PriceFiles, VerificationDocuments, ProviderLink
 
@@ -46,14 +48,19 @@ class ProviderAdmin(admin.ModelAdmin):
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'parent_category')
+class CategoryAdmin(DraggableMPTTAdmin):
+    list_display = ('tree_actions', 'indented_title', 'category', 'is_main_category', 'created_at')
+    list_display_links = ('indented_title',)
+    mptt_indent_field = "title"
     search_fields = ('title',)
 
-    def parent_category(self, obj):
-        return obj.category.title if obj.category else '---'
+    def indented_title(self, instance):
+        Category.objects.rebuild()
 
-    parent_category.short_description = 'Parent Category'
+        """ Добавляет отступы в зависимости от уровня вложенности категории. """
+        return '---' * instance.level + instance.title
+    indented_title.short_description = 'Название'
+
 
 
 # @admin.register(Tag)
