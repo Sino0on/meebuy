@@ -3,22 +3,25 @@ from decimal import Decimal, InvalidOperation
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
 
 from apps.provider.mixins import StatusMixin
 
 
-class ProductCategory(StatusMixin, models.Model):
+class ProductCategory(MPTTModel):  # Использование MPTTModel
     name = models.CharField(max_length=255)
-    parent = models.ForeignKey(
-        "ProductCategory",
+    parent = TreeForeignKey(
+        "self",
         on_delete=models.PROTECT,
         related_name="children",
         null=True,
         blank=True,
-        verbose_name="Родительская категория",
+        verbose_name="Родительская категория"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     icon = models.FileField(upload_to="images/categories/", verbose_name="Иконка", blank=True, null=True)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     # provider = models.ForeignKey(
     #     "provider.Provider", on_delete=models.PROTECT, related_name="product_categories"
@@ -32,13 +35,12 @@ class ProductCategory(StatusMixin, models.Model):
         return categories
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
 
     class Meta:
+        ordering = ["order"]
         verbose_name = _("Категория продуктов")
         verbose_name_plural = _("Категории продуктов")
-
-
 class AddNewCategoryRequest(models.Model):
     parent = models.ForeignKey("ProductCategory", verbose_name="Родительская категория", on_delete=models.CASCADE,
                                null=True, blank=True)

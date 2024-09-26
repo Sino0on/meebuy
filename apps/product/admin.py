@@ -1,4 +1,5 @@
 from django.contrib import admin
+from mptt.admin import MPTTModelAdmin, DraggableMPTTAdmin
 
 from .models import (
     Product,
@@ -9,8 +10,17 @@ from .models import (
 
 
 @admin.register(ProductCategory)
-class ProductCategoryAdmin(admin.ModelAdmin):
-    pass
+class ProductCategoryAdmin(DraggableMPTTAdmin):
+    mptt_level_indent = 20
+    list_display = ('tree_actions', 'indented_title', 'created_at', 'icon')
+    list_display_links = ('indented_title',)
+
+    def indented_title(self, instance):
+        ProductCategory.objects.rebuild()
+
+        """ Display the title with indentation proportional to the MPTT level. """
+        return '---' * instance.level + instance.name
+    indented_title.short_description = 'Name'
 
 
 class ProductImgInline(admin.TabularInline):
