@@ -124,6 +124,14 @@ class ProductListView(ListView):
 
 class ProductCategoryListView(ProductListView):
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category = ProductCategory.objects.get(id=self.kwargs['pk'])
+        categories = ProductCategory.get_category_descendants(category)
+        queryset = queryset.filter(category__in=categories)
+        return queryset
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         categories = ProductCategory.objects.filter(parent__id=self.kwargs['pk']).annotate(
@@ -131,6 +139,7 @@ class ProductCategoryListView(ProductListView):
                 When(children__isnull=False, then=True),
                 default=False,
                 output_field=BooleanField()
+
             )
         )
         context['categories'] = categories.distinct()
