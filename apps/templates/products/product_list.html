@@ -126,6 +126,12 @@
             flex-shrink: 0
         }
 
+        .desktop-banner{
+            display: none;
+        }
+
+
+
         @media screen and (min-width: 992px) {
             .side-banner {
                 display: flex;
@@ -134,6 +140,14 @@
             .top-products {
                 width: auto;
                 max-width: 500px;
+            }
+
+            .desktop-banner{
+                display: block;
+            }
+
+            .mobile-banner{
+                display: none;
             }
         }
 
@@ -197,10 +211,19 @@
 
             <div class="w-full">
                 {% if banner_1 %}
-                    <div class="top-banners-cover">
+                    <div class="top-banners-cover desktop-banner">
                         <a href="{{ banner_1.wide_banner_link }}">
                             <img
                                     src="{% if banner_1.wide_banner %}{{ banner_1.wide_banner.url }}{% endif %}"
+                                    alt=""
+                            />
+                        </a>
+                        <a href="{% if banner_1.wide_banner_link %}{{ banner_1.wide_banner_link }}{% endif %}" target="_blank"></a>
+                    </div>
+                      <div class="top-banners-cover mobile-banner">
+                        <a href="{{ banner_1.wide_banner_link }}">
+                            <img
+                                    src="{% if banner_1.wide_banner_mobile %}{{ banner_1.wide_banner_mobile.url }}{% endif %}"
                                     alt=""
                             />
                         </a>
@@ -478,9 +501,16 @@
 
                 </div>
                 {% if banner_4 %}
-                    <div class="top-banners-cover">
+                    <div class="top-banners-cover desktop-banner" >
                             <img
                                     src="{% if banner_4.bottom_banner %}{{ banner_4.bottom_banner.url }}{% endif %}"
+                                    alt=""
+                            />
+                        <a href="{% if banner_4.bottom_banner_link %}{{ banner_4.bottom_banner_link }}{% endif %}" target="_blank"></a>
+                    </div>
+                     <div class="top-banners-cover wide_banner_mobile">
+                            <img
+                                    src="{% if banner_4.bottom_banner_mobile %}{{ banner_4.bottom_banner_mobile.url }}{% endif %}"
                                     alt=""
                             />
                         <a href="{% if banner_4.bottom_banner_link %}{{ banner_4.bottom_banner_link }}{% endif %}" target="_blank"></a>
