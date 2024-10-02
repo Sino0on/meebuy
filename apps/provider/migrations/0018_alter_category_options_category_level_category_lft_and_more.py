@@ -12,5 +12,44 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-
+        migrations.AlterModelOptions(
+            name='category',
+            options={'ordering': ['order'], 'verbose_name': 'Категория', 'verbose_name_plural': 'Категории'},
+        ),
+        migrations.AddField(
+            model_name='category',
+            name='level',
+            field=models.PositiveIntegerField(default=1, editable=False),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='category',
+            name='lft',
+            field=models.PositiveIntegerField(default=1, editable=False),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='category',
+            name='order',
+            field=models.PositiveIntegerField(db_index=True, default=0, editable=False),
+        ),
+        migrations.AddField(
+            model_name='category',
+            name='rght',
+            field=models.PositiveIntegerField(default=1, editable=False),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='category',
+            name='tree_id',
+            field=models.PositiveIntegerField(db_index=True, default=1, editable=False),
+            preserve_default=False,
+        ),
+        migrations.AlterField(
+            model_name='category',
+            name='category',
+            field=mptt.fields.TreeForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT,
+                                             related_name='categor', to='provider.category',
+                                             verbose_name='Родительская категория'),
+        ),
     ]

@@ -15,6 +15,7 @@ from apps.tender.filters import TenderFilter
 from apps.tender.forms import TenderForm, SearchRequestForm
 from apps.tender.models import Tender, TenderImg, Country, Region, City, SearchRequest
 from apps.user_cabinet.models import Contacts, OpenNumberCount
+from django.views.generic.edit import UpdateView
 
 
 class TenderListView(generic.ListView):
@@ -191,7 +192,7 @@ class TenderCreateView(generic.CreateView):
         return super().post(request, *args, **kwargs)
 
 
-class TenderUpdateView(generic.UpdateView):
+class TenderUpdateView(UpdateView):
     template_name = "cabinet/tender_update.html"
     form_class = TenderForm
     model = Tender
@@ -199,7 +200,6 @@ class TenderUpdateView(generic.UpdateView):
     success_url = "/profile/tender/list/"
 
     def get_context_data(self, **kwargs):
-        print(self.request.user.user_type)
         context = super().get_context_data(**kwargs)
         context_keys = ["one", "two", "three", "four", "five", "six"]
         obj = self.get_object()
@@ -216,19 +216,21 @@ class TenderUpdateView(generic.UpdateView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        form = self.form_class(request.POST, instance=obj)  # Bind the form to the existing instance
+        form = self.form_class(request.POST, instance=obj)
         if form.is_valid():
             form.save()
         else:
-            print(form.errors)
-            return self.form_invalid(form)
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(self.request, "{}: {}".format(field, error))
+
+            return redirect(self.request.META.get('HTTP_REFERER', '/'))
 
         if request.POST.get("period"):
             days = request.POST.get("period")
             obj.end_date += timezone.timedelta(days=int(days))
             obj.save()
 
-        print(request.FILES)
         file_fields = ["file1", "file2", "file3", "file4", "file5", "file6"]
         new_images = [
             request.FILES.get(file) for file in file_fields if request.FILES.get(file)

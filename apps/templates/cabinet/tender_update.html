@@ -215,25 +215,46 @@
                   <div class="form__item">
                         <label class="label">Бюджет</label>
                         <p class="tooltip">Введите бюджет</p>
-                        <input id="price" value="{{ form.price.value }}" type="text" name="price" placeholder="Например: 10000">
+                        <input id="price" value="{% if form.price.value %}{{ form.price.value }}{% else %}0{% endif %}" type="text" name="price" placeholder="Например: 10000" required>
                         {% if form.price.errors %}
                             <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
                         {% endif %}
                     </div>
 
-                  <div class="form__item">
-                        <label class="label">Валюта</label>
-                        <p class="tooltip">Введите валюту</p>
-                        <input id="currency" value="{{ form.currency.value }}" type="text" name="currency" placeholder="Например: KGS">
-                        {% if form.currency.errors %}
-                            <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
-                        {% endif %}
-                    </div>
+                                        <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
+                                            <h6 class="text-[#2B292C] font-semibold text-[18px]">Валюта</h6>
+                                            <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
+                                                Например: KGS
+                                            </p>
+                                            <label>
+                                                <select name="currency"
+                                                        class=" relative outline-none px-4 lg-md:w-[47.6%] w-full bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]">
+                                                    {% for currency in currencies %}
+
+                                                        <option value="{{ currency.id }}"
+                                                                {% if object.currency == currency.code %}
+                                                                selected
+                                                                {% endif %}
+                                                        >{{ currency.name }} - {{ currency.code }}</option>
+                                                    {% endfor %}
+
+                                                    <img
+                                                            class="absolute right-7 top-6 mr-7"
+                                                            src="{% static 'assets/images/icons/arrow-down.svg' %}"
+                                                            alt=""
+                                                    />
+                                                </select>
+                                                {% if form.currency.errors %}
+                                                    <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
+                                                {% endif %}
+                                            </label>
+                                        </div>
+
 
                   <div class="form__item">
                         <label class="label">Количество</label>
                         <p class="tooltip">Введите Количество</p>
-                        <input id="quantity" value="{{ form.quantity.value }}" type="text" name="quantity" placeholder="Например: 1000">
+                        <input id="quantity" value="{% if form.quantity.value %}{{ form.quantity.value }}{% else %}0{% endif %}" type="text" name="quantity" placeholder="Например: 1000" required>
                         {% if form.quantity.errors %}
                             <div class="text-red-500 text-sm">{{ form.quantity.errors }}</div>
                         {% endif %}
@@ -243,7 +264,7 @@
                         <label class="label">Телефон для связи</label>
                         <p class="tooltip">Телефон является необязательным, но крайне желательным
                             Он будет показан только заинтересованным поставщикам</p>
-                        <input name="phone" id="phone" value="{{ form.phone.value }}" type="text" placeholder="Например: Бишкек">
+                        <input name="phone" id="phone" value="{% if form.phone.value %}{{ form.phone.value }}{% endif %}" type="text" placeholder="Например: Бишкек">
                         {% if form.phone.errors %}
                             <div class="text-red-500 text-sm">{{ form.phone.errors }}</div>
                         {% endif %}
@@ -252,7 +273,7 @@
                     <div class="form__item">
                         <label class="label">E-mail (публичный адрес электронной почты)</label>
                         <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                        <input name="email" value="{{ form.email.value }}" type="text" placeholder="Например: наушники оптом">
+                        <input name="email" value="{% if form.email.value %}{{ form.email.value }}{% endif %}" type="text" placeholder="Например: наушники оптом" required>
                         {% if form.email.errors %}
                             <div class="text-red-500 text-sm">{{ form.email.errors }}</div>
                         {% endif %}
