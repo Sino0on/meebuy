@@ -160,7 +160,9 @@ class ProviderCategoryListView(ProviderListView):
                 output_field=BooleanField()
             )
         )
-        print(categories)
+        category_id = self.request.GET.get("category")
+        if category_id:
+            context['current'] = int(category_id)
         context['categories'] = categories.distinct()
         context["all"] = False
 

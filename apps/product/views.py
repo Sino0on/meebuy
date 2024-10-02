@@ -131,7 +131,6 @@ class ProductCategoryListView(ProductListView):
         queryset = queryset.filter(category__in=categories)
         return queryset
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         categories = ProductCategory.objects.filter(parent__id=self.kwargs['pk']).annotate(
@@ -142,6 +141,9 @@ class ProductCategoryListView(ProductListView):
 
             )
         )
+        category_id = self.request.GET.get("category")
+        if category_id:
+            context['current'] = int(category_id)
         context['categories'] = categories.distinct()
         context["all"] = False
 
