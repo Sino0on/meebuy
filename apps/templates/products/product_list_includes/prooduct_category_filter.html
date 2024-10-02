@@ -8,13 +8,18 @@
                 <a class="flex items-center gap-[10px] w-fit"
                    href="{% if i.has_children %}{% url "product_category_list" i.id %}{% else %}{% if home %}product/list/{% endif %}?category={{ i.pk }}{% endif %}">
                     <div class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
-                                                   {% if i.id == current %}
+                   {% if i.id == current %}
                     	style="box-shadow: #ffb600 0 0 10px;"
-                    {% endif %}>
+                    {% endif %}
+                    >
 
                         <img src="{% if i.icon %}{{ i.icon.url }}{% endif %}" alt=""/>
                     </div>
-                    <span>{{ i.name }}</span>
+                    <span
+                   {% if i.id == current %}
+                    	style="color: #ff7300;"
+                    {% endif %}
+                    >{{ i.name }}</span>
                 </a>
             </li>
         {% endfor %}

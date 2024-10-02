@@ -18,7 +18,11 @@
                     >
                         <img src="{{ i.icon.url }}" alt=""/>
                     </div>
-                    <span>{{ i.title }}
+                    <span
+                   {% if i.id == current %}
+                    	style="color: #ff7300;"
+                    {% endif %}
+                    >{{ i.title }}
                     </span>
                 </a>
             </li>
