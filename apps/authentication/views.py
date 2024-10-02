@@ -314,7 +314,7 @@ def register_v2(request):
                 [user.email],
                 fail_silently=False,
             )
-            print(request.POST.get('user-role'))
+            print(password)
             if request.POST.get('user-role') == 'provider':
                 provider, _ = Provider.objects.get_or_create(user=user)
                 provider.is_provider = True

@@ -218,7 +218,7 @@
                                     <div class="form__item">
                                         <label class="label">Бюджет</label>
                                         <p class="tooltip">Введите бюджет</p>
-                                        <input id="price" type="text" name="price" placeholder="Например: 10000"
+                                        <input id="price" type="number" name="price" placeholder="Например: 10000"
                                                value="{% if form.price.value %}{{ form.price.value }}{% else %}{% endif %}">
                                         {% if form.price.errors %}
                                             <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
@@ -283,31 +283,10 @@
                                     <div class="form__item">
                                         <label class="label">Количество</label>
                                         <p class="tooltip">Введите Количество</p>
-                                        <input id="quantity" type="text" name="quantity" placeholder="Например: 1000"
+                                        <input id="quantity" type="number" name="quantity" placeholder="Например: 1000"
                                                value="{% if form.quantity.value %}{{ form.quantity.value }}{% endif %}">
                                         {% if form.quantity.errors %}
                                             <div class="text-red-500 text-sm">{{ form.quantity.errors }}</div>
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="form__item">
-                                        <label class="label">Телефон для связи</label>
-                                        <p class="tooltip">Телефон является необязательным, но крайне желательным
-                                            Он будет показан только заинтересованным поставщикам</p>
-                                        <input name="phone" id="phone" type="text" placeholder="Например: +996555555555"
-                                               value="{% if form.phone.value %}{{ form.phone.value }}{% endif %}">
-                                        {% if form.phone.errors %}
-                                            <div class="text-red-500 text-sm">{{ form.phone.errors }}</div>
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="form__item">
-                                        <label class="label">E-mail (публичный адрес электронной почты)</label>
-                                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                                        <input name="email" type="text" placeholder="Например: наушники оптом"
-                                               value="{% if form.email.value %}{{ form.email.value }}{% endif %}">
-                                        {% if form.email.errors %}
-                                            <div class="text-red-500 text-sm">{{ form.email.errors }}</div>
                                         {% endif %}
                                     </div>
 

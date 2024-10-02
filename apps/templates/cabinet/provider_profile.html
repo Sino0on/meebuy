@@ -53,7 +53,7 @@
                                     <br>
                                 {% else %}
                                     {% if provider.is_provider %}
-                                        <p class="text-[#FF4B4B]">{{ user.provider.comment }}</p>
+                                        <p class="text-[#FF4B4B]">{{ user.provider.comment|linebreaksbr  }}</p>
                                     {% endif %}
                                 {% endif %}
 

@@ -206,8 +206,9 @@
                                     </div>
                                     <div class="form__item">
                                         <label class="label">Дата регистрации юридического лица</label>
-                                        <p class="tooltip">Введите дату в формате 2000-01-01</p>
-                                        {{ form.register_ur }}
+                                        <p class="tooltip">Введите дату регистрации</p>
+                                        <input type="date" name="register_ur" id="id_register_ur" style="border: 1px solid #E6E6E6; border-radius: 10px; padding: 10px"
+                                                   value="{{ form.register_ur.value|date:'Y-m-d' }}">
                                     </div>
                                     <div class="form__item">
                                         <label class="label">Объем поставок</label>
