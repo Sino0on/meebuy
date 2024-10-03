@@ -23,10 +23,10 @@ def check_user_status_and_open_number(request):
                             )
                             return "open"
                         else:
-                            messages.error(request, 'У вас закончились открытия на сегодня.')
+                            messages.error(request, 'У вас закончились открытия.')
                             return None
                     else:
-                        messages.error(request, 'У вас закончились открытия на сегодня.')
+                        messages.error(request, 'У вас закончились открытия.')
                         return None
             else:
                 messages.error(request, 'Ваш тариф не активен.')
@@ -55,16 +55,16 @@ def check_user_status_and_open_tender(request, object_id=None):
                                 if not request.user.cabinet.quantity_opening - 1 < 0:
                                     request.user.cabinet.quantity_opening -= 1
                                 else:
-                                    messages.error(request, 'У вас закончились открытия на сегодня.')
+                                    messages.error(request, 'У вас закончились открытия.')
                                     return None
                                 request.user.cabinet.opened_tender_contacts.add(tender)
                                 request.user.cabinet.save()
                             return "open"
                         else:
-                            messages.error(request, 'У вас закончились открытия на сегодня.')
+                            messages.error(request, 'У вас закончились открытия.')
                             return None
                     else:
-                        messages.error(request, 'У вас закончились открытия на сегодня.')
+                        messages.error(request, 'У вас закончились открытия.')
                         return None
             else:
                 messages.error(request, 'Ваш тариф не активен.')
@@ -95,15 +95,15 @@ def check_user_status_and_open_buyer(request, object_id=None):
                                 request.user.cabinet.save()
                                 print(request.user.cabinet.quantity_opening)
                             else:
-                                messages.error(request, 'У вас закончились открытия на сегодня.')
+                                messages.error(request, 'У вас закончились открытия.')
                                 return None
 
                             return "open"
                         else:
-                            messages.error(request, 'У вас закончились открытия на сегодня.')
+                            messages.error(request, 'У вас закончились открытия.')
                             return None
                     else:
-                        messages.error(request, 'У вас закончились открытия на сегодня.')
+                        messages.error(request, 'У вас закончились открытия.')
                         return None
             else:
                 messages.error(request, 'Ваш тариф не активен.')
@@ -112,7 +112,7 @@ def check_user_status_and_open_buyer(request, object_id=None):
                 request.user.cabinet.user_status.save()
                 return None
         else:
-            messages.error(request, 'У вас не подключен ни один тариф.')
+            messages.error(request, 'Для просмотра данных покупателя пожалуйста подключите удобный вам тариф. Перейдите в личный кабинет найдите вкладку тарифы и выберите тарифный план')
             return None
     else:
         messages.error(request, 'Вы не авторизованы .')

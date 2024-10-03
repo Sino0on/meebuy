@@ -368,7 +368,7 @@
                                 </h6>
                                 <div class="flex flex-row flex-wrap  gap-2 font-light">
                                     {% if tender.quantity %}
-                                        <div class="flex items-center gap-3" style="border-right: 1px solid #686868; padding-right: 10px">
+                                        <div class="flex items-center gap-3" style=" padding-right: 10px">
                                             <p class="text-[#686868] text-[16px] font-mulish font-normal">
                                                 Количество:
                                             </p>
@@ -376,14 +376,14 @@
                                         </div>
                                     {% endif %}
                                     {% if tender.price %}
-                                        <div class="flex items-center gap-3" style="border-right: 1px solid #686868; padding-right: 10px">
+                                        <div class="flex items-center gap-3" style="padding-right: 10px">
                                             <p class="text-[#686868] text-[16px] font-mulish font-normal">
                                                 Бюджет:
                                             </p>
                                             <span class="text-[#2B292C] text-[16px] font-normal">{{ tender.price }}</span>
                                         </div>
                                     {% endif %}
-                                    <div class="flex items-center gap-3" style="border-right: 1px solid #686868; padding-right: 10px">
+                                    <div class="flex items-center gap-3" style=" padding-right: 10px">
                                         {% if tender.large_wholesale or tender.small_wholesale or tender.retail or tender.official_distributor %}
                                             <p class="text-[#686868] text-[16px] font-mulish font-normal">
                                                 Объем:
@@ -404,8 +404,9 @@
                                         {% endif %}
                                         <span class="text-[#2B292C] text-[16px] font-normal"></span>
                                     </div>
+                                  </div>
 
-                                    <div class="flex items-center gap-3" style="border-right: 1px solid #686868; padding-right: 10px">
+                                    <div class="flex items-center gap-3" style="padding-right: 10px">
                                         {% if tender.marketplaces or tender.online_store or tender.social_networks or tender.wholesale_resale or tender.group_purchases or tender.group_purchases %}
                                             <p class="text-[#686868] text-[16px] font-mulish font-normal">
                                                 Место реализации:
@@ -436,7 +437,7 @@
                                 </span>
                                     </div>
                                     {% if tender.requirements %}
-                                        <div class="flex items-center gap-3" style="border-right: 1px solid #686868; padding-right: 10px">
+                                        <div class="flex items-center gap-3" style=" padding-right: 10px">
                                             <p class="text-[#686868] text-[16px] font-mulish font-normal">
                                                 Необходимые товары :
                                             </p>
@@ -444,17 +445,18 @@
                                         </div>
                                     {% endif %}
                                     {% if tender.description %}
-                                         <p class="text-[#686868] text-[16px] font-mulish font-normal">
+
+                                        <div class="flex items-center gap-3">
+                                          <p class="text-[#686868] text-[16px] font-mulish font-normal">
                                                 Описание:
                                             </p>
-                                        <div class="flex items-center gap-3">
                                             <span class="text-[#2B292C] text-[16px] font-normal">
                                                 {{ tender.description }}
                                             </span>
                                         </div>
                                     {% endif %}
 
-                                </div>
+
                                 <a href="/tender/detail/{{ tender.id }}/"
                                    class="bg-[#E4DB00] text-[16px] font-normal rounded-lg py-3 px-6">
                                     Подробнее

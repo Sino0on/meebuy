@@ -81,7 +81,7 @@
                                             объем поставок, сроки, условия доставки
                                             Не публикуйте контактные данные в описании</p>
                                         <textarea id="description" name="description" type="text"
-                                                  placeholder="Например: наушники оптом">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                                                  placeholder="Например: Нужны высококачественные наушники ....">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
                                         {% if form.description.errors %}
                                             <div class="text-red-500 text-sm">{{ form.description.errors }}</div>
                                         {% endif %}
@@ -92,7 +92,7 @@
                                         <p class="tooltip">Введите необходимые товары через запятую.Пример: Платья,
                                             брюки, блузки…</p>
                                         <input id="requirements" type="text" name="requirements"
-                                               placeholder="Например: наушники оптом" value="{% if form.requirements.value %}{{ form.requirements.value }}{% endif %}">
+                                               placeholder="Например: наушники, зарядные устройства ...." value="{% if form.requirements.value %}{{ form.requirements.value }}{% endif %}">
                                         {% if form.requirements.errors %}
                                             <div class="text-red-500 text-sm">{{ form.product_list.errors }}</div>
                                         {% endif %}
@@ -304,7 +304,7 @@
                                         <label class="label">Телефон для связи</label>
                                         <p class="tooltip">Телефон является необязательным, но крайне желательным
                                             Он будет показан только заинтересованным поставщикам</p>
-                                        <input name="phone" id="phone" type="text" placeholder="Например: Бишкек"
+                                        <input name="phone" id="phone" type="text" placeholder="Например: +996 555 555 555"
                                                value="{% if form.phone.value %}{{ form.phone.value }}{% endif %}">
                                         {% if form.phone.errors %}
                                             <div class="text-red-500 text-sm">{{ form.phone.errors }}</div>
@@ -313,8 +313,7 @@
 
                                     <div class="form__item">
                                         <label class="label">E-mail (публичный адрес электронной почты)</label>
-                                        <p class="tooltip">Для выбора города начните вводить название в поле ниже</p>
-                                        <input name="email" type="text" placeholder="Например: наушники оптом"
+                                        <input name="email" type="text" placeholder="Например: 8HbCt@example.com"
                                                value="{% if form.email.value %}{{ form.email.value }}{% endif %}">
                                         {% if form.email.errors %}
                                             <div class="text-red-500 text-sm">{{ form.email.errors }}</div>
