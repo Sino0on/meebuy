@@ -4,6 +4,7 @@ from decimal import Decimal
 from django import template
 from django.shortcuts import get_object_or_404
 
+from apps.pages.models import FooterColumn
 from apps.product.models import Product, PriceColumn
 
 register = template.Library()
@@ -40,3 +41,9 @@ def calculate(obj_id):
 @register.simple_tag
 def nesting_level(level):
     return '-' * level
+
+
+@register.simple_tag
+def get_footer_columns():
+    return FooterColumn.objects.prefetch_related('links').order_by('order')
+

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 {% load custom_filters %}
+{% load math_tags %}
 <html lang="en">
 <head>
 <!-- Yandex.Metrika counter -->
@@ -246,6 +247,8 @@
 </header>
 {% block content %} {% endblock %}
 <footer class="bg-[#222222] relative">
+{% get_footer_columns as footer_columns %}
+
     <div class="hidden bg-black py-4 lg-md:block">
         <div
                 class="container flex justify-between lg-md:items-center lg-md:gap-[27px]"
@@ -292,6 +295,9 @@
                 <li class="font-medium uppercase">
                     <a href="{% url 'provider_list' %}"> Поставщики </a>
                 </li>
+                <div>
+
+
                 <li class="font-medium uppercase">
                     <a href="{% url 'tender_list' %}"> Закупки </a>
                 </li>
@@ -383,47 +389,46 @@
 
                 {% endif %}
             </div>
-            <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-                <li class="uppercase font-mulish font-extrabold">
-                    <h6 class="text-[#FFFFFC]">поставщикам</h6>
-                </li>
-                <li class="">
-                    <a href="
+    {% for column in footer_columns %}
 
-                            {% if user.is_authenticated %}{% url 'view_profile' %}{% else %}{% url 'login' %}{% endif %}">Добавить
-                        компанию</a>
-                </li>
-                <li><a href="{% url 'tender_list' %}">Поиск закупок</a></li>
-                <li><a href="{% url 'buyer_list' %}">Поиск покупателей</a></li>
-                <li><a href="{% url 'tariffs' %}">Тарифы</a></li>
-            </ul>
-            <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-                <li class="uppercase font-extrabold">
-                    <h6 class="text-[#FFFFFC]">покупателям</h6>
-                </li>
-                <li><a href="{% url 'product_list' %}">Купить оптом</a></li>
-                <li><a href="{% url 'provider_list' %}"> Поставщики </a></li>
-                <li><a href="{% url 'provider_list' %}">Производители</a></li>
-                <li><a href="{% url 'product_list' %}">Поиск товаров</a></li>
-            </ul>
             <ul class="font-mulish flex flex-col gap-6 text-[18px]">
                 <li class="uppercase font-mulish font-extrabold">
-                    <h6 class="text-[#FFFFFC]">о компании</h6>
+                    <h6 class="text-[#FFFFFC]">{{ column.title }}</h6>
                 </li>
-                <li><a href="{% url 'tariffs' %}">Тарифы</a></li>
-                <li><a href="{% url 'bunner' %}">Баннерная реклама</a></li>
-                <li><a href="{% url 'rules' %}">Правила</a></li>
-                <li><a href="{% url 'send_message' %}">Техподдержка</a></li>
+                {% for link in column.links.all %}
+                    <li><a href="{{ link.link }}">{{ link.title }}</a></li>
+
+                {% endfor %}
+
             </ul>
-            <ul class="font-mulish flex flex-col gap-6 text-[18px]">
-                <li class="uppercase font-mulish font-extrabold">
-                    <h6 class="text-[#FFFFFC]">Страницы</h6>
-                </li>
-                {% get_static_pages as pages %}
-                    {% for obj in pages %}
-                        <li><a href="{% url 'staticpages' obj.slug %}">{{ obj.name }}</a></li>
-                    {% endfor %}
-            </ul>
+    {% endfor %}
+{#            <ul class="font-mulish flex flex-col gap-6 text-[18px]">#}
+{#                <li class="uppercase font-extrabold">#}
+{#                    <h6 class="text-[#FFFFFC]">покупателям</h6>#}
+{#                </li>#}
+{#                <li><a href="{% url 'product_list' %}">Купить оптом</a></li>#}
+{#                <li><a href="{% url 'provider_list' %}"> Поставщики </a></li>#}
+{#                <li><a href="{% url 'provider_list' %}">Производители</a></li>#}
+{#                <li><a href="{% url 'product_list' %}">Поиск товаров</a></li>#}
+{#            </ul>#}
+{#            <ul class="font-mulish flex flex-col gap-6 text-[18px]">#}
+{#                <li class="uppercase font-mulish font-extrabold">#}
+{#                    <h6 class="text-[#FFFFFC]">о компании</h6>#}
+{#                </li>#}
+{#                <li><a href="{% url 'tariffs' %}">Тарифы</a></li>#}
+{#                <li><a href="{% url 'bunner' %}">Баннерная реклама</a></li>#}
+{#                <li><a href="{% url 'rules' %}">Правила</a></li>#}
+{#                <li><a href="{% url 'send_message' %}">Техподдержка</a></li>#}
+{#            </ul>#}
+{#            <ul class="font-mulish flex flex-col gap-6 text-[18px]">#}
+{#                <li class="uppercase font-mulish font-extrabold">#}
+{#                    <h6 class="text-[#FFFFFC]">Страницы</h6>#}
+{#                </li>#}
+{#                {% get_static_pages as pages %}#}
+{#                    {% for obj in pages %}#}
+{#                        <li><a href="{% url 'staticpages' obj.slug %}">{{ obj.name }}</a></li>#}
+{#                    {% endfor %}#}
+{#            </ul>#}
         </div>
     </div>
 </footer>

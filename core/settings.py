@@ -58,8 +58,8 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.vk',
     'allauth.socialaccount.providers.yandex',
     'allauth.socialaccount.providers.mailru',
+    'adminsortable2',
     'mptt',
-
     'rest_framework'
     # 'social.apps.django_app.default',
 ]
@@ -410,6 +410,24 @@ SIMPLEUI_CONFIG = {
                     'name': 'Статические страницы',
                     'icon': 'fa fa-file',
                     'url': '/admin/pages/staticpage/'
+                },
+                {
+                    'name': 'Футтер сайта',
+                    'icon': 'fa fa-arrow-circle-down',
+                     'models': [
+
+                        {
+                            'name': 'Колонки',
+                            'icon': 'fa fa-columns',
+                            'url': '/admin/pages/footercolumn/'
+                        },
+                        {
+                            'name': 'Ссылки',
+                            'icon': 'fa fa-link',
+                            'url': '/admin/pages/footerlink/'
+                        },
+
+                    ]
                 },
                 {
                     'name': 'Часто задаваемые вопросы',
