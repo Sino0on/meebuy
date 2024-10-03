@@ -60,3 +60,32 @@ class OurPartners(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+
+class FooterColumn(models.Model):
+    title = models.CharField(max_length=255, verbose_name=_("Название"))
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    # Это поле используется для определения порядка сортировки
+    sorting_field_name = 'order'
+
+    class Meta:
+        ordering = ['order']  # Указываем, что сортировка должна быть по полю `order`
+
+    def __str__(self):
+        return f"{self.title}"
+
+class FooterLink(models.Model):
+    column = models.ForeignKey(FooterColumn, on_delete=models.CASCADE, verbose_name=_("Колонка"), related_name="links")
+    title = models.CharField(max_length=255, verbose_name=_("Название"))
+    link = models.URLField(verbose_name=_("Ссылка"))
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    # Это поле используется для определения порядка сортировки
+    sorting_field_name = 'order'
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.title}"

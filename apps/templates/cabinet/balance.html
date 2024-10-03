@@ -36,9 +36,7 @@
       </nav>
 
       <main class="container mt-14 pb-28">
-        <h1
-          class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl"
-        >
+        <h1 class="font-black text-dark-logo text-lg mb-12 uppercase text-center sm:text-2xl lg-md:text-3xl xl:text-4xl">
           личный кабинет
         </h1>
         <!--  this section is for avatar  -->
@@ -276,6 +274,8 @@
                         <th scope="col">Транзакция</th>
                         <th scope="col">Дата</th>
                         <th scope="col">Сумма</th>
+                        <th scope="col">Статус</th>
+
                         <th scope="col"></th>
                       </tr>
                     </thead>
@@ -286,6 +286,8 @@
                         <td>{{ i.description }}</td>
                         <td>{{ i.created_at }}</td>
                         <td>{{ i.total }} сом</td>
+                        <td>{{ i.status }}</td>
+
                         <td>
                           <form method="post" action="{% url 'delete_transaction' transaction_id=i.id %}">
                             {% csrf_token %}

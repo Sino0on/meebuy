@@ -218,16 +218,14 @@
                                     <div class="form__item">
                                         <label class="label">Бюджет</label>
                                         <p class="tooltip">Введите бюджет</p>
-                                        <input id="price" type="number" name="price" placeholder="Например: 10000"
+                                        <input id="price" type="number" name="price" placeholder="Например: 10000" class="pl-5 bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                                value="{% if form.price.value %}{{ form.price.value }}{% else %}{% endif %}">
                                         {% if form.price.errors %}
                                             <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
                                         {% endif %}
                                     </div>
 
-                                    <div
-                                            class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full"
-                                    >
+                                    <div class="flex gap-[30px] lg-md:flex-row flex-col lg-md:items-center w-full">
                                         <div class="flex flex-col gap-1 lg-md:w-[50%] w-full">
                                             <h6 class="text-[#2B292C] font-semibold text-[18px]">Валюта</h6>
                                             <p class="text-[#4D4D4D] text-[16px] font-light mb-3">
@@ -245,11 +243,7 @@
                                                         >{{ currency.name }} - {{ currency.code }}</option>
                                                     {% endfor %}
 
-                                                    <img
-                                                            class="absolute right-7 top-6 mr-7"
-                                                            src="{% static 'assets/images/icons/arrow-down.svg' %}"
-                                                            alt=""
-                                                    />
+                                                    <img class="absolute right-7 top-6 mr-7" src="{% static 'assets/images/icons/arrow-down.svg' %}" alt=""/>
                                                 </select>
                                                 {% if form.currency.errors %}
                                                     <div class="text-red-500 text-sm">{{ form.currency.errors }}</div>
@@ -283,7 +277,7 @@
                                     <div class="form__item">
                                         <label class="label">Количество</label>
                                         <p class="tooltip">Введите Количество</p>
-                                        <input id="quantity" type="number" name="quantity" placeholder="Например: 1000"
+                                        <input id="quantity" type="number" name="quantity" placeholder="Например: 1000" class="pl-5 bg-[#F9F9F9] border border-[#E6E6E6] py-4 rounded-[15px]"
                                                value="{% if form.quantity.value %}{{ form.quantity.value }}{% endif %}">
                                         {% if form.quantity.errors %}
                                             <div class="text-red-500 text-sm">{{ form.quantity.errors }}</div>
