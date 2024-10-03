@@ -1015,9 +1015,10 @@ def freedompay_success(request):
                 user = Cabinet.objects.get(user_id=request.user.id)
                 transaction = Transaction.objects.filter(user=user).exclude(status='success').order_by('-id').first()
                 if transaction:
-                    transaction.status = 'success'
-                    transaction.save()
-                    pg_payment_id = transaction.pg_payment_id
+                    pass
+                    # transaction.status = 'success'
+                    # transaction.save()
+                    # pg_payment_id = transaction.pg_payment_id
                 else:
                     return redirect('balance')
 
