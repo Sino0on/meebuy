@@ -75,7 +75,11 @@ class ProductListView(ListView):
         if order:
             # Make sure the order field is included in the distinct call
             # Order by 'order', then '-id' (ensure records are unique by id)
-            queryset = queryset.order_by(order, '-id', 'provider_status_priority').distinct(order, 'id')
+            print(order)
+            for i in queryset:
+                print(i.is_new)
+            queryset = queryset.order_by(order, '-id', 'provider_status_priority').distinct(order.replace('-', ''),
+                                                                                            'id')
         else:
             # Default ordering and distinct to ensure each ID is unique
             queryset = queryset.order_by('-id', 'provider_status_priority').distinct('id')
