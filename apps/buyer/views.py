@@ -60,9 +60,7 @@ class BuyerListView(generic.ListView):
                 output_field=BooleanField()
             )
         )
-        for cat in categories:
-            print(cat.has_children)
-        context['categories'] = categories.distinct()
+        context['categories'] = categories
         context["banners"] = self.get_banners()
         context[
             "banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
@@ -115,10 +113,8 @@ class BuyerListView(generic.ListView):
 
 class BuyerCategoryListView(BuyerListView):
     def get_queryset(self):
-        queryset = Provider.objects.filter(is_modered=True, is_provider=False, category=self.kwargs['pk'])
-        order = self.request.GET.get("order")
-        if order:
-            queryset = queryset.order_by(order)
+        category_id = self.kwargs.get('pk')  # Получаем ID категории из URL
+        queryset = super().get_queryset().filter(category=category_id)
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 
@@ -131,10 +127,13 @@ class BuyerCategoryListView(BuyerListView):
                 output_field=BooleanField()
             )
         )
-        print(categories)
         context['categories'] = categories.distinct()
-        context["all"] = False
 
+
+        category_id = self.request.GET.get("category")
+        if category_id:
+            context['current'] = int(category_id)
+        context['filter'] = self.filter  # Добавление фильтра в контекст
         return context
 
 

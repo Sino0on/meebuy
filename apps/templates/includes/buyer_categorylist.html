@@ -5,16 +5,22 @@
     <ul class="grid gap-8 lg-md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
         {% for i in categories %}
             <li class="">
-                <a
-                        class="flex items-center gap-[10px] w-fit"
-                        href="{% if i.has_children %}{% url "buyer_category_list" i.id %}{% else %}?category={{ i.pk }}{% endif %}"
-                >
+
+                <a class="flex items-center gap-[10px] w-fit"
+                        href="{% if i.has_children %}{% url "buyer_category_list" i.id %}{% else %}{% if home %}buyer/list/{% endif %}?category={{ i.pk }}{% endif %}">
                     <div
                             class="shadow-category-white text-white w-9 h-9 rounded-full overflow-hidden flex items-center justify-center lg-md:w-12 lg-md:h-12"
-                    >
+                               {% if i.id == current %}
+                    	style="box-shadow: #ffb600 0 0 10px;"
+                    {% endif %}>
                         <img src="{{ i.icon.url }}" alt=""/>
                     </div>
-                    <span>{{ i.title }}</span>
+                    <span
+                   {% if i.id == current %}
+                    	style="color: #ff7300;"
+                    {% endif %}
+                    >{{ i.title }}
+                    </span>
                 </a>
             </li>
         {% endfor %}
