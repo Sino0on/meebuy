@@ -36,7 +36,7 @@
     <div class="flex items-center gap-3 mt-5 md:mt-0">
         <p>Перейти на страницу</p>
         <form class="flex gap-4 items-center" method="get">
-            <input type="number" name="page" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4">
+            <input type="number" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" class="border border-[#A0A0A0] rounded-[5px] w-[89px] h-10 pl-4">
             <button type="submit">
                 <img class="bg-[#FFFCB7] p-2 rounded-[5px]" src="{% static 'assets/images/suppliers/suppliers/icons/next.svg' %}" alt="Перейти">
             </button>
