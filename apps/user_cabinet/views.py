@@ -766,8 +766,12 @@ def send_message(request):
 
     else:
         form = SupportMessageForm()
+        token = TelegramBotToken.objects.first()
+        recaptcha = token.recaptcha
+        print(recaptcha)
 
-    return render(request, 'cabinet/send_message.html', {'form': form})
+    return render(request, 'cabinet/send_message.html', {'form': form, 'token': recaptcha})
+
 
 def generate_message(request):
     report_data = f'Имя: {request.POST.get("name")}\n'
