@@ -9,7 +9,7 @@ from apps.authentication.views import (
     SelectAuthUserTypeView,
     cabinet_create,
     activate,
-    login_redirect, RegistrationView, AuthenticationView, register_v2
+    login_redirect, RegistrationView, AuthenticationView, register_v2, my_custom_callback_view
 )
 # Buyer views
 from apps.buyer.views import (
@@ -247,4 +247,5 @@ urlpatterns = [
     path('init_payment/', init_payment, name='init_payment'),
     path('freedompay/success/', freedompay_success, name='freedompay_success'),
     path('static_page/<slug>/', StaticPageView.as_view(), name='staticpages'),
+    path('accounts/google/login/callback/', my_custom_callback_view, name='google_callback'),
 ]

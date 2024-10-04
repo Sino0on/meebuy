@@ -26,6 +26,8 @@ from apps.product.models import Product
 from apps.provider.models import Provider, Category
 from apps.tender.models import Tender, Country
 from apps.user_cabinet.models import Cabinet, Contacts
+from allauth.socialaccount.providers.oauth2.client import OAuth2Error
+from allauth.socialaccount.providers.google.views import oauth2_login, oauth2_callback
 
 
 class HomeView(TemplateView):
@@ -337,3 +339,12 @@ def register_v2(request):
         form = CustomUserCreationForm()
     countries = Country.objects.all()
     return render(request, 'auth/authentication.html', {'form': form, 'countries': countries})
+
+
+def my_custom_callback_view(request):
+    try:
+        # Вы можете вызвать стандартный обработчик и добавить свою логику до или после
+        return oauth2_callback(request, 'google')
+    except OAuth2Error as e:
+        # Обработка ошибок, связанных с OAuth2
+        return render(request, 'auth/google_error.html', {'error_message': str(e)})
