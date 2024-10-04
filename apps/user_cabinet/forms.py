@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 
+from captcha.fields import CaptchaField
+
 from .models import SupportMessage
 
 
@@ -28,9 +30,11 @@ class NewPasswordForm(SetPasswordForm):
 
 
 class SupportMessageForm(forms.ModelForm):
+    captcha = CaptchaField()
+
     class Meta:
         model = SupportMessage
-        fields = ['name', 'phone', 'email', 'message', 'regret_to_register', 'agree_to_policy']
+        fields = ['name', 'phone', 'email', 'message', 'regret_to_register', 'agree_to_policy', "captcha"]
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'border border-[#E6E6E6] bg-[#F9F9F9] outline-none rounded-[15px] w-full px-5 py-3',

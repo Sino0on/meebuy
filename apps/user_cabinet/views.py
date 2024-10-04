@@ -5,7 +5,6 @@ from functools import reduce
 from operator import and_
 
 import plotly.graph_objs as go
-import requests
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
@@ -253,6 +252,7 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
             if not self.object.is_modered:
                 self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
             self.object.save()
+
 
             return redirect(self.get_success_url())
         else:
@@ -742,32 +742,18 @@ def password_change_success(request):
 
 
 def send_message(request):
-    token = TelegramBotToken.objects.first()
-    form = SupportMessageForm(request.POST or None)
-
     if request.method == 'POST':
-        # reCAPTCHA validation
-        recaptcha_response = request.POST.get('g-recaptcha-response')
-        data = {
-            'secret': token.recaptcha,
-            'response': recaptcha_response
-        }
-        try:
-            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
-            result = r.json()
-        except requests.exceptions.RequestException as e:
-            messages.error(request, 'Произошла ошибка подключения к серверу reCAPTCHA. Попробуйте еще раз.')
-            return render(request, 'cabinet/send_message.html', {'form': form, 'token': token.recaptcha})
+        form = SupportMessageForm(request.POST)
+        if form.is_valid():
+            generate_message(request)
+            form.save()
 
-        if result.get('success'):
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Ваше сообщение успешно отправлено!')
-                return redirect('view_profile')
-        else:
-            messages.error(request, 'Ошибка проверки reCAPTCHA. Пожалуйста, подтвердите, что вы не робот.')
-
-    return render(request, 'cabinet/send_message.html', {'form': form, 'token': token.recaptcha})
+            messages.success(request, 'Ваше сообщение успешно отправлено!')
+            return redirect('view_profile')
+    else:
+        form = SupportMessageForm()
+    contacts = Contacts.load()
+    return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
 
 
 def generate_message(request):
@@ -894,9 +880,9 @@ def tariff_buy(request):
         return JsonResponse({"Error": "Недостаточно средств"}, status=400)
     # if user.cabinet.user_status:
 
-    # if user.cabinet.user_status.status == status and user.cabinet.user_status.end_date > today and user.cabinet.user_status.is_active:
-    #     print(user.cabinet.user_status.status)
-    #     return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
+        # if user.cabinet.user_status.status == status and user.cabinet.user_status.end_date > today and user.cabinet.user_status.is_active:
+        #     print(user.cabinet.user_status.status)
+        #     return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
 
     if status.status.base_tariff:
         if not user.cabinet.base_tariff_connected_date:
@@ -905,6 +891,7 @@ def tariff_buy(request):
             return JsonResponse(
                 {"Error": f"У вас уже был подключен базовый тариф - {user.cabinet.base_tariff_connected_date}"},
                 status=400)
+
 
         # if user.cabinet.user_status.status.status == status.status:
         #     user.cabinet.user_status.end_date += datetime.timedelta(days=status.months * 30)
@@ -936,7 +923,6 @@ def tariff_buy(request):
 
     user.cabinet.save()
     return JsonResponse(data={"Info": "ok"}, status=200)
-
 
 def redirect_to_site(request, pk):
     provider = get_object_or_404(Cabinet, id=pk)

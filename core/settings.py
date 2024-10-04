@@ -60,7 +60,9 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.mailru',
     'adminsortable2',
     'mptt',
-    'rest_framework'
+    'rest_framework',
+    'captcha',
+
     # 'social.apps.django_app.default',
 ]
 
@@ -284,6 +286,15 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SOCIALACCOUNT_ADAPTER = 'apps.authentication.adapters.CustomSocialAccountAdapter'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+
+CAPTCHA_LENGTH = 4
+CAPTCHA_FOREGROUND_COLOR = 'orange'
+CAPTCHA_BACKGROUND_COLOR = 'white'
+CAPTCHA_FONT_SIZE = 22
+CAPTCHA_IMAGE_SIZE = (100, 40)
+CAPTCHA_TIMEOUT = 5*60  # 5 минут
+CAPTCHA_CHALLENGE_FUNCT = 'apps.user_cabinet.custom_captcha.only_digit_challenge'
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

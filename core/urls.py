@@ -12,4 +12,6 @@ urlpatterns = [
 
                   re_path(r'^accounts/login/$', RedirectView.as_view(pattern_name='login', permanent=False)),
                   path('accounts/', include('allauth.urls')),
+                  path('captcha/', include('captcha.urls')),
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

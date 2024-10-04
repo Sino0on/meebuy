@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Отправка сообщения{% endblock %}
 
 {% block content %}
@@ -11,47 +10,45 @@
     </h1>
     <div class="shadow-card-shadow bg-[#FFFFFF] flex flex-col gap-5 sm:p-10 p-4 rounded-2xl md:w-[50%] mx-auto">
       <div class="flex items-center gap-[15px]">
-        <a href="{% url 'view_profile' %}">
-          <img src="{% static 'assets/images/icons/prev-arrow.svg' %}" alt="Назад"/>
-        </a>
+        <a href="{% url 'view_profile' %}"><img src="{% static 'assets/images/icons/prev-arrow.svg' %}" alt=""/></a>
         <span class="font-semibold text-[#2B292C]">Техподдержка Meebuy</span>
       </div>
       <hr class="h-[2px] bg-[#A0A0A0] w-full" />
 
-      <form method="post" action="{% url 'send_message' %}">
+      <form method="post">
         {% csrf_token %}
         <div class="flex flex-col gap-4">
           <div class="flex flex-col gap-4">
-            <label for="name" class="text-[#2B292C] text-[18px] font-semibold">Ваше ФИО</label>
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Ваше ФИО</h6>
             {{ form.name }}
           </div>
           <div class="flex flex-col gap-4">
-            <label for="phone" class="text-[#2B292C] text-[18px] font-semibold">Ваш номер телефона</label>
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Ваш номер телефона</h6>
             {{ form.phone }}
           </div>
           <div class="flex flex-col gap-4">
-            <label for="email" class="text-[#2B292C] text-[18px] font-semibold">Ваш e-mail</label>
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Ваш e-mail</h6>
             {{ form.email }}
           </div>
           <div class="flex flex-col gap-4">
-            <label for="message" class="text-[#2B292C] text-[18px] font-semibold">Ваше сообщение</label>
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Ваше сообщение</h6>
             {{ form.message }}
           </div>
           <div class="flex flex-col gap-4">
-            <label for="regret_to_register" class="text-[#2B292C] text-[18px] font-semibold">Основная цель для регистрации</label>
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Основная цель для регистрации</h6>
             {{ form.regret_to_register }}
           </div>
         </div>
-          <br>
-        <!-- reCAPTCHA widget -->
-        <div class="g-recaptcha my-3" data-sitekey="{{ token }}"></div>
-
         <!-- confirm -->
-<div class="flex items-center gap-[10px] mt-2">
-          <input type="checkbox" name="agree_to_policy" class="h-6 w-6" id="id_agree_to_policy" required>
+        <div class="flex items-center gap-[10px] mt-2">
+          {{ form.agree_to_policy }}
           <p class="text-[#777777] text-[16px] font-normal">
             Я ознакомился и согласен с условиями <a href="#" class="underline">Политики</a>
           </p>
+        </div>
+      <div class="flex flex-col gap-4">
+            <h6 class="text-[#2B292C] text-[18px] font-semibold">Введите символы с картинки</h6>
+            {{ form.captcha }}
         </div>
         <!-- button -->
         <button type="submit" class="font-medium text-[#2B292C] uppercase py-4 rounded-lg w-full bg-[#E4DB00] mt-6">
@@ -62,8 +59,7 @@
   </div>
 </div>
 {% endblock %}
-
 {% block js %}
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="{% static 'pages/home/index.js' %}"></script>
+    <script src="{% static 'pages/home/index.js' %}"></script>
+
 {% endblock %}

@@ -25,4 +25,33 @@ class Migration(migrations.Migration):
             name='wide_banner',
             field=models.FileField(blank=True, upload_to='images/banners/', verbose_name='Верхний баннер'),
         ),
+        migrations.AddField(
+            model_name='productcategory',
+            name='level',
+            field=models.PositiveIntegerField(default=1, editable=False),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='productcategory',
+            name='lft',
+            field=models.PositiveIntegerField(default=1, editable=False),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='productcategory',
+            name='order',
+            field=models.PositiveIntegerField(db_index=True, default=0, editable=False),
+        ),
+        migrations.AddField(
+            model_name='productcategory',
+            name='rght',
+            field=models.PositiveIntegerField(default=1, editable=False),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='productcategory',
+            name='tree_id',
+            field=models.PositiveIntegerField(db_index=True, default=1, editable=False),
+            preserve_default=False,
+        ),
     ]
