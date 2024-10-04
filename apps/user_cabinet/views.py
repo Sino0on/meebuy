@@ -337,6 +337,12 @@ class UserAnketaBuyerView(LoginRequiredMixin, generic.UpdateView):
                 self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
             self.object.save()  # Сохраняем изменения в объект
             form.save_m2m()  # Сохраняем ManyToMany поля
+            category_ids = self.request.POST.get('category')
+            if category_ids:
+                categories = category_ids.split(', ')
+                numbers = list(map(int, categories))
+                categories = Category.objects.filter(id__in=numbers)
+                self.object.category.set(categories)
             return redirect(self.get_success_url())  # Переадресация на страницу успеха
         else:
             print(form.errors)  # Вывод ошибок на консоль для отладки
