@@ -149,10 +149,7 @@
                             <div class="swiper-slide" style="position: relative">
                                 <div class="new__slide relative p-4 lg-md:p-6">
                                     <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
-                                         src="
-
-
-                                                 {% if i.image %}{{ i.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %} {% endif %}"
+                                         src="{% if i.image %}{{ i.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %} {% endif %}"
                                          alt="">
                                     <div class="relative flex flex-col justify-between h-full lg-md:block">
                                         <div>
