@@ -31,6 +31,7 @@ class TelegramBotToken(models.Model):
     email = models.EmailField(max_length=200, blank=True, null=True, verbose_name=_("Email"))
     support_whatsapp = models.CharField(max_length=200, blank=True, null=True, verbose_name=_("WhatsApp поддержки"))
     support_telegram = models.CharField(max_length=200, blank=True, null=True, verbose_name=_("Telegram поддержки"))
+    recaptcha = models.CharField(max_length=200, blank=True, null=True, verbose_name=_("ReCaptcha"))
 
     def clean(self):
         if TelegramBotToken.objects.exists() and not self.pk:

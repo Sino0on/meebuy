@@ -5,6 +5,7 @@ from functools import reduce
 from operator import and_
 
 import plotly.graph_objs as go
+import requests
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
@@ -743,18 +744,30 @@ def password_change_success(request):
 
 def send_message(request):
     if request.method == 'POST':
+        token = TelegramBotToken.objects.first()
         form = SupportMessageForm(request.POST)
-        if form.is_valid():
-            generate_message(request)
-            form.save()
+        # reCAPTCHA validation
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret': token.recaptcha,
+            'response': recaptcha_response
+        }
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = r.json()
 
-            messages.success(request, 'Ваше сообщение успешно отправлено!')
-            return redirect('view_profile')
+        if result.get('success'):
+            if form.is_valid():
+                form.save()  # Сохраняем данные формы, если они валидны
+                messages.success(request, 'Ваше сообщение успешно отправлено!')
+                return redirect('view_profile')  # Редирект после успешной отправки
+        else:
+            messages.error(request,
+                           'Ошибка проверки reCAPTCHA. Пожалуйста, подтвердите, что вы не робот.')  # Сообщение о ошибке
+
     else:
         form = SupportMessageForm()
-    contacts = Contacts.load()
-    return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
 
+    return render(request, 'cabinet/send_message.html', {'form': form})
 
 def generate_message(request):
     report_data = f'Имя: {request.POST.get("name")}\n'
