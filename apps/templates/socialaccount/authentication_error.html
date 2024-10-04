@@ -8,11 +8,6 @@
     {{ exceptions }}
     <pre>{{ request|pprint }}</pre>
 
-    <ul>
-{% for key in request.GET.keys %}
-  <li>{{ key }}: {{ request.GET[key] }}</li>
-{% endfor %}
-</ul>
 
     <a href="{% url 'home' %}">Вернуться на главную страницу</a>
 </div>
