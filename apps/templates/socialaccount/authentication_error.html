@@ -1,10 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .error-page {
+        background-color: #ffedd5; /* светло-оранжевый фон */
+        color: #ff6f00; /* темно-оранжевый текст */
+        padding: 20px;
+        border: 1px solid #ffaf1d; /* оранжевая рамка */
+        border-radius: 10px;
+        text-align: center;
+        max-width: 600px;
+        margin: 50px auto;
+    }
+    .error-page h1 {
+        color: #e65100; /* более темный оттенок оранжевого для заголовка */
+    }
+    .error-page a {
+        color: #005cff; /* синий цвет ссылок для контраста */
+        text-decoration: none;
+    }
+    .error-page a:hover {
+        text-decoration: underline;
+    }
+</style>
 <div class="error-page">
-    <h1>Ошибка входа</h1>
-    <p>При попытке входа через ваш аккаунт в социальной сети произошла ошибка.</p>
-    <p>{{ exception }}</p>
+    <h1>Ошибка аутентификации</h1>
+    <p>В процессе входа через сторонний сервис возникла ошибка.</p>
+    <p><strong>Подробности ошибки:</strong> {{ exception|default:"Недоступны детали ошибки" }}</p>
     <a href="{% url 'home' %}">Вернуться на главную страницу</a>
 </div>
 {% endblock %}
