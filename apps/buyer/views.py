@@ -60,7 +60,7 @@ class BuyerListView(generic.ListView):
                 output_field=BooleanField()
             )
         )
-        context['categories'] = categories
+        context['categories'] = categories.distinct()
         context["banners"] = self.get_banners()
         context[
             "banner_settings"] = BannerSettings.objects.all().first().number if BannerSettings.objects.all().first() else ''
