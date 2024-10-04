@@ -339,12 +339,3 @@ def register_v2(request):
         form = CustomUserCreationForm()
     countries = Country.objects.all()
     return render(request, 'auth/authentication.html', {'form': form, 'countries': countries})
-
-
-def my_custom_callback_view(request):
-    try:
-        # Вы можете вызвать стандартный обработчик и добавить свою логику до или после
-        return oauth2_callback(request, 'google')
-    except OAuth2Error as e:
-        # Обработка ошибок, связанных с OAuth2
-        return render(request, 'auth/google_error.html', {'error_message': str(e)})
