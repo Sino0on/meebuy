@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .signup-form {
+        background-color: #fff5e6; /* светло-оранжевый фон */
+        padding: 20px;
+        border: 2px solid #ffaf1d; /* оранжевая рамка */
+        border-radius: 8px;
+        max-width: 500px;
+        margin: 40px auto;
+        text-align: center;
+    }
+    .signup-form h2 {
+        color: #e65100; /* оранжевый текст */
+    }
+    .signup-form input, .signup-form button {
+        margin-top: 10px;
+        padding: 10px;
+        width: 90%;
+    }
+</style>
+
+<div class="signup-form">
+    <h2>Завершение регистрации</h2>
+    <form method="post" action="{% url 'socialaccount_signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}
