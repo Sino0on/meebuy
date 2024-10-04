@@ -63,11 +63,11 @@
                     <img src="{{ image.image.url }}" alt="" style="width: 60px;height: 60px; object-fit: cover"></img>
                 {% endfor %}
             </div>
-            <div class="flex gap-4 card-btns"  >
+            <div class="flex gap-4 card-btns"  ><a href="/provider/detail/{{ provider.id }}">
                 <button class="bg-[#E4DB00] px-6 py-3 rounded-[7px]">
 
-                    <a href="/provider/detail/{{ provider.id }}"> Подробнее </a>
-                </button>
+                     Подробнее
+                </button></a>
                 {% if user.is_authenticated %}
                                     <button class="bg-[#FFF] px-6 py-3 rounded-[7px] " style="border: 1px solid black">
 
