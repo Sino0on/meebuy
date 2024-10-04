@@ -143,6 +143,7 @@
                                   fill="black"></path>
                         </svg>
                         <button><a href="
+
                                 {% if user.is_authenticated %}{% url 'user_tenders' %}{% else %}{% url 'login' %}{% endif %}">
                             Добавить закупку</a></button>
                     </div>
@@ -404,63 +405,71 @@
                                         {% endif %}
                                         <span class="text-[#2B292C] text-[16px] font-normal"></span>
                                     </div>
-                                  </div>
+                                </div>
 
-                                    <div class="flex items-center gap-3" style="padding-right: 10px">
-                                        {% if tender.marketplaces or tender.online_store or tender.social_networks or tender.wholesale_resale or tender.group_purchases or tender.group_purchases %}
-                                            <p class="text-[#686868] text-[16px] font-mulish font-normal">
-                                                Место реализации:
-                                            </p>
-                                        {% endif %}
-                                        <span class="text-[#2B292C] text-[16px] font-normal">
+                                <div class="flex items-center gap-3" style="padding-right: 10px">
+                                    {% if tender.marketplaces or tender.online_store or tender.social_networks or tender.wholesale_resale or tender.group_purchases or tender.group_purchases %}
+                                        <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                            Место реализации:
+                                        </p>
+                                    {% endif %}
+                                    <span class="text-[#2B292C] text-[16px] font-normal">
                                     {% if tender.retail_store %}
                                         Розничный магазин,
                                     {% endif %}
-                                            {% if tender.marketplaces %}
-                                                Маркетплейсы,
-                                            {% endif %}
-                                            {% if tender.online_store %}
-                                                Интернет-магазин,
-                                            {% endif %}
-                                            {% if tender.social_networks %}
-                                                Соцсети/доски объявлений,
-                                            {% endif %}
-                                            {% if tender.wholesale_resale %}
-                                                Оптовая перепродажа,
-                                            {% endif %}
-                                            {% if tender.group_purchases %}
-                                                Совместные покупки,
-                                            {% endif %}
-                                            {% if tender.group_purchases %}
-                                                Для собственного потребления
-                                            {% endif %}
+                                        {% if tender.marketplaces %}
+                                            Маркетплейсы,
+                                        {% endif %}
+                                        {% if tender.online_store %}
+                                            Интернет-магазин,
+                                        {% endif %}
+                                        {% if tender.social_networks %}
+                                            Соцсети/доски объявлений,
+                                        {% endif %}
+                                        {% if tender.wholesale_resale %}
+                                            Оптовая перепродажа,
+                                        {% endif %}
+                                        {% if tender.group_purchases %}
+                                            Совместные покупки,
+                                        {% endif %}
+                                        {% if tender.group_purchases %}
+                                            Для собственного потребления
+                                        {% endif %}
                                 </span>
+                                </div>
+                                {% if tender.requirements %}
+                                    <div class="flex items-center gap-3" style=" padding-right: 10px">
+                                        <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                            Необходимые товары :
+                                        </p>
+                                        <span class="text-[#2B292C] text-[16px] font-normal">{{ tender.requirements }}</span>
                                     </div>
-                                    {% if tender.requirements %}
-                                        <div class="flex items-center gap-3" style=" padding-right: 10px">
-                                            <p class="text-[#686868] text-[16px] font-mulish font-normal">
-                                                Необходимые товары :
-                                            </p>
-                                            <span class="text-[#2B292C] text-[16px] font-normal">{{ tender.requirements }}</span>
-                                        </div>
-                                    {% endif %}
-                                    {% if tender.description %}
+                                {% endif %}
+                                {% if tender.description %}
 
-                                        <div class="flex items-center gap-3">
-                                          <p class="text-[#686868] text-[16px] font-mulish font-normal">
-                                                Описание:
-                                            </p>
-                                            <span class="text-[#2B292C] text-[16px] font-normal">
+                                    <div class="flex items-center gap-3">
+                                        <p class="text-[#686868] text-[16px] font-mulish font-normal">
+                                            Описание:
+                                        </p>
+                                        <span class="text-[#2B292C] text-[16px] font-normal">
                                                 {{ tender.description }}
                                             </span>
-                                        </div>
-                                    {% endif %}
+                                    </div>
+                                {% endif %}
 
+                    <div class="flex gap-4">
 
                                 <a href="/tender/detail/{{ tender.id }}/"
                                    class="bg-[#E4DB00] text-[16px] font-normal rounded-lg py-3 px-6">
                                     Подробнее
                                 </a>
+                                {% if request.user.is_authenticated and tender.user %}
+                                    <a href="{% url 'chat_create' tender.user.id %}"
+                                       class="border border-solid border-[#2B292C] px-6 py-2 rounded-[7px]">
+                                        Написать
+                                    </a>
+                                {% endif %}
+                    </div>
                             </div>
                             <p class="text-[#686868] text-[16px] font-mulish font-normal absolute right-9  bottom-8">
                                 {{ tender.created_at|date:"d.m.Y" }}

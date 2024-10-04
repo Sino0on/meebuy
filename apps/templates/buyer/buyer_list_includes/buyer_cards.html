@@ -1,84 +1,61 @@
 {% load static %}
-<div
-  id="buyer-list"
-  data-banners="{{ banners }}"
-  data-banner-order="{{ banner_settings }}"
-  class="flex flex-col gap-7"
->
-  {% for object in object_list %}
-  <div
-    class="cards buyer-item relative flex sm:justify-between items-start p-[20px] rounded-[15px]"
-  >
-    <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
-      <img {% if object.image %}{{ object.image.url }}{% else %}{% static
-      'assets/images/logo_4.svg' %}{% endif %} alt="" />
-      <div class="flex flex-col gap-9">
-        <div class="pt-2">
-          <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
-            {{ object.title }}
-          </h6>
-          <p>{{ object.mini_desc }}</p>
-        </div>
-        <div class="flex gap-4">
-          <a href="{% url 'buyer_detail' object.user.id %}">
-            <button class="bg-[#E4DB00] px-6 py-2 rounded-[7px]">
-              Подробнее
-            </button>
-          </a>
-          {% if user_is_authenticated %}
-          <a
-            href="{% url 'chat_create' object.user.id %}"
-            class="border border-solid border-[#2B292C] px-6 py-2 rounded-[7px]"
-          >
-            Написать
-          </a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <ul class="flex items-center gap-2 sm: absolute right-4">
-      <li>
-        <img
-          src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
-          alt=""
-        />
-      </li>
-      <li class="checIcon">
-        <svg
-          class="checkIcon transition-colors"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            style="stroke: rgb(43, 41, 44)"
-            class="iconGreen green"
-            d="M9.5 11.5389L11.8077 13.8466L19.5 6.1543"
-            stroke="#2B292C"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            style="stroke: rgb(43, 41, 44)"
-            class="iconGreen green"
-            d="M20 12V18.2222C20 18.6937 19.8127 19.1459 19.4793 19.4793C19.1459 19.8127 18.6937 20 18.2222 20H5.77778C5.30628 20 4.8541 19.8127 4.5207 19.4793C4.1873 19.1459 4 18.6937 4 18.2222V5.77778C4 5.30628 4.1873 4.8541 4.5207 4.5207C4.8541 4.1873 5.30628 4 5.77778 4H15.5556"
-            stroke="#2B292C"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </li>
-      <li>
-        <img src="../../assets/images/icons/retail-company-icons.svg" alt="" />
-      </li>
-    </ul>
-  </div>
+<div id="buyer-list" data-banners="{{ banners }}" data-banner-order="{{ banner_settings }}" class="flex flex-col gap-7">
+    {% for object in object_list %}
+        <div class="cards buyer-item relative flex sm:justify-between items-start p-[20px] rounded-[15px]">
+            <div class="flex md:flex-row flex-col gap-7 md:items-center items-start">
+                <img{% if object.image %}{{ object.image.url }}{% else %}
+                    {% static 'assets/images/logo_4.svg' %}{% endif %} alt=""/>
+                <div class="flex flex-col gap-9">
+                    <div class="pt-2">
+                        <h6 class="pb-2 text-[18px] font-extrabold font-mulish">
+                            {{ object.title }}
+                        </h6>
+                        <p>{{ object.mini_desc }}</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="{% url 'buyer_detail' object.user.id %}">
+                            <button class="bg-[#E4DB00] px-6 py-2 rounded-[7px]">
+                                Подробнее
+                            </button>
+                        </a>
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'chat_create' object.user.id %}"
+                               class="border border-solid border-[#2B292C] px-6 py-2 rounded-[7px]">
+                                Написать
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <ul class="flex items-center gap-2 sm: absolute right-4">
+                {% if object.is_recommended %}
+                    <li>
+                        <img
+                                src="{% static 'assets/images/suppliers/suppliers/icons/diamand.svg' %}"
+                                alt=""
+                        />
+                    </li>
 
-  {% endfor %}
+                {% endif %}
+
+                <li class="checIcon">
+                    <svg class="checkIcon transition-colors" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path style="stroke: rgb(43, 41, 44)" class="iconGreen green"
+                              d="M9.5 11.5389L11.8077 13.8466L19.5 6.1543" stroke="#2B292C" stroke-width="1.5"
+                              stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path style="stroke: rgb(43, 41, 44)" class="iconGreen green"
+                              d="M20 12V18.2222C20 18.6937 19.8127 19.1459 19.4793 19.4793C19.1459 19.8127 18.6937 20 18.2222 20H5.77778C5.30628 20 4.8541 19.8127 4.5207 19.4793C4.1873 19.1459 4 18.6937 4 18.2222V5.77778C4 5.30628 4.1873 4.8541 4.5207 4.5207C4.8541 4.1873 5.30628 4 5.77778 4H15.5556"
+                              stroke="#2B292C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </li>
+                <li>
+                    <img src="../../assets/images/icons/retail-company-icons.svg" alt=""/>
+                </li>
+            </ul>
+        </div>
+
+    {% endfor %}
 </div>
 
 

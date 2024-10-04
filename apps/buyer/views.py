@@ -146,6 +146,7 @@ class BuyerDetailView(generic.DetailView):
         check_result = self.check_open_and_status()
         context = super().get_context_data(**kwargs)
         context["open"] = check_result
+        context['similar'] = Provider.objects.filter(is_active=True, title__isnull=False, user__tenders__isnull=False)[:10]
         return context
 
     def check_open_and_status(self):

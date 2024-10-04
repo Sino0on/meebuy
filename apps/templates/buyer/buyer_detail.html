@@ -164,14 +164,13 @@
                 <div class="swiper supplier__detail-slider mt-[30px] lg:mt-10">
                     <div class="swiper-wrapper">
 
-                        {% for buyer in buyers %}
+                        {% for buyer in similar %}
                             <div class="swiper-slide">
-                                <div
-                                        class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]">
-                                    <div
-                                            class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full">
+                                <div class="card m-[1px] shadow-card-shadow flex flex-col relative p-[20px] rounded-[15px]">
+                                    <div class="w-[30%] aspect-square rounded-[10px] overflow-hidden lg-md:w-[135px] lg-md:h-[135px] lg-md:mx-auto lg-md:rounded-full">
                                         <img class="w-full h-full object-cover"
-                                             src="{% static 'assets/images/home/headphones-white.svg' %}" alt=""/>
+                                             src="{% if buyer.image %}{{ buyer.image.url }}{% else %}{% static 'assets/images/logo_4.svg' %}{% endif %}"
+                                             alt=""/>
                                     </div>
                                     <div class="mt-6">
                                         <div>
@@ -181,18 +180,20 @@
                                             <p class="text-base text-dark-logo line-clamp-2">
                                                 {{ buyer.mini_desc }}
                                             </p>
-                                            <p
-                                                    class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]">
-                                                <img class="mr-[6px]"
-                                                     src="{% static 'assets/images/home/headphones-white.svg' %}"
-                                                     alt=""/>
-                                                {{ buyer.city }} {{ buyer.city.region.country }}
-                                            </p>
+                                            {% if buyer.city %}
+                                                <p class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]">
+                                                    <img class="mr-[6px]"
+                                                         src="{% static 'assets/images/home/headphones-white.svg' %}"
+                                                         alt=""/>
+                                                    {{ buyer.city }} {{ buyer.city.region.country }}
+                                                </p>
+                                                {% else %}
+                                                <br>
+                                            {% endif %}
                                         </div>
-
                                         <div class="flex mt-4 gap-4">
                                             <a class="flex-grow text-center btn-filled py-[7px] w-full"
-                                               href="{% url 'buyer_detail' object.user.id %}">
+                                               href="{% url 'buyer_detail' object.id %}">
                                                 Подробнее
                                             </a>
                                         </div>

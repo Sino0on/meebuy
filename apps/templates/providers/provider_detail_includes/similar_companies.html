@@ -14,10 +14,12 @@
                                     <div>
                                         <h6 class="pb-2 text-[18px] font-bold line-clamp-1">{{ company.title }}</h6>
                                         <p class="text-base text-dark-logo line-clamp-2">{% if company.mini_descr %}{{ company.mini_descr }}{% else %}<br>{% endif %}</p>
-                                        <p class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]">
+                                        {% if company.city %}
+                                        	<p class="hidden lg-md:flex text-sm text-[#868686] font-normal mt-[18px]">
                                             <img class="mr-[6px]" src="{% static 'assets/images/icons/location-with-map.svg' %}" alt=""/>
-                                            {{ company.city }} {{ company.city.region.country }}
-                                        </p>
+                                                {{ company.city }} {{ company.city.region.country }}
+                                            </p>
+                                        {% endif %}
                                     </div>
                                     <div class="flex mt-4 gap-4">
                                         <a class="flex-grow text-center btn-filled py-[7px] w-full" href="{% url 'provider_detail' company.id %}">
