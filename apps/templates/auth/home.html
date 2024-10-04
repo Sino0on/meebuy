@@ -144,7 +144,9 @@
                 <div class="swiper new__slider mt-7">
                     <div class="swiper-wrapper">
                         {% for i in new_products %}
-                            <div class="swiper-slide">
+
+
+                            <div class="swiper-slide" style="position: relative">
                                 <div class="new__slide relative p-4 lg-md:p-6">
                                     <img class="absolute top-0 left-0 w-full h-full object-cover -z-[1]"
                                          src="
@@ -164,7 +166,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <a href="/product/detail/{{ i.pk }}/" style="position: absolute; top:0; left: 0; width: 100%;height: 100%; z-index: 100">   </a>
                             </div>
+
+
                         {% endfor %}
                     </div>
                 </div>
