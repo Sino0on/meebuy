@@ -254,7 +254,6 @@ class UserAnketaView(LoginRequiredMixin, generic.UpdateView):
                 self.object.comment = 'Ваша анкета на рассмотрении. Пожалуйста, подождите'
             self.object.save()
 
-
             return redirect(self.get_success_url())
         else:
             print(form.errors)
@@ -743,34 +742,32 @@ def password_change_success(request):
 
 
 def send_message(request):
+    token = TelegramBotToken.objects.first()
+    form = SupportMessageForm(request.POST or None)
+
     if request.method == 'POST':
-        token = TelegramBotToken.objects.first()
-        form = SupportMessageForm(request.POST)
         # reCAPTCHA validation
         recaptcha_response = request.POST.get('g-recaptcha-response')
         data = {
             'secret': token.recaptcha,
             'response': recaptcha_response
         }
-        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
-        result = r.json()
+        try:
+            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+            result = r.json()
+        except requests.exceptions.RequestException as e:
+            messages.error(request, 'Произошла ошибка подключения к серверу reCAPTCHA. Попробуйте еще раз.')
+            return render(request, 'cabinet/send_message.html', {'form': form, 'token': token.recaptcha})
 
         if result.get('success'):
             if form.is_valid():
-                form.save()  # Сохраняем данные формы, если они валидны
+                form.save()
                 messages.success(request, 'Ваше сообщение успешно отправлено!')
-                return redirect('view_profile')  # Редирект после успешной отправки
+                return redirect('view_profile')
         else:
-            messages.error(request,
-                           'Ошибка проверки reCAPTCHA. Пожалуйста, подтвердите, что вы не робот.')  # Сообщение о ошибке
+            messages.error(request, 'Ошибка проверки reCAPTCHA. Пожалуйста, подтвердите, что вы не робот.')
 
-    else:
-        form = SupportMessageForm()
-        token = TelegramBotToken.objects.first()
-        recaptcha = token.recaptcha
-        print(recaptcha)
-
-    return render(request, 'cabinet/send_message.html', {'form': form, 'token': recaptcha})
+    return render(request, 'cabinet/send_message.html', {'form': form, 'token': token.recaptcha})
 
 
 def generate_message(request):
@@ -897,9 +894,9 @@ def tariff_buy(request):
         return JsonResponse({"Error": "Недостаточно средств"}, status=400)
     # if user.cabinet.user_status:
 
-        # if user.cabinet.user_status.status == status and user.cabinet.user_status.end_date > today and user.cabinet.user_status.is_active:
-        #     print(user.cabinet.user_status.status)
-        #     return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
+    # if user.cabinet.user_status.status == status and user.cabinet.user_status.end_date > today and user.cabinet.user_status.is_active:
+    #     print(user.cabinet.user_status.status)
+    #     return JsonResponse({"Error": "У вас уже подключен данный тариф"}, status=400)
 
     if status.status.base_tariff:
         if not user.cabinet.base_tariff_connected_date:
@@ -908,7 +905,6 @@ def tariff_buy(request):
             return JsonResponse(
                 {"Error": f"У вас уже был подключен базовый тариф - {user.cabinet.base_tariff_connected_date}"},
                 status=400)
-
 
         # if user.cabinet.user_status.status.status == status.status:
         #     user.cabinet.user_status.end_date += datetime.timedelta(days=status.months * 30)
@@ -940,6 +936,7 @@ def tariff_buy(request):
 
     user.cabinet.save()
     return JsonResponse(data={"Info": "ok"}, status=200)
+
 
 def redirect_to_site(request, pk):
     provider = get_object_or_404(Cabinet, id=pk)
