@@ -34,6 +34,13 @@ class Category(MPTTModel):
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
 
+    @classmethod
+    def get_category_descendants(cls, category):
+        categories = [category]
+        for child in category.categor.all():
+            categories.extend(cls.get_category_descendants(child))
+        return categories
+
 
 class Provider(StatusMixin, models.Model):
     class BusinessType(models.TextChoices):
@@ -112,19 +119,21 @@ class Provider(StatusMixin, models.Model):
     credit_card = models.BooleanField(default=False, verbose_name=_("Кредитные карты"))
     electronic_money = models.BooleanField(default=False, verbose_name=_("Электронные деньги"))
 
+    @classmethod
+    def get_category_descendants(cls, category):
+        categories = [category]
+        for child in category.children.all():
+            categories.extend(cls.get_category_descendants(child))
+        return categories
+
     @property
     def is_verified(self):
-        # Проверяем, есть ли у провайдера документы
         if self.documents.exists():
-            # Проверяем, все ли документы верифицированы
             if not self.documents.filter(verified=False).exists():
-                # Все документы верифицированы
                 return 2
             else:
-                # Не все документы верифицированы
                 return 1
         else:
-            # Документы отсутствуют
             return 0
 
     def __str__(self):

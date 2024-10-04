@@ -1,5 +1,5 @@
 from django.db.models import Case, BooleanField, When
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views import generic
 
 from apps.authentication.models import User
@@ -113,8 +113,9 @@ class BuyerListView(generic.ListView):
 
 class BuyerCategoryListView(BuyerListView):
     def get_queryset(self):
-        category_id = self.kwargs.get('pk')  # Получаем ID категории из URL
-        queryset = super().get_queryset().filter(category=category_id)
+        category_id = self.kwargs.get('pk')
+        categories = Category.get_category_descendants(get_object_or_404(Category, id=category_id))
+        queryset = super().get_queryset().filter(category__in=categories)
         self.filter = ProviderFilter(self.request.GET, queryset=queryset)
         return self.filter.qs
 
