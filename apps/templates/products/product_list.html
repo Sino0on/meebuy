@@ -222,10 +222,7 @@
                     </div>
                       <div class="top-banners-cover mobile-banner">
                         <a href="{{ banner_1.wide_banner_link }}">
-                            <img
-                                    src="{% if banner_1.wide_banner_mobile %}{{ banner_1.wide_banner_mobile.url }}{% endif %}"
-                                    alt=""
-                            />
+                            <img src="{% if banner_1.wide_banner_mobile %}{{ banner_1.wide_banner_mobile.url }}{% endif %}" alt=""/>
                         </a>
                         <a href="{% if banner_1.wide_banner_link %}{{ banner_1.wide_banner_link }}{% endif %}" target="_blank"></a>
                     </div>
@@ -508,7 +505,7 @@
                             />
                         <a href="{% if banner_4.bottom_banner_link %}{{ banner_4.bottom_banner_link }}{% endif %}" target="_blank"></a>
                     </div>
-                     <div class="top-banners-cover wide_banner_mobile">
+                     <div class="top-banners-cover mobile-banner">
                             <img
                                     src="{% if banner_4.bottom_banner_mobile %}{{ banner_4.bottom_banner_mobile.url }}{% endif %}"
                                     alt=""
