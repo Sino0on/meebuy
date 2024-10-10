@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import Country, Region, City, Tender, TenderImg
+from .models import Country, Region, City, Tender, TenderImg, TenderOpenHelpText
+
+
+@admin.register(TenderOpenHelpText)
+class TenderOpenHelpTextAdmin(admin.ModelAdmin):
+    list_display = ['title', 'text']
 
 
 class TenderImgInline(admin.TabularInline):

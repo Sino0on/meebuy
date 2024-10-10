@@ -20,7 +20,8 @@
             max-width: 200px;
             margin: 0 auto;
         }
-        .capcha img{
+
+        .capcha img {
             width: 150px;
             margin: 0 auto;
         }
@@ -82,6 +83,15 @@
                             class="font-medium text-[#2B292C] uppercase py-4 rounded-lg w-full bg-[#E4DB00] mt-6">
                         отправить
                     </button>
+                    <div class="max-w-[522] text-center mt-10">
+                        <p class="text-lg text-dark-text">
+                            Вы можете написать нам на
+                            <br class="hidden sm:block">
+                            <a href="{{ telegram_bot_token.support_whatsapp }}" class="underline underline-offset-2">WhatsApp</a> или
+
+                            <a href="{{ telegram_bot_token.support_telegram }}" class="underline underline-offset-2">Telegram</a>
+                        </p>
+                    </div>
                 </form>
             </div>
         </div>

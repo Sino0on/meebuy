@@ -34,7 +34,7 @@ def check_user_status_and_open_number(request):
                 request.user.cabinet.user_status.save()
                 return None
         else:
-            messages.error(request, 'У вас не подключен ни один тариф.')
+            messages.error(request, 'Для просмотра данных покупателя пожалуйста подключите удобный вам тариф. Перейдите в личный кабинет найдите вкладку тарифы и выберите тарифный план..')
             return None
     else:
         messages.error(request, 'Вы не авторизованы .')
@@ -73,7 +73,7 @@ def check_user_status_and_open_tender(request, object_id=None):
                 request.user.cabinet.user_status.save()
                 return None
         else:
-            messages.error(request, 'У вас не подключен ни один тариф.')
+            messages.error(request, 'Для просмотра данных покупателя пожалуйста подключите удобный вам тариф. Перейдите в личный кабинет найдите вкладку тарифы и выберите тарифный план..')
             return None
     else:
         messages.error(request, 'Вы не авторизованы .')
@@ -145,7 +145,7 @@ def check_user_status_and_create_new_chat(request):
                 request.user.cabinet.user_status.save()
                 return None
         else:
-            messages.error(request, 'У вас не подключен ни один тариф.')
+            messages.error(request, 'Для просмотра данных покупателя пожалуйста подключите удобный вам тариф. Перейдите в личный кабинет найдите вкладку тарифы и выберите тарифный план..')
             return None
     else:
         messages.error(request, 'Вы не авторизованы .')
@@ -175,7 +175,7 @@ def check_user_status_and_create_new_product(request):
                 request.user.cabinet.user_status.save()
                 return None
         else:
-            messages.error(request, 'У вас не подключен ни один тариф.')
+            messages.error(request, 'Для просмотра данных покупателя пожалуйста подключите удобный вам тариф. Перейдите в личный кабинет найдите вкладку тарифы и выберите тарифный план..')
             return None
     else:
         messages.error(request, 'Вы не авторизованы .')
@@ -205,7 +205,7 @@ def check_user_status_and_create_new_tedner(request):
                 request.user.cabinet.user_status.save()
                 return None
         else:
-            messages.error(request, 'У вас не подключен ни один тариф.')
+            messages.error(request, 'Для просмотра данных покупателя пожалуйста подключите удобный вам тариф. Перейдите в личный кабинет найдите вкладку тарифы и выберите тарифный план..')
             return None
     else:
         messages.error(request, 'Вы не авторизованы .')

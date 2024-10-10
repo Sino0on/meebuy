@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import BooleanField, Case, Value, When, F, Q, IntegerField, Exists, OuterRef
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now
@@ -9,7 +10,7 @@ from django.core.mail import EmailMessage
 
 from apps.buyer.models import Banner, BannerSettings
 from apps.provider.filters import ProviderFilter
-from apps.provider.models import Provider, ProviderLink, VerificationDocuments
+from apps.provider.models import Provider, ProviderLink, VerificationDocuments, ProviderVerificationVideo
 from apps.provider.serializers import CategoryListSerializer
 from apps.tender.models import Category, Country, Region, City
 from apps.user_cabinet.models import Contacts
@@ -195,7 +196,7 @@ class ProviderDetailView(generic.DetailView):
         )
         context["documents"] = self.object.documents.filter(verified=True)
         context["links"] = self.object.links.filter(verified=True)
-
+        context["video_verification_icon"] = TelegramBotToken.objects.first().video_verification_icon.url if TelegramBotToken.objects.first().video_verification_icon else ''
         if self.request.GET.get("open"):
             open_status = check_user_status_and_open_number(self.request)
             if open_status == "open":
@@ -297,26 +298,64 @@ class AddLinkView(View):
         return render(request, self.template_name)
 
     def post(self, request):
-        # Получение списков данных для каждого поля
         names = request.POST.getlist('name')
         links = request.POST.getlist('link')
 
-        # Проверка количества элементов в обоих списках
         if len(names) == len(links):
-            # Удаление всех предыдущих ссылок пользователя
             ProviderLink.objects.filter(provider=request.user.provider).delete()
 
-            # Создание новых объектов ProviderLink
             for name, link in zip(names, links):
-                if name.strip() and link.strip():  # Сохранение только непустых значений
+                if name.strip() and link.strip():
                     ProviderLink.objects.create(name=name, link=link, provider=request.user.provider)
 
-            # Перенаправление на профиль пользователя после сохранения
             return redirect('view_profile')
         else:
-            # Обработка ошибки, если списки имеют разное количество элементов
             return render(request, self.template_name, {
                 'error': 'Количество названий и ссылок не совпадает.'
             })
 
         return redirect('view_profile')
+
+class AddVideoView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        context = {
+            'videos': ProviderVerificationVideo.objects.filter(provider=request.user.provider),
+        }
+        return render(request, 'cabinet/add_video.html', context=context)
+
+    def post(self, request):
+        files = request.FILES.getlist('videos')
+        if not files:
+            message = f'Пользователь {request.user} не отправил видео для верификации.'
+            return redirect('add_video')
+
+        file_names = [file.name for file in files]
+        for file in files:
+            ProviderVerificationVideo.objects.create(video=file, provider=request.user.provider)
+
+        file_names_text = ', '.join(file_names)
+        message = f'Пользователь {request.user} отправил следующие видео для верификации: {file_names_text}.'
+
+        token = TelegramBotToken.objects.first()
+        if token:
+            for chat in (chat.strip() for chat in token.report_channels.split(',')):
+                send_telegram_message(token.bot_token, chat, message)
+
+            if token.email:
+                email = EmailMessage(
+                    'Документы отправлены на проверку',
+                    f'Юзер {request.user}, следующие видео были отправлены на проверку для верификации: {file_names_text}.',
+                    'your-email@example.com',
+                    [token.email],
+                )
+                email.send(fail_silently=False)
+
+        return redirect('add_video')
+
+class VideoDeleteView(View):
+    def post(self, request, pk):
+        document = get_object_or_404(ProviderVerificationVideo, pk=pk)
+        document.delete()
+        return redirect('add_video')
+

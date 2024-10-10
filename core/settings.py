@@ -82,7 +82,6 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, "apps/templates")
@@ -137,7 +136,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "apps/static")
 #     }
 # }
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, "apps/static"),)
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -292,9 +290,8 @@ CAPTCHA_FOREGROUND_COLOR = 'orange'
 CAPTCHA_BACKGROUND_COLOR = 'white'
 CAPTCHA_FONT_SIZE = 22
 CAPTCHA_IMAGE_SIZE = (100, 40)
-CAPTCHA_TIMEOUT = 5*60  # 5 минут
+CAPTCHA_TIMEOUT = 5 * 60  # 5 минут
 CAPTCHA_CHALLENGE_FUNCT = 'apps.user_cabinet.custom_captcha.only_digit_challenge'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -355,10 +352,20 @@ SIMPLEUI_CONFIG = {
             ]
         },
         {
-            'name': 'Тендеры',
-            'icon': 'fa fa-star',
-            'url': '/admin/tender/tender/'
-        },
+            'name': 'Закупки',
+            'icon': 'fa fa-boxes',
+            'models': [
+                {
+                    'name': 'Тендеры',
+                    'icon': 'fa fa-star',
+                    'url': '/admin/tender/tender/'
+                },
+                {
+                    'name': 'Хелп тексты в тендере',
+                    'icon': 'fa fa-star',
+                    'url': '/admin/tender/tenderopenhelptext/'
+                },
+            ]},
 
         {
             'name': 'Локации',
@@ -425,7 +432,7 @@ SIMPLEUI_CONFIG = {
                 {
                     'name': 'Футтер сайта',
                     'icon': 'fa fa-arrow-circle-down',
-                     'models': [
+                    'models': [
 
                         {
                             'name': 'Колонки',
@@ -439,6 +446,11 @@ SIMPLEUI_CONFIG = {
                         },
 
                     ]
+                },
+                {
+                    'name': 'Хелп тексты в профиле',
+                    'icon': 'fa fa-text',
+                    'url': '/admin/pages/profilehelptext/'
                 },
                 {
                     'name': 'Часто задаваемые вопросы',

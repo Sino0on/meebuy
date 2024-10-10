@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./tariffs.css" />
+  </head>
+  <style>
+    .container {
+      width: 100%;
+      max-width: 750px;
+    }
+    .help-cover {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+      border-radius: 8px;
+      background-color: #e4db0052;
+      padding: 16px;
+      font-family: "Mulish", sans-serif;
+    }
+
+    .help-title {
+      text-align: left;
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .help-description {
+      white-space: pre-line;
+    }
+
+    .help-button {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .help-button .btn-style {
+      padding: 8px 16px;
+      transition: all 0.3s ease;
+      width: fit-content;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      border-radius: 0.5rem;
+      gap: 8px;
+      font-size: 16px;
+    }
+    .help-button .main,
+    .tarif-card button {
+      color: #000;
+      border-style: none;
+      --tw-bg-opacity: 1;
+      background-color: rgb(228 219 0);
+      line-height: 1.5rem;
+      --tw-text-opacity: 1;
+      color: rgb(43 41 44);
+    }
+
+    .help-button .secondary {
+      color: #000;
+      border: 1px solid rgb(228 219 0);
+      background: #fff;
+    }
+
+    .help-button a:active {
+      transform: scale(0.9);
+    }
+
+    .help-button img {
+      width: 25px;
+      height: 25px;
+      object-fit: cover;
+    }
+
+  </style>
+  <body class="tarrifs">
+    <div class="container">
+      <div class="help-cover">
+        <h5 class="help-title">Получите 20 открытий закупок бесплатно</h5>
+
+        <div class="help-description">
+          Чтобы получить возможность открыть контакты нужно зарегистрироваться
+          или войти (если уже зарегистрированы)
+        </div>
+
+        <div class="help-button">
+          <a class="main btn-style">
+            <img
+              src="https://meebuy.ru/static/assets/images/icons/crown.svg"
+              alt=""
+            />
+
+            Подключить MEEBUY PRO тариф
+          </a>
+
+          <a class="secondary btn-style">
+            <img
+              src="https://meebuy.ru/static/assets/images/icons/crown.svg"
+              alt=""
+            />
+
+            Подробнее о тарифах
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="tar-con">
+      <div class="tarrif-cover">
+        <form action="">
+          <div class="tarif-card">
+            <div
+              class="tarif-fixed_head"
+              style="background: rgba(193, 186, 1, 0.3)"
+            ></div>
+            <div class="tarif-header">
+              <div class="tarif-title">
+                <img
+                  src="https://meebuy.ru/static/assets/images/icons/premium.svg"
+                  alt=""
+                />
+                <h3>MEEBUY START</h3>
+              </div>
+              <img
+                src="https://meebuy.ru/static/assets/images/tariffs/tariff-premium-standard.png"
+                alt=""
+                style="
+                  width: 96px;
+                  height: 107px;
+                  object-fit: cover;
+                  margin: 0 auto;
+                "
+              />
+            </div>
+
+            <div class="tarif-options">
+              <h2 class="tarif-price">
+                <strong> 15500 </strong>
+                сом / в месяц
+              </h2>
+              <div class="tarif-selected-period">
+                <p>
+                  При оплате за
+
+                  <strong>1 мес.</strong>
+                </p>
+              </div>
+
+              <div class="tarif-total-amount">
+                <p>Итого:
+
+                  <strong>46500 сом</strong>
+                </p>
+              </div>
+
+              <div class="tarif-options_values">
+                <h5>Срок подключения</h5>
+                <div class="tarifs-options_selects">
+                  <div class="option">
+                    <input type="radio" data-price="19900" data-month-amount="1" name="period" id="period_1" checked />
+                    <label for="period_1"> 1 мес. </label>
+                  </div>
+                  <div class="option">
+                    <input type="radio" data-price="15500" data-month-amount="3" name="period" id="period_2"  />
+                    <label for="period_2"> 3 мес. </label>
+                  </div>
+                  <div class="option">
+                    <input type="radio" data-price="11500" data-month-amount="12" name="period" id="period_3" />
+                    <label for="period_3"> 12 мес. </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tarif-info">
+              <div class="tarif-info_block">
+                <img
+                  src="https://meebuy.ru/static/assets/images/tariffs/graph-free.png"
+                  alt=""
+                />
+                <p>
+                  Низкая позиция в каталоге, компанию трудно найти среди других
+                </p>
+              </div>
+              <div class="tarif-info_block">
+                <img
+                  src="https://meebuy.ru/static/assets/images/icons/box.svg"
+                  alt=""
+                />
+                <span>3</span>
+                <p>Открытий закупок в месяц (на срок 1 мес.)</p>
+              </div>
+              <div class="tarif-info_block">
+                <img
+                  src="https://meebuy.ru/static/assets/images/icons/message.svg"
+                  alt=""
+                />
+                <span>3</span>
+                <p>Исходящих сообщений в день</p>
+              </div>
+              <div class="tarif-info_block">
+                <span>5</span>
+                <p>Лимит товаров</p>
+              </div>
+            </div>
+            <div class="button-cover">
+              <button type="submit">Подключить</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="./tarif.js"></script>
+  </body>
+</html>

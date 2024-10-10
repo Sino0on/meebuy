@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -105,6 +106,7 @@ class Tender(StatusMixin, models.Model):
     @staticmethod
     def get_count_for_this_month(user):
         return Tender.get_count_for_today(user)
+
     class Meta:
         verbose_name = _("Тендер")
         verbose_name_plural = _("Тендеры")
@@ -124,7 +126,37 @@ class TenderImg(models.Model):
 
 
 class SearchRequest(models.Model):
-    user = models.ForeignKey(User, related_name="search_requests", on_delete=models.CASCADE, null=True, blank=True, verbose_name="Пользователь")
+    user = models.ForeignKey(User, related_name="search_requests", on_delete=models.CASCADE, null=True, blank=True,
+                             verbose_name="Пользователь")
     created_at = models.DateField(auto_now=True)
     name = models.TextField(verbose_name='Запрос', null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
+
+
+class TenderOpenHelpText(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    text = RichTextField(verbose_name="Текст")
+    button_text = models.CharField(max_length=255, verbose_name="Текст кнопки")
+
+    def __str__(self):
+        return f"{self.title}"
+
+    def save(self, *args, **kwargs):
+        if self.__class__.objects.exists() and not self.id:
+            existing = self.__class__.objects.first()
+            for field in self._meta.fields:
+                if field.name != 'id':
+                    setattr(existing, field.name, getattr(self, field.name))
+            existing.save()
+        else:
+            super(TenderOpenHelpText, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        if not cls.objects.exists():
+            cls.objects.create()
+        return cls.objects.get()
+
+    class Meta:
+        verbose_name = "Текст для помощи"
+        verbose_name_plural = "Тексты для помощи"

@@ -1,7 +1,7 @@
 from adminsortable2.admin import SortableAdminMixin
 from django.contrib import admin
 
-from apps.pages.models import StaticPage, TelegramBotToken, FooterLink, FooterColumn
+from apps.pages.models import StaticPage, TelegramBotToken, FooterLink, FooterColumn, ProfileHelpText
 
 
 @admin.register(StaticPage)
@@ -19,3 +19,8 @@ class FooterColumnAdmin(SortableAdminMixin, admin.ModelAdmin):
 class FooterLinkAdmin(SortableAdminMixin, admin.ModelAdmin):
     fields = ['title', 'column', 'link', 'order']
     list_filter = ['column']
+
+
+@admin.register(ProfileHelpText)
+class ProfileHelpTextAdmin(SortableAdminMixin, admin.ModelAdmin):
+    pass

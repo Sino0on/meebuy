@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+    <div class="container flex flex-col content-center items-center gap-8 pt-14">
+        <h3>Загрузите видео для проверки</h3>
+        <p>Вы можете выбрать несколько файлов, удерживая клавишу Ctrl (Cmd на Mac) при выборе.</p>
+
+        <form method="post" action="{% url 'add_video' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input id="file-input" type="file" name="videos" multiple>
+
+            <button class="mt-[26px] btn-filled-yellow w-full uppercase py-2.5">Отправить</button>
+        </form>
+        <div id="file-list" class="mt-8"></div>
+    </div>
+
+    <div class="container" style="padding: 20px; text-align: center;">
+    <h2 style="font-size: 22px;margin-bottom: 20px"> Ранее загруженные видео </h2>
+{% for document in videos %}
+            <div style="display: flex;flex-direction: row;gap:20px;justify-content: center;flex-wrap: wrap;box-shadow:0 0 2px; margin: 5px 0; padding:8px; border-radius: 5px">
+
+            <a href="{{ document.video.url }}" style="display: flex;flex-direction: row;gap:16px;flex-wrap: wrap;word-break: break-all">{{ document.video.url|filename }}  {% if document.verified %}<p style="color:green">Подтвержден</p>{% else %}<p style="color:red">Не подтвержден</p>{% endif %} </a>
+            <form action="{% url 'video_delete' document.pk %}" method="post" style="width: fit-content;">
+                <button type="submit" style="width: 32px;height: 32px;">
+                    {% csrf_token %}
+                    <img class="cursor-pointer w-6 h-6"
+                         src="{% static '/assets/images/icons/trash.svg' %}"
+                         alt="">
+                </button>
+            </form>
+            </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+{% endblock %}

@@ -119,6 +119,7 @@ class Provider(StatusMixin, models.Model):
     credit_card = models.BooleanField(default=False, verbose_name=_("Кредитные карты"))
     electronic_money = models.BooleanField(default=False, verbose_name=_("Электронные деньги"))
 
+    # Verification
     @classmethod
     def get_category_descendants(cls, category):
         categories = [category]
@@ -130,6 +131,16 @@ class Provider(StatusMixin, models.Model):
     def is_verified(self):
         if self.documents.exists():
             if not self.documents.filter(verified=False).exists():
+                return 2
+            else:
+                return 1
+        else:
+            return 0
+
+    @property
+    def videos_approved(self):
+        if self.videos.exists():
+            if not self.videos.filter(verified=False).exists():
                 return 2
             else:
                 return 1
@@ -211,3 +222,17 @@ class ProviderLink(models.Model):
     class Meta:
         verbose_name = _("Ссылка")
         verbose_name_plural = _("Ссылки")
+
+class ProviderVerificationVideo(models.Model):
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="videos")
+    video = models.FileField(upload_to='provider_videos/%Y/%m/', verbose_name="Видео")
+    verified = models.BooleanField(default=False, verbose_name='Подтверждено')
+
+    def __str__(self):
+        return f"{self.video.name}"
+
+    class Meta:
+        verbose_name = _("Видео")
+        verbose_name_plural = _("Видео")
+
+

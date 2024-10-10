@@ -67,7 +67,7 @@ from .forms import (
     SupportMessageForm
 )
 from .models import Contacts, FAQ
-from ..pages.models import TelegramBotToken, OurPartners
+from ..pages.models import TelegramBotToken, OurPartners, ProfileHelpText
 from ..services.send_telegram_message import send_telegram_message
 from ..tender.models import (
     Tender,
@@ -150,6 +150,20 @@ class UppingListView(LoginRequiredMixin, generic.ListView):
 class UserDetailView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cabinet/provider_profile.html'
 
+    def get_help_texts(self, user_tariff):
+        queryset = ProfileHelpText.objects.filter(active=True, for_all_users=True)
+
+        if user_tariff:
+            if user_tariff.status.status.base_tariff:
+                queryset |= ProfileHelpText.objects.filter(active=True, for_users_on_standard_tariff=True)
+            else:
+                queryset |= ProfileHelpText.objects.filter(active=True, for_users_on_standard_tariff=False,
+                                                           for_users_without_tariff=False)
+        else:
+            queryset |= ProfileHelpText.objects.filter(active=True, for_users_without_tariff=True)
+
+        return queryset.order_by('order')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context_keys = ['one', 'two', 'three', 'four', 'five', 'six']
@@ -165,6 +179,8 @@ class UserDetailView(LoginRequiredMixin, generic.TemplateView):
         context['products'] = Product.objects.filter(provider__user=self.request.user)[:3]
         context['links'] = provider.links.all()
         context['actual_tariff'] = self.request.user.cabinet.user_status if self.request.user.cabinet else None
+        user_tariff = self.request.user.cabinet.user_status if self.request.user.cabinet else None
+        context['help_texts'] = self.get_help_texts(user_tariff)
 
         return context
 
@@ -595,11 +611,12 @@ class AnalyticCabinetView(LoginRequiredMixin, generic.TemplateView):
 class TariffsCabinetView(generic.ListView):
     template_name = 'cabinet/tariffs.html'
     model = Status
-    queryset = Status.objects.all()
-    context_object_name = 'statasus'
+    queryset = Status.objects.all().order_by("order")
+    print(queryset)
+    context_object_name = 'statuses'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by("order")
         if not queryset.exists():
             status = Status.objects.create(
                 title='Базовый тариф',
@@ -620,7 +637,7 @@ class TariffsCabinetView(generic.ListView):
                 priorety=1
             )
             queryset = super().get_queryset()
-        return queryset.order_by('-price_month', '-id')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -629,9 +646,10 @@ class TariffsCabinetView(generic.ListView):
         context['faqs'] = FAQ.objects.all()
         context['parents'] = OurPartners.objects.filter(active=True)
         try:
-            context['actual_tariff'] = self.request.user.cabinet.user_status.status.id
+            context['actual_tariff'] = self.request.user.cabinet.user_status.status.status.id
         except AttributeError:
             context['actual_tariff'] = None
+        print(context['actual_tariff'])
         token = TelegramBotToken.objects.first()
         context['token'] = token
         return context
@@ -759,7 +777,8 @@ def send_message(request):
     else:
         form = SupportMessageForm()
     contacts = Contacts.load()
-    return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts})
+    telegram_bot_token = TelegramBotToken.objects.first()
+    return render(request, 'cabinet/send_message.html', {'form': form, 'contacts': contacts, 'telegram_bot_token': telegram_bot_token})
 
 
 def generate_message(request):
@@ -883,7 +902,8 @@ def tariff_buy(request):
     print(int(request.GET.get('id')))
     user = request.user
     if user.cabinet.balance < status.price:
-        return JsonResponse({"Error": "Недостаточно средств"}, status=400)
+        messages.error(request, "У вас недостаточно средств")
+        return redirect(request.META.get('HTTP_REFERER', 'fallback-url'))
     # if user.cabinet.user_status:
 
         # if user.cabinet.user_status.status == status and user.cabinet.user_status.end_date > today and user.cabinet.user_status.is_active:
@@ -894,9 +914,10 @@ def tariff_buy(request):
         if not user.cabinet.base_tariff_connected_date:
             user.cabinet.base_tariff_connected_date = datetime.date.today()
         else:
-            return JsonResponse(
-                {"Error": f"У вас уже был подключен базовый тариф - {user.cabinet.base_tariff_connected_date}"},
-                status=400)
+            messages.error(request,
+                           f"У вас уже был подключен базовый тариф - {user.cabinet.base_tariff_connected_date}")
+            return redirect(
+                request.META.get('HTTP_REFERER', 'fallback-url'))  # Замените 'fallback-url' на URL по умолчанию
 
 
         # if user.cabinet.user_status.status.status == status.status:
@@ -928,7 +949,8 @@ def tariff_buy(request):
     user.cabinet.quantity_tenders = status.status.quantity_tenders * status.months
 
     user.cabinet.save()
-    return JsonResponse(data={"Info": "ok"}, status=200)
+    messages.success(request, "Тариф успешно подключен.")
+    return redirect(request.META.get('HTTP_REFERER', 'fallback-url'))
 
 def redirect_to_site(request, pk):
     provider = get_object_or_404(Cabinet, id=pk)

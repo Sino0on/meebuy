@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.db import transaction
 from mptt.admin import DraggableMPTTAdmin
 
-from .models import Category, Provider, ProvideImg, ProvideFiles, PriceFiles, VerificationDocuments, ProviderLink
+from .models import Category, Provider, ProvideImg, ProvideFiles, PriceFiles, VerificationDocuments, ProviderLink, \
+    ProviderVerificationVideo
 
 
 class ProvideImgInline(admin.TabularInline):
@@ -33,12 +34,17 @@ class ProviderLinkInline(admin.TabularInline):
     extra = 0
 
 
+class ProviderVerificationVideoInline(admin.TabularInline):
+    model = ProviderVerificationVideo
+    extra = 0
+
+
 class ProviderAdmin(admin.ModelAdmin):
     list_display = ('title', 'user', 'type', 'address', 'is_active', 'is_modered', 'is_provider')
     list_filter = ('is_active', 'is_modered', 'type', 'is_provider')
     search_fields = ('title', 'description', 'mini_descr', 'post_index', 'address')
     fieldsets = ()
-    inlines = [ProvideImgInline, ProvideFilesInline, PriceFilesInline, ProviderVerificationDocInline, ProviderLinkInline]
+    inlines = [ProvideImgInline, ProvideFilesInline, PriceFilesInline, ProviderVerificationDocInline, ProviderLinkInline, ProviderVerificationVideoInline]
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "category":
@@ -73,3 +79,4 @@ class CategoryAdmin(DraggableMPTTAdmin):
 admin.site.register(Provider, ProviderAdmin)
 admin.site.register(ProvideImg)  # Optional: If you want to manage images separately as well
 admin.site.register(ProvideFiles)  # Optional: If you want to manage files separately as well
+admin.site.register(ProviderVerificationVideo)

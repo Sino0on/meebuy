@@ -32,6 +32,7 @@ class TelegramBotToken(models.Model):
     support_whatsapp = models.CharField(max_length=200, blank=True, null=True, verbose_name=_("WhatsApp поддержки"))
     support_telegram = models.CharField(max_length=200, blank=True, null=True, verbose_name=_("Telegram поддержки"))
     recaptcha = models.CharField(max_length=200, blank=True, null=True, verbose_name=_("ReCaptcha"))
+    video_verification_icon = models.FileField(upload_to="telegram_bot/", blank=True, null=True, verbose_name=_("Иконка проверки видео"))
 
     def clean(self):
         if TelegramBotToken.objects.exists() and not self.pk:
@@ -90,3 +91,27 @@ class FooterLink(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+
+class ProfileHelpText(models.Model):
+    title = models.CharField(max_length=255, verbose_name=_("Название"), blank=True, null=True)
+    text = RichTextField(verbose_name=_("Текст"), blank=True, null=True)
+    button1_icon = models.FileField(upload_to="help_text/", verbose_name=_("Иконка 1"), blank=True, null=True)
+    button1_text = models.CharField(max_length=255, verbose_name=_("Кнопка 1"), blank=True, null=True)
+    button1_link = models.URLField(verbose_name=_("Ссылка 1"), blank=True, null=True)
+    button2_icon = models.FileField(upload_to="help_text/", verbose_name=_("Иконка 2"), blank=True, null=True)
+    button2_text = models.CharField(max_length=255, verbose_name=_("Кнопка 2"), blank=True, null=True)
+    button2_link = models.URLField(verbose_name=_("Ссылка 2"), blank=True, null=True)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+    for_users_without_tariff = models.BooleanField(default=False, verbose_name=_("Для юзеров без тарифа"))
+    for_users_on_standard_tariff = models.BooleanField(default=False, verbose_name=_("Для юзеров на стандартном тариф"))
+    for_all_users = models.BooleanField(default=False, verbose_name=_("Для всех пользователей"))
+
+    active = models.BooleanField(default=True, verbose_name=_("Активен"))
+
+    # Это поле используется для определения порядка сортировки
+    def __str__(self):
+        return f"{self.title}"
+
+    class Meta:
+        ordering = ['order']

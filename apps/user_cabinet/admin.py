@@ -1,3 +1,4 @@
+from adminsortable2.admin import SortableAdminMixin
 from django.contrib import admin
 
 from apps.user_cabinet.models import (
@@ -79,9 +80,10 @@ class ActiveUserStatusAdmin(admin.ModelAdmin):
 
 
 @admin.register(Status)
-class StatusAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_date')
+class StatusAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = ('order', 'title', 'created_date', )
     search_fields = ('title',)
+    ordering = ('order',)
 
 
 @admin.register(Upping)

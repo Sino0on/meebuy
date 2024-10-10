@@ -13,7 +13,7 @@ from apps.provider.models import Category
 from apps.services.tarif_checker import check_user_status_and_open_number, check_user_status_and_open_tender
 from apps.tender.filters import TenderFilter
 from apps.tender.forms import TenderForm, SearchRequestForm
-from apps.tender.models import Tender, TenderImg, Country, Region, City, SearchRequest
+from apps.tender.models import Tender, TenderImg, Country, Region, City, SearchRequest, TenderOpenHelpText
 from apps.user_cabinet.models import Contacts, OpenNumberCount
 from django.views.generic.edit import UpdateView
 
@@ -122,6 +122,7 @@ class TenderDetailView(generic.DetailView):
             open_status = check_user_status_and_open_tender(self.request, self.object.id)
             if open_status == "open":
                 context["open"] = "open"
+        context["support_text"] = TenderOpenHelpText.objects.first()
         context["banners"] = self.get_banners()
         context["tenders"] = Tender.objects.exclude(id=self.object.id)
 

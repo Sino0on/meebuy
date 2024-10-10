@@ -9,14 +9,18 @@ from apps.authentication.views import (
     SelectAuthUserTypeView,
     cabinet_create,
     activate,
-    login_redirect, RegistrationView, AuthenticationView, register_v2
+    login_redirect,
+    RegistrationView,
+    AuthenticationView,
+    register_v2
 )
 # Buyer views
 from apps.buyer.views import (
     BuyerListView,
     BuyerDetailView,
     BuyerCategoryListView,
-    BuyersStepView, TenderStepView
+    BuyersStepView,
+    TenderStepView
 )
 # Chat views
 from apps.chat.views import (
@@ -50,7 +54,8 @@ from apps.product.views import (
     PriceColumnUpdateView,
     PriceColumnDeleteView,
     DownloadPriceFileView,
-    DeleteFileView, ProductCategoryListView
+    DeleteFileView,
+    ProductCategoryListView
 )
 # Provider views
 from apps.provider.views import (
@@ -61,7 +66,8 @@ from apps.provider.views import (
     upload_file,
     DocumentCreateView,
     AddLinkView,
-    DocumentDeleteView
+    DocumentDeleteView,
+    AddVideoView, VideoDeleteView
 )
 # Tender views
 from apps.tender.views import (
@@ -247,4 +253,8 @@ urlpatterns = [
     path('init_payment/', init_payment, name='init_payment'),
     path('freedompay/success/', freedompay_success, name='freedompay_success'),
     path('static_page/<slug>/', StaticPageView.as_view(), name='staticpages'),
+
+    path('add_video/', AddVideoView.as_view(), name='add_video'),
+    path('video/delete/<int:pk>', VideoDeleteView.as_view(), name='video_delete'),
+
 ]

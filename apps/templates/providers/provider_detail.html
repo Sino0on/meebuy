@@ -113,6 +113,11 @@
                                     {{ provider.title }}
                                 </p>
                                 <div class="hidden lg-md:flex items-center gap-[10px]">
+                                    {% if provider.videos_approved == 2 %}
+                                            <img class="w-6 h-6 cursor-pointer"
+                                             src="{{ video_verification_icon }}"
+                                             alt="Видео проверено">
+                                    {% endif %}
                                     {% if provider.is_recommended %}
                                         <img class="w-6 h-6 cursor-pointer"
                                              src="{% static 'assets/images/icons/premium.svg' %}"

@@ -8,6 +8,79 @@
     <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />-->
     <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />-->
     <link rel="stylesheet" href="{% static 'pages/purchaseAnnouncements/index.css' %}">
+      <style>
+    .container {
+      width: 100%;
+      max-width: 750px;
+    }
+    .help-cover {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+      border-radius: 8px;
+      background-color: #e4db0052;
+      padding: 16px;
+      font-family: "Mulish", sans-serif;
+        margin-top: 40px;
+    }
+
+    .help-title {
+      text-align: left;
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .help-description {
+      white-space: pre-line;
+    }
+
+    .help-button{
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+    }
+
+    .help-button .btn-style {
+      padding: 8px 16px;
+      transition: all 0.3s ease;
+      width: fit-content;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      border-radius: 0.5rem;
+      gap: 8px;
+      font-size: 16px;
+    }
+    .help-button .main {
+      color: #000;
+      border-style: none;
+      --tw-bg-opacity: 1;
+      background-color: rgb(228 219 0);
+      line-height: 1.5rem;
+      --tw-text-opacity: 1;
+      color: rgb(43 41 44);
+    }
+
+    .help-button .secondary{
+      color: #000;
+      border:1px solid rgb(228 219 0);
+      background: #fff;
+    }
+
+    .help-button a:active {
+      transform: scale(0.9);
+    }
+
+    .help-button img {
+      width: 25px;
+      height: 25px;
+      object-fit: cover;
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
@@ -103,18 +176,26 @@
                         <!-- icons and date -->
                         <div class="flex justify-between mt-[50px]">
                             <div class="flex items-center gap-1.5">
+                                {% if tender.is_new %}
+                                    <img class="cursor-pointer" src="{% static 'assets/images/icons/new.svg' %}"
+                                         alt="New">
 
-                                <img class="cursor-pointer" src="{% static 'assets/images/icons/new.svg' %}" alt="New">
-                                <img class="cursor-pointer w-6 h-6" src="{% static 'assets/images/icons/premium.svg' %}"
-                                     alt="Diamond">
-                                <a href="{% if user.is_authenticated %}
-{#{% url 'chat_create' tender.user.pk %}#}
-{% endif %}">
-                                    <img
-                                            class="cursor-pointer" src="{% static 'assets/images/icons/letter.svg' %}"
-                                            alt="Letter"></a>
-                                <img class="cursor-pointer" src="{% static 'assets/images/icons/phone.svg' %}"
-                                     alt="Phone">
+                                {% endif %}
+                                {% if tender.is_recommended %}
+                                    <img class="cursor-pointer w-6 h-6"
+                                         src="{% static 'assets/images/icons/premium.svg' %}" alt="Diamond">
+                                {% endif %}
+
+                                {#{% url 'chat_create' tender.user.pk %}#}
+                                {% if tender.user.email %}
+                                    <img class="cursor-pointer" src="{% static 'assets/images/icons/letter.svg' %}"
+                                         alt="Letter">
+                                {% endif %}
+                                {% if tender.user.phone %}
+                                    <img class="cursor-pointer" src="{% static 'assets/images/icons/phone.svg' %}"
+                                         alt="Phone">
+
+                                {% endif %}
                                 <svg {% if user.is_authenticated %}
                                     onclick="sendTenderRequest({{ tender.pk }})"
                                     {% if tender in user.cabinet.favorite_tenders.all %}
@@ -246,18 +327,29 @@
                                     </li>
                                 </ul>
                             {% endif %}
+
+                            {% if support_text %}
+                                <div class="help-cover">
+                                    <h5 class="help-title">{{ support_text.title }}</h5>
+
+                                    <div class="help-description">
+                                        {{ support_text.text|safe }}
+                                    </div>
                             {% if not user.is_authenticated %}
                                 <a href='#loginModal' data-bs-toggle='modal'>
-                                    <button class="btn-filled p-3 w-full uppercase mt-7 lg:mt-10 max-w-[307px]">
-                                        Показать контакты
+                                    <button class="btn-filled p-3 w-full uppercase mt-7 lg:mt-10 max-w-[327px]">
+                                        {{ support_text.button_text }}
                                     </button>
                                 </a>
                             {% else %}
                                 <a href="/tender/detail/{{ tender.pk }}/?open=1" id="reloadLink">
-                                    <button class="btn-filled py-3 w-full uppercase mt-7 lg:mt-10 max-w-[307px]">
-                                        Показать контакты
+                                    <button class="btn-filled py-3 px-3 w-full uppercase mt-7 lg:mt-10 max-w-[327px]">
+                                        {{ support_text.button_text }}
                                     </button>
                                 </a>
+                            {% endif %}
+
+                                </div>
                             {% endif %}
                         </div>
                     </div>
