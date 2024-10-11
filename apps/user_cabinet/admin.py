@@ -81,9 +81,10 @@ class ActiveUserStatusAdmin(admin.ModelAdmin):
 
 @admin.register(Status)
 class StatusAdmin(SortableAdminMixin, admin.ModelAdmin):
-    list_display = ('order', 'title', 'created_date', )
-    search_fields = ('title',)
-    ordering = ('order',)
+    pass
+    # list_display = ('order', 'title', 'created_date',)
+    # search_fields = ('title',)
+    # ordering = ('order',)
 
 
 @admin.register(Upping)
