@@ -10,13 +10,13 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name='status',
-            options={'ordering': ['order'], 'verbose_name': 'Статус', 'verbose_name_plural': 'Статусы'},
-        ),
         migrations.AddField(
             model_name='status',
             name='order',
             field=models.PositiveIntegerField(db_index=True, default=0, editable=False),
+        ),
+        migrations.AlterModelOptions(
+            name='status',
+            options={'ordering': ['order'], 'verbose_name': 'Статус', 'verbose_name_plural': 'Статусы'},
         ),
     ]
