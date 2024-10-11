@@ -59,13 +59,13 @@ class Status(models.Model):
 
     is_publish_phone = models.BooleanField(default=False, blank=True, verbose_name='Показ Вашего телефона незарегистрированным посетителям')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создание'), blank=True, null=True)
-    # order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     def __str__(self):
         return f'{self.title}'
 
     class Meta:
-        # ordering = ['order']
+        ordering = ['order']
 
         verbose_name = _('Статус')
         verbose_name_plural = _('Статусы')
