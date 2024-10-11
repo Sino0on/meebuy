@@ -611,12 +611,12 @@ class AnalyticCabinetView(LoginRequiredMixin, generic.TemplateView):
 class TariffsCabinetView(generic.ListView):
     template_name = 'cabinet/tariffs.html'
     model = Status
-    queryset = Status.objects.all().order_by("order")
+    queryset = Status.objects.all()
     print(queryset)
     context_object_name = 'statuses'
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by("order")
+        queryset = super().get_queryset()
         if not queryset.exists():
             status = Status.objects.create(
                 title='Базовый тариф',
