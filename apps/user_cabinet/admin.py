@@ -80,7 +80,7 @@ class ActiveUserStatusAdmin(admin.ModelAdmin):
 
 
 @admin.register(Status)
-class StatusAdmin(SortableAdminMixin, admin.ModelAdmin):
+class StatusAdmin(admin.ModelAdmin):
     pass
     # list_display = ('order', 'title', 'created_date',)
     # search_fields = ('title',)
