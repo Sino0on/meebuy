@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Подтверждение номера телефона</h2>
+    <p>Введите код, который вы получили на ваш телефон.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </form>
+</div>
+{% endblock %}

@@ -233,3 +233,15 @@ class CustomUserCreationForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise ValidationError("Электронная почта уже используется")
         return email
+
+
+class VerifyCodeForm(forms.Form):
+    code = forms.CharField(
+        max_length=6,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Введите код',
+            'class': 'form-control',
+        }),
+        label='Код подтверждения'
+    )

@@ -1,3 +1,5 @@
+from sqlite3 import IntegrityError
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -19,13 +21,14 @@ from apps.authentication.forms import (
     UserRegistrationForm,
     UserLoginForm,
     UserProfileForm,
-    UserTypeSelectionForm
+    UserTypeSelectionForm, VerifyCodeForm
 )
 from apps.authentication.token import account_activation_token
 from apps.product.models import Product
 from apps.provider.models import Provider, Category
 from apps.tender.models import Tender, Country
 from apps.user_cabinet.models import Cabinet, Contacts
+from .utils import generate_confirmation_code, send_sms
 
 
 class HomeView(TemplateView):
@@ -284,6 +287,43 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 
+from django.contrib.auth import login as auth_login, get_backends
+
+def verify_code_view(request):
+    if request.method == 'POST':
+        form = VerifyCodeForm(request.POST)
+        if form.is_valid():
+            entered_code = form.cleaned_data['code']
+            saved_code = request.session.get('confirmation_code')
+            phone_number = request.session.get('phone_number')
+
+            print(f"Entered code: {entered_code}")
+            print(f"Saved code: {saved_code}")
+            print(f"Phone number: {phone_number}")
+
+
+            if entered_code == saved_code:
+                # Активация пользователя
+                user = User.objects.filter(phone=phone_number).first()
+                if user:
+                    user.is_active = True
+                    user.save()
+                    backend = get_backends()[0]
+                    user.backend = f"{backend.__module__}.{backend.__class__.__name__}"
+                    auth_login(request, user)
+                    messages.success(request, 'Ваш номер успешно подтверждён!')
+                    # Удаляем код из сессии
+                    del request.session['confirmation_code']
+                    del request.session['phone_number']
+                    return redirect('view_profile')
+                else:
+                    messages.error(request, 'Пользователь не найден.')
+            else:
+                messages.error(request, 'Неверный код подтверждения.')
+    else:
+        form = VerifyCodeForm()
+
+    return render(request, 'auth/verify_code.html', {'form': form})
 
 
 # REGISTER V2
@@ -302,31 +342,54 @@ def register_v2(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
-            user = User.objects.create(
-                username=form.cleaned_data['username'],
-                email=form.cleaned_data['email'],
-                password=make_password(password)
-            )
-            send_mail(
-                'Ваш пароль для входа на сайт',
-                f'Ваш пароль: {password}\nИспользуйте его для входа на сайт.',
-                'from@example.com',
-                [user.email],
-                fail_silently=False,
-            )
-            print(password)
-            if request.POST.get('user-role') == 'provider':
-                provider, _ = Provider.objects.get_or_create(user=user)
-                provider.is_provider = True
-                provider.is_active = True
-                provider.save()
-            else:
-                provider, _ = Provider.objects.get_or_create(user=user)
-                provider.is_provider = False
-                provider.is_active = True
-                provider.save()
-            messages.success(request, 'Регистрация прошла успешно, мы выслали ваш пароль вам на почту!')
-            return redirect('authentication')
+            country_code = request.POST.get('country_code')  # Код страны
+            raw_phone = form.cleaned_data['phone']
+            formatted_phone = f"{country_code}{raw_phone}".replace(" ", "").replace("-", "").replace("(", "").replace(
+                ")", "")
+            if User.objects.filter(phone=formatted_phone).exists():
+                messages.error(request, f"Номер телефона {formatted_phone} уже зарегистрирован.")
+                return render(request, 'auth/authentication.html', {'form': form})
+            try:
+                user = User.objects.create(
+                    username=form.cleaned_data['username'],
+                    email=form.cleaned_data['email'],
+                    password=make_password(password),
+                    phone=formatted_phone,
+                    is_active=False
+
+                )
+                confirmation_code = generate_confirmation_code()
+
+                send_sms(user.phone, confirmation_code)
+
+                request.session['confirmation_code'] = confirmation_code
+                request.session['phone_number'] = formatted_phone
+                request.session.modified = True
+
+                # send_mail(
+                #     'Ваш пароль для входа на сайт',
+                #     f'Ваш пароль: {password}\nИспользуйте его для входа на сайт.',
+                #     'from@example.com',
+                #     [user.email],
+                #     fail_silently=False,
+                # )
+                # print(password)
+                # if request.POST.get('user-role') == 'provider':
+                #     provider, _ = Provider.objects.get_or_create(user=user)
+                #     provider.is_provider = True
+                #     provider.is_active = True
+                #     provider.save()
+                # else:
+                #     provider, _ = Provider.objects.get_or_create(user=user)
+                #     provider.is_provider = False
+                #     provider.is_active = True
+                #     provider.save()
+                # messages.success(request, 'Регистрация прошла успешно, мы выслали ваш пароль вам на почту!')
+                messages.success(request, 'Регистрация прошла успешно. Код отправлен на ваш номер телефона.')
+                return redirect('verify_code')
+            except IntegrityError:
+                messages.error(request, f"Номер телефона {formatted_phone} уже зарегистрирован.")
+                return render(request, 'auth/authentication.html', {'form': form})
         else:
             for field, errors in form.errors.items():
                 for error in errors:

@@ -9,7 +9,7 @@ from apps.authentication.views import (
     SelectAuthUserTypeView,
     cabinet_create,
     activate,
-    login_redirect, RegistrationView, AuthenticationView, register_v2
+    login_redirect, RegistrationView, AuthenticationView, register_v2, verify_code_view
 )
 # Buyer views
 from apps.buyer.views import (
@@ -125,6 +125,7 @@ urlpatterns = [
     path('register/', RegistrationView.as_view(), name='register'),
     path('authentication/', AuthenticationView.as_view(), name='authentication'),
     path('register_v2/', register_v2, name='register_v2'),
+    path('verify-code/', verify_code_view, name='verify_code'),
 
     path('choice/', SelectUserTypeView.as_view(), name='choice'),
     path('select_user_type/', SelectUserTypeView.as_view(), name='select_user_type'),

@@ -11,7 +11,7 @@ from apps.authentication.models import User
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     list_display = ('id', 'email', 'first_name', 'last_name', 'register_date', 'is_staff', 'is_active', 'is_confirm')
-    search_fields = ('email', 'first_name', 'last_name', )
+    search_fields = ('email', 'first_name', 'last_name', 'phone')
     list_filter = ('is_staff', 'is_active', 'is_confirm', )
 
     actions = ['ban_user', 'unban_user', 'count_user']
